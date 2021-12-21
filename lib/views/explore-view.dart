@@ -1,5 +1,5 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
-import 'package:colourlovers_app/providers.dart';
+import 'package:colourlovers_app/providers/providers.dart';
 import 'package:colourlovers_app/widgets/color-tile-view.dart';
 import 'package:colourlovers_app/widgets/explore-tile-view.dart';
 import 'package:colourlovers_app/widgets/items-view.dart';
@@ -23,25 +23,25 @@ class ExploreView extends HookConsumerWidget {
         children: [
           ExploreTileView(
             onTap: () {
-              ref.read(routingService.notifier).showScreen(context, createColorsView(ref));
+              ref.read(routingProvider.notifier).showScreen(context, createColorsView(ref));
             },
             text: "Colors",
           ),
           ExploreTileView(
             onTap: () {
-              ref.read(routingService.notifier).showScreen(context, createPalettesView(ref));
+              ref.read(routingProvider.notifier).showScreen(context, createPalettesView(ref));
             },
             text: "Palettes",
           ),
           ExploreTileView(
             onTap: () {
-              ref.read(routingService.notifier).showScreen(context, createPatternsView(ref));
+              ref.read(routingProvider.notifier).showScreen(context, createPatternsView(ref));
             },
             text: "Patterns",
           ),
           ExploreTileView(
             onTap: () {
-              ref.read(routingService.notifier).showScreen(context, createUsersView(ref));
+              ref.read(routingProvider.notifier).showScreen(context, createUsersView(ref));
             },
             text: "Users",
           ),
@@ -55,7 +55,7 @@ class ExploreView extends HookConsumerWidget {
       appBar: AppBar(
         title: const Text("Colors"),
       ),
-      service: colorsService,
+      service: colorsProvider,
       itemBuilder: (context, state, index) {
         final color = state.items[index];
         return ColorTileView(color: color);
@@ -68,7 +68,7 @@ class ExploreView extends HookConsumerWidget {
       appBar: AppBar(
         title: const Text("Palettes"),
       ),
-      service: palettesService,
+      service: palettesProvider,
       itemBuilder: (context, state, index) {
         final palette = state.items[index];
         return PaletteTileView(palette: palette);
@@ -81,7 +81,7 @@ class ExploreView extends HookConsumerWidget {
       appBar: AppBar(
         title: const Text("Patterns"),
       ),
-      service: patternsService,
+      service: patternsProvider,
       itemBuilder: (context, state, index) {
         final pattern = state.items[index];
         return PatternTileView(pattern: pattern);
@@ -94,7 +94,7 @@ class ExploreView extends HookConsumerWidget {
       appBar: AppBar(
         title: const Text("Users"),
       ),
-      service: usersService,
+      service: usersProvider,
       itemBuilder: (context, state, index) {
         final lover = state.items[index];
         return UserTileView(lover: lover);

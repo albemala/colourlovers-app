@@ -1,5 +1,5 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
-import 'package:colourlovers_app/providers.dart';
+import 'package:colourlovers_app/providers/providers.dart';
 import 'package:colourlovers_app/views/color-details-view.dart';
 import 'package:colourlovers_app/widgets/color-view.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class ColorTileView extends HookConsumerWidget {
     return Material(
       child: InkWell(
         onTap: () {
-          ref.read(routingService.notifier).showScreen(context, ColorDetailsView(color: color));
+          ref.read(routingProvider.notifier).showScreen(context, ColorDetailsView(color: color));
         },
         child: Row(
           children: [

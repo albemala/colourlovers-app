@@ -1,5 +1,5 @@
-import 'package:colourlovers_app/providers.dart';
-import 'package:colourlovers_app/services/routing-service.dart';
+import 'package:colourlovers_app/providers/providers.dart';
+import 'package:colourlovers_app/providers/routing-provider.dart';
 import 'package:colourlovers_app/views/about-view.dart';
 import 'package:colourlovers_app/views/explore-view.dart';
 import 'package:colourlovers_app/views/favorites-view.dart';
@@ -11,7 +11,7 @@ class MainView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final route = ref.watch(routingService);
+    final route = ref.watch(routingProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text(_getTitle(route)),
@@ -19,7 +19,7 @@ class MainView extends HookConsumerWidget {
       body: _getBody(route),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: route.index,
-        onTap: ref.read(routingService.notifier).setRoute,
+        onTap: ref.read(routingProvider.notifier).setRoute,
         items: const [
           BottomNavigationBarItem(
             label: "Explore",

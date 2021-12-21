@@ -1,11 +1,11 @@
-import 'package:colourlovers_app/services/items-service.dart';
+import 'package:colourlovers_app/providers/items-provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class ItemsView<ItemType> extends HookConsumerWidget {
   final PreferredSizeWidget appBar;
-  final StateNotifierProvider<ItemsService<ItemType>, ItemsState<ItemType>> service;
+  final StateNotifierProvider<ItemsProvider<ItemType>, ItemsState<ItemType>> service;
   final Widget Function(BuildContext, ItemsState<ItemType>, int) itemBuilder;
 
   const ItemsView({

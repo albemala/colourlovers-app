@@ -16,7 +16,7 @@ class PaletteTileView extends HookConsumerWidget {
     return Material(
       child: InkWell(
         onTap: () {
-          // ref.read(routingService.notifier).showScreen(context, const ColorView(color: color));
+          // ref.read(routingProvider.notifier).showScreen(context, const ColorView(color: color));
         },
         child: Row(
           children: [

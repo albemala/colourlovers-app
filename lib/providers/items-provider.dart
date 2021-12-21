@@ -28,13 +28,13 @@ class ItemsState<ItemType> extends Equatable {
   }
 }
 
-class ItemsService<ItemType> extends StateNotifier<ItemsState<ItemType>> {
+class ItemsProvider<ItemType> extends StateNotifier<ItemsState<ItemType>> {
   final Future<List<ItemType>?> Function(ClClient client, int numResults, int resultOffset) callback;
 
   final _client = ClClient();
   int _page = 0;
 
-  ItemsService(this.callback)
+  ItemsProvider(this.callback)
       : super(
           ItemsState(
             items: <ItemType>[],

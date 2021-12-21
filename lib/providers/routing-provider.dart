@@ -7,8 +7,8 @@ enum MainRoute {
   about,
 }
 
-class RoutingService extends StateNotifier<MainRoute> {
-  RoutingService() : super(MainRoute.explore);
+class RoutingProvider extends StateNotifier<MainRoute> {
+  RoutingProvider() : super(MainRoute.explore);
 
   void setRoute(int index) {
     state = MainRoute.values[index];
