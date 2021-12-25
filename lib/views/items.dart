@@ -1,4 +1,5 @@
 import 'package:colourlovers_app/providers/items-provider.dart';
+import 'package:colourlovers_app/widgets/background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -20,6 +21,7 @@ class ItemsView<ItemType> extends HookConsumerWidget {
     final scrollController = useScrollController();
     final state = ref.watch(service);
     return Scaffold(
+      extendBodyBehindAppBar: true,
       appBar: appBar,
       body: NotificationListener<ScrollNotification>(
         onNotification: (notification) {
@@ -30,11 +32,21 @@ class ItemsView<ItemType> extends HookConsumerWidget {
           }
           return false;
         },
-        child: ListView.separated(
-          controller: scrollController,
-          itemCount: state.items.length,
-          itemBuilder: (context, index) => itemBuilder(context, state, index),
-          separatorBuilder: (context, index) => const SizedBox(height: 8),
+        child: BackgroundWidget(
+          colors: [
+            Theme.of(context).backgroundColor,
+            const Color(0xFF881337),
+            const Color(0xFF581C87),
+          ],
+          child: SafeArea(
+            child: ListView.separated(
+              padding: const EdgeInsets.all(16),
+              controller: scrollController,
+              itemCount: state.items.length,
+              itemBuilder: (context, index) => itemBuilder(context, state, index),
+              separatorBuilder: (context, index) => const SizedBox(height: 12),
+            ),
+          ),
         ),
       ),
     );

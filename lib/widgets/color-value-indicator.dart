@@ -5,13 +5,13 @@ const double _trackHeight = 8;
 const double _dotRadius = 6;
 const double _dotBorderWidth = 2;
 
-class ColorValueIndicatorView extends StatelessWidget {
+class ColorValueIndicatorWidget extends StatelessWidget {
   final double value;
   final double minValue;
   final double maxValue;
   final List<Color> trackColors;
 
-  const ColorValueIndicatorView({
+  const ColorValueIndicatorWidget({
     Key? key,
     required this.value,
     required this.minValue,
@@ -30,11 +30,11 @@ class ColorValueIndicatorView extends StatelessWidget {
           child: Stack(
             clipBehavior: Clip.none,
             children: <Widget>[
-              _TrackView(
+              _TrackWidget(
                 width: widgetWidth,
                 trackColors: trackColors,
               ),
-              _DotView(
+              _DotWidget(
                 value: value,
                 maxValue: maxValue,
                 width: widgetWidth,
@@ -47,11 +47,11 @@ class ColorValueIndicatorView extends StatelessWidget {
   }
 }
 
-class _TrackView extends StatelessWidget {
+class _TrackWidget extends StatelessWidget {
   final double width;
   final List<Color> trackColors;
 
-  const _TrackView({
+  const _TrackWidget({
     Key? key,
     required this.width,
     required this.trackColors,
@@ -74,12 +74,12 @@ class _TrackView extends StatelessWidget {
   }
 }
 
-class _DotView extends StatelessWidget {
+class _DotWidget extends StatelessWidget {
   final double value;
   final double maxValue;
   final double width;
 
-  const _DotView({
+  const _DotWidget({
     Key? key,
     required this.value,
     required this.maxValue,
@@ -93,7 +93,9 @@ class _DotView extends StatelessWidget {
       height: _dotRadius * 2,
       left: _dotRadius + (width - _dotRadius * 2) * (value / maxValue),
       top: _widgetHeight / 2,
-      child: CustomPaint(painter: _DotPainter()),
+      child: CustomPaint(
+        painter: _DotPainter(),
+      ),
     );
   }
 }
@@ -107,7 +109,7 @@ class _TrackPainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) => false;
 
   @override
-  paint(Canvas canvas, Size size) {
+  void paint(Canvas canvas, Size size) {
     final rect = Offset.zero & size;
     canvas.drawRect(
       rect,
@@ -121,7 +123,7 @@ class _DotPainter extends CustomPainter {
   bool shouldRepaint(CustomPainter oldDelegate) => false;
 
   @override
-  paint(Canvas canvas, Size size) {
+  void paint(Canvas canvas, Size size) {
     canvas.drawCircle(
       Offset.zero,
       _dotRadius - _dotBorderWidth / 2,

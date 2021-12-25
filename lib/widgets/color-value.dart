@@ -1,14 +1,14 @@
-import 'package:colourlovers_app/widgets/color-value-indicator-view.dart';
+import 'package:colourlovers_app/widgets/color-value-indicator.dart';
 import 'package:flutter/material.dart';
 
-class ColorValueView extends StatelessWidget {
+class ColorValueWidget extends StatelessWidget {
   final String label;
   final double value;
   final double minValue;
   final double maxValue;
   final List<Color> trackColors;
 
-  const ColorValueView({
+  const ColorValueWidget({
     Key? key,
     required this.label,
     required this.value,
@@ -27,7 +27,7 @@ class ColorValueView extends StatelessWidget {
         ),
         const SizedBox(width: 8),
         Expanded(
-          child: ColorValueIndicatorView(
+          child: ColorValueIndicatorWidget(
             value: value,
             minValue: minValue,
             maxValue: maxValue,

@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-class ColorView extends StatelessWidget {
-  final String hex;
+class ColorWidget extends StatelessWidget {
+  final String? hex;
 
-  const ColorView({
+  const ColorWidget({
     Key? key,
     required this.hex,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if (hex == null) return Container();
     return Container(
-      color: HexColor(hex),
+      color: HexColor(hex!),
     );
   }
 }

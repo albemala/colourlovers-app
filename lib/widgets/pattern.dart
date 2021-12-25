@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 
-class PatternView extends StatelessWidget {
-  final String imageUrl;
+class PatternWidget extends StatelessWidget {
+  final String? imageUrl;
 
-  const PatternView({
+  const PatternWidget({
     Key? key,
     required this.imageUrl,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    if (imageUrl == null) return Container();
     return Image.network(
-      imageUrl,
+      imageUrl!,
       repeat: ImageRepeat.repeat,
     );
   }

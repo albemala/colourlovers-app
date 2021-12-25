@@ -2,10 +2,10 @@ import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class UserTileView extends HookConsumerWidget {
+class UserTileWidget extends HookConsumerWidget {
   final ClLover lover;
 
-  const UserTileView({
+  const UserTileWidget({
     Key? key,
     required this.lover,
   }) : super(key: key);

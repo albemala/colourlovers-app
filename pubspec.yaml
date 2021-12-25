@@ -17,7 +17,6 @@ dependencies:
   equatable: ^2.0.3
   flutter_hooks: ^0.18.1
   hooks_riverpod: ^1.0.3
-#  cupertino_icons: ^1.0.4
 
   hexcolor: ^2.0.5
 
@@ -25,6 +24,14 @@ dependencies:
     git:
       url: https://github.com/albemala/colourlovers-api-dart.git
       ref: d0a55b4ce3123a3ea416d5a999e5aaf686e09485
+
+  flex_color_scheme: ^4.1.1
+  google_fonts: ^2.1.0
+#  cupertino_icons: ^1.0.4
+  boxicons:
+    git:
+      url: https://github.com/albemala/boxicons-flutter.git
+      ref: fba4eaf5cc478991ec444e999dc497c6fe2ec522
 
 dev_dependencies:
   flutter_test:
@@ -52,10 +59,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+#  fonts:
+#    - family: boxicons
+#      fonts:
+#        - asset: assets/boxicons.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

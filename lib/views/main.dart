@@ -1,8 +1,11 @@
+import 'package:boxicons/boxicons.dart';
 import 'package:colourlovers_app/providers/providers.dart';
 import 'package:colourlovers_app/providers/routing-provider.dart';
-import 'package:colourlovers_app/views/about-view.dart';
-import 'package:colourlovers_app/views/explore-view.dart';
-import 'package:colourlovers_app/views/favorites-view.dart';
+import 'package:colourlovers_app/views/about.dart';
+import 'package:colourlovers_app/views/explore.dart';
+import 'package:colourlovers_app/views/favorites.dart';
+import 'package:colourlovers_app/widgets/app-bar.dart';
+import 'package:colourlovers_app/widgets/background.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -13,10 +16,19 @@ class MainView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final route = ref.watch(routingProvider);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_getTitle(route)),
+      extendBodyBehindAppBar: true,
+      appBar: AppBarWidget(
+        context,
+        titleText: _getTitle(route),
       ),
-      body: _getBody(route),
+      body: BackgroundWidget(
+        colors: [
+          Theme.of(context).backgroundColor,
+          const Color(0xFF881337),
+          const Color(0xFF581C87),
+        ],
+        child: _getBody(route),
+      ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: route.index,
         onTap: ref.read(routingProvider.notifier).setRoute,
@@ -24,15 +36,15 @@ class MainView extends HookConsumerWidget {
           BottomNavigationBarItem(
             label: "Explore",
             // TODO change icon
-            icon: Icon(Icons.home_outlined),
+            icon: Icon(BoxIcons.compass_regular),
           ),
           BottomNavigationBarItem(
             label: "Favorites",
-            icon: Icon(Icons.star_outline),
+            icon: Icon(BoxIcons.star_regular),
           ),
           BottomNavigationBarItem(
             label: "About",
-            icon: Icon(Icons.info_outline),
+            icon: Icon(BoxIcons.info_circle_regular),
           ),
         ],
       ),
