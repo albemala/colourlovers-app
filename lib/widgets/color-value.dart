@@ -1,5 +1,6 @@
 import 'package:colourlovers_app/widgets/color-value-indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ColorValueWidget extends StatelessWidget {
   final String label;
@@ -23,7 +24,11 @@ class ColorValueWidget extends StatelessWidget {
       children: <Widget>[
         SizedBox(
           width: 12,
-          child: Text(label),
+          child: Text(label,
+              style: GoogleFonts.archivoNarrow(
+                textStyle: Theme.of(context).textTheme.bodyText2,
+                letterSpacing: 0.6,
+              )),
         ),
         const SizedBox(width: 8),
         Expanded(
@@ -37,7 +42,10 @@ class ColorValueWidget extends StatelessWidget {
         const SizedBox(width: 8),
         SizedBox(
           width: 32,
-          child: Text(value.toInt().toString()),
+          child: Text(
+            value.toInt().toString(),
+            style: Theme.of(context).textTheme.bodyText2,
+          ),
         ),
       ],
     );

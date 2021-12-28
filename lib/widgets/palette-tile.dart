@@ -1,4 +1,6 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
+import 'package:colourlovers_app/providers/providers.dart';
+import 'package:colourlovers_app/views/palette-details.dart';
 import 'package:colourlovers_app/widgets/item-tile.dart';
 import 'package:colourlovers_app/widgets/palette.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +18,7 @@ class PaletteTileWidget extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ItemTileWidget(
       onTap: () {
-        // ref.read(routingProvider.notifier).showScreen(context, PaletteDetailsView(palette: palette));
+        ref.read(routingProvider.notifier).showScreen(context, PaletteDetailsView(palette: palette));
       },
       title: palette.title,
       numViews: palette.numViews,

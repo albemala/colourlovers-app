@@ -33,6 +33,8 @@ dependencies:
       url: https://github.com/albemala/boxicons-flutter.git
       ref: fba4eaf5cc478991ec444e999dc497c6fe2ec522
 
+  url_launcher: ^6.0.17
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -23,7 +23,7 @@ class ItemTileWidget extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return SizedBox(
-      height: 64,
+      height: 72,
       child: Stack(
         clipBehavior: Clip.none,
         children: [

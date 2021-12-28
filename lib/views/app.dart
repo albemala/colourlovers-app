@@ -1,4 +1,4 @@
-import 'package:colourlovers_app/assets/app-theme.dart';
+import 'package:colourlovers_app/assets/theme.dart';
 import 'package:colourlovers_app/views/main.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';

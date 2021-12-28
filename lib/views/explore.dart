@@ -10,6 +10,7 @@ import 'package:colourlovers_app/widgets/palette.dart';
 import 'package:colourlovers_app/widgets/pattern-tile.dart';
 import 'package:colourlovers_app/widgets/pattern.dart';
 import 'package:colourlovers_app/widgets/user-tile.dart';
+import 'package:colourlovers_app/widgets/user.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -59,7 +60,7 @@ class ExploreView extends HookConsumerWidget {
                 ref.read(routingProvider.notifier).showScreen(context, createUsersView(context, ref));
               },
               title: "Users",
-              child: Container(),
+              child: const UserWidget(),
             ),
           ],
         ),

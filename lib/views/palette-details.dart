@@ -1,15 +1,15 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/assets/urls.dart';
+import 'package:colourlovers_app/providers/colors-provider.dart';
 import 'package:colourlovers_app/providers/related-items-providers.dart';
 import 'package:colourlovers_app/providers/user-provider.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background.dart';
 import 'package:colourlovers_app/widgets/color-tile.dart';
-import 'package:colourlovers_app/widgets/color-value.dart';
-import 'package:colourlovers_app/widgets/color.dart';
 import 'package:colourlovers_app/widgets/h2-text.dart';
 import 'package:colourlovers_app/widgets/link.dart';
 import 'package:colourlovers_app/widgets/palette-tile.dart';
+import 'package:colourlovers_app/widgets/palette.dart';
 import 'package:colourlovers_app/widgets/pattern-tile.dart';
 import 'package:colourlovers_app/widgets/related-items.dart';
 import 'package:colourlovers_app/widgets/stats.dart';
@@ -17,25 +17,25 @@ import 'package:colourlovers_app/widgets/user-tile.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class ColorDetailsView extends HookConsumerWidget {
-  final ClColor? color;
+class PaletteDetailsView extends HookConsumerWidget {
+  final ClPalette? palette;
 
-  const ColorDetailsView({
+  const PaletteDetailsView({
     Key? key,
-    required this.color,
+    required this.palette,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = getUser(color?.userName);
-    final relatedColors = getRelatedColors(color?.hsv);
-    final relatedPalettes = getRelatedPalettes([color?.hex ?? ""]);
-    final relatedPatterns = getRelatedPatterns([color?.hex ?? ""]);
+    final colors = getColors(palette?.colors);
+    final user = getUser(palette?.userName);
+    final relatedPalettes = getRelatedPalettes(palette?.colors);
+    final relatedPatterns = getRelatedPatterns(palette?.colors);
 
     return Scaffold(
       appBar: AppBarWidget(
         context,
-        titleText: "Color",
+        titleText: "Palette",
       ),
       body: BackgroundWidget(
         colors: [
@@ -51,7 +51,7 @@ class ColorDetailsView extends HookConsumerWidget {
             children: [
               Center(
                 child: Text(
-                  color?.title ?? "",
+                  palette?.title ?? "",
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),
@@ -60,92 +60,38 @@ class ColorDetailsView extends HookConsumerWidget {
                 height: 56,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(4),
-                  child: ColorWidget(hex: color?.hex ?? ""),
+                  child: PaletteWidget(colors: palette?.colors ?? []),
                 ),
               ),
               const SizedBox(height: 32),
               StatsWidget(
                 stats: {
-                  "Views": color?.numViews.toString() ?? "",
-                  "Votes": color?.numVotes.toString() ?? "",
-                  "Rank": color?.rank.toString() ?? "",
+                  "Views": palette?.numViews.toString() ?? "",
+                  "Votes": palette?.numVotes.toString() ?? "",
+                  "Rank": palette?.rank.toString() ?? "",
                 },
               ),
               const SizedBox(height: 32),
-              const H2TextWidget("Values"),
+              const H2TextWidget("Colors"),
               const SizedBox(height: 16),
-              ColorValueWidget(
-                label: "R",
-                value: color?.rgb?.red?.toDouble() ?? 0,
-                minValue: 0,
-                maxValue: 256,
-                trackColors: const [Color(0xFF000000), Color(0xFFFF0000)],
-              ),
-              ColorValueWidget(
-                label: "G",
-                value: color?.rgb?.green?.toDouble() ?? 0,
-                minValue: 0,
-                maxValue: 256,
-                trackColors: const [Color(0xFF000000), Color(0xFF00FF00)],
-              ),
-              ColorValueWidget(
-                label: "B",
-                value: color?.rgb?.blue?.toDouble() ?? 0,
-                minValue: 0,
-                maxValue: 256,
-                trackColors: const [Color(0xFF000000), Color(0xFF0000FF)],
-              ),
-              const SizedBox(height: 16),
-              ColorValueWidget(
-                label: "H",
-                value: color?.hsv?.hue?.toDouble() ?? 0,
-                minValue: 0,
-                maxValue: 360,
-                trackColors: const [
-                  Color(0xFFFF0000),
-                  Color(0xFFFFFF00),
-                  Color(0xFF00FF00),
-                  Color(0xFF00FFFF),
-                  Color(0xFF0000FF),
-                  Color(0xFFFF00FF),
-                  Color(0xFFFF0000),
-                ],
-              ),
-              ColorValueWidget(
-                label: "S",
-                value: color?.hsv?.saturation?.toDouble() ?? 0,
-                minValue: 0,
-                maxValue: 100,
-                trackColors: [
-                  const Color(0xFF000000),
-                  HSVColor.fromAHSV(1, color?.hsv?.hue?.toDouble() ?? 0, 1, 1).toColor()
-                ],
-              ),
-              ColorValueWidget(
-                label: "V",
-                value: color?.hsv?.value?.toDouble() ?? 0,
-                minValue: 0,
-                maxValue: 100,
-                trackColors: const [Color(0xFF000000), Color(0xFFFFFFFF)],
-              ),
+              colors.isNotEmpty
+                  ? ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: colors.length,
+                      itemBuilder: (context, index) {
+                        final color = colors.elementAt(index);
+                        return color != null ? ColorTileWidget(color: color) : Container();
+                      },
+                      separatorBuilder: (context, index) => const SizedBox(height: 8),
+                    )
+                  : Container(),
               const SizedBox(height: 32),
               const H2TextWidget("Created by"),
               const SizedBox(height: 16),
               user != null
                   ? UserTileWidget(
                       lover: user,
-                    )
-                  : Container(),
-              relatedColors.isNotEmpty
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: 32),
-                      child: RelatedItemsWidget<ClColor>(
-                        title: "Related colors",
-                        items: relatedColors,
-                        itemBuilder: (item) {
-                          return ColorTileWidget(color: item);
-                        },
-                      ),
                     )
                   : Container(),
               relatedPalettes.isNotEmpty
@@ -174,9 +120,9 @@ class ColorDetailsView extends HookConsumerWidget {
                   : Container(),
               const SizedBox(height: 32),
               LinkWidget(
-                text: "This color on COLOURlovers.com",
+                text: "This palette on COLOURlovers.com",
                 onTap: () {
-                  URLs.open("http://www.colourlovers.com/color/${color?.hex}");
+                  URLs.open("http://www.colourlovers.com/palette/${palette?.id}");
                 },
               ),
               const SizedBox(height: 16),
