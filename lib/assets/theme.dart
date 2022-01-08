@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_redundant_argument_values
+
 import 'dart:ui';
 
 import 'package:flex_color_scheme/flex_color_scheme.dart';

@@ -57,7 +57,7 @@ class ItemTileWidget extends HookConsumerWidget {
                     color: Colors.white,
                     elevation: 4,
                     child: Text(
-                      title ?? "",
+                      title ?? '',
                       maxLines: 1,
                       overflow: TextOverflow.fade,
                       softWrap: false,

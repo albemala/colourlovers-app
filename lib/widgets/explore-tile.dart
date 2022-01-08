@@ -27,8 +27,8 @@ class ExploreTileWidget extends StatelessWidget {
               type: MaterialType.transparency,
               elevation: 12,
               child: ClipRRect(
-                child: child,
                 borderRadius: BorderRadius.circular(4),
+                child: child,
               ),
             ),
           ),

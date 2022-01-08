@@ -7,7 +7,7 @@ class AboutView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return const Center(
-      child: Text("About"),
+      child: Text('About'),
     );
   }
 }

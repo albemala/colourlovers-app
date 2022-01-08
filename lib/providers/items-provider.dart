@@ -65,6 +65,6 @@ class ItemsProvider<ItemType> extends StateNotifier<ItemsState<ItemType>> {
 
   Future<void> loadMore() async {
     _page++;
-    _load();
+    await _load();
   }
 }

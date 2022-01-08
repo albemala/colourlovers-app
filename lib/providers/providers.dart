@@ -10,7 +10,7 @@ final routingProvider = StateNotifierProvider<RoutingProvider, MainRoute>((ref) 
 final colorsProvider = StateNotifierProvider<ItemsProvider<ClColor>, ItemsState<ClColor>>((ref) {
   return ItemsProvider(
     (client, numResults, resultOffset) async {
-      return await client.getColors(
+      return client.getColors(
         numResults: numResults,
         resultOffset: resultOffset,
         // orderBy: ClRequestOrderBy.numVotes,
@@ -22,7 +22,7 @@ final colorsProvider = StateNotifierProvider<ItemsProvider<ClColor>, ItemsState<
 final palettesProvider = StateNotifierProvider<ItemsProvider<ClPalette>, ItemsState<ClPalette>>((ref) {
   return ItemsProvider(
     (client, numResults, resultOffset) async {
-      return await client.getPalettes(
+      return client.getPalettes(
         numResults: numResults,
         resultOffset: resultOffset,
         // orderBy: ClRequestOrderBy.numVotes,
@@ -35,7 +35,7 @@ final palettesProvider = StateNotifierProvider<ItemsProvider<ClPalette>, ItemsSt
 final patternsProvider = StateNotifierProvider<ItemsProvider<ClPattern>, ItemsState<ClPattern>>((ref) {
   return ItemsProvider(
     (client, numResults, resultOffset) async {
-      return await client.getPatterns(
+      return client.getPatterns(
         numResults: numResults,
         resultOffset: resultOffset,
         sortBy: ClRequestSortBy.DESC,
@@ -46,7 +46,7 @@ final patternsProvider = StateNotifierProvider<ItemsProvider<ClPattern>, ItemsSt
 final usersProvider = StateNotifierProvider<ItemsProvider<ClLover>, ItemsState<ClLover>>((ref) {
   return ItemsProvider(
     (client, numResults, resultOffset) async {
-      return await client.getLovers(
+      return client.getLovers(
         numResults: numResults,
         resultOffset: resultOffset,
         sortBy: ClRequestSortBy.DESC,

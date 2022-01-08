@@ -11,7 +11,7 @@ List<ClColor> getRelatedColors(Hsv? hsv) {
           final hue = hsv?.hue ?? 0;
           final value = hsv?.value ?? 0;
           const delta = 20;
-          return await ClClient().getTopColors(
+          return ClClient().getTopColors(
             hueMin: max(0, hue - delta),
             hueMax: min(359, hue + delta),
             brightnessMin: max(0, value - delta),
@@ -27,7 +27,7 @@ List<ClColor> getRelatedColors(Hsv? hsv) {
 List<ClPalette> getRelatedPalettes(List<String>? hex) {
   return useFuture(
         useMemoized(() async {
-          return await ClClient().getTopPalettes(
+          return ClClient().getTopPalettes(
             hex: hex ?? [],
             hexLogic: ClRequestHexLogic.OR,
             numResults: _numResults,
@@ -41,7 +41,7 @@ List<ClPalette> getRelatedPalettes(List<String>? hex) {
 List<ClPattern> getRelatedPatterns(List<String>? hex) {
   return useFuture(
         useMemoized(() async {
-          return await ClClient().getTopPatterns(
+          return ClClient().getTopPatterns(
             hex: hex ?? [],
             hexLogic: ClRequestHexLogic.OR,
             numResults: _numResults,

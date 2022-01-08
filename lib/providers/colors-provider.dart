@@ -4,7 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 List<ClColor?> getColors(List<String>? colors) {
   return useFuture(
         useMemoized(() async {
-          return await Future.wait<ClColor?>(
+          return Future.wait<ClColor?>(
             (colors ?? []).map((color) => ClClient().getColor(hex: color)),
           );
         }),

@@ -15,7 +15,7 @@ class RoutingProvider extends StateNotifier<MainRoute> {
   }
 
   void showScreen(BuildContext context, Widget screen) {
-    Navigator.push(
+    Navigator.push<void>(
       context,
       MaterialPageRoute(builder: (context) => screen),
     );

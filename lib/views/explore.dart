@@ -33,17 +33,17 @@ class ExploreView extends HookConsumerWidget {
               onTap: () {
                 ref.read(routingProvider.notifier).showScreen(context, createColorsView(context, ref));
               },
-              title: "Colors",
-              child: const ColorWidget(hex: "1693A5"),
+              title: 'Colors',
+              child: const ColorWidget(hex: '1693A5'),
             ),
             const SizedBox(height: 8),
             ExploreTileWidget(
               onTap: () {
                 ref.read(routingProvider.notifier).showScreen(context, createPalettesView(context, ref));
               },
-              title: "Palettes",
+              title: 'Palettes',
               child: const PaletteWidget(
-                colors: ["FE4365", "FC9D9A", "F9CDAD", "C8C8A9", "83AF9B"],
+                colors: ['FE4365', 'FC9D9A', 'F9CDAD', 'C8C8A9', '83AF9B'],
                 widths: [0.23, 0.07, 0.06, 0.07, 0.57],
               ),
             ),
@@ -52,10 +52,10 @@ class ExploreView extends HookConsumerWidget {
               onTap: () {
                 ref.read(routingProvider.notifier).showScreen(context, createPatternsView(context, ref));
               },
-              title: "Patterns",
+              title: 'Patterns',
               child: const PatternWidget(
                 // TODO store locally
-                imageUrl: "http://static.colourlovers.com/images/patterns/1101/1101098.png",
+                imageUrl: 'http://static.colourlovers.com/images/patterns/1101/1101098.png',
               ),
             ),
             const SizedBox(height: 8),
@@ -63,7 +63,7 @@ class ExploreView extends HookConsumerWidget {
               onTap: () {
                 ref.read(routingProvider.notifier).showScreen(context, createUsersView(context, ref));
               },
-              title: "Users",
+              title: 'Users',
               child: const UserWidget(),
             ),
           ],
@@ -77,7 +77,7 @@ Widget createColorsView(BuildContext context, WidgetRef ref) {
   return ItemsView<ClColor>(
     appBar: AppBarWidget(
       context,
-      titleText: "Colors",
+      titleText: 'Colors',
       actionWidgets: [
         IconButton(
           onPressed: () async {
@@ -102,7 +102,7 @@ Widget createPalettesView(BuildContext context, WidgetRef ref) {
   return ItemsView<ClPalette>(
     appBar: AppBarWidget(
       context,
-      titleText: "Palettes",
+      titleText: 'Palettes',
       actionWidgets: [
         IconButton(
           onPressed: () async {
@@ -127,7 +127,7 @@ Widget createPatternsView(BuildContext context, WidgetRef ref) {
   return ItemsView<ClPattern>(
     appBar: AppBarWidget(
       context,
-      titleText: "Patterns",
+      titleText: 'Patterns',
       actionWidgets: [
         IconButton(
           onPressed: () async {
@@ -152,7 +152,7 @@ Widget createUsersView(BuildContext context, WidgetRef ref) {
   return ItemsView<ClLover>(
     appBar: AppBarWidget(
       context,
-      titleText: "Users",
+      titleText: 'Users',
     ),
     service: usersProvider,
     itemBuilder: (context, state, index) {

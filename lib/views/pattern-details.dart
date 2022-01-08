@@ -35,7 +35,7 @@ class PatternDetailsView extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBarWidget(
         context,
-        titleText: "Pattern",
+        titleText: 'Pattern',
       ),
       body: BackgroundWidget(
         colors: [
@@ -51,7 +51,7 @@ class PatternDetailsView extends HookConsumerWidget {
             children: [
               Center(
                 child: Text(
-                  pattern?.title ?? "",
+                  pattern?.title ?? '',
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),
@@ -60,19 +60,19 @@ class PatternDetailsView extends HookConsumerWidget {
                 height: 56,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(4),
-                  child: PatternWidget(imageUrl: pattern?.imageUrl ?? ""),
+                  child: PatternWidget(imageUrl: pattern?.imageUrl ?? ''),
                 ),
               ),
               const SizedBox(height: 32),
               StatsWidget(
                 stats: {
-                  "Views": pattern?.numViews.toString() ?? "",
-                  "Votes": pattern?.numVotes.toString() ?? "",
-                  "Rank": pattern?.rank.toString() ?? "",
+                  'Views': pattern?.numViews.toString() ?? '',
+                  'Votes': pattern?.numVotes.toString() ?? '',
+                  'Rank': pattern?.rank.toString() ?? '',
                 },
               ),
               const SizedBox(height: 32),
-              const H2TextWidget("Colors"),
+              const H2TextWidget('Colors'),
               const SizedBox(height: 16),
               colors.isNotEmpty
                   ? ListView.separated(
@@ -87,7 +87,7 @@ class PatternDetailsView extends HookConsumerWidget {
                     )
                   : Container(),
               const SizedBox(height: 32),
-              const H2TextWidget("Created by"),
+              const H2TextWidget('Created by'),
               const SizedBox(height: 16),
               user != null
                   ? UserTileWidget(
@@ -98,7 +98,7 @@ class PatternDetailsView extends HookConsumerWidget {
                   ? Padding(
                       padding: const EdgeInsets.only(top: 32),
                       child: RelatedItemsWidget<ClPalette>(
-                        title: "Related palettes",
+                        title: 'Related palettes',
                         items: relatedPalettes,
                         itemBuilder: (item) {
                           return PaletteTileWidget(palette: item);
@@ -110,7 +110,7 @@ class PatternDetailsView extends HookConsumerWidget {
                   ? Padding(
                       padding: const EdgeInsets.only(top: 32),
                       child: RelatedItemsWidget<ClPattern>(
-                        title: "Related patterns",
+                        title: 'Related patterns',
                         items: relatedPatterns,
                         itemBuilder: (item) {
                           return PatternTileWidget(pattern: item);
@@ -120,14 +120,14 @@ class PatternDetailsView extends HookConsumerWidget {
                   : Container(),
               const SizedBox(height: 32),
               LinkWidget(
-                text: "This pattern on COLOURlovers.com",
+                text: 'This pattern on COLOURlovers.com',
                 onTap: () {
-                  URLs.open("http://www.colourlovers.com/pattern/${pattern?.id}");
+                  URLs.open('http://www.colourlovers.com/pattern/${pattern?.id}');
                 },
               ),
               const SizedBox(height: 16),
               LinkWidget(
-                text: "Licensed under Attribution-Noncommercial-Share Alike",
+                text: 'Licensed under Attribution-Noncommercial-Share Alike',
                 onTap: () {
                   URLs.open(URLs.creativeCommons);
                 },

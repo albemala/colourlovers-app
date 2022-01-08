@@ -7,7 +7,7 @@ class FavoritesView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return const Center(
-      child: Text("Favorites"),
+      child: Text('Favorites'),
     );
   }
 }

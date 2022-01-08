@@ -7,8 +7,9 @@ class URLs {
   static const creativeCommons = 'https://creativecommons.org/licenses/by-nc-sa/3.0/';
 
   static const twitterProfile = 'https://twitter.com/albemala';
-  static const supportEmail = "albemala@gmail.com";
+  static const supportEmail = 'albemala@gmail.com';
 
+  // TODO
   // Projects
   // static const slashBWebsite='https://slashb.app/';
   // static const hexeeWebsite='https://hexee.app/';

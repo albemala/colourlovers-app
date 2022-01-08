@@ -9,7 +9,7 @@ class AppView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
-      title: "LUV",
+      title: 'LUV',
       theme: lightTheme,
       darkTheme: darkTheme,
       themeMode: ThemeMode.dark,

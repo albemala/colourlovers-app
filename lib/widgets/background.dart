@@ -31,9 +31,9 @@ class _BackgroundWidgetState extends State<BackgroundWidget> {
     final random = Random();
     for (var i = 3; i < 3 + random.nextInt(10); i += 1) {
       final color = widget.colors[random.nextInt(widget.colors.length)];
-      final Paint paint = Paint()..color = color;
-      final double radius = size.width / 4 + random.nextDouble() * size.width / 2;
-      final Offset offset = Offset(
+      final paint = Paint()..color = color;
+      final radius = size.width / 4 + random.nextDouble() * size.width / 2;
+      final offset = Offset(
         random.nextDouble() * size.width,
         random.nextDouble() * size.height,
       );
@@ -90,7 +90,7 @@ class _BackgroundPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    for (var circle in circles) {
+    for (final circle in circles) {
       canvas.drawCircle(circle.offset, circle.radius, circle.paint);
     }
   }

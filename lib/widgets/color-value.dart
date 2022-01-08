@@ -24,11 +24,13 @@ class ColorValueWidget extends StatelessWidget {
       children: <Widget>[
         SizedBox(
           width: 12,
-          child: Text(label,
-              style: GoogleFonts.archivoNarrow(
-                textStyle: Theme.of(context).textTheme.bodyText2,
-                letterSpacing: 0.6,
-              )),
+          child: Text(
+            label,
+            style: GoogleFonts.archivoNarrow(
+              textStyle: Theme.of(context).textTheme.bodyText2,
+              letterSpacing: 0.6,
+            ),
+          ),
         ),
         const SizedBox(width: 8),
         Expanded(

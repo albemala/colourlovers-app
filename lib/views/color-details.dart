@@ -29,13 +29,13 @@ class ColorDetailsView extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final user = getUser(color?.userName);
     final relatedColors = getRelatedColors(color?.hsv);
-    final relatedPalettes = getRelatedPalettes([color?.hex ?? ""]);
-    final relatedPatterns = getRelatedPatterns([color?.hex ?? ""]);
+    final relatedPalettes = getRelatedPalettes([color?.hex ?? '']);
+    final relatedPatterns = getRelatedPatterns([color?.hex ?? '']);
 
     return Scaffold(
       appBar: AppBarWidget(
         context,
-        titleText: "Color",
+        titleText: 'Color',
       ),
       body: BackgroundWidget(
         colors: [
@@ -51,7 +51,7 @@ class ColorDetailsView extends HookConsumerWidget {
             children: [
               Center(
                 child: Text(
-                  color?.title ?? "",
+                  color?.title ?? '',
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),
@@ -60,36 +60,36 @@ class ColorDetailsView extends HookConsumerWidget {
                 height: 56,
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(4),
-                  child: ColorWidget(hex: color?.hex ?? ""),
+                  child: ColorWidget(hex: color?.hex ?? ''),
                 ),
               ),
               const SizedBox(height: 32),
               StatsWidget(
                 stats: {
-                  "Views": color?.numViews.toString() ?? "",
-                  "Votes": color?.numVotes.toString() ?? "",
-                  "Rank": color?.rank.toString() ?? "",
+                  'Views': color?.numViews.toString() ?? '',
+                  'Votes': color?.numVotes.toString() ?? '',
+                  'Rank': color?.rank.toString() ?? '',
                 },
               ),
               const SizedBox(height: 32),
-              const H2TextWidget("Values"),
+              const H2TextWidget('Values'),
               const SizedBox(height: 16),
               ColorValueWidget(
-                label: "R",
+                label: 'R',
                 value: color?.rgb?.red?.toDouble() ?? 0,
                 minValue: 0,
                 maxValue: 256,
                 trackColors: const [Color(0xFF000000), Color(0xFFFF0000)],
               ),
               ColorValueWidget(
-                label: "G",
+                label: 'G',
                 value: color?.rgb?.green?.toDouble() ?? 0,
                 minValue: 0,
                 maxValue: 256,
                 trackColors: const [Color(0xFF000000), Color(0xFF00FF00)],
               ),
               ColorValueWidget(
-                label: "B",
+                label: 'B',
                 value: color?.rgb?.blue?.toDouble() ?? 0,
                 minValue: 0,
                 maxValue: 256,
@@ -97,7 +97,7 @@ class ColorDetailsView extends HookConsumerWidget {
               ),
               const SizedBox(height: 16),
               ColorValueWidget(
-                label: "H",
+                label: 'H',
                 value: color?.hsv?.hue?.toDouble() ?? 0,
                 minValue: 0,
                 maxValue: 360,
@@ -112,7 +112,7 @@ class ColorDetailsView extends HookConsumerWidget {
                 ],
               ),
               ColorValueWidget(
-                label: "S",
+                label: 'S',
                 value: color?.hsv?.saturation?.toDouble() ?? 0,
                 minValue: 0,
                 maxValue: 100,
@@ -122,14 +122,14 @@ class ColorDetailsView extends HookConsumerWidget {
                 ],
               ),
               ColorValueWidget(
-                label: "V",
+                label: 'V',
                 value: color?.hsv?.value?.toDouble() ?? 0,
                 minValue: 0,
                 maxValue: 100,
                 trackColors: const [Color(0xFF000000), Color(0xFFFFFFFF)],
               ),
               const SizedBox(height: 32),
-              const H2TextWidget("Created by"),
+              const H2TextWidget('Created by'),
               const SizedBox(height: 16),
               user != null
                   ? UserTileWidget(
@@ -140,7 +140,7 @@ class ColorDetailsView extends HookConsumerWidget {
                   ? Padding(
                       padding: const EdgeInsets.only(top: 32),
                       child: RelatedItemsWidget<ClColor>(
-                        title: "Related colors",
+                        title: 'Related colors',
                         items: relatedColors,
                         itemBuilder: (item) {
                           return ColorTileWidget(color: item);
@@ -152,7 +152,7 @@ class ColorDetailsView extends HookConsumerWidget {
                   ? Padding(
                       padding: const EdgeInsets.only(top: 32),
                       child: RelatedItemsWidget<ClPalette>(
-                        title: "Related palettes",
+                        title: 'Related palettes',
                         items: relatedPalettes,
                         itemBuilder: (item) {
                           return PaletteTileWidget(palette: item);
@@ -164,7 +164,7 @@ class ColorDetailsView extends HookConsumerWidget {
                   ? Padding(
                       padding: const EdgeInsets.only(top: 32),
                       child: RelatedItemsWidget<ClPattern>(
-                        title: "Related patterns",
+                        title: 'Related patterns',
                         items: relatedPatterns,
                         itemBuilder: (item) {
                           return PatternTileWidget(pattern: item);
@@ -174,14 +174,14 @@ class ColorDetailsView extends HookConsumerWidget {
                   : Container(),
               const SizedBox(height: 32),
               LinkWidget(
-                text: "This color on COLOURlovers.com",
+                text: 'This color on COLOURlovers.com',
                 onTap: () {
-                  URLs.open("http://www.colourlovers.com/color/${color?.hex}");
+                  URLs.open('http://www.colourlovers.com/color/${color?.hex}');
                 },
               ),
               const SizedBox(height: 16),
               LinkWidget(
-                text: "Licensed under Attribution-Noncommercial-Share Alike",
+                text: 'Licensed under Attribution-Noncommercial-Share Alike',
                 onTap: () {
                   URLs.open(URLs.creativeCommons);
                 },

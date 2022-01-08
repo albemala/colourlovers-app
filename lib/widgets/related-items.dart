@@ -33,7 +33,7 @@ class RelatedItemsWidget<ItemType> extends StatelessWidget {
         const SizedBox(height: 8),
         OutlinedButton(
           onPressed: () {},
-          child: const Text("Show more"),
+          child: const Text('Show more'),
         ),
       ],
     );

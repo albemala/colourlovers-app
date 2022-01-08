@@ -22,14 +22,14 @@ class UserDetailsView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final colors = getUserColors(lover?.userName ?? "");
-    final palettes = getUserPalettes(lover?.userName ?? "");
-    final patterns = getUserPatterns(lover?.userName ?? "");
+    final colors = getUserColors(lover?.userName ?? '');
+    final palettes = getUserPalettes(lover?.userName ?? '');
+    final patterns = getUserPatterns(lover?.userName ?? '');
 
     return Scaffold(
       appBar: AppBarWidget(
         context,
-        titleText: "User",
+        titleText: 'User',
       ),
       body: BackgroundWidget(
         colors: [
@@ -45,26 +45,26 @@ class UserDetailsView extends HookConsumerWidget {
             children: [
               Center(
                 child: Text(
-                  lover?.userName ?? "",
+                  lover?.userName ?? '',
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),
               const SizedBox(height: 32),
-              LabelValueWidget(label: "Colors", value: lover?.numColors.toString() ?? ""),
-              LabelValueWidget(label: "Palettes", value: lover?.numPalettes.toString() ?? ""),
-              LabelValueWidget(label: "Patterns", value: lover?.numPatterns.toString() ?? ""),
+              LabelValueWidget(label: 'Colors', value: lover?.numColors.toString() ?? ''),
+              LabelValueWidget(label: 'Palettes', value: lover?.numPalettes.toString() ?? ''),
+              LabelValueWidget(label: 'Patterns', value: lover?.numPatterns.toString() ?? ''),
               const SizedBox(height: 8),
-              LabelValueWidget(label: "Rating", value: lover?.rating.toString() ?? ""),
-              LabelValueWidget(label: "Lovers", value: lover?.numLovers.toString() ?? ""),
+              LabelValueWidget(label: 'Rating', value: lover?.rating.toString() ?? ''),
+              LabelValueWidget(label: 'Lovers', value: lover?.numLovers.toString() ?? ''),
               const SizedBox(height: 8),
-              LabelValueWidget(label: "Location", value: lover?.location ?? ""),
-              LabelValueWidget(label: "Registered", value: _formatDate(lover?.dateRegistered)),
-              LabelValueWidget(label: "Last Active", value: _formatDate(lover?.dateLastActive)),
+              LabelValueWidget(label: 'Location', value: lover?.location ?? ''),
+              LabelValueWidget(label: 'Registered', value: _formatDate(lover?.dateRegistered)),
+              LabelValueWidget(label: 'Last Active', value: _formatDate(lover?.dateLastActive)),
               colors.isNotEmpty
                   ? Padding(
                       padding: const EdgeInsets.only(top: 32),
                       child: RelatedItemsWidget<ClColor>(
-                        title: "Colors",
+                        title: 'Colors',
                         items: colors,
                         itemBuilder: (item) {
                           return ColorTileWidget(color: item);
@@ -76,7 +76,7 @@ class UserDetailsView extends HookConsumerWidget {
                   ? Padding(
                       padding: const EdgeInsets.only(top: 32),
                       child: RelatedItemsWidget<ClPalette>(
-                        title: "Palettes",
+                        title: 'Palettes',
                         items: palettes,
                         itemBuilder: (item) {
                           return PaletteTileWidget(palette: item);
@@ -88,7 +88,7 @@ class UserDetailsView extends HookConsumerWidget {
                   ? Padding(
                       padding: const EdgeInsets.only(top: 32),
                       child: RelatedItemsWidget<ClPattern>(
-                        title: "Patterns",
+                        title: 'Patterns',
                         items: patterns,
                         itemBuilder: (item) {
                           return PatternTileWidget(pattern: item);
@@ -98,14 +98,14 @@ class UserDetailsView extends HookConsumerWidget {
                   : Container(),
               const SizedBox(height: 32),
               LinkWidget(
-                text: "This user on COLOURlovers.com",
+                text: 'This user on COLOURlovers.com',
                 onTap: () {
-                  URLs.open("http://www.colourlovers.com/lover/${lover?.userName}");
+                  URLs.open('http://www.colourlovers.com/lover/${lover?.userName}');
                 },
               ),
               const SizedBox(height: 16),
               LinkWidget(
-                text: "Licensed under Attribution-Noncommercial-Share Alike",
+                text: 'Licensed under Attribution-Noncommercial-Share Alike',
                 onTap: () {
                   URLs.open(URLs.creativeCommons);
                 },
@@ -119,6 +119,6 @@ class UserDetailsView extends HookConsumerWidget {
 }
 
 String _formatDate(DateTime? date) {
-  if (date == null) return "";
-  return "${date.year}/${date.month}/${date.day}";
+  if (date == null) return '';
+  return '${date.year}/${date.month}/${date.day}';
 }

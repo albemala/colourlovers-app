@@ -34,15 +34,15 @@ class MainView extends HookConsumerWidget {
         onTap: ref.read(routingProvider.notifier).setRoute,
         items: const [
           BottomNavigationBarItem(
-            label: "Explore",
+            label: 'Explore',
             icon: Icon(BoxIcons.bx_compass_regular),
           ),
           BottomNavigationBarItem(
-            label: "Favorites",
+            label: 'Favorites',
             icon: Icon(BoxIcons.bx_star_regular),
           ),
           BottomNavigationBarItem(
-            label: "About",
+            label: 'About',
             icon: Icon(BoxIcons.bx_info_circle_regular),
           ),
         ],
@@ -58,21 +58,17 @@ class MainView extends HookConsumerWidget {
         return const FavoritesView();
       case MainRoute.about:
         return const AboutView();
-      default:
-        return Container();
     }
   }
 
   String _getTitle(MainRoute route) {
     switch (route) {
       case MainRoute.explore:
-        return "Explore";
+        return 'Explore';
       case MainRoute.favorites:
-        return "Favorites";
+        return 'Favorites';
       case MainRoute.about:
-        return "About";
-      default:
-        return "";
+        return 'About';
     }
   }
 }

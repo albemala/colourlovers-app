@@ -51,7 +51,7 @@ class UserTileWidget extends HookConsumerWidget {
               color: Colors.white,
               elevation: 4,
               child: Text(
-                lover.userName ?? "",
+                lover.userName ?? '',
                 // maxLines: 1,
                 // overflow: TextOverflow.fade,
                 // softWrap: false,

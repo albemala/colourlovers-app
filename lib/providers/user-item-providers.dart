@@ -6,7 +6,7 @@ const _numResults = 3;
 List<ClColor> getUserColors(String userName) {
   return useFuture(
         useMemoized(() async {
-          return await ClClient().getTopColors(
+          return ClClient().getTopColors(
             lover: userName,
             numResults: _numResults,
           );
@@ -19,7 +19,7 @@ List<ClColor> getUserColors(String userName) {
 List<ClPalette> getUserPalettes(String userName) {
   return useFuture(
         useMemoized(() async {
-          return await ClClient().getTopPalettes(
+          return ClClient().getTopPalettes(
             lover: userName,
             numResults: _numResults,
           );
@@ -32,7 +32,7 @@ List<ClPalette> getUserPalettes(String userName) {
 List<ClPattern> getUserPatterns(String userName) {
   return useFuture(
         useMemoized(() async {
-          return await ClClient().getTopPatterns(
+          return ClClient().getTopPatterns(
             lover: userName,
             numResults: _numResults,
           );
