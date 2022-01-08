@@ -4,11 +4,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 class AppBarWidget extends AppBar {
   final String titleText;
+  final List<Widget>? actionWidgets;
 
   AppBarWidget(
     BuildContext context, {
     Key? key,
     required this.titleText,
+    this.actionWidgets = const [],
   }) : super(
           key: key,
           title: SkewedContainerWidget(
@@ -23,5 +25,6 @@ class AppBarWidget extends AppBar {
               ),
             ),
           ),
+          actions: actionWidgets,
         );
 }

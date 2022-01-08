@@ -35,16 +35,15 @@ class MainView extends HookConsumerWidget {
         items: const [
           BottomNavigationBarItem(
             label: "Explore",
-            // TODO change icon
-            icon: Icon(BoxIcons.compass_regular),
+            icon: Icon(BoxIcons.bx_compass_regular),
           ),
           BottomNavigationBarItem(
             label: "Favorites",
-            icon: Icon(BoxIcons.star_regular),
+            icon: Icon(BoxIcons.bx_star_regular),
           ),
           BottomNavigationBarItem(
             label: "About",
-            icon: Icon(BoxIcons.info_circle_regular),
+            icon: Icon(BoxIcons.bx_info_circle_regular),
           ),
         ],
       ),

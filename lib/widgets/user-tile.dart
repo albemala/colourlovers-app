@@ -1,5 +1,7 @@
 import 'package:boxicons/boxicons.dart';
 import 'package:colourlovers_api/colourlovers_api.dart';
+import 'package:colourlovers_app/providers/providers.dart';
+import 'package:colourlovers_app/views/user-details.dart';
 import 'package:colourlovers_app/widgets/pill.dart';
 import 'package:colourlovers_app/widgets/skewed-container.dart';
 import 'package:colourlovers_app/widgets/user.dart';
@@ -36,7 +38,7 @@ class UserTileWidget extends HookConsumerWidget {
             type: MaterialType.transparency,
             child: InkWell(
               onTap: () {
-                // ref.read(routingProvider.notifier).showScreen(context, ColorDetailsView(color: color));
+                ref.read(routingProvider.notifier).showScreen(context, UserDetailsView(lover: lover));
               },
             ),
           ),
@@ -67,17 +69,17 @@ class UserTileWidget extends HookConsumerWidget {
               children: [
                 PillWidget(
                   text: (lover.numColors ?? 0).toString(),
-                  icon: BoxIcons.square_regular,
+                  icon: BoxIcons.bx_square_regular,
                 ),
                 const SizedBox(width: 8),
                 PillWidget(
                   text: (lover.numPalettes ?? 0).toString(),
-                  icon: BoxIcons.dock_left_regular,
+                  icon: BoxIcons.bx_dock_left_regular,
                 ),
                 const SizedBox(width: 8),
                 PillWidget(
                   text: (lover.numPatterns ?? 0).toString(),
-                  icon: BoxIcons.grid_regular,
+                  icon: BoxIcons.bx_grid_regular,
                 ),
               ],
             ),

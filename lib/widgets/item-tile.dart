@@ -72,12 +72,12 @@ class ItemTileWidget extends HookConsumerWidget {
                     const SizedBox(width: 8),
                     PillWidget(
                       text: (numViews ?? 0).toString(),
-                      icon: BoxIcons.glasses_regular,
+                      icon: BoxIcons.bx_glasses_regular,
                     ),
                     const SizedBox(width: 8),
                     PillWidget(
                       text: (numVotes ?? 0).toString(),
-                      icon: BoxIcons.heart_regular,
+                      icon: BoxIcons.bx_heart_regular,
                     ),
                   ],
                 ),

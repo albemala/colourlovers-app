@@ -1,6 +1,6 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/assets/urls.dart';
-import 'package:colourlovers_app/providers/related-items-providers.dart';
+import 'package:colourlovers_app/providers/related-item-providers.dart';
 import 'package:colourlovers_app/providers/user-provider.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background.dart';

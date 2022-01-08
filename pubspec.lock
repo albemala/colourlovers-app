@@ -19,8 +19,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: fba4eaf5cc478991ec444e999dc497c6fe2ec522
-      resolved-ref: fba4eaf5cc478991ec444e999dc497c6fe2ec522
+      ref: b03aeb9e22e1941af2459abf7aa72032157b52da
+      resolved-ref: b03aeb9e22e1941af2459abf7aa72032157b52da
       url: "https://github.com/albemala/boxicons-flutter.git"
     source: git
     version: "1.0.0"

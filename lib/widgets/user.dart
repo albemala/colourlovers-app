@@ -15,7 +15,7 @@ class UserWidget extends StatelessWidget {
         child: Padding(
           padding: EdgeInsets.only(right: 8),
           child: Icon(
-            BoxIcons.user_circle_solid,
+            BoxIcons.bx_user_circle_solid,
             size: 56,
             color: Color(0xFF7E22CE),
           ),
