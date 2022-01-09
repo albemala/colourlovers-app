@@ -33,6 +33,7 @@ dependencies:
       ref: b03aeb9e22e1941af2459abf7aa72032157b52da
 
   url_launcher: ^6.0.17
+  clipboard: ^0.1.3
 
 dev_dependencies:
   flutter_test:

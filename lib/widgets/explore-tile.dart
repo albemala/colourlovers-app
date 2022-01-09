@@ -21,8 +21,7 @@ class ExploreTileWidget extends StatelessWidget {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
-          SizedBox(
-            width: double.maxFinite,
+          SizedBox.expand(
             child: Material(
               type: MaterialType.transparency,
               elevation: 12,

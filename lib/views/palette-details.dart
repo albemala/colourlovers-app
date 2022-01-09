@@ -1,12 +1,17 @@
+import 'package:boxicons/boxicons.dart';
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/assets/urls.dart';
 import 'package:colourlovers_app/providers/colors-provider.dart';
+import 'package:colourlovers_app/providers/providers.dart';
 import 'package:colourlovers_app/providers/related-item-providers.dart';
 import 'package:colourlovers_app/providers/user-provider.dart';
+import 'package:colourlovers_app/utils/url.dart';
+import 'package:colourlovers_app/views/share-palette.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background.dart';
 import 'package:colourlovers_app/widgets/color-tile.dart';
 import 'package:colourlovers_app/widgets/h2-text.dart';
+import 'package:colourlovers_app/widgets/item-button.dart';
 import 'package:colourlovers_app/widgets/link.dart';
 import 'package:colourlovers_app/widgets/palette-tile.dart';
 import 'package:colourlovers_app/widgets/palette.dart';
@@ -15,6 +20,7 @@ import 'package:colourlovers_app/widgets/related-items.dart';
 import 'package:colourlovers_app/widgets/stats.dart';
 import 'package:colourlovers_app/widgets/user-tile.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 class PaletteDetailsView extends HookConsumerWidget {
@@ -36,6 +42,16 @@ class PaletteDetailsView extends HookConsumerWidget {
       appBar: AppBarWidget(
         context,
         titleText: 'Palette',
+        actionWidgets: [
+          IconButton(
+            onPressed: () async {
+              ref.read(routingProvider.notifier).showScreen(context, SharePaletteView(palette: palette));
+            },
+            icon: const Icon(
+              BoxIcons.bx_export_regular,
+            ),
+          ),
+        ],
       ),
       body: BackgroundWidget(
         colors: palette?.colors?.map(HexColor.new).toList() ?? [],
@@ -51,12 +67,11 @@ class PaletteDetailsView extends HookConsumerWidget {
                 ),
               ),
               const SizedBox(height: 16),
-              SizedBox(
-                height: 56,
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(4),
-                  child: PaletteWidget(colors: palette?.colors ?? []),
-                ),
+              ItemButtonWidget(
+                onTap: () async {
+                  ref.read(routingProvider.notifier).showScreen(context, SharePaletteView(palette: palette));
+                },
+                child: PaletteWidget(colors: palette?.colors ?? []),
               ),
               const SizedBox(height: 32),
               StatsWidget(
@@ -117,14 +132,14 @@ class PaletteDetailsView extends HookConsumerWidget {
               LinkWidget(
                 text: 'This palette on COLOURlovers.com',
                 onTap: () {
-                  URLs.open('http://www.colourlovers.com/palette/${palette?.id}');
+                  openUrl('http://www.colourlovers.com/palette/${palette?.id}');
                 },
               ),
               const SizedBox(height: 16),
               LinkWidget(
                 text: 'Licensed under Attribution-Noncommercial-Share Alike',
                 onTap: () {
-                  URLs.open(URLs.creativeCommons);
+                  openUrl(URLs.creativeCommons);
                 },
               ),
             ],

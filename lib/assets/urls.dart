@@ -1,5 +1,3 @@
-import 'package:url_launcher/url_launcher.dart';
-
 class URLs {
   static const website = 'https://luv.albemala.me/';
 
@@ -13,10 +11,4 @@ class URLs {
   // Projects
   // static const slashBWebsite='https://slashb.app/';
   // static const hexeeWebsite='https://hexee.app/';
-
-  static Future<void> open(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    }
-  }
 }

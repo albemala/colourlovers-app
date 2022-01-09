@@ -1,6 +1,7 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/assets/urls.dart';
 import 'package:colourlovers_app/providers/user-item-providers.dart';
+import 'package:colourlovers_app/utils/url.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background.dart';
 import 'package:colourlovers_app/widgets/color-tile.dart';
@@ -95,14 +96,14 @@ class UserDetailsView extends HookConsumerWidget {
               LinkWidget(
                 text: 'This user on COLOURlovers.com',
                 onTap: () {
-                  URLs.open('http://www.colourlovers.com/lover/${lover?.userName}');
+                  openUrl('http://www.colourlovers.com/lover/${lover?.userName}');
                 },
               ),
               const SizedBox(height: 16),
               LinkWidget(
                 text: 'Licensed under Attribution-Noncommercial-Share Alike',
                 onTap: () {
-                  URLs.open(URLs.creativeCommons);
+                  openUrl(URLs.creativeCommons);
                 },
               ),
             ],

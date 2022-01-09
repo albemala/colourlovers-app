@@ -11,9 +11,8 @@ class ColorWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (hex == null) return Container();
-    return Container(
-      color: HexColor(hex!),
+    return ColoredBox(
+      color: HexColor(hex ?? '000000'),
     );
   }
 }
