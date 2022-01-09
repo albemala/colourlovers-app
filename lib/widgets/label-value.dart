@@ -1,3 +1,4 @@
+import 'package:colourlovers_app/widgets/h1-text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -15,16 +16,11 @@ class LabelValueWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Text(
+        H1TextWidget(
           label.toUpperCase(),
-          style: GoogleFonts.archivoNarrow(
-            textStyle: Theme.of(context).textTheme.headline4,
-            color: const Color(0xFF8B5CF6),
-            letterSpacing: 0.6,
-          ),
+          color: const Color(0xFF8B5CF6),
         ),
         const SizedBox(width: 2),
-        // Spacer(),
         Flexible(
           child: Text(
             value,
