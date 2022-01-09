@@ -33,11 +33,7 @@ class ItemsView<ItemType> extends HookConsumerWidget {
           return false;
         },
         child: BackgroundWidget(
-          colors: [
-            Theme.of(context).backgroundColor,
-            const Color(0xFF881337),
-            const Color(0xFF581C87),
-          ],
+          colors: defaultBackgroundColors,
           child: SafeArea(
             child: ListView.separated(
               padding: const EdgeInsets.all(16),

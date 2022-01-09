@@ -3,6 +3,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+final defaultBackgroundColors = [
+  const Color(0xFFF43F5E),
+  const Color(0xFFA855F7),
+];
+
 class BackgroundWidget extends StatefulWidget {
   final List<Color> colors;
   final Widget child;
@@ -18,19 +23,32 @@ class BackgroundWidget extends StatefulWidget {
 }
 
 class _BackgroundWidgetState extends State<BackgroundWidget> {
+  final List<Color> colors = [];
   final List<_Circle> circles = [];
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    _initColors();
     _initCircles();
   }
 
+  void _initColors() {
+    if (colors.isNotEmpty) return;
+
+    colors.addAll(widget.colors.map((e) => e.withOpacity(0.3)));
+    colors.add(Theme.of(context).backgroundColor);
+  }
+
   void _initCircles() {
+    if (circles.isNotEmpty) return;
+
     final size = MediaQuery.of(context).size;
     final random = Random();
-    for (var i = 3; i < 3 + random.nextInt(10); i += 1) {
-      final color = widget.colors[random.nextInt(widget.colors.length)];
+    const min = 3;
+    final max = min + random.nextInt(10);
+    for (var i = min; i < max; i += 1) {
+      final color = colors[random.nextInt(colors.length)];
       final paint = Paint()..color = color;
       final radius = size.width / 4 + random.nextDouble() * size.width / 2;
       final offset = Offset(
@@ -54,7 +72,7 @@ class _BackgroundWidgetState extends State<BackgroundWidget> {
         SizedBox.expand(
           child: CustomPaint(
             painter: _BackgroundPainter(
-              colors: widget.colors,
+              colors: colors,
               circles: circles,
             ),
           ),

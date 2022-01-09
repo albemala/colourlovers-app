@@ -22,11 +22,7 @@ class MainView extends HookConsumerWidget {
         titleText: _getTitle(route),
       ),
       body: BackgroundWidget(
-        colors: [
-          Theme.of(context).backgroundColor,
-          const Color(0xFF881337),
-          const Color(0xFF581C87),
-        ],
+        colors: defaultBackgroundColors,
         child: _getBody(route),
       ),
       bottomNavigationBar: BottomNavigationBar(

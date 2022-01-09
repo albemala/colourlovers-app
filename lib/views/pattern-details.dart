@@ -38,12 +38,7 @@ class PatternDetailsView extends HookConsumerWidget {
         titleText: 'Pattern',
       ),
       body: BackgroundWidget(
-        colors: [
-          Theme.of(context).backgroundColor,
-          // TODO change based on current item
-          const Color(0xFF881337),
-          const Color(0xFF581C87),
-        ],
+        colors: pattern?.colors?.map(HexColor.new).toList() ?? [],
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
           child: Column(

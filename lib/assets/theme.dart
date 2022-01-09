@@ -44,7 +44,9 @@ final lightTheme = FlexThemeData.light(
 );
 final darkTheme = FlexThemeData.dark(
   colors: const FlexSchemeColor(
+    // rose
     primary: Color(0xFFF43F5E),
+    // purple
     primaryVariant: Color(0xFF5B21B6),
     secondary: Color(0xFF03DAC6),
     secondaryVariant: Color(0xFF03DAC6),

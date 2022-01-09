@@ -39,10 +39,7 @@ class ColorDetailsView extends HookConsumerWidget {
       ),
       body: BackgroundWidget(
         colors: [
-          Theme.of(context).backgroundColor,
-          // TODO change based on current item
-          const Color(0xFF881337),
-          const Color(0xFF581C87),
+          HexColor(color?.hex ?? ''),
         ],
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
