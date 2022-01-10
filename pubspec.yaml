@@ -42,6 +42,11 @@ dev_dependencies:
   # linting
   very_good_analysis: ^2.4.0
 
+  flutter_launcher_icons:
+    git:
+      url: https://github.com/kechankrisna/flutter_launcher_icons.git
+      ref: b54d5244566c59dc5e98fb7dd28a245999600d0f
+
 flutter:
 
   uses-material-design: true
@@ -76,3 +81,14 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+# flutter pub run flutter_launcher_icons:main && flutter clean
+flutter_icons:
+  android: true
+  ios: true
+  macos: true
+  #  windows: true
+  image_path: "assets/app-icon/icon.png"
+  image_path_macos: "assets/app-icon/macos-icon.png"
+  adaptive_icon_background: "assets/app-icon/android-background.png"
+  adaptive_icon_foreground: "assets/app-icon/android-foreground.png"
