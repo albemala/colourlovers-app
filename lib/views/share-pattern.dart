@@ -5,6 +5,7 @@ import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background.dart';
 import 'package:colourlovers_app/widgets/h1-text.dart';
 import 'package:colourlovers_app/widgets/h2-text.dart';
+import 'package:colourlovers_app/widgets/link.dart';
 import 'package:colourlovers_app/widgets/pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -20,34 +21,38 @@ class SharePatternView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final colors = pattern?.colors;
+    final imageUrl = pattern?.imageUrl ?? '';
+    final templateUrl = pattern?.template?.url ?? '';
+
     return Scaffold(
       appBar: AppBarWidget(
         context,
         titleText: 'Share Pattern',
       ),
       body: BackgroundWidget(
-        colors: pattern?.colors?.map(HexColor.new).toList() ?? [],
+        colors: colors?.map(HexColor.new).toList() ?? [],
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(
                 height: 96,
-                child: PatternWidget(imageUrl: pattern?.imageUrl ?? ''),
+                child: PatternWidget(imageUrl: imageUrl),
               ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     const H2TextWidget('Values'),
                     const SizedBox(height: 16),
                     ListView.separated(
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
-                      itemCount: pattern?.colors?.length ?? 0,
+                      itemCount: colors?.length ?? 0,
                       itemBuilder: (context, index) {
-                        final color = pattern?.colors?.elementAt(index) ?? '';
+                        final color = colors?.elementAt(index) ?? '';
                         return Row(
                           children: [
                             SizedBox(
@@ -72,16 +77,25 @@ class SharePatternView extends HookConsumerWidget {
                     Row(
                       children: [
                         Flexible(
-                          child: Image.network(pattern?.imageUrl ?? ''),
+                          child: Image.network(imageUrl),
                         ),
                         const SizedBox(width: 8),
                         TextButton(
                           onPressed: () {
-                            openUrl(pattern?.imageUrl ?? '');
+                            openUrl(imageUrl);
                           },
                           child: const Text('Share'),
                         ),
                       ],
+                    ),
+                    const SizedBox(height: 32),
+                    const H2TextWidget('Template'),
+                    const SizedBox(height: 16),
+                    LinkWidget(
+                      text: 'This pattern template on COLOURlovers.com',
+                      onTap: () {
+                        openUrl(templateUrl);
+                      },
                     ),
                   ],
                 ),

@@ -122,7 +122,7 @@ class PaletteDetailsView extends HookConsumerWidget {
               LinkWidget(
                 text: 'This palette on COLOURlovers.com',
                 onTap: () {
-                  openUrl('http://www.colourlovers.com/palette/${palette?.id}');
+                  openUrl('https://www.colourlovers.com/palette/${palette?.id}');
                 },
               ),
               const SizedBox(height: 16),

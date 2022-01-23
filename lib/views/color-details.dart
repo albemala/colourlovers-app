@@ -170,7 +170,7 @@ class ColorDetailsView extends HookConsumerWidget {
               LinkWidget(
                 text: 'This color on COLOURlovers.com',
                 onTap: () {
-                  openUrl('http://www.colourlovers.com/color/${color?.hex}');
+                  openUrl('https://www.colourlovers.com/color/${color?.hex}');
                 },
               ),
               const SizedBox(height: 16),

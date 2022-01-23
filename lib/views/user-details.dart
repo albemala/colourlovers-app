@@ -71,7 +71,7 @@ class UserDetailsView extends HookConsumerWidget {
               LinkWidget(
                 text: 'This user on COLOURlovers.com',
                 onTap: () {
-                  openUrl('http://www.colourlovers.com/lover/${lover?.userName}');
+                  openUrl('https://www.colourlovers.com/lover/${lover?.userName}');
                 },
               ),
               const SizedBox(height: 16),

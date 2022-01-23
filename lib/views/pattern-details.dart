@@ -122,7 +122,7 @@ class PatternDetailsView extends HookConsumerWidget {
               LinkWidget(
                 text: 'This pattern on COLOURlovers.com',
                 onTap: () {
-                  openUrl('http://www.colourlovers.com/pattern/${pattern?.id}');
+                  openUrl('https://www.colourlovers.com/pattern/${pattern?.id}');
                 },
               ),
               const SizedBox(height: 16),
