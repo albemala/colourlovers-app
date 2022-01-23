@@ -44,6 +44,7 @@ class SharePatternView extends HookConsumerWidget {
                     const SizedBox(height: 16),
                     ListView.separated(
                       shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: pattern?.colors?.length ?? 0,
                       itemBuilder: (context, index) {
                         final color = pattern?.colors?.elementAt(index) ?? '';

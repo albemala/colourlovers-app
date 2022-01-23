@@ -1,6 +1,6 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
-import 'package:colourlovers_app/providers/items-provider.dart';
-import 'package:colourlovers_app/providers/routing-provider.dart';
+import 'package:colourlovers_app/providers/items.dart';
+import 'package:colourlovers_app/providers/routing.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 final routingProvider = StateNotifierProvider<RoutingProvider, MainRoute>((ref) {

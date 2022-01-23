@@ -1,6 +1,6 @@
 import 'package:boxicons/boxicons.dart';
 import 'package:colourlovers_app/providers/providers.dart';
-import 'package:colourlovers_app/providers/routing-provider.dart';
+import 'package:colourlovers_app/providers/routing.dart';
 import 'package:colourlovers_app/views/about.dart';
 import 'package:colourlovers_app/views/explore.dart';
 import 'package:colourlovers_app/views/favorites.dart';

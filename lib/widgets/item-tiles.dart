@@ -1,17 +1,91 @@
 import 'package:boxicons/boxicons.dart';
+import 'package:colourlovers_api/colourlovers_api.dart';
+import 'package:colourlovers_app/providers/providers.dart';
+import 'package:colourlovers_app/views/color-details.dart';
+import 'package:colourlovers_app/views/palette-details.dart';
+import 'package:colourlovers_app/views/pattern-details.dart';
+import 'package:colourlovers_app/widgets/color.dart';
+import 'package:colourlovers_app/widgets/palette.dart';
+import 'package:colourlovers_app/widgets/pattern.dart';
 import 'package:colourlovers_app/widgets/pill.dart';
 import 'package:colourlovers_app/widgets/skewed-container.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-class ItemTileWidget extends HookConsumerWidget {
+class ColorTileWidget extends HookConsumerWidget {
+  final ClColor color;
+
+  const ColorTileWidget({
+    Key? key,
+    required this.color,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return _ItemTileWidget(
+      onTap: () {
+        ref.read(routingProvider.notifier).showScreen(context, ColorDetailsView(color: color));
+      },
+      title: color.title,
+      numViews: color.numViews,
+      numVotes: color.numVotes,
+      child: ColorWidget(hex: color.hex),
+    );
+  }
+}
+
+class PaletteTileWidget extends HookConsumerWidget {
+  final ClPalette palette;
+
+  const PaletteTileWidget({
+    Key? key,
+    required this.palette,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return _ItemTileWidget(
+      onTap: () {
+        ref.read(routingProvider.notifier).showScreen(context, PaletteDetailsView(palette: palette));
+      },
+      title: palette.title,
+      numViews: palette.numViews,
+      numVotes: palette.numVotes,
+      child: PaletteWidget(colors: palette.colors),
+    );
+  }
+}
+
+class PatternTileWidget extends HookConsumerWidget {
+  final ClPattern pattern;
+
+  const PatternTileWidget({
+    Key? key,
+    required this.pattern,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return _ItemTileWidget(
+      onTap: () {
+        ref.read(routingProvider.notifier).showScreen(context, PatternDetailsView(pattern: pattern));
+      },
+      title: pattern.title,
+      numViews: pattern.numViews,
+      numVotes: pattern.numVotes,
+      child: PatternWidget(imageUrl: pattern.imageUrl),
+    );
+  }
+}
+
+class _ItemTileWidget extends HookConsumerWidget {
   final void Function() onTap;
   final String? title;
   final int? numViews;
   final int? numVotes;
   final Widget child;
 
-  const ItemTileWidget({
+  const _ItemTileWidget({
     Key? key,
     required this.onTap,
     required this.title,

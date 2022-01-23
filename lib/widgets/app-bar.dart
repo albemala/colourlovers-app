@@ -13,6 +13,7 @@ class AppBarWidget extends AppBar {
     this.actionWidgets = const [],
   }) : super(
           key: key,
+          centerTitle: true,
           title: SkewedContainerWidget(
             padding: const EdgeInsets.fromLTRB(16, 8, 21, 8),
             color: Theme.of(context).colorScheme.primaryVariant,

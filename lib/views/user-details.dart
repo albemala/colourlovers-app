@@ -1,14 +1,11 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/assets/urls.dart';
-import 'package:colourlovers_app/providers/user-item-providers.dart';
+import 'package:colourlovers_app/loaders/user-items.dart';
 import 'package:colourlovers_app/utils/url.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background.dart';
-import 'package:colourlovers_app/widgets/color-tile.dart';
 import 'package:colourlovers_app/widgets/label-value.dart';
 import 'package:colourlovers_app/widgets/link.dart';
-import 'package:colourlovers_app/widgets/palette-tile.dart';
-import 'package:colourlovers_app/widgets/pattern-tile.dart';
 import 'package:colourlovers_app/widgets/related-items.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -23,9 +20,11 @@ class UserDetailsView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final colors = getUserColors(lover?.userName ?? '');
-    final palettes = getUserPalettes(lover?.userName ?? '');
-    final patterns = getUserPatterns(lover?.userName ?? '');
+    final userName = lover?.userName ?? '';
+
+    final colors = loadUserColors(userName);
+    final palettes = loadUserPalettes(userName);
+    final patterns = loadUserPatterns(userName);
 
     return Scaffold(
       appBar: AppBarWidget(
@@ -41,7 +40,7 @@ class UserDetailsView extends HookConsumerWidget {
             children: [
               Center(
                 child: Text(
-                  lover?.userName ?? '',
+                  userName,
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ),
@@ -56,42 +55,18 @@ class UserDetailsView extends HookConsumerWidget {
               LabelValueWidget(label: 'Location', value: lover?.location ?? ''),
               LabelValueWidget(label: 'Registered', value: _formatDate(lover?.dateRegistered)),
               LabelValueWidget(label: 'Last Active', value: _formatDate(lover?.dateLastActive)),
-              colors.isNotEmpty
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: 32),
-                      child: RelatedItemsWidget<ClColor>(
-                        title: 'Colors',
-                        items: colors,
-                        itemBuilder: (item) {
-                          return ColorTileWidget(color: item);
-                        },
-                      ),
-                    )
-                  : Container(),
-              palettes.isNotEmpty
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: 32),
-                      child: RelatedItemsWidget<ClPalette>(
-                        title: 'Palettes',
-                        items: palettes,
-                        itemBuilder: (item) {
-                          return PaletteTileWidget(palette: item);
-                        },
-                      ),
-                    )
-                  : Container(),
-              patterns.isNotEmpty
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: 32),
-                      child: RelatedItemsWidget<ClPattern>(
-                        title: 'Patterns',
-                        items: patterns,
-                        itemBuilder: (item) {
-                          return PatternTileWidget(pattern: item);
-                        },
-                      ),
-                    )
-                  : Container(),
+              Padding(
+                padding: const EdgeInsets.only(top: 32),
+                child: UserColorsWidgets(userName: userName, colors: colors),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 32),
+                child: UserPalettesWidget(userName: userName, palettes: palettes),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 32),
+                child: UserPatternsWidget(userName: userName, patterns: patterns),
+              ),
               const SizedBox(height: 32),
               LinkWidget(
                 text: 'This user on COLOURlovers.com',

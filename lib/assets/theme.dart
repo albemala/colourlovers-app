@@ -42,6 +42,7 @@ final lightTheme = FlexThemeData.light(
     popupMenuOpacity: 0.95,
   ),
 );
+
 final darkTheme = FlexThemeData.dark(
   colors: const FlexSchemeColor(
     // rose

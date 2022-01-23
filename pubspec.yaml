@@ -15,10 +15,10 @@ dependencies:
     sdk: flutter
 
   equatable: ^2.0.3
-  flutter_hooks: ^0.18.1
+  flutter_hooks: ^0.18.2
   hooks_riverpod: ^1.0.3
 
-  hexcolor: ^2.0.5
+  hexcolor: ^2.0.6
 
   colourlovers_api:
     git:
@@ -26,13 +26,13 @@ dependencies:
       ref: d0a55b4ce3123a3ea416d5a999e5aaf686e09485
 
   flex_color_scheme: ^4.1.1
-  google_fonts: ^2.1.0
+  google_fonts: ^2.2.0
   boxicons:
     git:
       url: https://github.com/albemala/boxicons-flutter.git
       ref: b03aeb9e22e1941af2459abf7aa72032157b52da
 
-  url_launcher: ^6.0.17
+  url_launcher: ^6.0.18
   clipboard: ^0.1.3
 
 dev_dependencies:

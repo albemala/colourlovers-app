@@ -1,21 +1,18 @@
 import 'package:boxicons/boxicons.dart';
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/assets/urls.dart';
+import 'package:colourlovers_app/loaders/related-items.dart';
+import 'package:colourlovers_app/loaders/user.dart';
 import 'package:colourlovers_app/providers/providers.dart';
-import 'package:colourlovers_app/providers/related-item-providers.dart';
-import 'package:colourlovers_app/providers/user-provider.dart';
 import 'package:colourlovers_app/utils/url.dart';
 import 'package:colourlovers_app/views/share-color.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background.dart';
-import 'package:colourlovers_app/widgets/color-tile.dart';
 import 'package:colourlovers_app/widgets/color-value.dart';
 import 'package:colourlovers_app/widgets/color.dart';
 import 'package:colourlovers_app/widgets/h2-text.dart';
 import 'package:colourlovers_app/widgets/item-button.dart';
 import 'package:colourlovers_app/widgets/link.dart';
-import 'package:colourlovers_app/widgets/palette-tile.dart';
-import 'package:colourlovers_app/widgets/pattern-tile.dart';
 import 'package:colourlovers_app/widgets/related-items.dart';
 import 'package:colourlovers_app/widgets/stats.dart';
 import 'package:colourlovers_app/widgets/user-tile.dart';
@@ -33,10 +30,13 @@ class ColorDetailsView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final user = getUser(color?.userName);
-    final relatedColors = getRelatedColors(color?.hsv);
-    final relatedPalettes = getRelatedPalettes([color?.hex ?? '']);
-    final relatedPatterns = getRelatedPatterns([color?.hex ?? '']);
+    final hsv = color?.hsv;
+    final hex = [color?.hex ?? ''];
+
+    final user = loadUser(color?.userName);
+    final relatedColors = loadRelatedColors(hsv);
+    final relatedPalettes = loadRelatedPalettes(hex);
+    final relatedPatterns = loadRelatedPatterns(hex);
 
     return Scaffold(
       appBar: AppBarWidget(
@@ -110,7 +110,7 @@ class ColorDetailsView extends HookConsumerWidget {
               const SizedBox(height: 16),
               ColorValueWidget(
                 label: 'H',
-                value: color?.hsv?.hue?.toDouble() ?? 0,
+                value: hsv?.hue?.toDouble() ?? 0,
                 minValue: 0,
                 maxValue: 360,
                 trackColors: const [
@@ -125,17 +125,14 @@ class ColorDetailsView extends HookConsumerWidget {
               ),
               ColorValueWidget(
                 label: 'S',
-                value: color?.hsv?.saturation?.toDouble() ?? 0,
+                value: hsv?.saturation?.toDouble() ?? 0,
                 minValue: 0,
                 maxValue: 100,
-                trackColors: [
-                  const Color(0xFF000000),
-                  HSVColor.fromAHSV(1, color?.hsv?.hue?.toDouble() ?? 0, 1, 1).toColor()
-                ],
+                trackColors: [const Color(0xFF000000), HSVColor.fromAHSV(1, hsv?.hue?.toDouble() ?? 0, 1, 1).toColor()],
               ),
               ColorValueWidget(
                 label: 'V',
-                value: color?.hsv?.value?.toDouble() ?? 0,
+                value: hsv?.value?.toDouble() ?? 0,
                 minValue: 0,
                 maxValue: 100,
                 trackColors: const [Color(0xFF000000), Color(0xFFFFFFFF)],
@@ -148,42 +145,27 @@ class ColorDetailsView extends HookConsumerWidget {
                       lover: user,
                     )
                   : Container(),
-              relatedColors.isNotEmpty
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: 32),
-                      child: RelatedItemsWidget<ClColor>(
-                        title: 'Related colors',
-                        items: relatedColors,
-                        itemBuilder: (item) {
-                          return ColorTileWidget(color: item);
-                        },
-                      ),
-                    )
-                  : Container(),
-              relatedPalettes.isNotEmpty
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: 32),
-                      child: RelatedItemsWidget<ClPalette>(
-                        title: 'Related palettes',
-                        items: relatedPalettes,
-                        itemBuilder: (item) {
-                          return PaletteTileWidget(palette: item);
-                        },
-                      ),
-                    )
-                  : Container(),
-              relatedPatterns.isNotEmpty
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: 32),
-                      child: RelatedItemsWidget<ClPattern>(
-                        title: 'Related patterns',
-                        items: relatedPatterns,
-                        itemBuilder: (item) {
-                          return PatternTileWidget(pattern: item);
-                        },
-                      ),
-                    )
-                  : Container(),
+              Padding(
+                padding: const EdgeInsets.only(top: 32),
+                child: RelatedColorsWidget(
+                  hsv: hsv,
+                  relatedColors: relatedColors,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 32),
+                child: RelatedPalettesWidget(
+                  hex: hex,
+                  relatedPalettes: relatedPalettes,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 32),
+                child: RelatedPatternsWidget(
+                  hex: hex,
+                  relatedPatterns: relatedPatterns,
+                ),
+              ),
               const SizedBox(height: 32),
               LinkWidget(
                 text: 'This color on COLOURlovers.com',

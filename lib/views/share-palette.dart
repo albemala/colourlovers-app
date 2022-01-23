@@ -44,6 +44,7 @@ class SharePaletteView extends HookConsumerWidget {
                     const SizedBox(height: 16),
                     ListView.separated(
                       shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: palette?.colors?.length ?? 0,
                       itemBuilder: (context, index) {
                         final color = palette?.colors?.elementAt(index) ?? '';

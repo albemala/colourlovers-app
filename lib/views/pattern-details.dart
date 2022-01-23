@@ -1,20 +1,18 @@
 import 'package:boxicons/boxicons.dart';
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/assets/urls.dart';
-import 'package:colourlovers_app/providers/colors-provider.dart';
+import 'package:colourlovers_app/loaders/colors.dart';
+import 'package:colourlovers_app/loaders/related-items.dart';
+import 'package:colourlovers_app/loaders/user.dart';
 import 'package:colourlovers_app/providers/providers.dart';
-import 'package:colourlovers_app/providers/related-item-providers.dart';
-import 'package:colourlovers_app/providers/user-provider.dart';
 import 'package:colourlovers_app/utils/url.dart';
 import 'package:colourlovers_app/views/share-pattern.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background.dart';
-import 'package:colourlovers_app/widgets/color-tile.dart';
 import 'package:colourlovers_app/widgets/h2-text.dart';
 import 'package:colourlovers_app/widgets/item-button.dart';
+import 'package:colourlovers_app/widgets/item-tiles.dart';
 import 'package:colourlovers_app/widgets/link.dart';
-import 'package:colourlovers_app/widgets/palette-tile.dart';
-import 'package:colourlovers_app/widgets/pattern-tile.dart';
 import 'package:colourlovers_app/widgets/pattern.dart';
 import 'package:colourlovers_app/widgets/related-items.dart';
 import 'package:colourlovers_app/widgets/stats.dart';
@@ -33,10 +31,12 @@ class PatternDetailsView extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final colors = getColors(pattern?.colors);
-    final user = getUser(pattern?.userName);
-    final relatedPalettes = getRelatedPalettes(pattern?.colors);
-    final relatedPatterns = getRelatedPatterns(pattern?.colors);
+    final hex = pattern?.colors;
+
+    final colors = loadColors(hex);
+    final user = loadUser(pattern?.userName);
+    final relatedPalettes = loadRelatedPalettes(hex);
+    final relatedPatterns = loadRelatedPatterns(hex);
 
     return Scaffold(
       appBar: AppBarWidget(
@@ -54,7 +54,7 @@ class PatternDetailsView extends HookConsumerWidget {
         ],
       ),
       body: BackgroundWidget(
-        colors: pattern?.colors?.map(HexColor.new).toList() ?? [],
+        colors: hex?.map(HexColor.new).toList() ?? [],
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
           child: Column(
@@ -104,30 +104,20 @@ class PatternDetailsView extends HookConsumerWidget {
                       lover: user,
                     )
                   : Container(),
-              relatedPalettes.isNotEmpty
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: 32),
-                      child: RelatedItemsWidget<ClPalette>(
-                        title: 'Related palettes',
-                        items: relatedPalettes,
-                        itemBuilder: (item) {
-                          return PaletteTileWidget(palette: item);
-                        },
-                      ),
-                    )
-                  : Container(),
-              relatedPatterns.isNotEmpty
-                  ? Padding(
-                      padding: const EdgeInsets.only(top: 32),
-                      child: RelatedItemsWidget<ClPattern>(
-                        title: 'Related patterns',
-                        items: relatedPatterns,
-                        itemBuilder: (item) {
-                          return PatternTileWidget(pattern: item);
-                        },
-                      ),
-                    )
-                  : Container(),
+              Padding(
+                padding: const EdgeInsets.only(top: 32),
+                child: RelatedPalettesWidget(
+                  hex: hex,
+                  relatedPalettes: relatedPalettes,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 32),
+                child: RelatedPatternsWidget(
+                  hex: hex,
+                  relatedPatterns: relatedPatterns,
+                ),
+              ),
               const SizedBox(height: 32),
               LinkWidget(
                 text: 'This pattern on COLOURlovers.com',
