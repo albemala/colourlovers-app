@@ -200,14 +200,14 @@ class _RelatedItemsView<ItemType> extends HookConsumerWidget {
         context,
         titleText: appBarTitle,
       ),
-      body: PaginationWidget(
-        scrollController: scrollController,
-        onLoadMore: () {
-          ref.read(provider.notifier).loadMore();
-        },
-        child: BackgroundWidget(
-          colors: defaultBackgroundColors,
-          child: SafeArea(
+      body: BackgroundWidget(
+        colors: defaultBackgroundColors,
+        child: SafeArea(
+          child: PaginationWidget(
+            scrollController: scrollController,
+            onLoadMore: () {
+              ref.read(provider.notifier).loadMore();
+            },
             child: ListView.separated(
               padding: const EdgeInsets.all(16),
               controller: scrollController,
