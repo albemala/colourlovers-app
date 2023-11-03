@@ -1,19 +1,98 @@
 name: colourlovers_app
 description: A new Flutter project.
+version: 1.0.0+1
 publish_to: 'none'
-version: 0.1.0
 
 environment:
-  sdk: '>=3.0.3 <4.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
   flutter:
     sdk: flutter
 
+  flutter_state_management:
+    git:
+      url: https://github.com/albemala/flutter_state_management
+      ref: 2.0.0
+
+  colourlovers_api:
+    git:
+      url: https://github.com/albemala/colourlovers-api-dart.git
+      ref: 1.1.0
+
+  hexcolor: ^3.0.1
+
+  flex_color_scheme: ^7.2.0
+  google_fonts: ^6.1.0
+
+  url_launcher: ^6.1.13
+  clipboard: ^0.1.3
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^2.0.0
+
+  very_good_analysis: ^5.1.0
+
+  icons_launcher: ^2.1.4
+  package_rename: ^1.5.1
 
 flutter:
   uses-material-design: true
+
+  assets:
+    - assets/fonts/
+
+# dart run icons_launcher:create && flutter clean && flutter pub get
+icons_launcher:
+  image_path: "assets/app-icon/icon.png"
+  platforms:
+    macos:
+      enable: true
+      image_path: "assets/app-icon/macos-icon.png"
+    windows:
+      enable: true
+      # image_path: 'assets/ic_logo_border.png'
+    linux:
+      enable: true
+      # image_path: 'assets/ic_logo_border.png'
+    web:
+      enable: false
+      # image_path: 'assets/ic_logo_border.png'
+      # favicon_path: 'assets/ic_logo_round.png'
+    android:
+      enable: true
+      # image_path: 'assets/ic_logo_border.png'
+      # adaptive_background_color: '#ffffff'
+      adaptive_background_image: 'assets/app-icon/android-background.png'
+      adaptive_foreground_image: 'assets/app-icon/android-foreground.png'
+      # adaptive_round_image: 'assets/ic_logo_round.png'
+    ios:
+      enable: true
+      # image_path: 'assets/ic_logo_rectangle.png'
+
+# dart run package_rename
+package_rename_config:
+  android:
+    app_name: colourlovers_app
+    package_name: me.albemala.colourlovers_app
+  ios:
+    app_name: colourlovers_app
+    bundle_name: colourlovers_app
+    package_name: me.albemala.colourlovers_app
+  macos:
+    app_name: colourlovers_app
+    package_name: me.albemala.colourlovers_app
+    copyright_notice: Copyright © 2023 Alberto Malagoli (albemala.me). All rights reserved.
+  windows:
+    app_name: colourlovers_app
+    organization: albemala.me
+    copyright_notice: Copyright © 2023 Alberto Malagoli (albemala.me).
+    exe_name: colourlovers_app
+  linux:
+    app_name: colourlovers_app
+    package_name: me.albemala.colourlovers_app
+    exe_name: colourlovers_app
+  web:
+    app_name: colourlovers_app
+    description: A new Flutter project.
