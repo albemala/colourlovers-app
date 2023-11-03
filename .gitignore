@@ -1,13 +1,13 @@
+deprecated/
+
 # Miscellaneous
 *.class
 *.log
 *.pyc
 *.swp
 .DS_Store
-.atom/
 .buildlog/
 .history
-.svn/
 
 # IntelliJ related
 *.iml
@@ -30,9 +30,6 @@
 .pub-cache/
 .pub/
 /build/
-
-# Web related
-lib/generated_plugin_registrant.dart
 
 # Symbolication related
 app.*.symbols

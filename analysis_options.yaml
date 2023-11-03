@@ -1,11 +1,1 @@
-include: package:very_good_analysis/analysis_options.yaml
-
-# https://dart-lang.github.io/linter/lints/index.html.
-linter:
-  rules:
-    lines_longer_than_80_chars: false
-    public_member_api_docs: false
-    file_names: false
-    sort_constructors_first: false
-    flutter_style_todos: false
-    prefer_if_elements_to_conditional_expressions: false
+include: package:flutter_lints/flutter.yaml

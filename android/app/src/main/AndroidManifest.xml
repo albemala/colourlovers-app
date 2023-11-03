@@ -1,6 +1,5 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="me.albemala.colourlovers_app">
-   <application
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application
         android:label="colourlovers_app"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
