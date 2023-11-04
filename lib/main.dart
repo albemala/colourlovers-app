@@ -1,20 +1,20 @@
+import 'package:colourlovers_app/conductors/preferences-conductor.dart';
+import 'package:colourlovers_app/conductors/routing-conductor.dart';
+import 'package:colourlovers_app/views/app.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_state_management/flutter_state_management.dart';
 
 void main() {
-  runApp(const MainApp());
-}
+  WidgetsFlutterBinding.ensureInitialized();
+  // GoogleFonts.config.allowRuntimeFetching = false; // TODO restore
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
+  runApp(
+    const ConductorCreator(
+      create: RoutingConductor.fromContext,
+      child: ConductorCreator(
+        create: PreferencesConductor.fromContext,
+        child: AppView(),
       ),
-    );
-  }
+    ),
+  );
 }
