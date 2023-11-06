@@ -1,5 +1,5 @@
-import 'package:colourlovers_app/conductors/preferences-conductor.dart';
-import 'package:colourlovers_app/conductors/routing-conductor.dart';
+import 'package:colourlovers_app/conductors/preferences.dart';
+import 'package:colourlovers_app/conductors/routing.dart';
 import 'package:colourlovers_app/defines/app.dart';
 import 'package:colourlovers_app/defines/theme.dart';
 import 'package:colourlovers_app/views/app-content.dart';

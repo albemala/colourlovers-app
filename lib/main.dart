@@ -1,5 +1,5 @@
-import 'package:colourlovers_app/conductors/preferences-conductor.dart';
-import 'package:colourlovers_app/conductors/routing-conductor.dart';
+import 'package:colourlovers_app/conductors/preferences.dart';
+import 'package:colourlovers_app/conductors/routing.dart';
 import 'package:colourlovers_app/views/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_state_management/flutter_state_management.dart';

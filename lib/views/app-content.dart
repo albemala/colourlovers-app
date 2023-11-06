@@ -1,4 +1,4 @@
-import 'package:colourlovers_app/conductors/preferences-conductor.dart';
+import 'package:colourlovers_app/conductors/preferences.dart';
 import 'package:colourlovers_app/views/about.dart';
 import 'package:colourlovers_app/views/explore.dart';
 import 'package:colourlovers_app/views/favorites.dart';
@@ -27,7 +27,7 @@ String getRouteTitle(MainRoute route) {
 Widget getRouteView(MainRoute route) {
   switch (route) {
     case MainRoute.explore:
-      return const ExploreView();
+      return const ExploreViewCreator();
     case MainRoute.favorites:
       return const FavoritesView();
     case MainRoute.about:
@@ -91,8 +91,8 @@ class AppContentView extends StatelessWidget {
           // extendBodyBehindAppBar: true, // TODO
           appBar: AppTopBarView(
             context,
-            titleText: getRouteTitle(route),
-            actionWidgets: const [
+            title: getRouteTitle(route),
+            actions: const [
               ThemeModeToggleButton(),
               // TODO add padding to the left
             ],
@@ -140,6 +140,7 @@ class ThemeModeToggleButton extends StatelessWidget {
           onPressed: () {
             preferencesConductor.toggleThemeMode();
           },
+          tooltip: 'Toggle light/dark theme',
           icon: preferencesConductor.themeMode.value == ThemeMode.light //
               ? const Icon(LucideIcons.moon)
               : const Icon(LucideIcons.sun),
