@@ -5,8 +5,6 @@ import 'package:colourlovers_app/widgets/random-item-button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_state_management/flutter_state_management.dart';
 
-// TODO load more
-
 class PatternsViewConductor extends Conductor {
   factory PatternsViewConductor.fromContext(BuildContext context) {
     return PatternsViewConductor(
@@ -140,7 +138,8 @@ class PatternsView extends StatelessWidget {
                   } else {
                     final pattern = patterns[index];
                     return PatternTileView(
-                      pattern: pattern,
+                      viewModel:
+                          PatternTileViewModel.fromColourloverPattern(pattern),
                       onTap: () {
                         conductor.showPatternDetails(pattern);
                       },

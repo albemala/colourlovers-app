@@ -86,14 +86,14 @@ class ExploreView extends StatelessWidget {
             ExploreTileView(
               onTap: conductor.showColorsView,
               title: 'Colors',
-              child: const ColorView(colorHex: '1693A5'),
+              child: const ColorView(hex: '1693A5'),
             ),
             const SizedBox(height: 8),
             ExploreTileView(
               onTap: conductor.showPalettesView,
               title: 'Palettes',
               child: const PaletteView(
-                colorsHex: ['FE4365', 'FC9D9A', 'F9CDAD', 'C8C8A9', '83AF9B'],
+                hexs: ['FE4365', 'FC9D9A', 'F9CDAD', 'C8C8A9', '83AF9B'],
                 widths: [0.23, 0.07, 0.06, 0.07, 0.57],
               ),
             ),

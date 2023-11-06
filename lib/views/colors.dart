@@ -1,19 +1,21 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
+import 'package:colourlovers_app/conductors/routing.dart';
+import 'package:colourlovers_app/views/color-details.dart';
 import 'package:colourlovers_app/widgets/app-top-bar.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';
 import 'package:colourlovers_app/widgets/random-item-button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_state_management/flutter_state_management.dart';
 
-// TODO load more
-
 class ColorsViewConductor extends Conductor {
   factory ColorsViewConductor.fromContext(BuildContext context) {
     return ColorsViewConductor(
+      context.getConductor<RoutingConductor>(),
       ColourloversApiClient(),
     );
   }
 
+  final RoutingConductor _routingConductor;
   final ColourloversApiClient client;
   int page = 0;
 
@@ -21,6 +23,7 @@ class ColorsViewConductor extends Conductor {
   final isLoading = ValueNotifier(false);
 
   ColorsViewConductor(
+    this._routingConductor,
     this.client,
   ) {
     load();
@@ -51,7 +54,11 @@ class ColorsViewConductor extends Conductor {
   }
 
   void showColorDetails(ColourloversColor color) {
-    // TODO
+    _routingConductor.openRoute((context) {
+      return ColorDetailsViewCreator(
+        color: color,
+      );
+    });
   }
 
   Future<void> openRandomColor() async {
@@ -140,7 +147,7 @@ class ColorsView extends StatelessWidget {
                   } else {
                     final color = colors[index];
                     return ColorTileView(
-                      color: color,
+                      viewModel: ColorTileViewModel.fromColourloverColor(color),
                       onTap: () {
                         conductor.showColorDetails(color);
                       },

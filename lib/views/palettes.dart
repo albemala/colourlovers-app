@@ -5,8 +5,6 @@ import 'package:colourlovers_app/widgets/random-item-button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_state_management/flutter_state_management.dart';
 
-// TODO load more
-
 class PalettesViewConductor extends Conductor {
   factory PalettesViewConductor.fromContext(BuildContext context) {
     return PalettesViewConductor(
@@ -141,7 +139,8 @@ class PalettesView extends StatelessWidget {
                   } else {
                     final palette = palettes[index];
                     return PaletteTileView(
-                      palette: palette,
+                      viewModel:
+                          PaletteTileViewModel.fromColourloverPalette(palette),
                       onTap: () {
                         conductor.showPaletteDetails(palette);
                       },

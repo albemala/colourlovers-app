@@ -3,28 +3,28 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 class ColorView extends StatelessWidget {
-  final String colorHex;
+  final String hex;
 
   const ColorView({
     super.key,
-    required this.colorHex,
+    required this.hex,
   });
 
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color: HexColor(colorHex),
+      color: HexColor(hex),
     );
   }
 }
 
 class PaletteView extends StatelessWidget {
-  final List<String> colorsHex;
+  final List<String> hexs;
   final List<double> widths;
 
   const PaletteView({
     super.key,
-    required this.colorsHex,
+    required this.hexs,
     this.widths = const [],
   });
 
@@ -33,7 +33,7 @@ class PaletteView extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         return Row(
-          children: colorsHex.map((color) {
+          children: hexs.map((color) {
             return SizedBox(
               width: constraints.minWidth * _width(color),
               child: Container(
@@ -47,8 +47,8 @@ class PaletteView extends StatelessWidget {
   }
 
   double _width(String color) {
-    final index = colorsHex.indexOf(color);
-    return index < widths.length ? widths[index] : 1 / colorsHex.length;
+    final index = hexs.indexOf(color);
+    return index < widths.length ? widths[index] : 1 / hexs.length;
   }
 }
 
@@ -63,9 +63,9 @@ class PatternView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Image.network(
-            imageUrl,
-            repeat: ImageRepeat.repeat,
-          );
+      imageUrl,
+      repeat: ImageRepeat.repeat,
+    );
   }
 }
 

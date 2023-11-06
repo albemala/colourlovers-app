@@ -5,70 +5,170 @@ import 'package:colourlovers_app/widgets/skewed-container.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-// TODO create view models for each item type
+class ColorTileViewModel {
+  final String title;
+  final int numViews;
+  final int numVotes;
+  final String hex;
+
+  const ColorTileViewModel({
+    required this.title,
+    required this.numViews,
+    required this.numVotes,
+    required this.hex,
+  });
+
+  factory ColorTileViewModel.empty() {
+    return const ColorTileViewModel(
+      title: '',
+      numViews: 0,
+      numVotes: 0,
+      hex: '',
+    );
+  }
+
+  factory ColorTileViewModel.fromColourloverColor(
+    ColourloversColor color,
+  ) {
+    return ColorTileViewModel(
+      title: color.title ?? '',
+      numViews: color.numViews ?? 0,
+      numVotes: color.numVotes ?? 0,
+      hex: color.hex ?? '',
+    );
+  }
+}
 
 class ColorTileView extends StatelessWidget {
-  final ColourloversColor color;
   final void Function() onTap;
+  final ColorTileViewModel viewModel;
 
   const ColorTileView({
     super.key,
-    required this.color,
     required this.onTap,
+    required this.viewModel,
   });
 
   @override
   Widget build(BuildContext context) {
     return _ItemTileView(
       onTap: onTap,
-      title: color.title ?? '',
-      numViews: color.numViews ?? 0,
-      numVotes: color.numVotes ?? 0,
-      child: ColorView(colorHex: color.hex ?? '0'),
+      title: viewModel.title,
+      numViews: viewModel.numViews,
+      numVotes: viewModel.numVotes,
+      child: ColorView(hex: viewModel.hex),
+    );
+  }
+}
+
+class PaletteTileViewModel {
+  final String title;
+  final int numViews;
+  final int numVotes;
+  final List<String> hexs;
+
+  const PaletteTileViewModel({
+    required this.title,
+    required this.numViews,
+    required this.numVotes,
+    required this.hexs,
+  });
+
+  factory PaletteTileViewModel.empty() {
+    return const PaletteTileViewModel(
+      title: '',
+      numViews: 0,
+      numVotes: 0,
+      hexs: [],
+    );
+  }
+
+  factory PaletteTileViewModel.fromColourloverPalette(
+    ColourloversPalette palette,
+  ) {
+    return PaletteTileViewModel(
+      title: palette.title ?? '',
+      numViews: palette.numViews ?? 0,
+      numVotes: palette.numVotes ?? 0,
+      hexs: palette.colors ?? [],
     );
   }
 }
 
 class PaletteTileView extends StatelessWidget {
-  final ColourloversPalette palette;
   final void Function() onTap;
+  final PaletteTileViewModel viewModel;
 
   const PaletteTileView({
     super.key,
-    required this.palette,
     required this.onTap,
+    required this.viewModel,
   });
 
   @override
   Widget build(BuildContext context) {
     return _ItemTileView(
       onTap: onTap,
-      title: palette.title ?? '',
-      numViews: palette.numViews ?? 0,
-      numVotes: palette.numVotes ?? 0,
-      child: PaletteView(colorsHex: palette.colors ?? []),
+      title: viewModel.title,
+      numViews: viewModel.numViews,
+      numVotes: viewModel.numVotes,
+      child: PaletteView(hexs: viewModel.hexs),
+    );
+  }
+}
+
+class PatternTileViewModel {
+  final String title;
+  final int numViews;
+  final int numVotes;
+  final String imageUrl;
+
+  const PatternTileViewModel({
+    required this.title,
+    required this.numViews,
+    required this.numVotes,
+    required this.imageUrl,
+  });
+
+  factory PatternTileViewModel.empty() {
+    return const PatternTileViewModel(
+      title: '',
+      numViews: 0,
+      numVotes: 0,
+      imageUrl: '',
+    );
+  }
+
+  factory PatternTileViewModel.fromColourloverPattern(
+    ColourloversPattern pattern,
+  ) {
+    return PatternTileViewModel(
+      title: pattern.title ?? '',
+      numViews: pattern.numViews ?? 0,
+      numVotes: pattern.numVotes ?? 0,
+      imageUrl: pattern.imageUrl ?? '',
     );
   }
 }
 
 class PatternTileView extends StatelessWidget {
-  final ColourloversPattern pattern;
   final void Function() onTap;
+  final PatternTileViewModel viewModel;
 
   const PatternTileView({
     super.key,
-    required this.pattern,
     required this.onTap,
+    required this.viewModel,
   });
 
   @override
   Widget build(BuildContext context) {
     return _ItemTileView(
       onTap: onTap,
-      title: pattern.title ?? '',
-      numViews: pattern.numViews ?? 0,
-      numVotes: pattern.numVotes ?? 0,
-      child: PatternView(imageUrl: pattern.imageUrl ?? ''),
+      title: viewModel.title,
+      numViews: viewModel.numViews,
+      numVotes: viewModel.numVotes,
+      child: PatternView(imageUrl: viewModel.imageUrl),
     );
   }
 }
@@ -154,14 +254,48 @@ class _ItemTileView extends StatelessWidget {
   }
 }
 
+class UserTileViewModel {
+  final String userName;
+  final int numColors;
+  final int numPalettes;
+  final int numPatterns;
+
+  const UserTileViewModel({
+    required this.userName,
+    required this.numColors,
+    required this.numPalettes,
+    required this.numPatterns,
+  });
+
+  factory UserTileViewModel.empty() {
+    return const UserTileViewModel(
+      userName: '',
+      numColors: 0,
+      numPalettes: 0,
+      numPatterns: 0,
+    );
+  }
+
+  factory UserTileViewModel.fromColourloverUser(
+    ColourloversLover user,
+  ) {
+    return UserTileViewModel(
+      userName: user.userName ?? '',
+      numColors: user.numColors ?? 0,
+      numPalettes: user.numPalettes ?? 0,
+      numPatterns: user.numPatterns ?? 0,
+    );
+  }
+}
+
 class UserTileView extends StatelessWidget {
-  final ColourloversLover lover;
   final void Function() onTap;
+  final UserTileViewModel viewModel;
 
   const UserTileView({
     super.key,
-    required this.lover,
     required this.onTap,
+    required this.viewModel,
   });
 
   @override
@@ -197,7 +331,7 @@ class UserTileView extends StatelessWidget {
               color: Colors.white,
               elevation: 4,
               child: Text(
-                lover.userName ?? '',
+                viewModel.userName,
                 // maxLines: 1,
                 // overflow: TextOverflow.fade,
                 // softWrap: false,
@@ -214,17 +348,17 @@ class UserTileView extends StatelessWidget {
             child: Row(
               children: [
                 PillView(
-                  text: (lover.numColors ?? 0).toString(),
+                  text: viewModel.numColors.toString(),
                   icon: LucideIcons.square,
                 ),
                 const SizedBox(width: 8),
                 PillView(
-                  text: (lover.numPalettes ?? 0).toString(),
+                  text: viewModel.numPalettes.toString(),
                   icon: LucideIcons.columns,
                 ),
                 const SizedBox(width: 8),
                 PillView(
-                  text: (lover.numPatterns ?? 0).toString(),
+                  text: viewModel.numPatterns.toString(),
                   icon: LucideIcons.grid,
                 ),
               ],
