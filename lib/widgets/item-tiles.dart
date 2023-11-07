@@ -5,6 +5,7 @@ import 'package:colourlovers_app/widgets/skewed-container.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
+@immutable
 class ColorTileViewModel {
   final String title;
   final int numViews;
@@ -61,6 +62,7 @@ class ColorTileView extends StatelessWidget {
   }
 }
 
+@immutable
 class PaletteTileViewModel {
   final String title;
   final int numViews;
@@ -117,6 +119,7 @@ class PaletteTileView extends StatelessWidget {
   }
 }
 
+@immutable
 class PatternTileViewModel {
   final String title;
   final int numViews;
@@ -254,6 +257,7 @@ class _ItemTileView extends StatelessWidget {
   }
 }
 
+@immutable
 class UserTileViewModel {
   final String userName;
   final int numColors;

@@ -10,10 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_state_management:
-    git:
-      url: https://github.com/albemala/flutter_state_management
-      ref: 2.0.0
+  flutter_bloc: ^8.1.3
 
   colourlovers_api:
     git:
@@ -41,8 +38,8 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-  assets:
-    - assets/fonts/
+#  assets:
+#    - assets/fonts/
 
 # dart run icons_launcher:create && flutter clean && flutter pub get
 icons_launcher:

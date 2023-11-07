@@ -1,10 +1,10 @@
-import 'package:colourlovers_app/conductors/preferences.dart';
+import 'package:colourlovers_app/blocs/preferences.dart';
 import 'package:colourlovers_app/views/about.dart';
 import 'package:colourlovers_app/views/explore.dart';
 import 'package:colourlovers_app/views/favorites.dart';
 import 'package:colourlovers_app/widgets/app-top-bar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_state_management/flutter_state_management.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 enum MainRoute {
@@ -27,7 +27,7 @@ String getRouteTitle(MainRoute route) {
 Widget getRouteView(MainRoute route) {
   switch (route) {
     case MainRoute.explore:
-      return const ExploreViewCreator();
+      return const ExploreViewBuilder();
     case MainRoute.favorites:
       return const FavoritesView();
     case MainRoute.about:
@@ -35,38 +35,33 @@ Widget getRouteView(MainRoute route) {
   }
 }
 
-class MainRouteConductor extends Conductor {
-  factory MainRouteConductor.fromContext(BuildContext context) {
-    return MainRouteConductor();
+class MainRouteBloc extends Cubit<MainRoute> {
+  factory MainRouteBloc.fromContext(BuildContext context) {
+    return MainRouteBloc();
   }
 
-  final route = ValueNotifier<MainRoute>(MainRoute.explore);
-
-  MainRouteConductor();
+  MainRouteBloc() : super(MainRoute.explore);
 
   void setRoute(int index) {
-    route.value = MainRoute.values[index];
-  }
-
-  @override
-  void dispose() {
-    route.dispose();
+    emit(
+      MainRoute.values[index],
+    );
   }
 }
 
-class AppContentViewCreator extends StatelessWidget {
-  const AppContentViewCreator({
+class AppContentViewBuilder extends StatelessWidget {
+  const AppContentViewBuilder({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ConductorCreator(
-      create: MainRouteConductor.fromContext,
-      child: ConductorConsumer<MainRouteConductor>(
-        builder: (context, conductor) {
+    return BlocProvider(
+      create: MainRouteBloc.fromContext,
+      child: BlocBuilder<MainRouteBloc, MainRoute>(
+        builder: (context, route) {
           return AppContentView(
-            conductor: conductor,
+            route: route,
           );
         },
       ),
@@ -75,54 +70,51 @@ class AppContentViewCreator extends StatelessWidget {
 }
 
 class AppContentView extends StatelessWidget {
-  final MainRouteConductor conductor;
+  final MainRoute route;
 
   const AppContentView({
     super.key,
-    required this.conductor,
+    required this.route,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: conductor.route,
-      builder: (context, route, _) {
-        return Scaffold(
-          // extendBodyBehindAppBar: true, // TODO
-          appBar: AppTopBarView(
-            context,
-            title: getRouteTitle(route),
-            actions: const [
-              ThemeModeToggleButton(),
-              // TODO add padding to the left
-            ],
+    return Scaffold(
+      // extendBodyBehindAppBar: true, // TODO
+      appBar: AppTopBarView(
+        context,
+        title: getRouteTitle(route),
+        actions: const [
+          ThemeModeToggleButton(),
+          // TODO add padding to the left
+        ],
+      ),
+      // TODO
+      // body: BackgroundWidget(
+      //   colors: defaultBackgroundColors,
+      //   child: _getBody(route),
+      // ),
+      body: getRouteView(route),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: route.index,
+        onTap: (index) {
+          context.read<MainRouteBloc>().setRoute(index);
+        },
+        items: [
+          BottomNavigationBarItem(
+            label: getRouteTitle(MainRoute.explore),
+            icon: const Icon(LucideIcons.compass),
           ),
-          // TODO
-          // body: BackgroundWidget(
-          //   colors: defaultBackgroundColors,
-          //   child: _getBody(route),
-          // ),
-          body: getRouteView(route),
-          bottomNavigationBar: BottomNavigationBar(
-            currentIndex: route.index,
-            onTap: conductor.setRoute,
-            items: [
-              BottomNavigationBarItem(
-                label: getRouteTitle(MainRoute.explore),
-                icon: const Icon(LucideIcons.compass),
-              ),
-              BottomNavigationBarItem(
-                label: getRouteTitle(MainRoute.favorites),
-                icon: const Icon(LucideIcons.star),
-              ),
-              BottomNavigationBarItem(
-                label: getRouteTitle(MainRoute.about),
-                icon: const Icon(LucideIcons.info),
-              ),
-            ],
+          BottomNavigationBarItem(
+            label: getRouteTitle(MainRoute.favorites),
+            icon: const Icon(LucideIcons.star),
           ),
-        );
-      },
+          BottomNavigationBarItem(
+            label: getRouteTitle(MainRoute.about),
+            icon: const Icon(LucideIcons.info),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -134,14 +126,14 @@ class ThemeModeToggleButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ConductorConsumer<PreferencesConductor>(
-      builder: (context, preferencesConductor) {
+    return BlocBuilder<PreferencesBloc, PreferencesBlocModel>(
+      builder: (context, preferences) {
         return IconButton(
           onPressed: () {
-            preferencesConductor.toggleThemeMode();
+            context.read<PreferencesBloc>().toggleThemeMode();
           },
           tooltip: 'Toggle light/dark theme',
-          icon: preferencesConductor.themeMode.value == ThemeMode.light //
+          icon: preferences.themeMode == ThemeMode.light //
               ? const Icon(LucideIcons.moon)
               : const Icon(LucideIcons.sun),
         );

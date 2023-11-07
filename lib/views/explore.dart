@@ -1,65 +1,51 @@
-import 'package:colourlovers_app/conductors/routing.dart';
+import 'package:colourlovers_app/functions/routing.dart';
 import 'package:colourlovers_app/views/colors.dart';
 import 'package:colourlovers_app/views/palettes.dart';
 import 'package:colourlovers_app/views/patterns.dart';
 import 'package:colourlovers_app/widgets/items.dart';
 import 'package:colourlovers_app/widgets/skewed-container.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_state_management/flutter_state_management.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ExploreViewConductor extends Conductor {
-  factory ExploreViewConductor.fromContext(BuildContext context) {
-    return ExploreViewConductor(
-      context.getConductor<RoutingConductor>(),
-    );
+// TODO create view model and pass tiles data to view from bloc
+
+class ExploreViewBloc extends Cubit<void> {
+  factory ExploreViewBloc.fromContext(BuildContext context) {
+    return ExploreViewBloc();
   }
 
-  final RoutingConductor _routingConductor;
+  ExploreViewBloc() : super(null);
 
-  ExploreViewConductor(
-    this._routingConductor,
-  );
-
-  void showColorsView() {
-    _routingConductor.openRoute((context) {
-      return const ColorsViewCreator();
-    });
+  void showColorsView(BuildContext context) {
+    openRoute(context, const ColorsViewBuilder());
   }
 
-  void showPalettesView() {
-    _routingConductor.openRoute((context) {
-      return const PalettesViewCreator();
-    });
+  void showPalettesView(BuildContext context) {
+    openRoute(context, const PalettesViewBuilder());
   }
 
-  void showPatternsView() {
-    _routingConductor.openRoute((context) {
-      return const PatternsViewCreator();
-    });
+  void showPatternsView(BuildContext context) {
+    openRoute(context, const PatternsViewBuilder());
   }
 
-  void showUsersView() {
-    // _routingConductor.openRoute((context) {
-    //   return const UsersViewCreator();
-    // });
+  void showUsersView(BuildContext context) {
+    // openRoute(context, const UsersViewBuilder());
   }
-
-  @override
-  void dispose() {}
 }
 
-class ExploreViewCreator extends StatelessWidget {
-  const ExploreViewCreator({super.key});
+class ExploreViewBuilder extends StatelessWidget {
+  const ExploreViewBuilder({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ConductorCreator(
-      create: ExploreViewConductor.fromContext,
-      child: ConductorConsumer<ExploreViewConductor>(
-        builder: (context, conductor) {
+    return BlocProvider(
+      create: ExploreViewBloc.fromContext,
+      child: BlocBuilder<ExploreViewBloc, void>(
+        builder: (context, viewModel) {
           return ExploreView(
-            conductor: conductor,
+            // viewModel: viewModel,
+            bloc: context.read<ExploreViewBloc>(),
           );
         },
       ),
@@ -68,11 +54,13 @@ class ExploreViewCreator extends StatelessWidget {
 }
 
 class ExploreView extends StatelessWidget {
-  final ExploreViewConductor conductor;
+  // final void viewModel;
+  final ExploreViewBloc bloc;
 
   const ExploreView({
     super.key,
-    required this.conductor,
+    // required this.viewModel,
+    required this.bloc,
   });
 
   @override
@@ -84,13 +72,17 @@ class ExploreView extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ExploreTileView(
-              onTap: conductor.showColorsView,
+              onTap: () {
+                bloc.showColorsView(context);
+              },
               title: 'Colors',
               child: const ColorView(hex: '1693A5'),
             ),
             const SizedBox(height: 8),
             ExploreTileView(
-              onTap: conductor.showPalettesView,
+              onTap: () {
+                bloc.showPalettesView(context);
+              },
               title: 'Palettes',
               child: const PaletteView(
                 hexs: ['FE4365', 'FC9D9A', 'F9CDAD', 'C8C8A9', '83AF9B'],
@@ -99,7 +91,9 @@ class ExploreView extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             ExploreTileView(
-              onTap: conductor.showPatternsView,
+              onTap: () {
+                bloc.showPatternsView(context);
+              },
               title: 'Patterns',
               child: const PatternView(
                 // TODO store locally
@@ -109,7 +103,9 @@ class ExploreView extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             ExploreTileView(
-              onTap: conductor.showUsersView,
+              onTap: () {
+                bloc.showUsersView(context);
+              },
               title: 'Users',
               child: const UserView(),
             ),

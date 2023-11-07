@@ -1,92 +1,125 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
-import 'package:colourlovers_app/conductors/routing.dart';
+import 'package:colourlovers_app/functions/routing.dart';
 import 'package:colourlovers_app/views/color-details.dart';
 import 'package:colourlovers_app/widgets/app-top-bar.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';
 import 'package:colourlovers_app/widgets/random-item-button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_state_management/flutter_state_management.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ColorsViewConductor extends Conductor {
-  factory ColorsViewConductor.fromContext(BuildContext context) {
-    return ColorsViewConductor(
-      context.getConductor<RoutingConductor>(),
+@immutable
+class ColorsViewModel {
+  final bool isLoading;
+  final List<ColorTileViewModel> colors;
+
+  const ColorsViewModel({
+    required this.isLoading,
+    required this.colors,
+  });
+
+  factory ColorsViewModel.initialState() {
+    return const ColorsViewModel(
+      isLoading: false,
+      colors: <ColorTileViewModel>[],
+    );
+  }
+}
+
+class ColorsViewBloc extends Cubit<ColorsViewModel> {
+  factory ColorsViewBloc.fromContext(BuildContext context) {
+    return ColorsViewBloc(
       ColourloversApiClient(),
     );
   }
 
-  final RoutingConductor _routingConductor;
-  final ColourloversApiClient client;
-  int page = 0;
+  final ColourloversApiClient _client;
+  bool _isLoading = false;
+  List<ColourloversColor> _colors = <ColourloversColor>[];
+  int _page = 0;
 
-  final colors = ValueNotifier(<ColourloversColor>[]);
-  final isLoading = ValueNotifier(false);
-
-  ColorsViewConductor(
-    this._routingConductor,
-    this.client,
-  ) {
+  ColorsViewBloc(
+    this._client,
+  ) : super(
+          ColorsViewModel.initialState(),
+        ) {
     load();
   }
 
   Future<void> load() async {
-    isLoading.value = true;
+    _isLoading = true;
+    _emitState();
 
     const numResults = 20;
-    final items = await client.getColors(
+    final items = await _client.getColors(
           numResults: numResults,
-          resultOffset: page * numResults,
+          resultOffset: _page * numResults,
           // orderBy: ClRequestOrderBy.numVotes,
           sortBy: ColourloversRequestSortBy.DESC,
         ) ??
         [];
-    colors.value = [
-      ...colors.value,
+
+    _isLoading = false;
+    _colors = [
+      ..._colors,
       ...items,
     ];
-
-    isLoading.value = false;
+    _emitState();
   }
 
   Future<void> loadMore() async {
-    page++;
+    _page++;
     await load();
   }
 
-  void showColorDetails(ColourloversColor color) {
-    _routingConductor.openRoute((context) {
-      return ColorDetailsViewCreator(
-        color: color,
-      );
-    });
+  void showColorDetails(
+    BuildContext context,
+    int colorIndex,
+  ) {
+    final color = _colors[colorIndex];
+    _showColorDetails(context, color);
   }
 
-  Future<void> openRandomColor() async {
-    final color = await client.getRandomColor();
+  Future<void> openRandomColor(
+    BuildContext context,
+  ) async {
+    final color = await _client.getRandomColor();
     if (color == null) return;
-    showColorDetails(color);
+    _showColorDetails(context, color);
   }
 
-  @override
-  void dispose() {
-    colors.dispose();
-    isLoading.dispose();
+  void _showColorDetails(
+    BuildContext context,
+    ColourloversColor color,
+  ) {
+    openRoute(context, ColorDetailsViewBuilder(color: color));
+  }
+
+  void _emitState() {
+    emit(
+      ColorsViewModel(
+        isLoading: _isLoading,
+        colors: _colors //
+            .map(ColorTileViewModel.fromColourloverColor)
+            .toList(),
+      ),
+    );
   }
 }
 
-class ColorsViewCreator extends StatelessWidget {
-  const ColorsViewCreator({
+class ColorsViewBuilder extends StatelessWidget {
+  const ColorsViewBuilder({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ConductorCreator(
-      create: ColorsViewConductor.fromContext,
-      child: ConductorConsumer<ColorsViewConductor>(
-        builder: (context, conductor) {
+    return BlocProvider<ColorsViewBloc>(
+      create: ColorsViewBloc.fromContext,
+      child: BlocBuilder<ColorsViewBloc, ColorsViewModel>(
+        builder: (context, viewModel) {
           return ColorsView(
-            conductor: conductor,
+            viewModel: viewModel,
+            bloc: context.read<ColorsViewBloc>(),
           );
         },
       ),
@@ -95,11 +128,13 @@ class ColorsViewCreator extends StatelessWidget {
 }
 
 class ColorsView extends StatelessWidget {
-  final ColorsViewConductor conductor;
+  final ColorsViewModel viewModel;
+  final ColorsViewBloc bloc;
 
   const ColorsView({
     super.key,
-    required this.conductor,
+    required this.viewModel,
+    required this.bloc,
   });
 
   @override
@@ -111,7 +146,9 @@ class ColorsView extends StatelessWidget {
         title: 'Colors',
         actions: [
           RandomItemButton(
-            onPressed: conductor.openRandomColor,
+            onPressed: () {
+              bloc.openRandomColor(context);
+            },
             tooltip: 'Random color',
           ),
           // _FilterButton(
@@ -121,45 +158,35 @@ class ColorsView extends StatelessWidget {
           // ),
         ],
       ),
-      body: ValueListenableBuilder(
-        valueListenable: conductor.colors,
-        builder: (context, colors, child) {
-          return ValueListenableBuilder(
-            valueListenable: conductor.isLoading,
-            builder: (context, isLoading, child) {
-              return ListView.separated(
-                padding: const EdgeInsets.all(16),
-                // controller: scrollController,
-                itemCount: colors.length + 1,
-                itemBuilder: (context, index) {
-                  if (index == colors.length) {
-                    if (isLoading) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else {
-                      // TODO dont show if no more items
-                      return OutlinedButton(
-                        onPressed: conductor.loadMore,
-                        child: const Text('Load more'),
-                      );
-                    }
-                  } else {
-                    final color = colors[index];
-                    return ColorTileView(
-                      viewModel: ColorTileViewModel.fromColourloverColor(color),
-                      onTap: () {
-                        conductor.showColorDetails(color);
-                      },
-                    );
-                  }
-                },
-                separatorBuilder: (context, index) {
-                  return const SizedBox(height: 12);
-                },
+      body: ListView.separated(
+        padding: const EdgeInsets.all(16),
+        // controller: scrollController,
+        itemCount: viewModel.colors.length + 1,
+        itemBuilder: (context, index) {
+          if (index == viewModel.colors.length) {
+            if (viewModel.isLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
               );
-            },
-          );
+            } else {
+              // TODO dont show if no more items
+              return OutlinedButton(
+                onPressed: bloc.loadMore,
+                child: const Text('Load more'),
+              );
+            }
+          } else {
+            final color = viewModel.colors[index];
+            return ColorTileView(
+              viewModel: color,
+              onTap: () {
+                bloc.showColorDetails(context, index);
+              },
+            );
+          }
+        },
+        separatorBuilder: (context, index) {
+          return const SizedBox(height: 12);
         },
       ),
     );

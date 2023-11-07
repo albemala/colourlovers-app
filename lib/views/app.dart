@@ -1,10 +1,9 @@
-import 'package:colourlovers_app/conductors/preferences.dart';
-import 'package:colourlovers_app/conductors/routing.dart';
+import 'package:colourlovers_app/blocs/preferences.dart';
 import 'package:colourlovers_app/defines/app.dart';
 import 'package:colourlovers_app/defines/theme.dart';
 import 'package:colourlovers_app/views/app-content.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_state_management/flutter_state_management.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppView extends StatelessWidget {
   const AppView({
@@ -13,9 +12,8 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder(
-      valueListenable: context.getConductor<PreferencesConductor>().themeMode,
-      builder: (context, themeMode, child) {
+    return BlocBuilder<PreferencesBloc, PreferencesBlocModel>(
+      builder: (context, preferences) {
 /* TODO
         SystemChrome.setSystemUIOverlayStyle(
           SystemUiOverlayStyle(
@@ -31,14 +29,15 @@ class AppView extends StatelessWidget {
           title: appName,
           theme: lightTheme,
           darkTheme: darkTheme,
-          themeMode: themeMode,
-          home: child,
+          themeMode: preferences.themeMode,
+          // home: child,
+          home: const AppContentViewBuilder(),
         );
       },
-      child: RoutingView(
-        routingStream: context.getConductor<RoutingConductor>().routingStream,
-        child: const AppContentViewCreator(),
-      ),
+      // child: RoutingView(
+      //   routingStream: context.read<RoutingBloc>().routingStream,
+      //   child: const AppContentViewBuilder(),
+      // ),
     );
   }
 }

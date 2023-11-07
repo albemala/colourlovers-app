@@ -1,83 +1,125 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
+import 'package:colourlovers_app/functions/routing.dart';
+import 'package:colourlovers_app/views/pattern-details.dart';
 import 'package:colourlovers_app/widgets/app-top-bar.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';
 import 'package:colourlovers_app/widgets/random-item-button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_state_management/flutter_state_management.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class PatternsViewConductor extends Conductor {
-  factory PatternsViewConductor.fromContext(BuildContext context) {
-    return PatternsViewConductor(
+@immutable
+class PatternsViewModel {
+  final bool isLoading;
+  final List<PatternTileViewModel> patterns;
+
+  const PatternsViewModel({
+    required this.isLoading,
+    required this.patterns,
+  });
+
+  factory PatternsViewModel.initialState() {
+    return const PatternsViewModel(
+      isLoading: false,
+      patterns: <PatternTileViewModel>[],
+    );
+  }
+}
+
+class PatternsViewBloc extends Cubit<PatternsViewModel> {
+  factory PatternsViewBloc.fromContext(BuildContext context) {
+    return PatternsViewBloc(
       ColourloversApiClient(),
     );
   }
 
-  final ColourloversApiClient client;
-  int page = 0;
+  final ColourloversApiClient _client;
+  bool _isLoading = false;
+  List<ColourloversPattern> _patterns = <ColourloversPattern>[];
+  int _page = 0;
 
-  final patterns = ValueNotifier(<ColourloversPattern>[]);
-  final isLoading = ValueNotifier(false);
-
-  PatternsViewConductor(
-    this.client,
-  ) {
+  PatternsViewBloc(
+    this._client,
+  ) : super(
+          PatternsViewModel.initialState(),
+        ) {
     load();
   }
 
   Future<void> load() async {
-    isLoading.value = true;
+    _isLoading = true;
+    _emitState();
 
     const numResults = 20;
-    final items = await client.getPatterns(
+    final items = await _client.getPatterns(
           numResults: numResults,
-          resultOffset: page * numResults,
+          resultOffset: _page * numResults,
           // orderBy: ClRequestOrderBy.numVotes,
           sortBy: ColourloversRequestSortBy.DESC,
         ) ??
         [];
-    patterns.value = [
-      ...patterns.value,
+
+    _isLoading = false;
+    _patterns = [
+      ..._patterns,
       ...items,
     ];
-
-    isLoading.value = false;
+    _emitState();
   }
 
   Future<void> loadMore() async {
-    page++;
+    _page++;
     await load();
   }
 
-  void showPatternDetails(ColourloversPattern pattern) {
-    // TODO
+  void showPatternDetails(
+    BuildContext context,
+    int patternIndex,
+  ) {
+    final pattern = _patterns[patternIndex];
+    _showPatternDetails(context, pattern);
   }
 
-  Future<void> openRandomPattern() async {
-    final pattern = await client.getRandomPattern();
+  Future<void> openRandomPattern(
+    BuildContext context,
+  ) async {
+    final pattern = await _client.getRandomPattern();
     if (pattern == null) return;
-    showPatternDetails(pattern);
+    _showPatternDetails(context, pattern);
   }
 
-  @override
-  void dispose() {
-    patterns.dispose();
-    isLoading.dispose();
+  void _showPatternDetails(
+    BuildContext context,
+    ColourloversPattern pattern,
+  ) {
+    openRoute(context, PatternDetailsViewBuilder(pattern: pattern));
+  }
+
+  void _emitState() {
+    emit(
+      PatternsViewModel(
+        isLoading: _isLoading,
+        patterns: _patterns //
+            .map(PatternTileViewModel.fromColourloverPattern)
+            .toList(),
+      ),
+    );
   }
 }
 
-class PatternsViewCreator extends StatelessWidget {
-  const PatternsViewCreator({
+class PatternsViewBuilder extends StatelessWidget {
+  const PatternsViewBuilder({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ConductorCreator(
-      create: PatternsViewConductor.fromContext,
-      child: ConductorConsumer<PatternsViewConductor>(
-        builder: (context, conductor) {
+    return BlocProvider<PatternsViewBloc>(
+      create: PatternsViewBloc.fromContext,
+      child: BlocBuilder<PatternsViewBloc, PatternsViewModel>(
+        builder: (context, viewModel) {
           return PatternsView(
-            conductor: conductor,
+            viewModel: viewModel,
+            bloc: context.read<PatternsViewBloc>(),
           );
         },
       ),
@@ -86,11 +128,13 @@ class PatternsViewCreator extends StatelessWidget {
 }
 
 class PatternsView extends StatelessWidget {
-  final PatternsViewConductor conductor;
+  final PatternsViewModel viewModel;
+  final PatternsViewBloc bloc;
 
   const PatternsView({
     super.key,
-    required this.conductor,
+    required this.viewModel,
+    required this.bloc,
   });
 
   @override
@@ -102,7 +146,9 @@ class PatternsView extends StatelessWidget {
         title: 'Patterns',
         actions: [
           RandomItemButton(
-            onPressed: conductor.openRandomPattern,
+            onPressed: () {
+              bloc.openRandomPattern(context);
+            },
             tooltip: 'Random pattern',
           ),
           // _FilterButton(
@@ -112,46 +158,35 @@ class PatternsView extends StatelessWidget {
           // ),
         ],
       ),
-      body: ValueListenableBuilder(
-        valueListenable: conductor.patterns,
-        builder: (context, patterns, child) {
-          return ValueListenableBuilder(
-            valueListenable: conductor.isLoading,
-            builder: (context, isLoading, child) {
-              return ListView.separated(
-                padding: const EdgeInsets.all(16),
-                // controller: scrollController,
-                itemCount: patterns.length + 1,
-                itemBuilder: (context, index) {
-                  if (index == patterns.length) {
-                    if (isLoading) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else {
-                      // TODO dont show if no more items
-                      return OutlinedButton(
-                        onPressed: conductor.loadMore,
-                        child: const Text('Load more'),
-                      );
-                    }
-                  } else {
-                    final pattern = patterns[index];
-                    return PatternTileView(
-                      viewModel:
-                          PatternTileViewModel.fromColourloverPattern(pattern),
-                      onTap: () {
-                        conductor.showPatternDetails(pattern);
-                      },
-                    );
-                  }
-                },
-                separatorBuilder: (context, index) {
-                  return const SizedBox(height: 12);
-                },
+      body: ListView.separated(
+        padding: const EdgeInsets.all(16),
+        // controller: scrollController,
+        itemCount: viewModel.patterns.length + 1,
+        itemBuilder: (context, index) {
+          if (index == viewModel.patterns.length) {
+            if (viewModel.isLoading) {
+              return const Center(
+                child: CircularProgressIndicator(),
               );
-            },
-          );
+            } else {
+              // TODO dont show if no more items
+              return OutlinedButton(
+                onPressed: bloc.loadMore,
+                child: const Text('Load more'),
+              );
+            }
+          } else {
+            final pattern = viewModel.patterns[index];
+            return PatternTileView(
+              viewModel: pattern,
+              onTap: () {
+                bloc.showPatternDetails(context, index);
+              },
+            );
+          }
+        },
+        separatorBuilder: (context, index) {
+          return const SizedBox(height: 12);
         },
       ),
     );
