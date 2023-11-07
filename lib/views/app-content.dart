@@ -2,7 +2,9 @@ import 'package:colourlovers_app/blocs/preferences.dart';
 import 'package:colourlovers_app/views/about.dart';
 import 'package:colourlovers_app/views/explore.dart';
 import 'package:colourlovers_app/views/favorites.dart';
+import 'package:colourlovers_app/views/test.dart';
 import 'package:colourlovers_app/widgets/app-top-bar.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons/lucide_icons.dart';
@@ -11,6 +13,7 @@ enum MainRoute {
   explore,
   favorites,
   about,
+  test,
 }
 
 String getRouteTitle(MainRoute route) {
@@ -21,6 +24,8 @@ String getRouteTitle(MainRoute route) {
       return 'Favorites';
     case MainRoute.about:
       return 'About';
+    case MainRoute.test:
+      return 'Test';
   }
 }
 
@@ -32,6 +37,8 @@ Widget getRouteView(MainRoute route) {
       return const FavoritesView();
     case MainRoute.about:
       return const AboutView();
+    case MainRoute.test:
+      return const TestViewBuilder();
   }
 }
 
@@ -113,6 +120,11 @@ class AppContentView extends StatelessWidget {
             label: getRouteTitle(MainRoute.about),
             icon: const Icon(LucideIcons.info),
           ),
+          if (kDebugMode)
+            BottomNavigationBarItem(
+              label: getRouteTitle(MainRoute.test),
+              icon: const Icon(LucideIcons.bug),
+            ),
         ],
       ),
     );
