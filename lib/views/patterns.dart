@@ -79,7 +79,7 @@ class PatternsViewBloc extends Cubit<PatternsViewModel> {
     _showPatternDetails(context, pattern);
   }
 
-  Future<void> openRandomPattern(
+  Future<void> showRandomPattern(
     BuildContext context,
   ) async {
     final pattern = await _client.getRandomPattern();
@@ -147,7 +147,7 @@ class PatternsView extends StatelessWidget {
         actions: [
           RandomItemButton(
             onPressed: () {
-              bloc.openRandomPattern(context);
+              bloc.showRandomPattern(context);
             },
             tooltip: 'Random pattern',
           ),

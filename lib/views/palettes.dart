@@ -80,7 +80,7 @@ class PalettesViewBloc extends Cubit<PalettesViewModel> {
     _showPaletteDetails(context, palette);
   }
 
-  Future<void> openRandomPalette(
+  Future<void> showRandomPalette(
     BuildContext context,
   ) async {
     final palette = await _client.getRandomPalette();
@@ -148,7 +148,7 @@ class PalettesView extends StatelessWidget {
         actions: [
           RandomItemButton(
             onPressed: () {
-              bloc.openRandomPalette(context);
+              bloc.showRandomPalette(context);
             },
             tooltip: 'Random palette',
           ),

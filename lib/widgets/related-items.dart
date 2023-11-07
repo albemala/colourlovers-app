@@ -2,6 +2,8 @@ import 'package:colourlovers_app/widgets/h2-text.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';
 import 'package:flutter/material.dart';
 
+// TODO if they are all the same, can I just use _RelatedItemsView?
+
 class RelatedColorsView extends StatelessWidget {
   // final Hsv hsv;
   final List<ColorTileViewModel> viewModels;

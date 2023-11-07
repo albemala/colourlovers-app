@@ -2,6 +2,7 @@ import 'package:colourlovers_app/functions/routing.dart';
 import 'package:colourlovers_app/views/colors.dart';
 import 'package:colourlovers_app/views/palettes.dart';
 import 'package:colourlovers_app/views/patterns.dart';
+import 'package:colourlovers_app/views/users.dart';
 import 'package:colourlovers_app/widgets/items.dart';
 import 'package:colourlovers_app/widgets/skewed-container.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ class ExploreViewBloc extends Cubit<void> {
   }
 
   void showUsersView(BuildContext context) {
-    // openRoute(context, const UsersViewBuilder());
+    openRoute(context, const UsersViewBuilder());
   }
 }
 

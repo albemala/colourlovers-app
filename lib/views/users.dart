@@ -1,46 +1,45 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/functions/routing.dart';
-import 'package:colourlovers_app/views/color-details.dart';
+import 'package:colourlovers_app/views/user-details.dart';
 import 'package:colourlovers_app/widgets/app-top-bar.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';
-import 'package:colourlovers_app/widgets/random-item-button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @immutable
-class ColorsViewModel {
+class UsersViewModel {
   final bool isLoading;
-  final List<ColorTileViewModel> colors;
+  final List<UserTileViewModel> users;
 
-  const ColorsViewModel({
+  const UsersViewModel({
     required this.isLoading,
-    required this.colors,
+    required this.users,
   });
 
-  factory ColorsViewModel.initialState() {
-    return const ColorsViewModel(
+  factory UsersViewModel.initialState() {
+    return const UsersViewModel(
       isLoading: false,
-      colors: <ColorTileViewModel>[],
+      users: <UserTileViewModel>[],
     );
   }
 }
 
-class ColorsViewBloc extends Cubit<ColorsViewModel> {
-  factory ColorsViewBloc.fromContext(BuildContext context) {
-    return ColorsViewBloc(
+class UsersViewBloc extends Cubit<UsersViewModel> {
+  factory UsersViewBloc.fromContext(BuildContext context) {
+    return UsersViewBloc(
       ColourloversApiClient(),
     );
   }
 
   final ColourloversApiClient _client;
   bool _isLoading = false;
-  List<ColourloversColor> _colors = <ColourloversColor>[];
+  List<ColourloversLover> _users = <ColourloversLover>[];
   int _page = 0;
 
-  ColorsViewBloc(
+  UsersViewBloc(
     this._client,
   ) : super(
-          ColorsViewModel.initialState(),
+          UsersViewModel.initialState(),
         ) {
     load();
   }
@@ -50,7 +49,7 @@ class ColorsViewBloc extends Cubit<ColorsViewModel> {
     _emitState();
 
     const numResults = 20;
-    final items = await _client.getColors(
+    final items = await _client.getLovers(
           numResults: numResults,
           resultOffset: _page * numResults,
           // orderBy: ClRequestOrderBy.numVotes,
@@ -59,8 +58,8 @@ class ColorsViewBloc extends Cubit<ColorsViewModel> {
         [];
 
     _isLoading = false;
-    _colors = [
-      ..._colors,
+    _users = [
+      ..._users,
       ...items,
     ];
     _emitState();
@@ -71,55 +70,47 @@ class ColorsViewBloc extends Cubit<ColorsViewModel> {
     await load();
   }
 
-  void showColorDetails(
+  void showUserDetails(
     BuildContext context,
-    int colorIndex,
+    int userIndex,
   ) {
-    final color = _colors[colorIndex];
-    _showColorDetails(context, color);
+    final user = _users[userIndex];
+    _showUserDetails(context, user);
   }
 
-  Future<void> showRandomColor(
+  void _showUserDetails(
     BuildContext context,
-  ) async {
-    final color = await _client.getRandomColor();
-    if (color == null) return;
-    _showColorDetails(context, color);
-  }
-
-  void _showColorDetails(
-    BuildContext context,
-    ColourloversColor color,
+    ColourloversLover user,
   ) {
-    openRoute(context, ColorDetailsViewBuilder(color: color));
+    openRoute(context, UserDetailsViewBuilder(user: user));
   }
 
   void _emitState() {
     emit(
-      ColorsViewModel(
+      UsersViewModel(
         isLoading: _isLoading,
-        colors: _colors //
-            .map(ColorTileViewModel.fromColourloverColor)
+        users: _users //
+            .map(UserTileViewModel.fromColourloverUser)
             .toList(),
       ),
     );
   }
 }
 
-class ColorsViewBuilder extends StatelessWidget {
-  const ColorsViewBuilder({
+class UsersViewBuilder extends StatelessWidget {
+  const UsersViewBuilder({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ColorsViewBloc>(
-      create: ColorsViewBloc.fromContext,
-      child: BlocBuilder<ColorsViewBloc, ColorsViewModel>(
+    return BlocProvider<UsersViewBloc>(
+      create: UsersViewBloc.fromContext,
+      child: BlocBuilder<UsersViewBloc, UsersViewModel>(
         builder: (context, viewModel) {
-          return ColorsView(
+          return UsersView(
             viewModel: viewModel,
-            bloc: context.read<ColorsViewBloc>(),
+            bloc: context.read<UsersViewBloc>(),
           );
         },
       ),
@@ -127,11 +118,11 @@ class ColorsViewBuilder extends StatelessWidget {
   }
 }
 
-class ColorsView extends StatelessWidget {
-  final ColorsViewModel viewModel;
-  final ColorsViewBloc bloc;
+class UsersView extends StatelessWidget {
+  final UsersViewModel viewModel;
+  final UsersViewBloc bloc;
 
-  const ColorsView({
+  const UsersView({
     super.key,
     required this.viewModel,
     required this.bloc,
@@ -143,14 +134,8 @@ class ColorsView extends StatelessWidget {
       // extendBodyBehindAppBar: true,
       appBar: AppTopBarView(
         context,
-        title: 'Colors',
+        title: 'Users',
         actions: [
-          RandomItemButton(
-            onPressed: () {
-              bloc.showRandomColor(context);
-            },
-            tooltip: 'Random color',
-          ),
           // _FilterButton(
           //   onPressed: () {
           //     // TODO
@@ -161,9 +146,9 @@ class ColorsView extends StatelessWidget {
       body: ListView.separated(
         padding: const EdgeInsets.all(16),
         // controller: scrollController,
-        itemCount: viewModel.colors.length + 1,
+        itemCount: viewModel.users.length + 1,
         itemBuilder: (context, index) {
-          if (index == viewModel.colors.length) {
+          if (index == viewModel.users.length) {
             if (viewModel.isLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
@@ -176,11 +161,11 @@ class ColorsView extends StatelessWidget {
               );
             }
           } else {
-            final color = viewModel.colors[index];
-            return ColorTileView(
-              viewModel: color,
+            final user = viewModel.users[index];
+            return UserTileView(
+              viewModel: user,
               onTap: () {
-                bloc.showColorDetails(context, index);
+                bloc.showUserDetails(context, index);
               },
             );
           }
