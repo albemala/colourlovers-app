@@ -34,6 +34,7 @@ Future<List<ColourloversPalette>> fetchUserPalettes(
     lover: userName,
     numResults: numResults,
     resultOffset: resultOffset,
+    showPaletteWidths: true,
   );
   return palettes ?? [];
 }

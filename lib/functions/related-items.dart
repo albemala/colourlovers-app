@@ -38,6 +38,7 @@ Future<List<ColourloversPalette>> fetchRelatedPalettes(
     resultOffset: resultOffset,
     // orderBy: ClRequestOrderBy.numVotes,
     // sortBy: ClRequestSortBy.DESC,
+    showPaletteWidths: true,
   );
   return palettes ?? [];
 }

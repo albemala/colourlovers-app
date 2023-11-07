@@ -68,12 +68,14 @@ class PaletteTileViewModel {
   final int numViews;
   final int numVotes;
   final List<String> hexs;
+  final List<double> widths;
 
   const PaletteTileViewModel({
     required this.title,
     required this.numViews,
     required this.numVotes,
     required this.hexs,
+    required this.widths,
   });
 
   factory PaletteTileViewModel.empty() {
@@ -82,6 +84,7 @@ class PaletteTileViewModel {
       numViews: 0,
       numVotes: 0,
       hexs: [],
+      widths: [],
     );
   }
 
@@ -93,6 +96,7 @@ class PaletteTileViewModel {
       numViews: palette.numViews ?? 0,
       numVotes: palette.numVotes ?? 0,
       hexs: palette.colors ?? [],
+      widths: palette.colorWidths ?? [],
     );
   }
 }
@@ -114,7 +118,10 @@ class PaletteTileView extends StatelessWidget {
       title: viewModel.title,
       numViews: viewModel.numViews,
       numVotes: viewModel.numVotes,
-      child: PaletteView(hexs: viewModel.hexs),
+      child: PaletteView(
+        hexs: viewModel.hexs,
+        widths: viewModel.widths,
+      ),
     );
   }
 }
@@ -332,7 +339,7 @@ class UserTileView extends StatelessWidget {
             // right: 8,
             child: SkewedContainerView(
               padding: const EdgeInsets.fromLTRB(8, 4, 12, 4),
-              color: Colors.white,
+              color: Theme.of(context).colorScheme.inverseSurface,
               elevation: 4,
               child: Text(
                 viewModel.userName,
@@ -340,7 +347,7 @@ class UserTileView extends StatelessWidget {
                 // overflow: TextOverflow.fade,
                 // softWrap: false,
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.background,
+                      color: Theme.of(context).colorScheme.onInverseSurface,
                     ),
               ),
             ),
