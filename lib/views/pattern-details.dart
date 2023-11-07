@@ -17,6 +17,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 @immutable
 class PatternDetailsViewModel {
   final bool isLoading;
+  final String id;
   final String title;
   final List<String> colors;
   final String imageUrl;
@@ -29,6 +30,7 @@ class PatternDetailsViewModel {
 
   const PatternDetailsViewModel({
     required this.isLoading,
+    required this.id,
     required this.title,
     required this.colors,
     required this.imageUrl,
@@ -43,6 +45,7 @@ class PatternDetailsViewModel {
   factory PatternDetailsViewModel.empty() {
     return PatternDetailsViewModel(
       isLoading: true,
+      id: '',
       title: '',
       colors: const [],
       imageUrl: '',
@@ -93,6 +96,7 @@ class PatternDetailsViewBloc extends Cubit<PatternDetailsViewModel> {
     emit(
       PatternDetailsViewModel(
         isLoading: false,
+        id: (_pattern.id ?? 0).toString(),
         title: _pattern.title ?? '',
         colors: _pattern.colors ?? [],
         imageUrl: _pattern.imageUrl ?? '',
@@ -250,7 +254,7 @@ class PatternDetailsView extends StatelessWidget {
                     text: 'This pattern on COLOURlovers.com',
                     onTap: () {
                       openUrl(
-                          'https://www.colourlovers.com/pattern/${viewModel.title}');
+                          'https://www.colourlovers.com/pattern/${viewModel.id}');
                     },
                   ),
                   const SizedBox(height: 16),

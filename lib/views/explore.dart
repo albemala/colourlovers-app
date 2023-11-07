@@ -36,7 +36,9 @@ class ExploreViewBloc extends Cubit<void> {
 }
 
 class ExploreViewBuilder extends StatelessWidget {
-  const ExploreViewBuilder({super.key});
+  const ExploreViewBuilder({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +69,7 @@ class ExploreView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
+      // TODO should this have a Scaffold?
       child: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(

@@ -17,6 +17,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 @immutable
 class PaletteDetailsViewModel {
   final bool isLoading;
+  final String id;
   final String title;
   final List<String> colors;
   final List<double> colorWidths;
@@ -29,6 +30,7 @@ class PaletteDetailsViewModel {
 
   const PaletteDetailsViewModel({
     required this.isLoading,
+    required this.id,
     required this.title,
     required this.colors,
     required this.colorWidths,
@@ -43,6 +45,7 @@ class PaletteDetailsViewModel {
   factory PaletteDetailsViewModel.empty() {
     return PaletteDetailsViewModel(
       isLoading: true,
+      id: '',
       title: '',
       colors: const [],
       colorWidths: const [],
@@ -93,6 +96,7 @@ class PaletteDetailsViewBloc extends Cubit<PaletteDetailsViewModel> {
     emit(
       PaletteDetailsViewModel(
         isLoading: false,
+        id: (_palette.id ?? 0).toString(),
         title: _palette.title ?? '',
         colors: _palette.colors ?? [],
         colorWidths: _palette.colorWidths ?? [],
@@ -252,7 +256,7 @@ class PaletteDetailsView extends StatelessWidget {
                     text: 'This palette on COLOURlovers.com',
                     onTap: () {
                       openUrl(
-                          'https://www.colourlovers.com/palette/${viewModel.title}');
+                          'https://www.colourlovers.com/palette/${viewModel.id}');
                     },
                   ),
                   const SizedBox(height: 16),
