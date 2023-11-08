@@ -8,6 +8,29 @@ Future<ColourloversLover?> fetchUser(
   return client.getLover(userName: userName);
 }
 
+const _numResults = 3;
+
+Future<List<ColourloversColor>> fetchUserColorsPreview(
+  ColourloversApiClient client,
+  String userName,
+) async {
+  return fetchUserColors(client, _numResults, 0, userName);
+}
+
+Future<List<ColourloversPalette>> fetchUserPalettesPreview(
+  ColourloversApiClient client,
+  String userName,
+) async {
+  return fetchUserPalettes(client, _numResults, 0, userName);
+}
+
+Future<List<ColourloversPattern>> fetchUserPatternsPreview(
+  ColourloversApiClient client,
+  String userName,
+) async {
+  return fetchUserPatterns(client, _numResults, 0, userName);
+}
+
 Future<List<ColourloversColor>> fetchUserColors(
   ColourloversApiClient client,
   int numResults,
@@ -52,27 +75,4 @@ Future<List<ColourloversPattern>> fetchUserPatterns(
     resultOffset: resultOffset,
   );
   return patterns ?? [];
-}
-
-const _numResults = 3;
-
-Future<List<ColourloversColor>> fetchUserColorsPreview(
-  ColourloversApiClient client,
-  String userName,
-) async {
-  return fetchUserColors(client, _numResults, 0, userName);
-}
-
-Future<List<ColourloversPalette>> fetchUserPalettesPreview(
-  ColourloversApiClient client,
-  String userName,
-) async {
-  return fetchUserPalettes(client, _numResults, 0, userName);
-}
-
-Future<List<ColourloversPattern>> fetchUserPatternsPreview(
-  ColourloversApiClient client,
-  String userName,
-) async {
-  return fetchUserPatterns(client, _numResults, 0, userName);
 }

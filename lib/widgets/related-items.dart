@@ -1,5 +1,6 @@
 import 'package:colourlovers_app/widgets/h2-text.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';
+import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 
 // TODO if they are all the same, can I just use _RelatedItemsView?
@@ -225,27 +226,25 @@ class _RelatedItemsView<ItemType> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (items.isEmpty) return Container();
-    return Column(
+    return SeparatedColumn(
       crossAxisAlignment: CrossAxisAlignment.stretch,
+      separatorBuilder: () {
+        return const SizedBox(height: 16);
+      },
       children: [
         H2TextView(title),
-        const SizedBox(height: 16),
-        ListView.separated(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: items.length,
-          itemBuilder: (context, index) {
-            final item = items.elementAt(index);
-            return itemBuilder(item);
-          },
-          separatorBuilder: (context, index) {
+        SeparatedColumn(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          separatorBuilder: () {
             return const SizedBox(height: 8);
           },
-        ),
-        const SizedBox(height: 8),
-        OutlinedButton(
-          onPressed: onShowMorePressed,
-          child: const Text('Show more'),
+          children: [
+            ...items.map(itemBuilder),
+            OutlinedButton(
+              onPressed: onShowMorePressed,
+              child: const Text('Show more'),
+            ),
+          ],
         ),
       ],
     );

@@ -12,6 +12,7 @@ import 'package:colourlovers_app/widgets/items.dart';
 import 'package:colourlovers_app/widgets/link.dart';
 import 'package:colourlovers_app/widgets/related-items.dart';
 import 'package:colourlovers_app/widgets/stats.dart';
+import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -250,31 +251,18 @@ class ColorDetailsView extends StatelessWidget {
         ],
       ),
       body: viewModel.isLoading
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
+          ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+              child: SeparatedColumn(
+                separatorBuilder: () {
+                  return const SizedBox(height: 32);
+                },
                 children: [
-                  Center(
-                    child: Text(
-                      viewModel.title,
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
+                  _HeaderView(
+                    title: viewModel.title,
+                    hex: viewModel.hex,
                   ),
-                  const SizedBox(height: 16),
-                  ItemButtonView(
-                    onTap: () {
-                      // TODO
-                      // ref
-                      //     .read(routingProvider.notifier)
-                      //     .showScreen(context, ShareColorView(color: color));
-                    },
-                    child: ColorView(hex: viewModel.hex),
-                  ),
-                  const SizedBox(height: 32),
                   StatsView(
                     stats: [
                       StatsItemViewModel(
@@ -291,115 +279,213 @@ class ColorDetailsView extends StatelessWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 32),
-                  const H2TextView('Values'),
-                  const SizedBox(height: 16),
-                  ColorValueView(
-                    label: 'R',
-                    value: viewModel.rgb.red,
-                    minValue: 0,
-                    maxValue: 256,
-                    trackColors: const [Color(0xFF000000), Color(0xFFFF0000)],
+                  _ColorValuesView(
+                    rgb: viewModel.rgb,
+                    hsv: viewModel.hsv,
                   ),
-                  ColorValueView(
-                    label: 'G',
-                    value: viewModel.rgb.green,
-                    minValue: 0,
-                    maxValue: 256,
-                    trackColors: const [Color(0xFF000000), Color(0xFF00FF00)],
+                  _CreatedByView(
+                    user: viewModel.user,
                   ),
-                  ColorValueView(
-                    label: 'B',
-                    value: viewModel.rgb.blue,
-                    minValue: 0,
-                    maxValue: 256,
-                    trackColors: const [Color(0xFF000000), Color(0xFF0000FF)],
+                  RelatedColorsView(
+                    // hsv: viewModel.hsv,
+                    viewModels: viewModel.relatedColors,
                   ),
-                  const SizedBox(height: 16),
-                  ColorValueView(
-                    label: 'H',
-                    value: viewModel.hsv.hue,
-                    minValue: 0,
-                    maxValue: 360,
-                    trackColors: const [
-                      Color(0xFFFF0000),
-                      Color(0xFFFFFF00),
-                      Color(0xFF00FF00),
-                      Color(0xFF00FFFF),
-                      Color(0xFF0000FF),
-                      Color(0xFFFF00FF),
-                      Color(0xFFFF0000),
-                    ],
+                  RelatedPalettesView(
+                    // hexs: viewModel.hexs,
+                    viewModels: viewModel.relatedPalettes,
                   ),
-                  ColorValueView(
-                    label: 'S',
-                    value: viewModel.hsv.saturation,
-                    minValue: 0,
-                    maxValue: 100,
-                    trackColors: [
-                      const Color(0xFF000000),
-                      HSVColor.fromAHSV(1, viewModel.hsv.hue, 1, 1).toColor()
-                    ],
+                  RelatedPatternsView(
+                    // hexs: viewModel.hexs,
+                    viewModels: viewModel.relatedPatterns,
                   ),
-                  ColorValueView(
-                    label: 'V',
-                    value: viewModel.hsv.value,
-                    minValue: 0,
-                    maxValue: 100,
-                    trackColors: const [Color(0xFF000000), Color(0xFFFFFFFF)],
-                  ),
-                  const SizedBox(height: 32),
-                  const H2TextView('Created by'),
-                  const SizedBox(height: 16),
-                  UserTileView(
-                    viewModel: viewModel.user,
-                    onTap: () {
-                      // TODO
-                      // ref
-                      //     .read(routingProvider.notifier)
-                      //     .showScreen(context, UserView(user: user));
-                    },
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 32),
-                    child: RelatedColorsView(
-                      // hsv: viewModel.hsv,
-                      viewModels: viewModel.relatedColors,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 32),
-                    child: RelatedPalettesView(
-                      // hexs: viewModel.hexs,
-                      viewModels: viewModel.relatedPalettes,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 32),
-                    child: RelatedPatternsView(
-                      // hexs: viewModel.hexs,
-                      viewModels: viewModel.relatedPatterns,
-                    ),
-                  ),
-                  const SizedBox(height: 32),
-                  LinkView(
-                    text: 'This color on COLOURlovers.com',
-                    onTap: () {
-                      openUrl(
-                          'https://www.colourlovers.com/color/${viewModel.hex}');
-                    },
-                  ),
-                  const SizedBox(height: 16),
-                  LinkView(
-                    text:
-                        'Licensed under Attribution-Noncommercial-Share Alike',
-                    onTap: () {
-                      openUrl(creativeCommonsUrl);
-                    },
+                  _CreditsView(
+                    hex: viewModel.hex,
                   ),
                 ],
               ),
             ),
+    );
+  }
+}
+
+class _HeaderView extends StatelessWidget {
+  final String title;
+  final String hex;
+
+  const _HeaderView({
+    required this.title,
+    required this.hex,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SeparatedColumn(
+      separatorBuilder: () {
+        return const SizedBox(height: 16);
+      },
+      children: [
+        Center(
+          child: Text(
+            title,
+            style: Theme.of(context).textTheme.titleLarge,
+          ),
+        ),
+        ItemButtonView(
+          onTap: () {
+            // TODO
+            // ref
+            //     .read(routingProvider.notifier)
+            //     .showScreen(context, ShareColorView(color: color));
+          },
+          child: ColorView(hex: hex),
+        ),
+      ],
+    );
+  }
+}
+
+class _ColorValuesView extends StatelessWidget {
+  final ColorRgbViewModel rgb;
+  final ColorHsvViewModel hsv;
+
+  const _ColorValuesView({
+    required this.rgb,
+    required this.hsv,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SeparatedColumn(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      separatorBuilder: () {
+        return const SizedBox(height: 16);
+      },
+      children: [
+        const H2TextView('Values'),
+        Column(
+          children: [
+            ColorValueView(
+              label: 'R',
+              value: rgb.red,
+              minValue: 0,
+              maxValue: 256,
+              trackColors: const [Color(0xFF000000), Color(0xFFFF0000)],
+            ),
+            ColorValueView(
+              label: 'G',
+              value: rgb.green,
+              minValue: 0,
+              maxValue: 256,
+              trackColors: const [Color(0xFF000000), Color(0xFF00FF00)],
+            ),
+            ColorValueView(
+              label: 'B',
+              value: rgb.blue,
+              minValue: 0,
+              maxValue: 256,
+              trackColors: const [Color(0xFF000000), Color(0xFF0000FF)],
+            ),
+          ],
+        ),
+        Column(
+          children: [
+            ColorValueView(
+              label: 'H',
+              value: hsv.hue,
+              minValue: 0,
+              maxValue: 360,
+              trackColors: const [
+                Color(0xFFFF0000),
+                Color(0xFFFFFF00),
+                Color(0xFF00FF00),
+                Color(0xFF00FFFF),
+                Color(0xFF0000FF),
+                Color(0xFFFF00FF),
+                Color(0xFFFF0000),
+              ],
+            ),
+            ColorValueView(
+              label: 'S',
+              value: hsv.saturation,
+              minValue: 0,
+              maxValue: 100,
+              trackColors: [
+                const Color(0xFF000000),
+                HSVColor.fromAHSV(1, hsv.hue, 1, 1).toColor()
+              ],
+            ),
+            ColorValueView(
+              label: 'V',
+              value: hsv.value,
+              minValue: 0,
+              maxValue: 100,
+              trackColors: const [Color(0xFF000000), Color(0xFFFFFFFF)],
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _CreatedByView extends StatelessWidget {
+  final UserTileViewModel user;
+
+  const _CreatedByView({
+    required this.user,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SeparatedColumn(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      separatorBuilder: () {
+        return const SizedBox(height: 16);
+      },
+      children: [
+        const H2TextView('Created by'),
+        UserTileView(
+          viewModel: user,
+          onTap: () {
+            // TODO
+            // ref
+            //     .read(routingProvider.notifier)
+            //     .showScreen(context, UserView(user: user));
+          },
+        ),
+      ],
+    );
+  }
+}
+
+class _CreditsView extends StatelessWidget {
+  final String hex;
+
+  const _CreditsView({
+    required this.hex,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SeparatedColumn(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      separatorBuilder: () {
+        return const SizedBox(height: 16);
+      },
+      children: [
+        LinkView(
+          text: 'This color on COLOURlovers.com',
+          onTap: () {
+            openUrl('https://www.colourlovers.com/color/$hex');
+          },
+        ),
+        LinkView(
+          text: 'Licensed under Attribution-Noncommercial-Share Alike',
+          onTap: () {
+            openUrl(creativeCommonsUrl);
+          },
+        ),
+      ],
     );
   }
 }

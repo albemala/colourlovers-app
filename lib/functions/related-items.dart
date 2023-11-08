@@ -2,6 +2,29 @@ import 'dart:math';
 
 import 'package:colourlovers_api/colourlovers_api.dart';
 
+const _numResults = 3;
+
+Future<List<ColourloversColor>> fetchRelatedColorsPreview(
+  ColourloversApiClient client,
+  Hsv hsv,
+) async {
+  return fetchRelatedColors(client, _numResults, 0, hsv);
+}
+
+Future<List<ColourloversPalette>> fetchRelatedPalettesPreview(
+  ColourloversApiClient client,
+  List<String> hex,
+) async {
+  return fetchRelatedPalettes(client, _numResults, 0, hex);
+}
+
+Future<List<ColourloversPattern>> fetchRelatedPatternsPreview(
+  ColourloversApiClient client,
+  List<String> hex,
+) async {
+  return fetchRelatedPatterns(client, _numResults, 0, hex);
+}
+
 Future<List<ColourloversColor>> fetchRelatedColors(
   ColourloversApiClient client,
   int numResults,
@@ -59,27 +82,4 @@ Future<List<ColourloversPattern>> fetchRelatedPatterns(
     // sortBy: ClRequestSortBy.DESC,
   );
   return patterns ?? [];
-}
-
-const _numResults = 3;
-
-Future<List<ColourloversColor>> fetchRelatedColorsPreview(
-  ColourloversApiClient client,
-  Hsv hsv,
-) async {
-  return fetchRelatedColors(client, _numResults, 0, hsv);
-}
-
-Future<List<ColourloversPalette>> fetchRelatedPalettesPreview(
-  ColourloversApiClient client,
-  List<String> hex,
-) async {
-  return fetchRelatedPalettes(client, _numResults, 0, hex);
-}
-
-Future<List<ColourloversPattern>> fetchRelatedPatternsPreview(
-  ColourloversApiClient client,
-  List<String> hex,
-) async {
-  return fetchRelatedPatterns(client, _numResults, 0, hex);
 }

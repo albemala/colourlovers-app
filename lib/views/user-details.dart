@@ -7,6 +7,7 @@ import 'package:colourlovers_app/widgets/item-tiles.dart';
 import 'package:colourlovers_app/widgets/label-value.dart';
 import 'package:colourlovers_app/widgets/link.dart';
 import 'package:colourlovers_app/widgets/related-items.dart';
+import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -160,6 +161,7 @@ class UserDetailsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userName = viewModel.userName;
     return Scaffold(
       appBar: AppTopBarView(
         context,
@@ -172,8 +174,10 @@ class UserDetailsView extends StatelessWidget {
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
+              child: SeparatedColumn(
+                separatorBuilder: () {
+                  return const SizedBox(height: 32);
+                },
                 children: [
                   Center(
                     child: Text(
@@ -181,75 +185,98 @@ class UserDetailsView extends StatelessWidget {
                       style: Theme.of(context).textTheme.titleLarge,
                     ),
                   ),
-                  const SizedBox(height: 32),
-                  LabelValueView(
-                    label: 'Colors',
-                    value: viewModel.numColors,
-                  ),
-                  LabelValueView(
-                    label: 'Palettes',
-                    value: viewModel.numPalettes,
-                  ),
-                  LabelValueView(
-                    label: 'Patterns',
-                    value: viewModel.numPatterns,
-                  ),
-                  const SizedBox(height: 8),
-                  LabelValueView(
-                    label: 'Rating',
-                    value: viewModel.rating,
-                  ),
-                  LabelValueView(
-                    label: 'Lovers',
-                    value: viewModel.numLovers,
-                  ),
-                  const SizedBox(height: 8),
-                  LabelValueView(
-                    label: 'Location',
-                    value: viewModel.location,
-                  ),
-                  LabelValueView(
-                    label: 'Registered',
-                    value: viewModel.dateRegistered,
-                  ),
-                  LabelValueView(
-                    label: 'Last Active',
-                    value: viewModel.dateLastActive,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 32),
-                    child: RelatedColorsView(viewModels: viewModel.userColors),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 32),
-                    child:
-                        RelatedPalettesView(viewModels: viewModel.userPalettes),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 32),
-                    child:
-                        RelatedPatternsView(viewModels: viewModel.userPatterns),
-                  ),
-                  const SizedBox(height: 32),
-                  LinkView(
-                    text: 'This user on COLOURlovers.com',
-                    onTap: () {
-                      openUrl(
-                        'https://www.colourlovers.com/lover/${viewModel.userName}',
-                      );
+                  SeparatedColumn(
+                    separatorBuilder: () {
+                      return const SizedBox(height: 8);
                     },
+                    children: [
+                      Column(
+                        children: [
+                          LabelValueView(
+                            label: 'Colors',
+                            value: viewModel.numColors,
+                          ),
+                          LabelValueView(
+                            label: 'Palettes',
+                            value: viewModel.numPalettes,
+                          ),
+                          LabelValueView(
+                            label: 'Patterns',
+                            value: viewModel.numPatterns,
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          LabelValueView(
+                            label: 'Rating',
+                            value: viewModel.rating,
+                          ),
+                          LabelValueView(
+                            label: 'Lovers',
+                            value: viewModel.numLovers,
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          LabelValueView(
+                            label: 'Location',
+                            value: viewModel.location,
+                          ),
+                          LabelValueView(
+                            label: 'Registered',
+                            value: viewModel.dateRegistered,
+                          ),
+                          LabelValueView(
+                            label: 'Last Active',
+                            value: viewModel.dateLastActive,
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 16),
-                  LinkView(
-                    text:
-                        'Licensed under Attribution-Noncommercial-Share Alike',
-                    onTap: () {
-                      openUrl(creativeCommonsUrl);
-                    },
-                  ),
+                  // TODO the original implementation used UserColorsWidgets, ...
+                  RelatedColorsView(viewModels: viewModel.userColors),
+                  RelatedPalettesView(viewModels: viewModel.userPalettes),
+                  RelatedPatternsView(viewModels: viewModel.userPatterns),
+                  _CreditsView(userName: userName),
                 ],
               ),
             ),
+    );
+  }
+}
+
+class _CreditsView extends StatelessWidget {
+  final String userName;
+
+  const _CreditsView({
+    super.key,
+    required this.userName,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SeparatedColumn(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      separatorBuilder: () {
+        return const SizedBox(height: 16);
+      },
+      children: [
+        LinkView(
+          text: 'This user on COLOURlovers.com',
+          onTap: () {
+            openUrl('https://www.colourlovers.com/lover/$userName');
+          },
+        ),
+        LinkView(
+          text: 'Licensed under Attribution-Noncommercial-Share Alike',
+          onTap: () {
+            openUrl(creativeCommonsUrl);
+          },
+        ),
+      ],
     );
   }
 }
