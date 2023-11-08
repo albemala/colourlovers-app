@@ -2,8 +2,10 @@ import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/defines/urls.dart';
 import 'package:colourlovers_app/functions/colors.dart';
 import 'package:colourlovers_app/functions/related-items.dart';
+import 'package:colourlovers_app/functions/routing.dart';
 import 'package:colourlovers_app/functions/url.dart';
 import 'package:colourlovers_app/functions/user.dart';
+import 'package:colourlovers_app/views/share-palette.dart';
 import 'package:colourlovers_app/widgets/app-top-bar.dart';
 import 'package:colourlovers_app/widgets/h2-text.dart';
 import 'package:colourlovers_app/widgets/item-button.dart';
@@ -11,6 +13,7 @@ import 'package:colourlovers_app/widgets/item-tiles.dart';
 import 'package:colourlovers_app/widgets/items.dart';
 import 'package:colourlovers_app/widgets/link.dart';
 import 'package:colourlovers_app/widgets/related-items.dart';
+import 'package:colourlovers_app/widgets/share-item-button.dart';
 import 'package:colourlovers_app/widgets/stats.dart';
 import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
@@ -126,6 +129,10 @@ class PaletteDetailsViewBloc extends Cubit<PaletteDetailsViewModel> {
       ),
     );
   }
+
+  void showSharePaletteView(BuildContext context) {
+    openRoute(context, SharePaletteViewBuilder(palette: _palette));
+  }
 }
 
 class PaletteDetailsViewBuilder extends StatelessWidget {
@@ -171,18 +178,12 @@ class PaletteDetailsView extends StatelessWidget {
       appBar: AppTopBarView(
         context,
         title: 'Palette',
-        actions: const [
-          // TODO
-          /*
-            IconButton(
-            onPressed: () async {
-              ref.read(routingProvider.notifier).showScreen(context, SharePaletteView(palette: palette));
+        actions: [
+          ShareItemButton(
+            onPressed: () {
+              bloc.showSharePaletteView(context);
             },
-            icon: const Icon(
-              BoxIcons.bx_export_regular,
-            ),
           ),
-          */
         ],
       ),
       body: viewModel.isLoading

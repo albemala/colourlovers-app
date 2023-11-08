@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 
 void showSnackBar(
   BuildContext context,
-  SnackBar Function(BuildContext context) builder,
+  SnackBar view,
 ) {
   if (!context.mounted) return;
   ScaffoldMessenger.of(context)
     ..clearSnackBars()
-    ..showSnackBar(builder(context));
+    ..showSnackBar(view);
 }
 
 void showModalDialog(
   BuildContext context,
-  AlertDialog dialog,
+  AlertDialog view,
 ) {
   if (!context.mounted) return;
   showDialog<void>(
     context: context,
-    builder: (_) => dialog,
+    builder: (_) => view,
   );
 }
 

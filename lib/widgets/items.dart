@@ -25,7 +25,7 @@ class PaletteView extends StatelessWidget {
   const PaletteView({
     super.key,
     required this.hexs,
-    this.widths = const [],
+    required this.widths,
   });
 
   @override

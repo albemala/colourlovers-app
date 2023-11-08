@@ -1,8 +1,10 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/defines/urls.dart';
 import 'package:colourlovers_app/functions/related-items.dart';
+import 'package:colourlovers_app/functions/routing.dart';
 import 'package:colourlovers_app/functions/url.dart';
 import 'package:colourlovers_app/functions/user.dart';
+import 'package:colourlovers_app/views/share-color.dart';
 import 'package:colourlovers_app/widgets/app-top-bar.dart';
 import 'package:colourlovers_app/widgets/color-value.dart';
 import 'package:colourlovers_app/widgets/h2-text.dart';
@@ -11,6 +13,7 @@ import 'package:colourlovers_app/widgets/item-tiles.dart';
 import 'package:colourlovers_app/widgets/items.dart';
 import 'package:colourlovers_app/widgets/link.dart';
 import 'package:colourlovers_app/widgets/related-items.dart';
+import 'package:colourlovers_app/widgets/share-item-button.dart';
 import 'package:colourlovers_app/widgets/stats.dart';
 import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
@@ -188,6 +191,10 @@ class ColorDetailsViewBloc extends Cubit<ColorDetailsViewModel> {
       ),
     );
   }
+
+  void showShareColorView(BuildContext context) {
+    openRoute(context, ShareColorViewBuilder(color: _color));
+  }
 }
 
 class ColorDetailsViewBuilder extends StatelessWidget {
@@ -235,19 +242,12 @@ class ColorDetailsView extends StatelessWidget {
       appBar: AppTopBarView(
         context,
         title: 'Color',
-        actions: const [
-/* TODO
-          IconButton(
-            onPressed: () async {
-              ref
-                  .read(routingProvider.notifier)
-                  .showScreen(context, ShareColorView(color: color));
+        actions: [
+          ShareItemButton(
+            onPressed: () {
+              bloc.showShareColorView(context);
             },
-            icon: const Icon(
-              BoxIcons.bx_export_regular,
-            ),
           ),
-*/
         ],
       ),
       body: viewModel.isLoading

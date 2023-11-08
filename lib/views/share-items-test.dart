@@ -1,43 +1,42 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
-import 'package:colourlovers_app/views/color-details.dart';
-import 'package:colourlovers_app/views/palette-details.dart';
-import 'package:colourlovers_app/views/pattern-details.dart';
-import 'package:colourlovers_app/views/user-details.dart';
+import 'package:colourlovers_app/views/share-color.dart';
+import 'package:colourlovers_app/views/share-palette.dart';
+import 'package:colourlovers_app/views/share-pattern.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @immutable
-class ItemDetailsViewModel {
+class ShareItemsViewModel {
   final ColourloversColor? color;
   final ColourloversPalette? palette;
   final ColourloversPattern? pattern;
   final ColourloversLover? user;
 
-  const ItemDetailsViewModel({
+  const ShareItemsViewModel({
     this.color,
     this.palette,
     this.pattern,
     this.user,
   });
 
-  factory ItemDetailsViewModel.initialState() {
-    return const ItemDetailsViewModel();
+  factory ShareItemsViewModel.initialState() {
+    return const ShareItemsViewModel();
   }
 }
 
-class ItemDetailsBloc extends Cubit<ItemDetailsViewModel> {
-  factory ItemDetailsBloc.fromContext(BuildContext context) {
-    return ItemDetailsBloc(
+class ShareItemsBloc extends Cubit<ShareItemsViewModel> {
+  factory ShareItemsBloc.fromContext(BuildContext context) {
+    return ShareItemsBloc(
       ColourloversApiClient(),
     );
   }
 
   final ColourloversApiClient _client;
 
-  ItemDetailsBloc(
+  ShareItemsBloc(
     this._client,
   ) : super(
-          ItemDetailsViewModel.initialState(),
+          ShareItemsViewModel.initialState(),
         ) {
     _init();
   }
@@ -49,7 +48,7 @@ class ItemDetailsBloc extends Cubit<ItemDetailsViewModel> {
     final user = await _client.getLover(userName: 'sunmeadow');
 
     emit(
-      ItemDetailsViewModel(
+      ShareItemsViewModel(
         color: color,
         palette: palette,
         pattern: pattern,
@@ -59,20 +58,20 @@ class ItemDetailsBloc extends Cubit<ItemDetailsViewModel> {
   }
 }
 
-class ItemDetailsTestViewBuilder extends StatelessWidget {
-  const ItemDetailsTestViewBuilder({
+class ShareItemsTestViewBuilder extends StatelessWidget {
+  const ShareItemsTestViewBuilder({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: ItemDetailsBloc.fromContext,
-      child: BlocBuilder<ItemDetailsBloc, ItemDetailsViewModel>(
+      create: ShareItemsBloc.fromContext,
+      child: BlocBuilder<ShareItemsBloc, ShareItemsViewModel>(
         builder: (context, viewModel) {
-          return ItemDetailsTestView(
+          return ShareItemsTestView(
             viewModel: viewModel,
-            bloc: context.read<ItemDetailsBloc>(),
+            bloc: context.read<ShareItemsBloc>(),
           );
         },
       ),
@@ -80,11 +79,11 @@ class ItemDetailsTestViewBuilder extends StatelessWidget {
   }
 }
 
-class ItemDetailsTestView extends StatelessWidget {
-  final ItemDetailsViewModel viewModel;
-  final ItemDetailsBloc bloc;
+class ShareItemsTestView extends StatelessWidget {
+  final ShareItemsViewModel viewModel;
+  final ShareItemsBloc bloc;
 
-  const ItemDetailsTestView({
+  const ShareItemsTestView({
     super.key,
     required this.viewModel,
     required this.bloc,
@@ -96,22 +95,17 @@ class ItemDetailsTestView extends StatelessWidget {
       children: [
         Expanded(
           child: viewModel.color != null
-              ? ColorDetailsViewBuilder(color: viewModel.color!)
+              ? ShareColorViewBuilder(color: viewModel.color!)
               : const Center(child: CircularProgressIndicator()),
         ),
         Expanded(
           child: viewModel.palette != null
-              ? PaletteDetailsViewBuilder(palette: viewModel.palette!)
+              ? SharePaletteViewBuilder(palette: viewModel.palette!)
               : const Center(child: CircularProgressIndicator()),
         ),
         Expanded(
           child: viewModel.pattern != null
-              ? PatternDetailsViewBuilder(pattern: viewModel.pattern!)
-              : const Center(child: CircularProgressIndicator()),
-        ),
-        Expanded(
-          child: viewModel.user != null
-              ? UserDetailsViewBuilder(user: viewModel.user!)
+              ? SharePatternViewBuilder(pattern: viewModel.pattern!)
               : const Center(child: CircularProgressIndicator()),
         ),
       ],

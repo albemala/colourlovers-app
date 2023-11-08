@@ -9,3 +9,7 @@ Future<void> openUrl(String url) async {
 
   await launchUrl(uri);
 }
+
+String httpToHttps(String url) {
+  return url.replaceFirst('http://', 'https://');
+}

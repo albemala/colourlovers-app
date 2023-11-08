@@ -1,6 +1,7 @@
 import 'package:colourlovers_app/functions/routing.dart';
 import 'package:colourlovers_app/views/item-details-test.dart';
 import 'package:colourlovers_app/views/items-test.dart';
+import 'package:colourlovers_app/views/share-items-test.dart';
 import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +19,10 @@ class TestViewBloc extends Cubit<void> {
 
   void showItemDetailsTestView(BuildContext context) {
     openRoute(context, const ItemDetailsTestViewBuilder());
+  }
+
+  void showShareItemsTestView(BuildContext context) {
+    openRoute(context, const ShareItemsTestViewBuilder());
   }
 }
 
@@ -74,6 +79,12 @@ class TestView extends StatelessWidget {
                 bloc.showItemDetailsTestView(context);
               },
               child: const Text('Item details'),
+            ),
+            OutlinedButton(
+              onPressed: () {
+                bloc.showShareItemsTestView(context);
+              },
+              child: const Text('Share items'),
             ),
           ],
         ),
