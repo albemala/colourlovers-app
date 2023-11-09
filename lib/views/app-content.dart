@@ -3,7 +3,6 @@ import 'package:colourlovers_app/views/about.dart';
 import 'package:colourlovers_app/views/explore.dart';
 import 'package:colourlovers_app/views/favorites.dart';
 import 'package:colourlovers_app/views/test.dart';
-import 'package:colourlovers_app/widgets/app-top-bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,32 +13,6 @@ enum MainRoute {
   favorites,
   about,
   test,
-}
-
-String getRouteTitle(MainRoute route) {
-  switch (route) {
-    case MainRoute.explore:
-      return 'Explore';
-    case MainRoute.favorites:
-      return 'Favorites';
-    case MainRoute.about:
-      return 'About';
-    case MainRoute.test:
-      return 'Test';
-  }
-}
-
-Widget getRouteView(MainRoute route) {
-  switch (route) {
-    case MainRoute.explore:
-      return const ExploreViewBuilder();
-    case MainRoute.favorites:
-      return const FavoritesView();
-    case MainRoute.about:
-      return const AboutView();
-    case MainRoute.test:
-      return const TestViewBuilder();
-  }
 }
 
 class MainRouteBloc extends Cubit<MainRoute> {
@@ -88,45 +61,73 @@ class AppContentView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // extendBodyBehindAppBar: true, // TODO
-      appBar: AppTopBarView(
-        context,
-        title: getRouteTitle(route),
-        actions: const [
-          ThemeModeToggleButton(),
-          // TODO add padding to the left
-        ],
-      ),
+      // appBar: AppTopBarView(
+      //   context,
+      //   title: getRouteTitle(route),
+      //   actions: const [
+      //     ThemeModeToggleButton(),
+      //     // TODO add padding to the left
+      //   ],
+      // ),
       // TODO
       // body: BackgroundWidget(
       //   colors: defaultBackgroundColors,
       //   child: _getBody(route),
       // ),
-      body: getRouteView(route),
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: route.index,
-        onTap: (index) {
+      body: IndexedStack(
+        index: route.index,
+        children: const [
+          NavigatorView(child: ExploreViewBuilder()),
+          NavigatorView(child: FavoritesView()),
+          NavigatorView(child: AboutView()),
+          if (kDebugMode) NavigatorView(child: TestViewBuilder()),
+        ],
+      ),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: route.index,
+        onDestinationSelected: (index) {
           context.read<MainRouteBloc>().setRoute(index);
         },
-        items: [
-          BottomNavigationBarItem(
-            label: getRouteTitle(MainRoute.explore),
-            icon: const Icon(LucideIcons.compass),
+        destinations: const [
+          NavigationDestination(
+            label: 'Explore',
+            icon: Icon(LucideIcons.compass),
           ),
-          BottomNavigationBarItem(
-            label: getRouteTitle(MainRoute.favorites),
-            icon: const Icon(LucideIcons.star),
+          NavigationDestination(
+            label: 'Favorites',
+            icon: Icon(LucideIcons.star),
           ),
-          BottomNavigationBarItem(
-            label: getRouteTitle(MainRoute.about),
-            icon: const Icon(LucideIcons.info),
+          NavigationDestination(
+            label: 'About',
+            icon: Icon(LucideIcons.info),
           ),
           if (kDebugMode)
-            BottomNavigationBarItem(
-              label: getRouteTitle(MainRoute.test),
-              icon: const Icon(LucideIcons.bug),
+            NavigationDestination(
+              label: 'Test',
+              icon: Icon(LucideIcons.bug),
             ),
         ],
       ),
+    );
+  }
+}
+
+class NavigatorView extends StatelessWidget {
+  final Widget child;
+
+  const NavigatorView({
+    super.key,
+    required this.child,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Navigator(
+      onGenerateRoute: (RouteSettings settings) {
+        return MaterialPageRoute(
+          builder: (BuildContext context) => child,
+        );
+      },
     );
   }
 }

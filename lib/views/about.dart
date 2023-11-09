@@ -1,3 +1,4 @@
+import 'package:colourlovers_app/widgets/app-top-bar.dart';
 import 'package:flutter/material.dart';
 
 class AboutView extends StatelessWidget {
@@ -7,8 +8,18 @@ class AboutView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('About'),
+    return Scaffold(
+      appBar: AppTopBarView(
+        context,
+        title: 'About',
+        actions: const [
+          // ThemeModeToggleButton(),
+          // TODO add padding to the left
+        ],
+      ),
+      body: Center(
+        child: Text('About'),
+      ),
     );
   }
 }

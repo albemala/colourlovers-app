@@ -1,3 +1,4 @@
+import 'package:colourlovers_app/widgets/app-top-bar.dart';
 import 'package:flutter/material.dart';
 
 class FavoritesView extends StatelessWidget {
@@ -7,8 +8,15 @@ class FavoritesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Favorites'),
+    return Scaffold(
+      appBar: AppTopBarView(
+        context,
+        title: 'Favorites',
+        actions: const [],
+      ),
+      body: Center(
+        child: Text('Favorites'),
+      ),
     );
   }
 }
