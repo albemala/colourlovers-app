@@ -221,12 +221,14 @@ class PatternDetailsView extends StatelessWidget {
                   _CreatedByView(
                     user: viewModel.user,
                   ),
-                  RelatedPalettesView(
-                    viewModels: viewModel.relatedPalettes,
-                  ),
-                  RelatedPatternsView(
-                    viewModels: viewModel.relatedPatterns,
-                  ),
+                  if (viewModel.relatedPalettes.isNotEmpty)
+                    RelatedPalettesView(
+                      viewModels: viewModel.relatedPalettes,
+                    ),
+                  if (viewModel.relatedPatterns.isNotEmpty)
+                    RelatedPatternsView(
+                      viewModels: viewModel.relatedPatterns,
+                    ),
                   _CreditsView(
                     id: viewModel.id,
                   ),

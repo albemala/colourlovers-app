@@ -237,10 +237,21 @@ class UserDetailsView extends StatelessWidget {
                     ],
                   ),
                   // TODO the original implementation used UserColorsWidgets, ...
-                  RelatedColorsView(viewModels: viewModel.userColors),
-                  RelatedPalettesView(viewModels: viewModel.userPalettes),
-                  RelatedPatternsView(viewModels: viewModel.userPatterns),
-                  _CreditsView(userName: userName),
+                  if (viewModel.userColors.isNotEmpty)
+                    RelatedColorsView(
+                      viewModels: viewModel.userColors,
+                    ),
+                  if (viewModel.userPalettes.isNotEmpty)
+                    RelatedPalettesView(
+                      viewModels: viewModel.userPalettes,
+                    ),
+                  if (viewModel.userPatterns.isNotEmpty)
+                    RelatedPatternsView(
+                      viewModels: viewModel.userPatterns,
+                    ),
+                  _CreditsView(
+                    userName: userName,
+                  ),
                 ],
               ),
             ),

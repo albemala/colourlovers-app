@@ -256,7 +256,7 @@ class ColorDetailsView extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
               child: SeparatedColumn(
                 separatorBuilder: () {
-                  return const SizedBox(height: 32);
+                  return const SizedBox(height: 32); // TODO try 48
                 },
                 children: [
                   _HeaderView(
@@ -286,18 +286,21 @@ class ColorDetailsView extends StatelessWidget {
                   _CreatedByView(
                     user: viewModel.user,
                   ),
-                  RelatedColorsView(
-                    // hsv: viewModel.hsv,
-                    viewModels: viewModel.relatedColors,
-                  ),
-                  RelatedPalettesView(
-                    // hexs: viewModel.hexs,
-                    viewModels: viewModel.relatedPalettes,
-                  ),
-                  RelatedPatternsView(
-                    // hexs: viewModel.hexs,
-                    viewModels: viewModel.relatedPatterns,
-                  ),
+                  if (viewModel.relatedColors.isNotEmpty)
+                    RelatedColorsView(
+                      // hsv: viewModel.hsv,
+                      viewModels: viewModel.relatedColors,
+                    ),
+                  if (viewModel.relatedPalettes.isNotEmpty)
+                    RelatedPalettesView(
+                      // hexs: viewModel.hexs,
+                      viewModels: viewModel.relatedPalettes,
+                    ),
+                  if (viewModel.relatedPatterns.isNotEmpty)
+                    RelatedPatternsView(
+                      // hexs: viewModel.hexs,
+                      viewModels: viewModel.relatedPatterns,
+                    ),
                   _CreditsView(
                     hex: viewModel.hex,
                   ),

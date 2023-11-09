@@ -225,7 +225,6 @@ class _RelatedItemsView<ItemType> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (items.isEmpty) return Container();
     return SeparatedColumn(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       separatorBuilder: () {
