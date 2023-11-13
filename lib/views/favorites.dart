@@ -14,7 +14,7 @@ class FavoritesView extends StatelessWidget {
         title: 'Favorites',
         actions: const [],
       ),
-      body: Center(
+      body: const Center(
         child: Text('Favorites'),
       ),
     );

@@ -30,14 +30,9 @@ class AppView extends StatelessWidget {
           theme: lightTheme,
           darkTheme: darkTheme,
           themeMode: preferences.themeMode,
-          // home: child,
           home: const AppContentViewBuilder(),
         );
       },
-      // child: RoutingView(
-      //   routingStream: context.read<RoutingBloc>().routingStream,
-      //   child: const AppContentViewBuilder(),
-      // ),
     );
   }
 }

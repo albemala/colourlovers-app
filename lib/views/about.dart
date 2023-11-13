@@ -17,7 +17,7 @@ class AboutView extends StatelessWidget {
           // TODO add padding to the left
         ],
       ),
-      body: Center(
+      body: const Center(
         child: Text('About'),
       ),
     );
