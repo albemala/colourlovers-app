@@ -1,7 +1,11 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/defines/urls.dart';
+import 'package:colourlovers_app/functions/routing.dart';
 import 'package:colourlovers_app/functions/url.dart';
 import 'package:colourlovers_app/functions/user.dart';
+import 'package:colourlovers_app/views/color-details.dart';
+import 'package:colourlovers_app/views/palette-details.dart';
+import 'package:colourlovers_app/views/pattern-details.dart';
 import 'package:colourlovers_app/widgets/app-top-bar.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';
 import 'package:colourlovers_app/widgets/label-value.dart';
@@ -75,6 +79,9 @@ class UserDetailsViewBloc extends Cubit<UserDetailsViewModel> {
 
   final ColourloversLover _user;
   final ColourloversApiClient _client;
+  List<ColourloversColor> _userColors = [];
+  List<ColourloversPalette> _userPalettes = [];
+  List<ColourloversPattern> _userPatterns = [];
 
   UserDetailsViewBloc(
     this._user,
@@ -87,14 +94,18 @@ class UserDetailsViewBloc extends Cubit<UserDetailsViewModel> {
 
   Future<void> _init() async {
     final userName = _user.userName ?? '';
-    final userColors = await fetchUserColorsPreview(_client, userName);
-    final userPalettes = await fetchUserPalettesPreview(_client, userName);
-    final userPatterns = await fetchUserPatternsPreview(_client, userName);
+    _userColors = await fetchUserColorsPreview(_client, userName);
+    _userPalettes = await fetchUserPalettesPreview(_client, userName);
+    _userPatterns = await fetchUserPatternsPreview(_client, userName);
 
+    _updateState();
+  }
+
+  void _updateState() {
     emit(
       UserDetailsViewModel(
         isLoading: false,
-        userName: userName,
+        userName: _user.userName ?? '',
         numColors: (_user.numColors ?? 0).toString(),
         numPalettes: (_user.numPalettes ?? 0).toString(),
         numPatterns: (_user.numPatterns ?? 0).toString(),
@@ -103,13 +114,13 @@ class UserDetailsViewBloc extends Cubit<UserDetailsViewModel> {
         location: _user.location ?? '',
         dateRegistered: _formatDate(_user.dateRegistered),
         dateLastActive: _formatDate(_user.dateLastActive),
-        userColors: userColors //
+        userColors: _userColors //
             .map(ColorTileViewModel.fromColourloverColor)
             .toList(),
-        userPalettes: userPalettes //
+        userPalettes: _userPalettes //
             .map(PaletteTileViewModel.fromColourloverPalette)
             .toList(),
-        userPatterns: userPatterns //
+        userPatterns: _userPatterns //
             .map(PatternTileViewModel.fromColourloverPattern)
             .toList(),
       ),
@@ -119,6 +130,39 @@ class UserDetailsViewBloc extends Cubit<UserDetailsViewModel> {
   String _formatDate(DateTime? date) {
     if (date == null) return '';
     return '${date.year}/${date.month.toString().padLeft(2, '0')}/${date.day.toString().padLeft(2, '0')}';
+  }
+
+  void showColorDetailsView(
+    BuildContext context,
+    ColorTileViewModel viewModel,
+  ) {
+    final index = state.userColors.indexOf(viewModel);
+    openRoute(
+      context,
+      ColorDetailsViewBuilder(color: _userColors[index]),
+    );
+  }
+
+  void showPaletteDetailsView(
+    BuildContext context,
+    PaletteTileViewModel viewModel,
+  ) {
+    final index = state.userPalettes.indexOf(viewModel);
+    openRoute(
+      context,
+      PaletteDetailsViewBuilder(palette: _userPalettes[index]),
+    );
+  }
+
+  void showPatternDetailsView(
+    BuildContext context,
+    PatternTileViewModel viewModel,
+  ) {
+    final index = state.userPatterns.indexOf(viewModel);
+    openRoute(
+      context,
+      PatternDetailsViewBuilder(pattern: _userPatterns[index]),
+    );
   }
 }
 
@@ -236,18 +280,65 @@ class UserDetailsView extends StatelessWidget {
                       ),
                     ],
                   ),
-                  // TODO the original implementation used UserColorsWidgets, ...
                   if (viewModel.userColors.isNotEmpty)
-                    RelatedColorsView(
-                      viewModels: viewModel.userColors,
+                    RelatedItemsPreviewView(
+                      title: 'Colors',
+                      items: viewModel.userColors,
+                      itemBuilder: (viewModel) {
+                        return ColorTileView(
+                          viewModel: viewModel,
+                          onTap: () {
+                            bloc.showColorDetailsView(context, viewModel);
+                          },
+                        );
+                      },
+                      onShowMorePressed: () {
+                        // TODO
+                        // ref.read(routingProvider.notifier).showScreen(
+                        //       context,
+                        //       RelatedColorsView(hsv: hsv),
+                        //     );
+                      },
                     ),
                   if (viewModel.userPalettes.isNotEmpty)
-                    RelatedPalettesView(
-                      viewModels: viewModel.userPalettes,
+                    RelatedItemsPreviewView(
+                      title: 'Palettes',
+                      items: viewModel.userPalettes,
+                      itemBuilder: (viewModel) {
+                        return PaletteTileView(
+                          viewModel: viewModel,
+                          onTap: () {
+                            bloc.showPaletteDetailsView(context, viewModel);
+                          },
+                        );
+                      },
+                      onShowMorePressed: () {
+                        // TODO
+                        // ref.read(routingProvider.notifier).showScreen(
+                        //       context,
+                        //       RelatedPalettesView(hex: hex),
+                        //     );
+                      },
                     ),
                   if (viewModel.userPatterns.isNotEmpty)
-                    RelatedPatternsView(
-                      viewModels: viewModel.userPatterns,
+                    RelatedItemsPreviewView(
+                      title: 'Patterns',
+                      items: viewModel.userPatterns,
+                      itemBuilder: (viewModel) {
+                        return PatternTileView(
+                          viewModel: viewModel,
+                          onTap: () {
+                            bloc.showPatternDetailsView(context, viewModel);
+                          },
+                        );
+                      },
+                      onShowMorePressed: () {
+                        // TODO
+                        // ref.read(routingProvider.notifier).showScreen(
+                        //       context,
+                        //       RelatedPatternsView(hex: hex),
+                        //     );
+                      },
                     ),
                   _CreditsView(
                     userName: userName,
@@ -263,7 +354,6 @@ class _CreditsView extends StatelessWidget {
   final String userName;
 
   const _CreditsView({
-    super.key,
     required this.userName,
   });
 

@@ -4,7 +4,10 @@ import 'package:colourlovers_app/functions/related-items.dart';
 import 'package:colourlovers_app/functions/routing.dart';
 import 'package:colourlovers_app/functions/url.dart';
 import 'package:colourlovers_app/functions/user.dart';
+import 'package:colourlovers_app/views/palette-details.dart';
+import 'package:colourlovers_app/views/pattern-details.dart';
 import 'package:colourlovers_app/views/share-color.dart';
+import 'package:colourlovers_app/views/user-details.dart';
 import 'package:colourlovers_app/widgets/app-top-bar.dart';
 import 'package:colourlovers_app/widgets/color-value.dart';
 import 'package:colourlovers_app/widgets/h2-text.dart';
@@ -138,6 +141,10 @@ class ColorDetailsViewBloc extends Cubit<ColorDetailsViewModel> {
 
   final ColourloversColor _color;
   final ColourloversApiClient _client;
+  ColourloversLover? _user;
+  List<ColourloversColor> _relatedColors = [];
+  List<ColourloversPalette> _relatedPalettes = [];
+  List<ColourloversPattern> _relatedPatterns = [];
 
   ColorDetailsViewBloc(
     this._color,
@@ -149,19 +156,23 @@ class ColorDetailsViewBloc extends Cubit<ColorDetailsViewModel> {
   }
 
   Future<void> _init() async {
-    final user = _color.userName != null
+    _user = _color.userName != null
         ? await fetchUser(_client, _color.userName!)
         : null;
-    final relatedColors = _color.hsv != null
+    _relatedColors = _color.hsv != null
         ? await fetchRelatedColorsPreview(_client, _color.hsv!)
         : <ColourloversColor>[];
-    final relatedPalettes = _color.hex != null
+    _relatedPalettes = _color.hex != null
         ? await fetchRelatedPalettesPreview(_client, [_color.hex!])
         : <ColourloversPalette>[];
-    final relatedPatterns = _color.hex != null
+    _relatedPatterns = _color.hex != null
         ? await fetchRelatedPatternsPreview(_client, [_color.hex!])
         : <ColourloversPattern>[];
 
+    _updateState();
+  }
+
+  void _updateState() {
     emit(
       ColorDetailsViewModel(
         isLoading: false,
@@ -176,16 +187,16 @@ class ColorDetailsViewBloc extends Cubit<ColorDetailsViewModel> {
         numViews: (_color.numViews ?? 0).toString(),
         numVotes: (_color.numVotes ?? 0).toString(),
         rank: (_color.rank ?? 0).toString(),
-        user: user != null
-            ? UserTileViewModel.fromColourloverUser(user)
+        user: _user != null
+            ? UserTileViewModel.fromColourloverUser(_user!)
             : UserTileViewModel.empty(),
-        relatedColors: relatedColors //
+        relatedColors: _relatedColors //
             .map(ColorTileViewModel.fromColourloverColor)
             .toList(),
-        relatedPalettes: relatedPalettes //
+        relatedPalettes: _relatedPalettes //
             .map(PaletteTileViewModel.fromColourloverPalette)
             .toList(),
-        relatedPatterns: relatedPatterns //
+        relatedPatterns: _relatedPatterns //
             .map(PatternTileViewModel.fromColourloverPattern)
             .toList(),
       ),
@@ -194,6 +205,47 @@ class ColorDetailsViewBloc extends Cubit<ColorDetailsViewModel> {
 
   void showShareColorView(BuildContext context) {
     openRoute(context, ShareColorViewBuilder(color: _color));
+  }
+
+  void showColorDetailsView(
+    BuildContext context,
+    ColorTileViewModel viewModel,
+  ) {
+    final index = state.relatedColors.indexOf(viewModel);
+    openRoute(
+      context,
+      ColorDetailsViewBuilder(color: _relatedColors[index]),
+    );
+  }
+
+  void showPaletteDetailsView(
+    BuildContext context,
+    PaletteTileViewModel viewModel,
+  ) {
+    final index = state.relatedPalettes.indexOf(viewModel);
+    openRoute(
+      context,
+      PaletteDetailsViewBuilder(palette: _relatedPalettes[index]),
+    );
+  }
+
+  void showPatternDetailsView(
+    BuildContext context,
+    PatternTileViewModel viewModel,
+  ) {
+    final index = state.relatedPatterns.indexOf(viewModel);
+    openRoute(
+      context,
+      PatternDetailsViewBuilder(pattern: _relatedPatterns[index]),
+    );
+  }
+
+  void showUserDetailsView(BuildContext context) {
+    if (_user == null) return;
+    openRoute(
+      context,
+      UserDetailsViewBuilder(user: _user!),
+    );
   }
 }
 
@@ -262,6 +314,9 @@ class ColorDetailsView extends StatelessWidget {
                   _HeaderView(
                     title: viewModel.title,
                     hex: viewModel.hex,
+                    onItemTap: () {
+                      bloc.showShareColorView(context);
+                    },
                   ),
                   StatsView(
                     stats: [
@@ -285,21 +340,69 @@ class ColorDetailsView extends StatelessWidget {
                   ),
                   _CreatedByView(
                     user: viewModel.user,
+                    onUserTap: () {
+                      bloc.showUserDetailsView(context);
+                    },
                   ),
                   if (viewModel.relatedColors.isNotEmpty)
-                    RelatedColorsView(
-                      // hsv: viewModel.hsv,
-                      viewModels: viewModel.relatedColors,
+                    RelatedItemsPreviewView(
+                      title: 'Related colors',
+                      items: viewModel.relatedColors,
+                      itemBuilder: (viewModel) {
+                        return ColorTileView(
+                          viewModel: viewModel,
+                          onTap: () {
+                            bloc.showColorDetailsView(context, viewModel);
+                          },
+                        );
+                      },
+                      onShowMorePressed: () {
+                        // TODO
+                        // ref.read(routingProvider.notifier).showScreen(
+                        //       context,
+                        //       RelatedColorsView(hsv: hsv),
+                        //     );
+                      },
                     ),
                   if (viewModel.relatedPalettes.isNotEmpty)
-                    RelatedPalettesView(
-                      // hexs: viewModel.hexs,
-                      viewModels: viewModel.relatedPalettes,
+                    RelatedItemsPreviewView(
+                      title: 'Related palettes',
+                      items: viewModel.relatedPalettes,
+                      itemBuilder: (viewModel) {
+                        return PaletteTileView(
+                          viewModel: viewModel,
+                          onTap: () {
+                            bloc.showPaletteDetailsView(context, viewModel);
+                          },
+                        );
+                      },
+                      onShowMorePressed: () {
+                        // TODO
+                        // ref.read(routingProvider.notifier).showScreen(
+                        //       context,
+                        //       RelatedPalettesView(hex: hex),
+                        //     );
+                      },
                     ),
                   if (viewModel.relatedPatterns.isNotEmpty)
-                    RelatedPatternsView(
-                      // hexs: viewModel.hexs,
-                      viewModels: viewModel.relatedPatterns,
+                    RelatedItemsPreviewView(
+                      title: 'Related patterns',
+                      items: viewModel.relatedPatterns,
+                      itemBuilder: (viewModel) {
+                        return PatternTileView(
+                          viewModel: viewModel,
+                          onTap: () {
+                            bloc.showPatternDetailsView(context, viewModel);
+                          },
+                        );
+                      },
+                      onShowMorePressed: () {
+                        // TODO
+                        // ref.read(routingProvider.notifier).showScreen(
+                        //       context,
+                        //       RelatedPatternsView(hex: hex),
+                        //     );
+                      },
                     ),
                   _CreditsView(
                     hex: viewModel.hex,
@@ -314,10 +417,12 @@ class ColorDetailsView extends StatelessWidget {
 class _HeaderView extends StatelessWidget {
   final String title;
   final String hex;
+  final void Function() onItemTap;
 
   const _HeaderView({
     required this.title,
     required this.hex,
+    required this.onItemTap,
   });
 
   @override
@@ -334,12 +439,7 @@ class _HeaderView extends StatelessWidget {
           ),
         ),
         ItemButtonView(
-          onTap: () {
-            // TODO
-            // ref
-            //     .read(routingProvider.notifier)
-            //     .showScreen(context, ShareColorView(color: color));
-          },
+          onTap: onItemTap,
           child: ColorView(hex: hex),
         ),
       ],
@@ -433,9 +533,11 @@ class _ColorValuesView extends StatelessWidget {
 
 class _CreatedByView extends StatelessWidget {
   final UserTileViewModel user;
+  final void Function() onUserTap;
 
   const _CreatedByView({
     required this.user,
+    required this.onUserTap,
   });
 
   @override
@@ -449,12 +551,7 @@ class _CreatedByView extends StatelessWidget {
         const H2TextView('Created by'),
         UserTileView(
           viewModel: user,
-          onTap: () {
-            // TODO
-            // ref
-            //     .read(routingProvider.notifier)
-            //     .showScreen(context, UserView(user: user));
-          },
+          onTap: onUserTap,
         ),
       ],
     );
