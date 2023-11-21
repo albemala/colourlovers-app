@@ -1,34 +1,36 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/functions/routing.dart';
-import 'package:colourlovers_app/views/user-details.dart';
+import 'package:colourlovers_app/functions/user.dart';
+import 'package:colourlovers_app/views/color-details.dart';
 import 'package:colourlovers_app/widgets/app-top-bar.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';
 import 'package:colourlovers_app/widgets/items-list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class UsersViewBloc extends Cubit<ItemsListViewModel<UserTileViewModel>> {
-  factory UsersViewBloc.fromContext(BuildContext context) {
-    return UsersViewBloc(
+class UserColorsViewBloc extends Cubit<ItemsListViewModel<ColorTileViewModel>> {
+  factory UserColorsViewBloc.fromContext(
+    BuildContext context, {
+    required String userName,
+  }) {
+    return UserColorsViewBloc(
+      userName,
       ColourloversApiClient(),
     );
   }
 
+  final String _userName;
   final ColourloversApiClient _client;
-  late final ItemsPagination<ColourloversLover> _pagination;
+  late final ItemsPagination<ColourloversColor> _pagination;
 
-  UsersViewBloc(
+  UserColorsViewBloc(
+    this._userName,
     this._client,
   ) : super(
           ItemsListViewModel.initialState(),
         ) {
-    _pagination = ItemsPagination<ColourloversLover>((numResults, offset) {
-      return _client.getLovers(
-        numResults: numResults,
-        resultOffset: offset,
-        // orderBy: ClRequestOrderBy.numVotes,
-        sortBy: ColourloversRequestSortBy.DESC,
-      );
+    _pagination = ItemsPagination<ColourloversColor>((numResults, offset) {
+      return fetchUserColors(_client, numResults, offset, _userName);
     });
     _pagination.addListener(_updateState);
     _pagination.load();
@@ -44,20 +46,13 @@ class UsersViewBloc extends Cubit<ItemsListViewModel<UserTileViewModel>> {
     await _pagination.loadMore();
   }
 
-  void showUserDetails(
+  void showColorDetails(
     BuildContext context,
-    UserTileViewModel viewModel,
+    ColorTileViewModel viewModel,
   ) {
     final viewModelIndex = state.items.indexOf(viewModel);
-    final user = _pagination.items[viewModelIndex];
-    _showUserDetails(context, user);
-  }
-
-  void _showUserDetails(
-    BuildContext context,
-    ColourloversLover user,
-  ) {
-    openRoute(context, UserDetailsViewBuilder(user: user));
+    final color = _pagination.items[viewModelIndex];
+    openRoute(context, ColorDetailsViewBuilder(color: color));
   }
 
   void _updateState() {
@@ -65,7 +60,7 @@ class UsersViewBloc extends Cubit<ItemsListViewModel<UserTileViewModel>> {
       ItemsListViewModel(
         isLoading: _pagination.isLoading,
         items: _pagination.items //
-            .map(UserTileViewModel.fromColourloverUser)
+            .map(ColorTileViewModel.fromColourloverColor)
             .toList(),
         hasMoreItems: _pagination.hasMoreItems,
       ),
@@ -73,20 +68,29 @@ class UsersViewBloc extends Cubit<ItemsListViewModel<UserTileViewModel>> {
   }
 }
 
-class UsersViewBuilder extends StatelessWidget {
-  const UsersViewBuilder({
+class UserColorsViewBuilder extends StatelessWidget {
+  final String userName;
+
+  const UserColorsViewBuilder({
     super.key,
+    required this.userName,
   });
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<UsersViewBloc>(
-      create: UsersViewBloc.fromContext,
-      child: BlocBuilder<UsersViewBloc, ItemsListViewModel<UserTileViewModel>>(
+    return BlocProvider<UserColorsViewBloc>(
+      create: (context) {
+        return UserColorsViewBloc.fromContext(
+          context,
+          userName: userName,
+        );
+      },
+      child: BlocBuilder<UserColorsViewBloc,
+          ItemsListViewModel<ColorTileViewModel>>(
         builder: (context, viewModel) {
-          return UsersView(
+          return UserColorsView(
             listViewModel: viewModel,
-            bloc: context.read<UsersViewBloc>(),
+            bloc: context.read<UserColorsViewBloc>(),
           );
         },
       ),
@@ -94,11 +98,11 @@ class UsersViewBuilder extends StatelessWidget {
   }
 }
 
-class UsersView extends StatelessWidget {
-  final ItemsListViewModel<UserTileViewModel> listViewModel;
-  final UsersViewBloc bloc;
+class UserColorsView extends StatelessWidget {
+  final ItemsListViewModel<ColorTileViewModel> listViewModel;
+  final UserColorsViewBloc bloc;
 
-  const UsersView({
+  const UserColorsView({
     super.key,
     required this.listViewModel,
     required this.bloc,
@@ -107,25 +111,17 @@ class UsersView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // extendBodyBehindAppBar: true,
       appBar: AppTopBarView(
         context,
-        title: 'Users',
-        actions: [
-          // _FilterButton(
-          //   onPressed: () {
-          //     // TODO
-          //   },
-          // ),
-        ],
+        title: 'User colors',
       ),
       body: ItemsListView(
         viewModel: listViewModel,
         itemTileBuilder: (itemViewModel) {
-          return UserTileView(
+          return ColorTileView(
             viewModel: itemViewModel,
             onTap: () {
-              bloc.showUserDetails(context, itemViewModel);
+              bloc.showColorDetails(context, itemViewModel);
             },
           );
         },

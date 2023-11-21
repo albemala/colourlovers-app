@@ -3,19 +3,18 @@ import 'package:colourlovers_app/defines/urls.dart';
 import 'package:colourlovers_app/functions/colors.dart';
 import 'package:colourlovers_app/functions/related-items.dart';
 import 'package:colourlovers_app/functions/routing.dart';
-import 'package:colourlovers_app/functions/url.dart';
 import 'package:colourlovers_app/functions/user.dart';
 import 'package:colourlovers_app/views/color-details.dart';
 import 'package:colourlovers_app/views/palette-details.dart';
+import 'package:colourlovers_app/views/related-palettes.dart';
+import 'package:colourlovers_app/views/related-patterns.dart';
 import 'package:colourlovers_app/views/share-pattern.dart';
 import 'package:colourlovers_app/views/user-details.dart';
 import 'package:colourlovers_app/widgets/app-top-bar.dart';
-import 'package:colourlovers_app/widgets/h2-text.dart';
-import 'package:colourlovers_app/widgets/item-button.dart';
+import 'package:colourlovers_app/widgets/item-details.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';
 import 'package:colourlovers_app/widgets/items.dart';
-import 'package:colourlovers_app/widgets/link.dart';
-import 'package:colourlovers_app/widgets/related-items.dart';
+import 'package:colourlovers_app/widgets/related-items-preview.dart';
 import 'package:colourlovers_app/widgets/share-item-button.dart';
 import 'package:colourlovers_app/widgets/stats.dart';
 import 'package:flextras/flextras.dart';
@@ -185,6 +184,22 @@ class PatternDetailsViewBloc extends Cubit<PatternDetailsViewModel> {
       UserDetailsViewBuilder(user: _user!),
     );
   }
+
+  void showRelatedPalettesView(BuildContext context) {
+    if (_pattern.colors == null) return;
+    openRoute(
+      context,
+      RelatedPalettesViewBuilder(hex: _pattern.colors!),
+    );
+  }
+
+  void showRelatedPatternsView(BuildContext context) {
+    if (_pattern.colors == null) return;
+    openRoute(
+      context,
+      RelatedPatternsViewBuilder(hex: _pattern.colors!),
+    );
+  }
 }
 
 class PatternDetailsViewBuilder extends StatelessWidget {
@@ -247,9 +262,9 @@ class PatternDetailsView extends StatelessWidget {
                   return const SizedBox(height: 32);
                 },
                 children: [
-                  _HeaderView(
+                  HeaderView(
                     title: viewModel.title,
-                    imageUrl: viewModel.imageUrl,
+                    item: PatternView(imageUrl: viewModel.imageUrl),
                     onItemTap: () {
                       bloc.showSharePatternView(context);
                     },
@@ -270,13 +285,13 @@ class PatternDetailsView extends StatelessWidget {
                       ),
                     ],
                   ),
-                  _ColorsView(
+                  ItemColorsView(
                     colorViewModels: viewModel.colorViewModels,
                     onColorTap: (viewModel) {
                       bloc.showColorDetailsView(context, viewModel);
                     },
                   ),
-                  _CreatedByView(
+                  CreatedByView(
                     user: viewModel.user,
                     onUserTap: () {
                       bloc.showUserDetailsView(context);
@@ -295,11 +310,7 @@ class PatternDetailsView extends StatelessWidget {
                         );
                       },
                       onShowMorePressed: () {
-                        // TODO
-                        // ref.read(routingProvider.notifier).showScreen(
-                        //       context,
-                        //       RelatedPalettesView(hex: hex),
-                        //     );
+                        bloc.showRelatedPalettesView(context);
                       },
                     ),
                   if (viewModel.relatedPatterns.isNotEmpty)
@@ -315,146 +326,16 @@ class PatternDetailsView extends StatelessWidget {
                         );
                       },
                       onShowMorePressed: () {
-                        // TODO
-                        // ref.read(routingProvider.notifier).showScreen(
-                        //       context,
-                        //       RelatedPatternsView(hex: hex),
-                        //     );
+                        bloc.showRelatedPatternsView(context);
                       },
                     ),
-                  _CreditsView(
-                    id: viewModel.id,
+                  CreditsView(
+                    itemName: 'pattern',
+                    itemUrl: '$colourLoversUrl/pattern/${viewModel.id}',
                   ),
                 ],
               ),
             ),
-    );
-  }
-}
-
-class _HeaderView extends StatelessWidget {
-  final String title;
-  final String imageUrl;
-  final void Function() onItemTap;
-
-  const _HeaderView({
-    required this.title,
-    required this.imageUrl,
-    required this.onItemTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SeparatedColumn(
-      separatorBuilder: () {
-        return const SizedBox(height: 16);
-      },
-      children: [
-        Center(
-          child: Text(
-            title,
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-        ),
-        ItemButtonView(
-          onTap: onItemTap,
-          child: PatternView(imageUrl: imageUrl),
-        ),
-      ],
-    );
-  }
-}
-
-class _ColorsView extends StatelessWidget {
-  final List<ColorTileViewModel> colorViewModels;
-  final void Function(ColorTileViewModel) onColorTap;
-
-  const _ColorsView({
-    required this.colorViewModels,
-    required this.onColorTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SeparatedColumn(
-      separatorBuilder: () {
-        return const SizedBox(height: 16);
-      },
-      children: [
-        const H2TextView('Colors'),
-        SeparatedColumn(
-          separatorBuilder: () {
-            return const SizedBox(height: 8);
-          },
-          children: colorViewModels.map((viewModel) {
-            return ColorTileView(
-              viewModel: viewModel,
-              onTap: () {
-                onColorTap(viewModel);
-              },
-            );
-          }).toList(),
-        ),
-      ],
-    );
-  }
-}
-
-class _CreatedByView extends StatelessWidget {
-  final UserTileViewModel user;
-  final void Function() onUserTap;
-
-  const _CreatedByView({
-    required this.user,
-    required this.onUserTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SeparatedColumn(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      separatorBuilder: () {
-        return const SizedBox(height: 16);
-      },
-      children: [
-        const H2TextView('Created by'),
-        UserTileView(
-          viewModel: user,
-          onTap: onUserTap,
-        ),
-      ],
-    );
-  }
-}
-
-class _CreditsView extends StatelessWidget {
-  final String id;
-
-  const _CreditsView({
-    required this.id,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SeparatedColumn(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      separatorBuilder: () {
-        return const SizedBox(height: 16);
-      },
-      children: [
-        LinkView(
-          text: 'This pattern on COLOURlovers.com',
-          onTap: () {
-            openUrl('https://www.colourlovers.com/pattern/$id');
-          },
-        ),
-        LinkView(
-          text: 'Licensed under Attribution-Noncommercial-Share Alike',
-          onTap: () {
-            openUrl(creativeCommonsUrl);
-          },
-        ),
-      ],
     );
   }
 }

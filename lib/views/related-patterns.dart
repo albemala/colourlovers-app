@@ -1,34 +1,37 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
+import 'package:colourlovers_app/functions/related-items.dart';
 import 'package:colourlovers_app/functions/routing.dart';
-import 'package:colourlovers_app/views/user-details.dart';
+import 'package:colourlovers_app/views/pattern-details.dart';
 import 'package:colourlovers_app/widgets/app-top-bar.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';
 import 'package:colourlovers_app/widgets/items-list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class UsersViewBloc extends Cubit<ItemsListViewModel<UserTileViewModel>> {
-  factory UsersViewBloc.fromContext(BuildContext context) {
-    return UsersViewBloc(
+class RelatedPatternsViewBloc
+    extends Cubit<ItemsListViewModel<PatternTileViewModel>> {
+  factory RelatedPatternsViewBloc.fromContext(
+    BuildContext context, {
+    required List<String> hex,
+  }) {
+    return RelatedPatternsViewBloc(
+      hex,
       ColourloversApiClient(),
     );
   }
 
+  final List<String> _hex;
   final ColourloversApiClient _client;
-  late final ItemsPagination<ColourloversLover> _pagination;
+  late final ItemsPagination<ColourloversPattern> _pagination;
 
-  UsersViewBloc(
+  RelatedPatternsViewBloc(
+    this._hex,
     this._client,
   ) : super(
           ItemsListViewModel.initialState(),
         ) {
-    _pagination = ItemsPagination<ColourloversLover>((numResults, offset) {
-      return _client.getLovers(
-        numResults: numResults,
-        resultOffset: offset,
-        // orderBy: ClRequestOrderBy.numVotes,
-        sortBy: ColourloversRequestSortBy.DESC,
-      );
+    _pagination = ItemsPagination<ColourloversPattern>((numResults, offset) {
+      return fetchRelatedPatterns(_client, numResults, offset, _hex);
     });
     _pagination.addListener(_updateState);
     _pagination.load();
@@ -44,20 +47,13 @@ class UsersViewBloc extends Cubit<ItemsListViewModel<UserTileViewModel>> {
     await _pagination.loadMore();
   }
 
-  void showUserDetails(
+  void showPatternDetails(
     BuildContext context,
-    UserTileViewModel viewModel,
+    PatternTileViewModel viewModel,
   ) {
     final viewModelIndex = state.items.indexOf(viewModel);
-    final user = _pagination.items[viewModelIndex];
-    _showUserDetails(context, user);
-  }
-
-  void _showUserDetails(
-    BuildContext context,
-    ColourloversLover user,
-  ) {
-    openRoute(context, UserDetailsViewBuilder(user: user));
+    final pattern = _pagination.items[viewModelIndex];
+    openRoute(context, PatternDetailsViewBuilder(pattern: pattern));
   }
 
   void _updateState() {
@@ -65,7 +61,7 @@ class UsersViewBloc extends Cubit<ItemsListViewModel<UserTileViewModel>> {
       ItemsListViewModel(
         isLoading: _pagination.isLoading,
         items: _pagination.items //
-            .map(UserTileViewModel.fromColourloverUser)
+            .map(PatternTileViewModel.fromColourloverPattern)
             .toList(),
         hasMoreItems: _pagination.hasMoreItems,
       ),
@@ -73,20 +69,29 @@ class UsersViewBloc extends Cubit<ItemsListViewModel<UserTileViewModel>> {
   }
 }
 
-class UsersViewBuilder extends StatelessWidget {
-  const UsersViewBuilder({
+class RelatedPatternsViewBuilder extends StatelessWidget {
+  final List<String> hex;
+
+  const RelatedPatternsViewBuilder({
     super.key,
+    required this.hex,
   });
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<UsersViewBloc>(
-      create: UsersViewBloc.fromContext,
-      child: BlocBuilder<UsersViewBloc, ItemsListViewModel<UserTileViewModel>>(
+    return BlocProvider<RelatedPatternsViewBloc>(
+      create: (context) {
+        return RelatedPatternsViewBloc.fromContext(
+          context,
+          hex: hex,
+        );
+      },
+      child: BlocBuilder<RelatedPatternsViewBloc,
+          ItemsListViewModel<PatternTileViewModel>>(
         builder: (context, viewModel) {
-          return UsersView(
+          return RelatedPatternsView(
             listViewModel: viewModel,
-            bloc: context.read<UsersViewBloc>(),
+            bloc: context.read<RelatedPatternsViewBloc>(),
           );
         },
       ),
@@ -94,11 +99,11 @@ class UsersViewBuilder extends StatelessWidget {
   }
 }
 
-class UsersView extends StatelessWidget {
-  final ItemsListViewModel<UserTileViewModel> listViewModel;
-  final UsersViewBloc bloc;
+class RelatedPatternsView extends StatelessWidget {
+  final ItemsListViewModel<PatternTileViewModel> listViewModel;
+  final RelatedPatternsViewBloc bloc;
 
-  const UsersView({
+  const RelatedPatternsView({
     super.key,
     required this.listViewModel,
     required this.bloc,
@@ -107,25 +112,17 @@ class UsersView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // extendBodyBehindAppBar: true,
       appBar: AppTopBarView(
         context,
-        title: 'Users',
-        actions: [
-          // _FilterButton(
-          //   onPressed: () {
-          //     // TODO
-          //   },
-          // ),
-        ],
+        title: 'Related patterns',
       ),
       body: ItemsListView(
         viewModel: listViewModel,
         itemTileBuilder: (itemViewModel) {
-          return UserTileView(
+          return PatternTileView(
             viewModel: itemViewModel,
             onTap: () {
-              bloc.showUserDetails(context, itemViewModel);
+              bloc.showPatternDetails(context, itemViewModel);
             },
           );
         },

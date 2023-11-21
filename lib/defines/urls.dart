@@ -3,7 +3,8 @@ const websiteUrl = 'https://luv.albemala.me/';
 const repositoryUrl = 'https://github.com/albemala/colourlovers-app';
 const twitterUrl = 'https://twitter.com/albemala';
 
-const colourLoversLicenseUrl = 'https://www.colourlovers.com/api';
+const colourLoversUrl = 'https://www.colourlovers.com';
+const colourLoversLicenseUrl = '$colourLoversUrl/api';
 const creativeCommonsUrl = 'https://creativecommons.org/licenses/by-nc-sa/3.0/';
 
 const exaboxWebsiteUrl = 'https://exabox.app';

@@ -3,29 +3,12 @@ import 'package:colourlovers_app/functions/routing.dart';
 import 'package:colourlovers_app/views/pattern-details.dart';
 import 'package:colourlovers_app/widgets/app-top-bar.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';
+import 'package:colourlovers_app/widgets/items-list.dart';
 import 'package:colourlovers_app/widgets/random-item-button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-@immutable
-class PatternsViewModel {
-  final bool isLoading;
-  final List<PatternTileViewModel> patterns;
-
-  const PatternsViewModel({
-    required this.isLoading,
-    required this.patterns,
-  });
-
-  factory PatternsViewModel.initialState() {
-    return const PatternsViewModel(
-      isLoading: false,
-      patterns: <PatternTileViewModel>[],
-    );
-  }
-}
-
-class PatternsViewBloc extends Cubit<PatternsViewModel> {
+class PatternsViewBloc extends Cubit<ItemsListViewModel<PatternTileViewModel>> {
   factory PatternsViewBloc.fromContext(BuildContext context) {
     return PatternsViewBloc(
       ColourloversApiClient(),
@@ -33,50 +16,42 @@ class PatternsViewBloc extends Cubit<PatternsViewModel> {
   }
 
   final ColourloversApiClient _client;
-  bool _isLoading = false;
-  List<ColourloversPattern> _patterns = <ColourloversPattern>[];
-  int _page = 0;
+  late final ItemsPagination<ColourloversPattern> _pagination;
 
   PatternsViewBloc(
     this._client,
   ) : super(
-          PatternsViewModel.initialState(),
+          ItemsListViewModel.initialState(),
         ) {
-    load();
+    _pagination = ItemsPagination<ColourloversPattern>((numResults, offset) {
+      return _client.getPatterns(
+        numResults: numResults,
+        resultOffset: offset,
+        // orderBy: ClRequestOrderBy.numVotes,
+        sortBy: ColourloversRequestSortBy.DESC,
+      );
+    });
+    _pagination.addListener(_updateState);
+    _pagination.load();
   }
 
-  Future<void> load() async {
-    _isLoading = true;
-    _emitState();
-
-    const numResults = 20;
-    final items = await _client.getPatterns(
-          numResults: numResults,
-          resultOffset: _page * numResults,
-          // orderBy: ClRequestOrderBy.numVotes,
-          sortBy: ColourloversRequestSortBy.DESC,
-        ) ??
-        [];
-
-    _isLoading = false;
-    _patterns = [
-      ..._patterns,
-      ...items,
-    ];
-    _emitState();
+  @override
+  Future<void> close() {
+    _pagination.removeListener(_updateState);
+    return super.close();
   }
 
   Future<void> loadMore() async {
-    _page++;
-    await load();
+    await _pagination.loadMore();
   }
 
   void showPatternDetails(
     BuildContext context,
-    int patternIndex,
+    PatternTileViewModel viewModel,
   ) {
-    final pattern = _patterns[patternIndex];
-    _showPatternDetails(context, pattern);
+    final viewModelIndex = state.items.indexOf(viewModel);
+    final pattern = _pagination.items[viewModelIndex];
+    _showPatternDetailsView(context, pattern);
   }
 
   Future<void> showRandomPattern(
@@ -84,23 +59,24 @@ class PatternsViewBloc extends Cubit<PatternsViewModel> {
   ) async {
     final pattern = await _client.getRandomPattern();
     if (pattern == null) return;
-    _showPatternDetails(context, pattern);
+    _showPatternDetailsView(context, pattern);
   }
 
-  void _showPatternDetails(
+  void _showPatternDetailsView(
     BuildContext context,
     ColourloversPattern pattern,
   ) {
     openRoute(context, PatternDetailsViewBuilder(pattern: pattern));
   }
 
-  void _emitState() {
+  void _updateState() {
     emit(
-      PatternsViewModel(
-        isLoading: _isLoading,
-        patterns: _patterns //
+      ItemsListViewModel(
+        isLoading: _pagination.isLoading,
+        items: _pagination.items //
             .map(PatternTileViewModel.fromColourloverPattern)
             .toList(),
+        hasMoreItems: _pagination.hasMoreItems,
       ),
     );
   }
@@ -115,10 +91,11 @@ class PatternsViewBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<PatternsViewBloc>(
       create: PatternsViewBloc.fromContext,
-      child: BlocBuilder<PatternsViewBloc, PatternsViewModel>(
+      child: BlocBuilder<PatternsViewBloc,
+          ItemsListViewModel<PatternTileViewModel>>(
         builder: (context, viewModel) {
           return PatternsView(
-            viewModel: viewModel,
+            listViewModel: viewModel,
             bloc: context.read<PatternsViewBloc>(),
           );
         },
@@ -128,12 +105,12 @@ class PatternsViewBuilder extends StatelessWidget {
 }
 
 class PatternsView extends StatelessWidget {
-  final PatternsViewModel viewModel;
+  final ItemsListViewModel<PatternTileViewModel> listViewModel;
   final PatternsViewBloc bloc;
 
   const PatternsView({
     super.key,
-    required this.viewModel,
+    required this.listViewModel,
     required this.bloc,
   });
 
@@ -158,36 +135,17 @@ class PatternsView extends StatelessWidget {
           // ),
         ],
       ),
-      body: ListView.separated(
-        padding: const EdgeInsets.all(16),
-        // controller: scrollController,
-        itemCount: viewModel.patterns.length + 1,
-        itemBuilder: (context, index) {
-          if (index == viewModel.patterns.length) {
-            if (viewModel.isLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              // TODO dont show if no more items
-              return OutlinedButton(
-                onPressed: bloc.loadMore,
-                child: const Text('Load more'),
-              );
-            }
-          } else {
-            final pattern = viewModel.patterns[index];
-            return PatternTileView(
-              viewModel: pattern,
-              onTap: () {
-                bloc.showPatternDetails(context, index);
-              },
-            );
-          }
+      body: ItemsListView(
+        viewModel: listViewModel,
+        itemTileBuilder: (itemViewModel) {
+          return PatternTileView(
+            viewModel: itemViewModel,
+            onTap: () {
+              bloc.showPatternDetails(context, itemViewModel);
+            },
+          );
         },
-        separatorBuilder: (context, index) {
-          return const SizedBox(height: 12);
-        },
+        onLoadMorePressed: bloc.loadMore,
       ),
     );
   }

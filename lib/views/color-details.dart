@@ -2,20 +2,21 @@ import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/defines/urls.dart';
 import 'package:colourlovers_app/functions/related-items.dart';
 import 'package:colourlovers_app/functions/routing.dart';
-import 'package:colourlovers_app/functions/url.dart';
 import 'package:colourlovers_app/functions/user.dart';
 import 'package:colourlovers_app/views/palette-details.dart';
 import 'package:colourlovers_app/views/pattern-details.dart';
+import 'package:colourlovers_app/views/related-colors.dart';
+import 'package:colourlovers_app/views/related-palettes.dart';
+import 'package:colourlovers_app/views/related-patterns.dart';
 import 'package:colourlovers_app/views/share-color.dart';
 import 'package:colourlovers_app/views/user-details.dart';
 import 'package:colourlovers_app/widgets/app-top-bar.dart';
 import 'package:colourlovers_app/widgets/color-value.dart';
 import 'package:colourlovers_app/widgets/h2-text.dart';
-import 'package:colourlovers_app/widgets/item-button.dart';
+import 'package:colourlovers_app/widgets/item-details.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';
 import 'package:colourlovers_app/widgets/items.dart';
-import 'package:colourlovers_app/widgets/link.dart';
-import 'package:colourlovers_app/widgets/related-items.dart';
+import 'package:colourlovers_app/widgets/related-items-preview.dart';
 import 'package:colourlovers_app/widgets/share-item-button.dart';
 import 'package:colourlovers_app/widgets/stats.dart';
 import 'package:flextras/flextras.dart';
@@ -247,6 +248,30 @@ class ColorDetailsViewBloc extends Cubit<ColorDetailsViewModel> {
       UserDetailsViewBuilder(user: _user!),
     );
   }
+
+  void showRelatedColorsView(BuildContext context) {
+    if (_color.hsv == null) return;
+    openRoute(
+      context,
+      RelatedColorsViewBuilder(hsv: _color.hsv!),
+    );
+  }
+
+  void showRelatedPalettesView(BuildContext context) {
+    if (_color.hex == null) return;
+    openRoute(
+      context,
+      RelatedPalettesViewBuilder(hex: [_color.hex!]),
+    );
+  }
+
+  void showRelatedPatternsView(BuildContext context) {
+    if (_color.hex == null) return;
+    openRoute(
+      context,
+      RelatedPatternsViewBuilder(hex: [_color.hex!]),
+    );
+  }
 }
 
 class ColorDetailsViewBuilder extends StatelessWidget {
@@ -311,9 +336,9 @@ class ColorDetailsView extends StatelessWidget {
                   return const SizedBox(height: 32); // TODO try 48
                 },
                 children: [
-                  _HeaderView(
+                  HeaderView(
                     title: viewModel.title,
-                    hex: viewModel.hex,
+                    item: ColorView(hex: viewModel.hex),
                     onItemTap: () {
                       bloc.showShareColorView(context);
                     },
@@ -338,7 +363,7 @@ class ColorDetailsView extends StatelessWidget {
                     rgb: viewModel.rgb,
                     hsv: viewModel.hsv,
                   ),
-                  _CreatedByView(
+                  CreatedByView(
                     user: viewModel.user,
                     onUserTap: () {
                       bloc.showUserDetailsView(context);
@@ -357,11 +382,7 @@ class ColorDetailsView extends StatelessWidget {
                         );
                       },
                       onShowMorePressed: () {
-                        // TODO
-                        // ref.read(routingProvider.notifier).showScreen(
-                        //       context,
-                        //       RelatedColorsView(hsv: hsv),
-                        //     );
+                        bloc.showRelatedColorsView(context);
                       },
                     ),
                   if (viewModel.relatedPalettes.isNotEmpty)
@@ -377,11 +398,7 @@ class ColorDetailsView extends StatelessWidget {
                         );
                       },
                       onShowMorePressed: () {
-                        // TODO
-                        // ref.read(routingProvider.notifier).showScreen(
-                        //       context,
-                        //       RelatedPalettesView(hex: hex),
-                        //     );
+                        bloc.showRelatedPalettesView(context);
                       },
                     ),
                   if (viewModel.relatedPatterns.isNotEmpty)
@@ -397,52 +414,16 @@ class ColorDetailsView extends StatelessWidget {
                         );
                       },
                       onShowMorePressed: () {
-                        // TODO
-                        // ref.read(routingProvider.notifier).showScreen(
-                        //       context,
-                        //       RelatedPatternsView(hex: hex),
-                        //     );
+                        bloc.showRelatedPatternsView(context);
                       },
                     ),
-                  _CreditsView(
-                    hex: viewModel.hex,
+                  CreditsView(
+                    itemName: 'color',
+                    itemUrl: '$colourLoversUrl/color/${viewModel.hex}',
                   ),
                 ],
               ),
             ),
-    );
-  }
-}
-
-class _HeaderView extends StatelessWidget {
-  final String title;
-  final String hex;
-  final void Function() onItemTap;
-
-  const _HeaderView({
-    required this.title,
-    required this.hex,
-    required this.onItemTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SeparatedColumn(
-      separatorBuilder: () {
-        return const SizedBox(height: 16);
-      },
-      children: [
-        Center(
-          child: Text(
-            title,
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-        ),
-        ItemButtonView(
-          onTap: onItemTap,
-          child: ColorView(hex: hex),
-        ),
-      ],
     );
   }
 }
@@ -525,65 +506,6 @@ class _ColorValuesView extends StatelessWidget {
               trackColors: const [Color(0xFF000000), Color(0xFFFFFFFF)],
             ),
           ],
-        ),
-      ],
-    );
-  }
-}
-
-class _CreatedByView extends StatelessWidget {
-  final UserTileViewModel user;
-  final void Function() onUserTap;
-
-  const _CreatedByView({
-    required this.user,
-    required this.onUserTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SeparatedColumn(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      separatorBuilder: () {
-        return const SizedBox(height: 16);
-      },
-      children: [
-        const H2TextView('Created by'),
-        UserTileView(
-          viewModel: user,
-          onTap: onUserTap,
-        ),
-      ],
-    );
-  }
-}
-
-class _CreditsView extends StatelessWidget {
-  final String hex;
-
-  const _CreditsView({
-    required this.hex,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SeparatedColumn(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      separatorBuilder: () {
-        return const SizedBox(height: 16);
-      },
-      children: [
-        LinkView(
-          text: 'This color on COLOURlovers.com',
-          onTap: () {
-            openUrl('https://www.colourlovers.com/color/$hex');
-          },
-        ),
-        LinkView(
-          text: 'Licensed under Attribution-Noncommercial-Share Alike',
-          onTap: () {
-            openUrl(creativeCommonsUrl);
-          },
         ),
       ],
     );

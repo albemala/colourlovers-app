@@ -1,16 +1,18 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/defines/urls.dart';
 import 'package:colourlovers_app/functions/routing.dart';
-import 'package:colourlovers_app/functions/url.dart';
 import 'package:colourlovers_app/functions/user.dart';
 import 'package:colourlovers_app/views/color-details.dart';
 import 'package:colourlovers_app/views/palette-details.dart';
 import 'package:colourlovers_app/views/pattern-details.dart';
+import 'package:colourlovers_app/views/user-colors.dart';
+import 'package:colourlovers_app/views/user-palettes.dart';
+import 'package:colourlovers_app/views/user-patterns.dart';
 import 'package:colourlovers_app/widgets/app-top-bar.dart';
+import 'package:colourlovers_app/widgets/item-details.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';
 import 'package:colourlovers_app/widgets/label-value.dart';
-import 'package:colourlovers_app/widgets/link.dart';
-import 'package:colourlovers_app/widgets/related-items.dart';
+import 'package:colourlovers_app/widgets/related-items-preview.dart';
 import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -164,6 +166,30 @@ class UserDetailsViewBloc extends Cubit<UserDetailsViewModel> {
       PatternDetailsViewBuilder(pattern: _userPatterns[index]),
     );
   }
+
+  void showUserColorsView(BuildContext context) {
+    if (_user.userName == null) return;
+    openRoute(
+      context,
+      UserColorsViewBuilder(userName: _user.userName!),
+    );
+  }
+
+  void showUserPalettesView(BuildContext context) {
+    if (_user.userName == null) return;
+    openRoute(
+      context,
+      UserPalettesViewBuilder(userName: _user.userName!),
+    );
+  }
+
+  void showUserPatternsView(BuildContext context) {
+    if (_user.userName == null) return;
+    openRoute(
+      context,
+      UserPatternsViewBuilder(userName: _user.userName!),
+    );
+  }
 }
 
 class UserDetailsViewBuilder extends StatelessWidget {
@@ -293,11 +319,7 @@ class UserDetailsView extends StatelessWidget {
                         );
                       },
                       onShowMorePressed: () {
-                        // TODO
-                        // ref.read(routingProvider.notifier).showScreen(
-                        //       context,
-                        //       RelatedColorsView(hsv: hsv),
-                        //     );
+                        bloc.showUserColorsView(context);
                       },
                     ),
                   if (viewModel.userPalettes.isNotEmpty)
@@ -313,11 +335,7 @@ class UserDetailsView extends StatelessWidget {
                         );
                       },
                       onShowMorePressed: () {
-                        // TODO
-                        // ref.read(routingProvider.notifier).showScreen(
-                        //       context,
-                        //       RelatedPalettesView(hex: hex),
-                        //     );
+                        bloc.showUserPalettesView(context);
                       },
                     ),
                   if (viewModel.userPatterns.isNotEmpty)
@@ -333,51 +351,16 @@ class UserDetailsView extends StatelessWidget {
                         );
                       },
                       onShowMorePressed: () {
-                        // TODO
-                        // ref.read(routingProvider.notifier).showScreen(
-                        //       context,
-                        //       RelatedPatternsView(hex: hex),
-                        //     );
+                        bloc.showUserPatternsView(context);
                       },
                     ),
-                  _CreditsView(
-                    userName: userName,
+                  CreditsView(
+                    itemName: 'user',
+                    itemUrl: '$colourLoversUrl/lover/$userName',
                   ),
                 ],
               ),
             ),
-    );
-  }
-}
-
-class _CreditsView extends StatelessWidget {
-  final String userName;
-
-  const _CreditsView({
-    required this.userName,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SeparatedColumn(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
-      separatorBuilder: () {
-        return const SizedBox(height: 16);
-      },
-      children: [
-        LinkView(
-          text: 'This user on COLOURlovers.com',
-          onTap: () {
-            openUrl('https://www.colourlovers.com/lover/$userName');
-          },
-        ),
-        LinkView(
-          text: 'Licensed under Attribution-Noncommercial-Share Alike',
-          onTap: () {
-            openUrl(creativeCommonsUrl);
-          },
-        ),
-      ],
     );
   }
 }

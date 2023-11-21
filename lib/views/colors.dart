@@ -3,29 +3,12 @@ import 'package:colourlovers_app/functions/routing.dart';
 import 'package:colourlovers_app/views/color-details.dart';
 import 'package:colourlovers_app/widgets/app-top-bar.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';
+import 'package:colourlovers_app/widgets/items-list.dart';
 import 'package:colourlovers_app/widgets/random-item-button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-@immutable
-class ColorsViewModel {
-  final bool isLoading;
-  final List<ColorTileViewModel> colors;
-
-  const ColorsViewModel({
-    required this.isLoading,
-    required this.colors,
-  });
-
-  factory ColorsViewModel.initialState() {
-    return const ColorsViewModel(
-      isLoading: false,
-      colors: <ColorTileViewModel>[],
-    );
-  }
-}
-
-class ColorsViewBloc extends Cubit<ColorsViewModel> {
+class ColorsViewBloc extends Cubit<ItemsListViewModel<ColorTileViewModel>> {
   factory ColorsViewBloc.fromContext(BuildContext context) {
     return ColorsViewBloc(
       ColourloversApiClient(),
@@ -33,49 +16,41 @@ class ColorsViewBloc extends Cubit<ColorsViewModel> {
   }
 
   final ColourloversApiClient _client;
-  bool _isLoading = false;
-  List<ColourloversColor> _colors = <ColourloversColor>[];
-  int _page = 0;
+  late final ItemsPagination<ColourloversColor> _pagination;
 
   ColorsViewBloc(
     this._client,
   ) : super(
-          ColorsViewModel.initialState(),
+          ItemsListViewModel.initialState(),
         ) {
-    load();
+    _pagination = ItemsPagination<ColourloversColor>((numResults, offset) {
+      return _client.getColors(
+        numResults: numResults,
+        resultOffset: offset,
+        // orderBy: ClRequestOrderBy.numVotes,
+        sortBy: ColourloversRequestSortBy.DESC,
+      );
+    });
+    _pagination.addListener(_updateState);
+    _pagination.load();
   }
 
-  Future<void> load() async {
-    _isLoading = true;
-    _emitState();
-
-    const numResults = 20;
-    final items = await _client.getColors(
-          numResults: numResults,
-          resultOffset: _page * numResults,
-          // orderBy: ClRequestOrderBy.numVotes,
-          sortBy: ColourloversRequestSortBy.DESC,
-        ) ??
-        [];
-
-    _isLoading = false;
-    _colors = [
-      ..._colors,
-      ...items,
-    ];
-    _emitState();
+  @override
+  Future<void> close() {
+    _pagination.removeListener(_updateState);
+    return super.close();
   }
 
   Future<void> loadMore() async {
-    _page++;
-    await load();
+    await _pagination.loadMore();
   }
 
   void showColorDetails(
     BuildContext context,
-    int colorIndex,
+    ColorTileViewModel viewModel,
   ) {
-    final color = _colors[colorIndex];
+    final viewModelIndex = state.items.indexOf(viewModel);
+    final color = _pagination.items[viewModelIndex];
     _showColorDetails(context, color);
   }
 
@@ -94,13 +69,14 @@ class ColorsViewBloc extends Cubit<ColorsViewModel> {
     openRoute(context, ColorDetailsViewBuilder(color: color));
   }
 
-  void _emitState() {
+  void _updateState() {
     emit(
-      ColorsViewModel(
-        isLoading: _isLoading,
-        colors: _colors //
+      ItemsListViewModel(
+        isLoading: _pagination.isLoading,
+        items: _pagination.items //
             .map(ColorTileViewModel.fromColourloverColor)
             .toList(),
+        hasMoreItems: _pagination.hasMoreItems,
       ),
     );
   }
@@ -115,10 +91,11 @@ class ColorsViewBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<ColorsViewBloc>(
       create: ColorsViewBloc.fromContext,
-      child: BlocBuilder<ColorsViewBloc, ColorsViewModel>(
+      child:
+          BlocBuilder<ColorsViewBloc, ItemsListViewModel<ColorTileViewModel>>(
         builder: (context, viewModel) {
           return ColorsView(
-            viewModel: viewModel,
+            listViewModel: viewModel,
             bloc: context.read<ColorsViewBloc>(),
           );
         },
@@ -128,12 +105,12 @@ class ColorsViewBuilder extends StatelessWidget {
 }
 
 class ColorsView extends StatelessWidget {
-  final ColorsViewModel viewModel;
+  final ItemsListViewModel<ColorTileViewModel> listViewModel;
   final ColorsViewBloc bloc;
 
   const ColorsView({
     super.key,
-    required this.viewModel,
+    required this.listViewModel,
     required this.bloc,
   });
 
@@ -158,36 +135,17 @@ class ColorsView extends StatelessWidget {
           // ),
         ],
       ),
-      body: ListView.separated(
-        padding: const EdgeInsets.all(16),
-        // controller: scrollController,
-        itemCount: viewModel.colors.length + 1,
-        itemBuilder: (context, index) {
-          if (index == viewModel.colors.length) {
-            if (viewModel.isLoading) {
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            } else {
-              // TODO dont show if no more items
-              return OutlinedButton(
-                onPressed: bloc.loadMore,
-                child: const Text('Load more'),
-              );
-            }
-          } else {
-            final color = viewModel.colors[index];
-            return ColorTileView(
-              viewModel: color,
-              onTap: () {
-                bloc.showColorDetails(context, index);
-              },
-            );
-          }
+      body: ItemsListView(
+        viewModel: listViewModel,
+        itemTileBuilder: (itemViewModel) {
+          return ColorTileView(
+            viewModel: itemViewModel,
+            onTap: () {
+              bloc.showColorDetails(context, itemViewModel);
+            },
+          );
         },
-        separatorBuilder: (context, index) {
-          return const SizedBox(height: 12);
-        },
+        onLoadMorePressed: bloc.loadMore,
       ),
     );
   }
