@@ -107,7 +107,6 @@ class UsersView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // extendBodyBehindAppBar: true,
       appBar: AppTopBarView(
         context,
         title: 'Users',

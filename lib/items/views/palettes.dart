@@ -118,7 +118,6 @@ class PalettesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // extendBodyBehindAppBar: true,
       appBar: AppTopBarView(
         context,
         title: 'Palettes',

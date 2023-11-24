@@ -23,6 +23,7 @@ dependencies:
   lucide_icons: ^0.257.0
   flex_color_scheme: ^7.2.0
   flextras: ^1.0.0
+  another_xlider: ^3.0.1
 
   url_launcher: ^6.1.13
   clipboard: ^0.1.3

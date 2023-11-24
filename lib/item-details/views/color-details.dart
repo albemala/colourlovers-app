@@ -448,21 +448,21 @@ class _ColorValuesView extends StatelessWidget {
         const H2TextView('Values'),
         Column(
           children: [
-            ColorValueView(
+            ColorChannelView(
               label: 'R',
               value: rgb.red,
               minValue: 0,
               maxValue: 256,
               trackColors: const [Color(0xFF000000), Color(0xFFFF0000)],
             ),
-            ColorValueView(
+            ColorChannelView(
               label: 'G',
               value: rgb.green,
               minValue: 0,
               maxValue: 256,
               trackColors: const [Color(0xFF000000), Color(0xFF00FF00)],
             ),
-            ColorValueView(
+            ColorChannelView(
               label: 'B',
               value: rgb.blue,
               minValue: 0,
@@ -473,7 +473,7 @@ class _ColorValuesView extends StatelessWidget {
         ),
         Column(
           children: [
-            ColorValueView(
+            ColorChannelView(
               label: 'H',
               value: hsv.hue,
               minValue: 0,
@@ -488,7 +488,7 @@ class _ColorValuesView extends StatelessWidget {
                 Color(0xFFFF0000),
               ],
             ),
-            ColorValueView(
+            ColorChannelView(
               label: 'S',
               value: hsv.saturation,
               minValue: 0,
@@ -498,7 +498,7 @@ class _ColorValuesView extends StatelessWidget {
                 HSVColor.fromAHSV(1, hsv.hue, 1, 1).toColor()
               ],
             ),
-            ColorValueView(
+            ColorChannelView(
               label: 'V',
               value: hsv.value,
               minValue: 0,

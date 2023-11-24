@@ -31,6 +31,14 @@ class ItemsPagination<ItemType> extends ChangeNotifier {
     page++;
     await load();
   }
+
+  void reset() {
+    isLoading = false;
+    items = [];
+    page = 0;
+    hasMoreItems = true;
+    notifyListeners();
+  }
 }
 
 @immutable

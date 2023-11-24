@@ -34,11 +34,13 @@ void showBottomSheet(
 
 void openRoute(
   BuildContext context,
-  Widget view,
-) {
+  Widget view, {
+  bool fullscreenDialog = false,
+}) {
   if (!context.mounted) return;
   Navigator.of(context).push(
     MaterialPageRoute<void>(
+      fullscreenDialog: fullscreenDialog,
       builder: (_) => view,
     ),
   );

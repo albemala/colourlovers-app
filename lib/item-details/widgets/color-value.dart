@@ -1,14 +1,15 @@
+import 'package:colourlovers_app/common/widgets/color-value-indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class ColorValueView extends StatelessWidget {
+class ColorChannelView extends StatelessWidget {
   final String label;
   final double value;
   final double minValue;
   final double maxValue;
   final List<Color> trackColors;
 
-  const ColorValueView({
+  const ColorChannelView({
     super.key,
     required this.label,
     required this.value,
@@ -20,7 +21,7 @@ class ColorValueView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: <Widget>[
+      children: [
         SizedBox(
           width: 12,
           child: Text(
@@ -33,7 +34,7 @@ class ColorValueView extends StatelessWidget {
         ),
         const SizedBox(width: 8),
         Expanded(
-          child: _ColorValueIndicatorWidget(
+          child: ColorChannelValueView(
             value: value,
             minValue: minValue,
             maxValue: maxValue,
@@ -49,138 +50,6 @@ class ColorValueView extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-const double _widgetHeight = 16;
-const double _trackHeight = 8;
-const double _dotRadius = 6;
-const double _dotBorderWidth = 2;
-
-class _ColorValueIndicatorWidget extends StatelessWidget {
-  final double value;
-  final double minValue;
-  final double maxValue;
-  final List<Color> trackColors;
-
-  const _ColorValueIndicatorWidget({
-    required this.value,
-    required this.minValue,
-    required this.maxValue,
-    required this.trackColors,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints box) {
-        final widgetWidth = box.maxWidth;
-        return SizedBox(
-          width: widgetWidth,
-          height: _widgetHeight,
-          child: Stack(
-            clipBehavior: Clip.none,
-            children: <Widget>[
-              _TrackWidget(
-                width: widgetWidth,
-                trackColors: trackColors,
-              ),
-              _DotWidget(
-                value: value,
-                maxValue: maxValue,
-                width: widgetWidth,
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-}
-
-class _TrackWidget extends StatelessWidget {
-  final double width;
-  final List<Color> trackColors;
-
-  const _TrackWidget({
-    required this.width,
-    required this.trackColors,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      width: width,
-      height: _trackHeight,
-      left: 0,
-      top: _widgetHeight / 2 - _trackHeight / 2,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(_trackHeight / 2),
-        child: CustomPaint(
-          painter: _TrackPainter(trackColors),
-        ),
-      ),
-    );
-  }
-}
-
-class _DotWidget extends StatelessWidget {
-  final double value;
-  final double maxValue;
-  final double width;
-
-  const _DotWidget({
-    required this.value,
-    required this.maxValue,
-    required this.width,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Positioned(
-      width: _dotRadius * 2,
-      height: _dotRadius * 2,
-      left: _dotRadius + (width - _dotRadius * 2) * (value / maxValue),
-      top: _widgetHeight / 2,
-      child: CustomPaint(
-        painter: _DotPainter(),
-      ),
-    );
-  }
-}
-
-class _TrackPainter extends CustomPainter {
-  final List<Color> colors;
-
-  const _TrackPainter(this.colors);
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => false;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final rect = Offset.zero & size;
-    canvas.drawRect(
-      rect,
-      Paint()..shader = LinearGradient(colors: colors).createShader(rect),
-    );
-  }
-}
-
-class _DotPainter extends CustomPainter {
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) => false;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    canvas.drawCircle(
-      Offset.zero,
-      _dotRadius - _dotBorderWidth / 2,
-      Paint()
-        ..color = Colors.white
-        ..strokeWidth = _dotBorderWidth
-        ..style = PaintingStyle.stroke,
     );
   }
 }
