@@ -1,12 +1,14 @@
 import 'package:colourlovers_app/app-content/view.dart';
 import 'package:colourlovers_app/app/routing.dart';
 import 'package:colourlovers_app/common/widgets/app-top-bar.dart';
+import 'package:colourlovers_app/common/widgets/background.dart';
 import 'package:colourlovers_app/common/widgets/items.dart';
 import 'package:colourlovers_app/common/widgets/skewed-container.dart';
 import 'package:colourlovers_app/items/views/colors.dart';
 import 'package:colourlovers_app/items/views/palettes.dart';
 import 'package:colourlovers_app/items/views/patterns.dart';
 import 'package:colourlovers_app/items/views/users.dart';
+import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -79,52 +81,58 @@ class ExploreView extends StatelessWidget {
           // TODO add padding to the left
         ],
       ),
-      body: Center(
-        // TODO should this have a Scaffold?
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              ExploreTileView(
-                onTap: () {
-                  bloc.showColorsView(context);
-                },
-                title: 'Colors',
-                child: const ColorView(hex: '1693A5'),
-              ),
-              const SizedBox(height: 8),
-              ExploreTileView(
-                onTap: () {
-                  bloc.showPalettesView(context);
-                },
-                title: 'Palettes',
-                child: const PaletteView(
-                  hexs: ['FE4365', 'FC9D9A', 'F9CDAD', 'C8C8A9', '83AF9B'],
-                  widths: [0.23, 0.07, 0.06, 0.07, 0.57],
+      body: BackgroundView(
+        colors: const [
+          Color(0xFFFE4365),
+          Color(0xFFFC9D9A),
+          Color(0xFFF9CDAD),
+          Color(0xFFC8C8A9),
+          Color(0xFF83AF9B),
+        ],
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(16),
+            child: SeparatedColumn(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              separatorBuilder: () => const SizedBox(height: 8),
+              children: [
+                ExploreTileView(
+                  onTap: () {
+                    bloc.showColorsView(context);
+                  },
+                  title: 'Colors',
+                  child: const ColorView(hex: '1693A5'),
                 ),
-              ),
-              const SizedBox(height: 8),
-              ExploreTileView(
-                onTap: () {
-                  bloc.showPatternsView(context);
-                },
-                title: 'Patterns',
-                child: const PatternView(
-                  // TODO store locally
-                  imageUrl:
-                      'http://static.colourlovers.com/images/patterns/1101/1101098.png',
+                ExploreTileView(
+                  onTap: () {
+                    bloc.showPalettesView(context);
+                  },
+                  title: 'Palettes',
+                  child: const PaletteView(
+                    hexs: ['FE4365', 'FC9D9A', 'F9CDAD', 'C8C8A9', '83AF9B'],
+                    widths: [0.23, 0.07, 0.06, 0.07, 0.57],
+                  ),
                 ),
-              ),
-              const SizedBox(height: 8),
-              ExploreTileView(
-                onTap: () {
-                  bloc.showUsersView(context);
-                },
-                title: 'Users',
-                child: const UserView(),
-              ),
-            ],
+                ExploreTileView(
+                  onTap: () {
+                    bloc.showPatternsView(context);
+                  },
+                  title: 'Patterns',
+                  child: const PatternView(
+                    // TODO store locally
+                    imageUrl:
+                        'http://static.colourlovers.com/images/patterns/1101/1101098.png',
+                  ),
+                ),
+                ExploreTileView(
+                  onTap: () {
+                    bloc.showUsersView(context);
+                  },
+                  title: 'Users',
+                  child: const UserView(),
+                ),
+              ],
+            ),
           ),
         ),
       ),

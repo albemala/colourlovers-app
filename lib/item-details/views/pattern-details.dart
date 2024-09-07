@@ -9,9 +9,9 @@ import 'package:colourlovers_app/item-details/views/color-details.dart';
 import 'package:colourlovers_app/item-details/views/palette-details.dart';
 import 'package:colourlovers_app/item-details/views/user-details.dart';
 import 'package:colourlovers_app/item-details/widgets/item-details.dart';
+import 'package:colourlovers_app/item-details/widgets/label-value.dart';
 import 'package:colourlovers_app/item-details/widgets/related-items-preview.dart';
 import 'package:colourlovers_app/item-details/widgets/share-item-button.dart';
-import 'package:colourlovers_app/item-details/widgets/stats.dart';
 import 'package:colourlovers_app/related-items/functions/related-items.dart';
 import 'package:colourlovers_app/related-items/functions/user-items.dart';
 import 'package:colourlovers_app/related-items/views/related-palettes.dart';
@@ -269,22 +269,38 @@ class PatternDetailsView extends StatelessWidget {
                       bloc.showSharePatternView(context);
                     },
                   ),
-                  StatsView(
-                    stats: [
-                      StatsItemViewModel(
+                  Column(
+                    children: [
+                      LabelValueView(
                         label: 'Views',
                         value: viewModel.numViews,
                       ),
-                      StatsItemViewModel(
+                      LabelValueView(
                         label: 'Votes',
                         value: viewModel.numVotes,
                       ),
-                      StatsItemViewModel(
+                      LabelValueView(
                         label: 'Rank',
                         value: viewModel.rank,
                       ),
                     ],
                   ),
+                  // StatsView(
+                  //   stats: [
+                  //     StatsItemViewModel(
+                  //       label: 'Views',
+                  //       value: viewModel.numViews,
+                  //     ),
+                  //     StatsItemViewModel(
+                  //       label: 'Votes',
+                  //       value: viewModel.numVotes,
+                  //     ),
+                  //     StatsItemViewModel(
+                  //       label: 'Rank',
+                  //       value: viewModel.rank,
+                  //     ),
+                  //   ],
+                  // ),
                   ItemColorsView(
                     colorViewModels: viewModel.colorViewModels,
                     onColorTap: (viewModel) {

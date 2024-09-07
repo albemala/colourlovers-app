@@ -48,5 +48,9 @@ final darkTheme = _setupTheme(
 );
 
 ThemeData _setupTheme(ThemeData theme) {
-  return theme.copyWith();
+  return theme.copyWith(
+    iconTheme: theme.iconTheme.copyWith(
+        // size: 18, // TODO
+        ),
+  );
 }
