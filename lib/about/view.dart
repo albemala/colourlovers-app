@@ -1,4 +1,4 @@
-import 'package:colourlovers_app/common/widgets/app-top-bar.dart';
+import 'package:colourlovers_app/widgets/app-top-bar.dart';
 import 'package:flutter/material.dart';
 
 class AboutView extends StatelessWidget {

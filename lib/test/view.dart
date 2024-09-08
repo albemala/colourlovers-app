@@ -1,8 +1,8 @@
 import 'package:colourlovers_app/app/routing.dart';
-import 'package:colourlovers_app/common/widgets/app-top-bar.dart';
-import 'package:colourlovers_app/item-details/views/item-details-test.dart';
-import 'package:colourlovers_app/items/views/items-test.dart';
-import 'package:colourlovers_app/share-items/views/share-items-test.dart';
+import 'package:colourlovers_app/test/item-details-test.dart';
+import 'package:colourlovers_app/test/items-test.dart';
+import 'package:colourlovers_app/test/share-items-test.dart';
+import 'package:colourlovers_app/widgets/app-top-bar.dart';
 import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

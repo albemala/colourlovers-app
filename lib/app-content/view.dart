@@ -1,7 +1,7 @@
 import 'package:colourlovers_app/about/view.dart';
-import 'package:colourlovers_app/common/preferences/bloc.dart';
 import 'package:colourlovers_app/explore/view.dart';
 import 'package:colourlovers_app/favorites/view.dart';
+import 'package:colourlovers_app/preferences/bloc.dart';
 import 'package:colourlovers_app/test/view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
