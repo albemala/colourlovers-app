@@ -42,7 +42,7 @@ class HeaderView extends StatelessWidget {
 }
 
 class CreatedByView extends StatelessWidget {
-  final UserTileViewModel user;
+  final UserTileViewState user;
   final void Function() onUserTap;
 
   const CreatedByView({
@@ -61,7 +61,7 @@ class CreatedByView extends StatelessWidget {
       children: [
         const H2TextView('Created by'),
         UserTileView(
-          viewModel: user,
+          state: user,
           onTap: onUserTap,
         ),
       ],
@@ -105,12 +105,12 @@ class CreditsView extends StatelessWidget {
 }
 
 class ItemColorsView extends StatelessWidget {
-  final List<ColorTileViewModel> colorViewModels;
-  final void Function(ColorTileViewModel) onColorTap;
+  final List<ColorTileViewState> colorViewStates;
+  final void Function(ColorTileViewState) onColorTap;
 
   const ItemColorsView({
     super.key,
-    required this.colorViewModels,
+    required this.colorViewStates,
     required this.onColorTap,
   });
 
@@ -126,11 +126,11 @@ class ItemColorsView extends StatelessWidget {
           separatorBuilder: () {
             return const SizedBox(height: 8);
           },
-          children: colorViewModels.map((viewModel) {
+          children: colorViewStates.map((state) {
             return ColorTileView(
-              viewModel: viewModel,
+              state: state,
               onTap: () {
-                onColorTap(viewModel);
+                onColorTap(state);
               },
             );
           }).toList(),

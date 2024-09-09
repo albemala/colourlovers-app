@@ -1,80 +1,18 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
-import 'package:colourlovers_app/app/routing.dart';
-import 'package:colourlovers_app/clipboard.dart';
-import 'package:colourlovers_app/urls/functions.dart';
+import 'package:colourlovers_app/share-color/view-controller.dart';
+import 'package:colourlovers_app/share-color/view-state.dart';
 import 'package:colourlovers_app/widgets/app-top-bar.dart';
 import 'package:colourlovers_app/widgets/h1-text.dart';
 import 'package:colourlovers_app/widgets/h2-text.dart';
 import 'package:colourlovers_app/widgets/items.dart';
-import 'package:colourlovers_app/widgets/snack-bar.dart';
 import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-@immutable
-class ShareColorViewModel {
-  final String hex;
-  final String imageUrl;
-
-  const ShareColorViewModel({
-    required this.hex,
-    required this.imageUrl,
-  });
-
-  factory ShareColorViewModel.initialState() {
-    return const ShareColorViewModel(
-      hex: '',
-      imageUrl: '',
-    );
-  }
-
-  factory ShareColorViewModel.fromColourloversColor(ColourloversColor color) {
-    return ShareColorViewModel(
-      hex: color.hex ?? '',
-      imageUrl: httpToHttps(color.imageUrl ?? ''),
-    );
-  }
-}
-
-class ShareColorBloc extends Cubit<ShareColorViewModel> {
-  factory ShareColorBloc.fromContext(
-    BuildContext context, {
-    required ColourloversColor color,
-  }) {
-    return ShareColorBloc(
-      color,
-    );
-  }
-
-  final ColourloversColor _color;
-  ShareColorBloc(
-    this._color,
-  ) : super(
-          ShareColorViewModel.initialState(),
-        ) {
-    _init();
-  }
-
-  Future<void> _init() async {
-    emit(
-      ShareColorViewModel.fromColourloversColor(_color),
-    );
-  }
-
-  Future<void> copyHexToClipboard(BuildContext context) async {
-    await copyToClipboard(state.hex);
-    showSnackBar(context, createCopiedToClipboardSnackBar(state.hex));
-  }
-
-  void shareImage() {
-    openUrl(state.imageUrl);
-  }
-}
-
-class ShareColorViewBuilder extends StatelessWidget {
+class ShareColorViewCreator extends StatelessWidget {
   final ColourloversColor color;
 
-  const ShareColorViewBuilder({
+  const ShareColorViewCreator({
     super.key,
     required this.color,
   });
@@ -82,15 +20,17 @@ class ShareColorViewBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => ShareColorBloc.fromContext(
-        context,
-        color: color,
-      ),
-      child: BlocBuilder<ShareColorBloc, ShareColorViewModel>(
-        builder: (context, viewModel) {
+      create: (context) {
+        return ShareColorViewController.fromContext(
+          context,
+          color: color,
+        );
+      },
+      child: BlocBuilder<ShareColorViewController, ShareColorViewState>(
+        builder: (context, state) {
           return ShareColorView(
-            viewModel: viewModel,
-            bloc: context.read<ShareColorBloc>(),
+            state: state,
+            controller: context.read<ShareColorViewController>(),
           );
         },
       ),
@@ -99,13 +39,13 @@ class ShareColorViewBuilder extends StatelessWidget {
 }
 
 class ShareColorView extends StatelessWidget {
-  final ShareColorViewModel viewModel;
-  final ShareColorBloc bloc;
+  final ShareColorViewState state;
+  final ShareColorViewController controller;
 
   const ShareColorView({
     super.key,
-    required this.viewModel,
-    required this.bloc,
+    required this.state,
+    required this.controller,
   });
 
   @override
@@ -121,7 +61,7 @@ class ShareColorView extends StatelessWidget {
           children: [
             SizedBox(
               height: 96,
-              child: ColorView(hex: viewModel.hex),
+              child: ColorView(hex: state.hex),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
@@ -144,11 +84,11 @@ class ShareColorView extends StatelessWidget {
                         children: [
                           SizedBox(
                             // width: 120,
-                            child: H1TextView('#${viewModel.hex}'),
+                            child: H1TextView('#${state.hex}'),
                           ),
                           TextButton(
                             onPressed: () {
-                              bloc.copyHexToClipboard(context);
+                              controller.copyHexToClipboard(context);
                             },
                             child: const Text('Copy'),
                           ),
@@ -169,10 +109,10 @@ class ShareColorView extends StatelessWidget {
                         },
                         children: [
                           Flexible(
-                            child: Image.network(viewModel.imageUrl),
+                            child: Image.network(state.imageUrl),
                           ),
                           TextButton(
-                            onPressed: bloc.shareImage,
+                            onPressed: controller.shareImage,
                             child: const Text('Share'),
                           ),
                         ],

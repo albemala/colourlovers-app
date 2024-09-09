@@ -1,4 +1,4 @@
-import 'package:colourlovers_app/colors/colors.dart';
+import 'package:colourlovers_app/colors/view.dart';
 import 'package:colourlovers_app/palettes/view.dart';
 import 'package:colourlovers_app/patterns/view.dart';
 import 'package:colourlovers_app/users/view.dart';
@@ -13,10 +13,10 @@ class ItemsTestView extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Row(
       children: [
-        Expanded(child: ColorsViewBuilder()),
-        Expanded(child: PalettesViewBuilder()),
-        Expanded(child: PatternsViewBuilder()),
-        Expanded(child: UsersViewBuilder()),
+        Expanded(child: ColorsViewCreator()),
+        Expanded(child: PalettesViewCreator()),
+        Expanded(child: PatternsViewCreator()),
+        Expanded(child: UsersViewCreator()),
       ],
     );
   }

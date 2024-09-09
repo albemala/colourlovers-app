@@ -3,18 +3,18 @@ import 'package:colourlovers_app/widgets/h2-text.dart';
 import 'package:flutter/material.dart';
 
 @immutable
-class StatsItemViewModel {
+class StatsItemViewState {
   final String label;
   final String value;
 
-  const StatsItemViewModel({
+  const StatsItemViewState({
     required this.label,
     required this.value,
   });
 }
 
 class StatsView extends StatelessWidget {
-  final List<StatsItemViewModel> stats;
+  final List<StatsItemViewState> stats;
 
   const StatsView({
     super.key,

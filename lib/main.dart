@@ -1,17 +1,19 @@
 import 'package:colourlovers_app/app/view.dart';
-import 'package:colourlovers_app/preferences/bloc.dart';
+import 'package:colourlovers_app/preferences/data-controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // GoogleFonts.config.allowRuntimeFetching = false; // TODO restore
+  // GoogleFonts.config.allowRuntimeFetching = false;
 
   runApp(
-    const BlocProvider(
-      create: PreferencesBloc.fromContext,
-      child: AppView(),
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (_) => PreferencesDataController()),
+      ],
+      child: const AppViewCreator(),
     ),
   );
 }

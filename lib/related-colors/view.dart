@@ -1,97 +1,34 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
-import 'package:colourlovers_app/app/routing.dart';
-import 'package:colourlovers_app/color-details/view.dart';
-import 'package:colourlovers_app/related-items.dart';
+import 'package:colourlovers_app/related-colors/view-controller.dart';
 import 'package:colourlovers_app/widgets/app-top-bar.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';
 import 'package:colourlovers_app/widgets/items-list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class RelatedColorsViewBloc
-    extends Cubit<ItemsListViewModel<ColorTileViewModel>> {
-  factory RelatedColorsViewBloc.fromContext(
-    BuildContext context, {
-    required Hsv hsv,
-  }) {
-    return RelatedColorsViewBloc(
-      hsv,
-      ColourloversApiClient(),
-    );
-  }
-
-  final Hsv _hsv;
-  final ColourloversApiClient _client;
-  late final ItemsPagination<ColourloversColor> _pagination;
-
-  RelatedColorsViewBloc(
-    this._hsv,
-    this._client,
-  ) : super(
-          ItemsListViewModel.initialState(),
-        ) {
-    _pagination = ItemsPagination<ColourloversColor>((numResults, offset) {
-      return fetchRelatedColors(_client, numResults, offset, _hsv);
-    });
-    _pagination.addListener(_updateState);
-    _pagination.load();
-  }
-
-  @override
-  Future<void> close() {
-    _pagination.removeListener(_updateState);
-    return super.close();
-  }
-
-  Future<void> loadMore() async {
-    await _pagination.loadMore();
-  }
-
-  void showColorDetails(
-    BuildContext context,
-    ColorTileViewModel viewModel,
-  ) {
-    final viewModelIndex = state.items.indexOf(viewModel);
-    final color = _pagination.items[viewModelIndex];
-    openRoute(context, ColorDetailsViewBuilder(color: color));
-  }
-
-  void _updateState() {
-    emit(
-      ItemsListViewModel(
-        isLoading: _pagination.isLoading,
-        items: _pagination.items //
-            .map(ColorTileViewModel.fromColourloverColor)
-            .toList(),
-        hasMoreItems: _pagination.hasMoreItems,
-      ),
-    );
-  }
-}
-
-class RelatedColorsViewBuilder extends StatelessWidget {
+class RelatedColorsViewCreator extends StatelessWidget {
   final Hsv hsv;
 
-  const RelatedColorsViewBuilder({
+  const RelatedColorsViewCreator({
     super.key,
     required this.hsv,
   });
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<RelatedColorsViewBloc>(
+    return BlocProvider<RelatedColorsViewController>(
       create: (context) {
-        return RelatedColorsViewBloc.fromContext(
+        return RelatedColorsViewController.fromContext(
           context,
           hsv: hsv,
         );
       },
-      child: BlocBuilder<RelatedColorsViewBloc,
-          ItemsListViewModel<ColorTileViewModel>>(
-        builder: (context, viewModel) {
+      child: BlocBuilder<RelatedColorsViewController,
+          ItemsListViewState<ColorTileViewState>>(
+        builder: (context, state) {
           return RelatedColorsView(
-            listViewModel: viewModel,
-            bloc: context.read<RelatedColorsViewBloc>(),
+            listViewState: state,
+            controller: context.read<RelatedColorsViewController>(),
           );
         },
       ),
@@ -100,13 +37,13 @@ class RelatedColorsViewBuilder extends StatelessWidget {
 }
 
 class RelatedColorsView extends StatelessWidget {
-  final ItemsListViewModel<ColorTileViewModel> listViewModel;
-  final RelatedColorsViewBloc bloc;
+  final ItemsListViewState<ColorTileViewState> listViewState;
+  final RelatedColorsViewController controller;
 
   const RelatedColorsView({
     super.key,
-    required this.listViewModel,
-    required this.bloc,
+    required this.listViewState,
+    required this.controller,
   });
 
   @override
@@ -117,16 +54,16 @@ class RelatedColorsView extends StatelessWidget {
         title: 'Related colors',
       ),
       body: ItemsListView(
-        viewModel: listViewModel,
-        itemTileBuilder: (itemViewModel) {
+        state: listViewState,
+        itemTileBuilder: (itemViewState) {
           return ColorTileView(
-            viewModel: itemViewModel,
+            state: itemViewState,
             onTap: () {
-              bloc.showColorDetails(context, itemViewModel);
+              controller.showColorDetails(context, itemViewState);
             },
           );
         },
-        onLoadMorePressed: bloc.loadMore,
+        onLoadMorePressed: controller.loadMore,
       ),
     );
   }

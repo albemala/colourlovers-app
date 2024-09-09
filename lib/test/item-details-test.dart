@@ -7,37 +7,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @immutable
-class ItemDetailsViewModel {
+class ItemDetailsViewState {
   final ColourloversColor? color;
   final ColourloversPalette? palette;
   final ColourloversPattern? pattern;
   final ColourloversLover? user;
 
-  const ItemDetailsViewModel({
+  const ItemDetailsViewState({
     this.color,
     this.palette,
     this.pattern,
     this.user,
   });
 
-  factory ItemDetailsViewModel.initialState() {
-    return const ItemDetailsViewModel();
+  factory ItemDetailsViewState.initialState() {
+    return const ItemDetailsViewState();
   }
 }
 
-class ItemDetailsBloc extends Cubit<ItemDetailsViewModel> {
-  factory ItemDetailsBloc.fromContext(BuildContext context) {
-    return ItemDetailsBloc(
+class ItemDetailsViewController extends Cubit<ItemDetailsViewState> {
+  factory ItemDetailsViewController.fromContext(BuildContext context) {
+    return ItemDetailsViewController(
       ColourloversApiClient(),
     );
   }
 
   final ColourloversApiClient _client;
 
-  ItemDetailsBloc(
+  ItemDetailsViewController(
     this._client,
   ) : super(
-          ItemDetailsViewModel.initialState(),
+          ItemDetailsViewState.initialState(),
         ) {
     _init();
   }
@@ -49,7 +49,7 @@ class ItemDetailsBloc extends Cubit<ItemDetailsViewModel> {
     final user = await _client.getLover(userName: 'sunmeadow');
 
     emit(
-      ItemDetailsViewModel(
+      ItemDetailsViewState(
         color: color,
         palette: palette,
         pattern: pattern,
@@ -59,20 +59,20 @@ class ItemDetailsBloc extends Cubit<ItemDetailsViewModel> {
   }
 }
 
-class ItemDetailsTestViewBuilder extends StatelessWidget {
-  const ItemDetailsTestViewBuilder({
+class ItemDetailsTestViewCreator extends StatelessWidget {
+  const ItemDetailsTestViewCreator({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: ItemDetailsBloc.fromContext,
-      child: BlocBuilder<ItemDetailsBloc, ItemDetailsViewModel>(
-        builder: (context, viewModel) {
+      create: ItemDetailsViewController.fromContext,
+      child: BlocBuilder<ItemDetailsViewController, ItemDetailsViewState>(
+        builder: (context, state) {
           return ItemDetailsTestView(
-            viewModel: viewModel,
-            bloc: context.read<ItemDetailsBloc>(),
+            state: state,
+            controller: context.read<ItemDetailsViewController>(),
           );
         },
       ),
@@ -81,13 +81,13 @@ class ItemDetailsTestViewBuilder extends StatelessWidget {
 }
 
 class ItemDetailsTestView extends StatelessWidget {
-  final ItemDetailsViewModel viewModel;
-  final ItemDetailsBloc bloc;
+  final ItemDetailsViewState state;
+  final ItemDetailsViewController controller;
 
   const ItemDetailsTestView({
     super.key,
-    required this.viewModel,
-    required this.bloc,
+    required this.state,
+    required this.controller,
   });
 
   @override
@@ -95,23 +95,23 @@ class ItemDetailsTestView extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: viewModel.color != null
-              ? ColorDetailsViewBuilder(color: viewModel.color!)
+          child: state.color != null
+              ? ColorDetailsViewCreator(color: state.color!)
               : const Center(child: CircularProgressIndicator()),
         ),
         Expanded(
-          child: viewModel.palette != null
-              ? PaletteDetailsViewBuilder(palette: viewModel.palette!)
+          child: state.palette != null
+              ? PaletteDetailsViewCreator(palette: state.palette!)
               : const Center(child: CircularProgressIndicator()),
         ),
         Expanded(
-          child: viewModel.pattern != null
-              ? PatternDetailsViewBuilder(pattern: viewModel.pattern!)
+          child: state.pattern != null
+              ? PatternDetailsViewCreator(pattern: state.pattern!)
               : const Center(child: CircularProgressIndicator()),
         ),
         Expanded(
-          child: viewModel.user != null
-              ? UserDetailsViewBuilder(user: viewModel.user!)
+          child: state.user != null
+              ? UserDetailsViewCreator(user: state.user!)
               : const Center(child: CircularProgressIndicator()),
         ),
       ],

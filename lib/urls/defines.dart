@@ -7,8 +7,8 @@ const colourLoversUrl = 'https://www.colourlovers.com';
 const colourLoversLicenseUrl = '$colourLoversUrl/api';
 const creativeCommonsUrl = 'https://creativecommons.org/licenses/by-nc-sa/3.0/';
 
-const exaboxWebsiteUrl = 'https://exabox.app';
-const hexeeWebsiteUrl = 'https://hexee.app/';
-const wmapWebsiteUrl = 'https://wmap.albemala.me/';
-const iroIroWebsiteUrl = 'https://iro-iro.albemala.me/';
+const exaboxWebsiteUrl = 'https://exabox.app/?ref=luv-app';
+const hexeeWebsiteUrl = 'https://hexee.app/?ref=luv-app';
+const wmapWebsiteUrl = 'https://wmap.albemala.me/?ref=luv-app';
+const iroIroWebsiteUrl = 'https://iro-iro.albemala.me/?ref=luv-app';
 const otherProjectsUrl = 'https://projects.albemala.me/?ref=luv-app';

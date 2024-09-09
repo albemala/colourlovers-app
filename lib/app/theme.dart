@@ -2,54 +2,57 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-final lightTheme = _setupTheme(
-  FlexThemeData.light(
-    scheme: FlexScheme.purpleM3,
-    // tones: FlexTones.vivid(Brightness.light),
-    // keyColors: const FlexKeyColors(
-    //   useSecondary: true,
-    //   useTertiary: true,
-    // ),
-    surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
-    blendLevel: 7,
-    subThemesData: const FlexSubThemesData(
-      blendOnLevel: 10,
-      blendOnColors: false,
-      useM2StyleDividerInM3: true,
-    ),
-    swapLegacyOnMaterial3: true,
-    useMaterial3: true,
-    visualDensity: FlexColorScheme.comfortablePlatformDensity,
-    // visualDensity: VisualDensity.compact,
-    fontFamily: GoogleFonts.archivo().fontFamily,
-  ),
-);
+const _defaultScheme = FlexScheme.purpleM3;
+// const _surfaceMode = FlexSurfaceMode.levelSurfacesLowScaffold;
+const _surfaceMode = FlexSurfaceMode.highScaffoldLowSurfaces;
+// const _radius = 0.0;
+const _visualDensity = VisualDensity.compact;
+// const _visualDensity = VisualDensity.comfortablePlatformDensity;
+final _fontFamily = GoogleFonts.archivo().fontFamily;
 
-final darkTheme = _setupTheme(
-  FlexThemeData.dark(
-    scheme: FlexScheme.purpleM3,
-    // tones: FlexTones.vivid(Brightness.dark),
-    // keyColors: const FlexKeyColors(
-    //   useSecondary: true,
-    //   useTertiary: true,
-    // ),
-    surfaceMode: FlexSurfaceMode.levelSurfacesLowScaffold,
-    blendLevel: 13,
-    subThemesData: const FlexSubThemesData(
-      blendOnLevel: 20,
-      useM2StyleDividerInM3: true,
+ThemeData getLightTheme() {
+  return _applyThemeDefaults(
+    FlexThemeData.light(
+      // tones: FlexTones.soft(Brightness.light),
+      // keyColors: const FlexKeyColors(),
+      useMaterial3: true,
+      scheme: _defaultScheme,
+      surfaceMode: _surfaceMode,
+      // blendLevel: 2,
+      // blendLevel: 7,
+      subThemesData: const FlexSubThemesData(
+          // blendOnLevel: 10,
+          // defaultRadius: _radius,
+          ),
+      visualDensity: _visualDensity,
+      fontFamily: _fontFamily,
     ),
-    swapLegacyOnMaterial3: true,
-    useMaterial3: true,
-    visualDensity: FlexColorScheme.comfortablePlatformDensity,
-    // visualDensity: VisualDensity.compact,
-    fontFamily: GoogleFonts.archivo().fontFamily,
-  ),
-);
+  );
+}
 
-ThemeData _setupTheme(ThemeData theme) {
-  return theme.copyWith(
-    iconTheme: theme.iconTheme.copyWith(
+ThemeData getDarkTheme() {
+  return _applyThemeDefaults(
+    FlexThemeData.dark(
+      // tones: FlexTones.soft(Brightness.dark),
+      // keyColors: const FlexKeyColors(),
+      useMaterial3: true,
+      scheme: _defaultScheme,
+      surfaceMode: _surfaceMode,
+      // blendLevel: 8,
+      // blendLevel: 13,
+      subThemesData: const FlexSubThemesData(
+          // blendOnLevel: 20,
+          // defaultRadius: _radius,
+          ),
+      visualDensity: _visualDensity,
+      fontFamily: _fontFamily,
+    ),
+  );
+}
+
+ThemeData _applyThemeDefaults(ThemeData themeData) {
+  return themeData.copyWith(
+    iconTheme: themeData.iconTheme.copyWith(
         // size: 18, // TODO
         ),
   );

@@ -6,37 +6,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 @immutable
-class ShareItemsViewModel {
+class ShareItemsViewState {
   final ColourloversColor? color;
   final ColourloversPalette? palette;
   final ColourloversPattern? pattern;
   final ColourloversLover? user;
 
-  const ShareItemsViewModel({
+  const ShareItemsViewState({
     this.color,
     this.palette,
     this.pattern,
     this.user,
   });
 
-  factory ShareItemsViewModel.initialState() {
-    return const ShareItemsViewModel();
+  factory ShareItemsViewState.initialState() {
+    return const ShareItemsViewState();
   }
 }
 
-class ShareItemsBloc extends Cubit<ShareItemsViewModel> {
-  factory ShareItemsBloc.fromContext(BuildContext context) {
-    return ShareItemsBloc(
+class ShareItemsViewController extends Cubit<ShareItemsViewState> {
+  factory ShareItemsViewController.fromContext(BuildContext context) {
+    return ShareItemsViewController(
       ColourloversApiClient(),
     );
   }
 
   final ColourloversApiClient _client;
 
-  ShareItemsBloc(
+  ShareItemsViewController(
     this._client,
   ) : super(
-          ShareItemsViewModel.initialState(),
+          ShareItemsViewState.initialState(),
         ) {
     _init();
   }
@@ -48,7 +48,7 @@ class ShareItemsBloc extends Cubit<ShareItemsViewModel> {
     final user = await _client.getLover(userName: 'sunmeadow');
 
     emit(
-      ShareItemsViewModel(
+      ShareItemsViewState(
         color: color,
         palette: palette,
         pattern: pattern,
@@ -58,20 +58,20 @@ class ShareItemsBloc extends Cubit<ShareItemsViewModel> {
   }
 }
 
-class ShareItemsTestViewBuilder extends StatelessWidget {
-  const ShareItemsTestViewBuilder({
+class ShareItemsTestViewCreator extends StatelessWidget {
+  const ShareItemsTestViewCreator({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: ShareItemsBloc.fromContext,
-      child: BlocBuilder<ShareItemsBloc, ShareItemsViewModel>(
-        builder: (context, viewModel) {
+      create: ShareItemsViewController.fromContext,
+      child: BlocBuilder<ShareItemsViewController, ShareItemsViewState>(
+        builder: (context, state) {
           return ShareItemsTestView(
-            viewModel: viewModel,
-            bloc: context.read<ShareItemsBloc>(),
+            state: state,
+            controller: context.read<ShareItemsViewController>(),
           );
         },
       ),
@@ -80,13 +80,13 @@ class ShareItemsTestViewBuilder extends StatelessWidget {
 }
 
 class ShareItemsTestView extends StatelessWidget {
-  final ShareItemsViewModel viewModel;
-  final ShareItemsBloc bloc;
+  final ShareItemsViewState state;
+  final ShareItemsViewController controller;
 
   const ShareItemsTestView({
     super.key,
-    required this.viewModel,
-    required this.bloc,
+    required this.state,
+    required this.controller,
   });
 
   @override
@@ -94,18 +94,18 @@ class ShareItemsTestView extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: viewModel.color != null
-              ? ShareColorViewBuilder(color: viewModel.color!)
+          child: state.color != null
+              ? ShareColorViewCreator(color: state.color!)
               : const Center(child: CircularProgressIndicator()),
         ),
         Expanded(
-          child: viewModel.palette != null
-              ? SharePaletteViewBuilder(palette: viewModel.palette!)
+          child: state.palette != null
+              ? SharePaletteViewCreator(palette: state.palette!)
               : const Center(child: CircularProgressIndicator()),
         ),
         Expanded(
-          child: viewModel.pattern != null
-              ? SharePatternViewBuilder(pattern: viewModel.pattern!)
+          child: state.pattern != null
+              ? SharePatternViewCreator(pattern: state.pattern!)
               : const Center(child: CircularProgressIndicator()),
         ),
       ],

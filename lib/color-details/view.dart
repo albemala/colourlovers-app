@@ -1,15 +1,7 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
-import 'package:colourlovers_app/app/routing.dart';
-import 'package:colourlovers_app/palette-details/view.dart';
-import 'package:colourlovers_app/pattern-details/view.dart';
-import 'package:colourlovers_app/related-colors/view.dart';
-import 'package:colourlovers_app/related-items.dart';
-import 'package:colourlovers_app/related-palettes/view.dart';
-import 'package:colourlovers_app/related-patterns/view.dart';
-import 'package:colourlovers_app/share-color/view.dart';
+import 'package:colourlovers_app/color-details/view-controller.dart';
+import 'package:colourlovers_app/color-details/view-state.dart';
 import 'package:colourlovers_app/urls/defines.dart';
-import 'package:colourlovers_app/user-details/view.dart';
-import 'package:colourlovers_app/user-items.dart';
 import 'package:colourlovers_app/widgets/app-top-bar.dart';
 import 'package:colourlovers_app/widgets/color-value.dart';
 import 'package:colourlovers_app/widgets/h2-text.dart';
@@ -23,261 +15,10 @@ import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-@immutable
-class ColorRgbViewModel {
-  final double red;
-  final double green;
-  final double blue;
-
-  const ColorRgbViewModel({
-    required this.red,
-    required this.green,
-    required this.blue,
-  });
-
-  factory ColorRgbViewModel.empty() {
-    return const ColorRgbViewModel(
-      red: 0,
-      green: 0,
-      blue: 0,
-    );
-  }
-
-  factory ColorRgbViewModel.fromColourloverRgb(Rgb rgb) {
-    return ColorRgbViewModel(
-      red: rgb.red?.toDouble() ?? 0,
-      green: rgb.green?.toDouble() ?? 0,
-      blue: rgb.blue?.toDouble() ?? 0,
-    );
-  }
-}
-
-@immutable
-class ColorHsvViewModel {
-  final double hue;
-  final double saturation;
-  final double value;
-
-  const ColorHsvViewModel({
-    required this.hue,
-    required this.saturation,
-    required this.value,
-  });
-
-  factory ColorHsvViewModel.empty() {
-    return const ColorHsvViewModel(
-      hue: 0,
-      saturation: 0,
-      value: 0,
-    );
-  }
-
-  factory ColorHsvViewModel.fromColourloverHsv(Hsv hsv) {
-    return ColorHsvViewModel(
-      hue: hsv.hue?.toDouble() ?? 0,
-      saturation: hsv.saturation?.toDouble() ?? 0,
-      value: hsv.value?.toDouble() ?? 0,
-    );
-  }
-}
-
-@immutable
-class ColorDetailsViewModel {
-  final bool isLoading;
-  final String title;
-  final String hex;
-  final ColorRgbViewModel rgb;
-  final ColorHsvViewModel hsv;
-  final String numViews;
-  final String numVotes;
-  final String rank;
-  final UserTileViewModel user;
-  final List<ColorTileViewModel> relatedColors;
-  final List<PaletteTileViewModel> relatedPalettes;
-  final List<PatternTileViewModel> relatedPatterns;
-
-  const ColorDetailsViewModel({
-    required this.isLoading,
-    required this.title,
-    required this.hex,
-    required this.rgb,
-    required this.hsv,
-    required this.numViews,
-    required this.numVotes,
-    required this.rank,
-    required this.user,
-    required this.relatedColors,
-    required this.relatedPalettes,
-    required this.relatedPatterns,
-  });
-
-  factory ColorDetailsViewModel.empty() {
-    return ColorDetailsViewModel(
-      isLoading: true,
-      title: '',
-      hex: '',
-      rgb: ColorRgbViewModel.empty(),
-      hsv: ColorHsvViewModel.empty(),
-      numViews: '',
-      numVotes: '',
-      rank: '',
-      user: UserTileViewModel.empty(),
-      relatedColors: const [],
-      relatedPalettes: const [],
-      relatedPatterns: const [],
-    );
-  }
-}
-
-class ColorDetailsViewBloc extends Cubit<ColorDetailsViewModel> {
-  factory ColorDetailsViewBloc.fromContext(
-    BuildContext context, {
-    required ColourloversColor color,
-  }) {
-    return ColorDetailsViewBloc(
-      color,
-      ColourloversApiClient(),
-    );
-  }
-
-  final ColourloversColor _color;
-  final ColourloversApiClient _client;
-  ColourloversLover? _user;
-  List<ColourloversColor> _relatedColors = [];
-  List<ColourloversPalette> _relatedPalettes = [];
-  List<ColourloversPattern> _relatedPatterns = [];
-
-  ColorDetailsViewBloc(
-    this._color,
-    this._client,
-  ) : super(
-          ColorDetailsViewModel.empty(),
-        ) {
-    _init();
-  }
-
-  Future<void> _init() async {
-    _user = _color.userName != null
-        ? await fetchUser(_client, _color.userName!)
-        : null;
-    _relatedColors = _color.hsv != null
-        ? await fetchRelatedColorsPreview(_client, _color.hsv!)
-        : <ColourloversColor>[];
-    _relatedPalettes = _color.hex != null
-        ? await fetchRelatedPalettesPreview(_client, [_color.hex!])
-        : <ColourloversPalette>[];
-    _relatedPatterns = _color.hex != null
-        ? await fetchRelatedPatternsPreview(_client, [_color.hex!])
-        : <ColourloversPattern>[];
-
-    _updateState();
-  }
-
-  void _updateState() {
-    emit(
-      ColorDetailsViewModel(
-        isLoading: false,
-        title: _color.title ?? '',
-        hex: _color.hex ?? '',
-        rgb: _color.rgb != null
-            ? ColorRgbViewModel.fromColourloverRgb(_color.rgb!)
-            : ColorRgbViewModel.empty(),
-        hsv: _color.hsv != null
-            ? ColorHsvViewModel.fromColourloverHsv(_color.hsv!)
-            : ColorHsvViewModel.empty(),
-        numViews: (_color.numViews ?? 0).toString(),
-        numVotes: (_color.numVotes ?? 0).toString(),
-        rank: (_color.rank ?? 0).toString(),
-        user: _user != null
-            ? UserTileViewModel.fromColourloverUser(_user!)
-            : UserTileViewModel.empty(),
-        relatedColors: _relatedColors //
-            .map(ColorTileViewModel.fromColourloverColor)
-            .toList(),
-        relatedPalettes: _relatedPalettes //
-            .map(PaletteTileViewModel.fromColourloverPalette)
-            .toList(),
-        relatedPatterns: _relatedPatterns //
-            .map(PatternTileViewModel.fromColourloverPattern)
-            .toList(),
-      ),
-    );
-  }
-
-  void showShareColorView(BuildContext context) {
-    openRoute(context, ShareColorViewBuilder(color: _color));
-  }
-
-  void showColorDetailsView(
-    BuildContext context,
-    ColorTileViewModel viewModel,
-  ) {
-    final index = state.relatedColors.indexOf(viewModel);
-    openRoute(
-      context,
-      ColorDetailsViewBuilder(color: _relatedColors[index]),
-    );
-  }
-
-  void showPaletteDetailsView(
-    BuildContext context,
-    PaletteTileViewModel viewModel,
-  ) {
-    final index = state.relatedPalettes.indexOf(viewModel);
-    openRoute(
-      context,
-      PaletteDetailsViewBuilder(palette: _relatedPalettes[index]),
-    );
-  }
-
-  void showPatternDetailsView(
-    BuildContext context,
-    PatternTileViewModel viewModel,
-  ) {
-    final index = state.relatedPatterns.indexOf(viewModel);
-    openRoute(
-      context,
-      PatternDetailsViewBuilder(pattern: _relatedPatterns[index]),
-    );
-  }
-
-  void showUserDetailsView(BuildContext context) {
-    if (_user == null) return;
-    openRoute(
-      context,
-      UserDetailsViewBuilder(user: _user!),
-    );
-  }
-
-  void showRelatedColorsView(BuildContext context) {
-    if (_color.hsv == null) return;
-    openRoute(
-      context,
-      RelatedColorsViewBuilder(hsv: _color.hsv!),
-    );
-  }
-
-  void showRelatedPalettesView(BuildContext context) {
-    if (_color.hex == null) return;
-    openRoute(
-      context,
-      RelatedPalettesViewBuilder(hex: [_color.hex!]),
-    );
-  }
-
-  void showRelatedPatternsView(BuildContext context) {
-    if (_color.hex == null) return;
-    openRoute(
-      context,
-      RelatedPatternsViewBuilder(hex: [_color.hex!]),
-    );
-  }
-}
-
-class ColorDetailsViewBuilder extends StatelessWidget {
+class ColorDetailsViewCreator extends StatelessWidget {
   final ColourloversColor color;
 
-  const ColorDetailsViewBuilder({
+  const ColorDetailsViewCreator({
     super.key,
     required this.color,
   });
@@ -286,16 +27,16 @@ class ColorDetailsViewBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        return ColorDetailsViewBloc.fromContext(
+        return ColorDetailsViewController.fromContext(
           context,
           color: color,
         );
       },
-      child: BlocBuilder<ColorDetailsViewBloc, ColorDetailsViewModel>(
-        builder: (context, viewModel) {
+      child: BlocBuilder<ColorDetailsViewController, ColorDetailsViewState>(
+        builder: (context, state) {
           return ColorDetailsView(
-            viewModel: viewModel,
-            bloc: context.read<ColorDetailsViewBloc>(),
+            state: state,
+            controller: context.read<ColorDetailsViewController>(),
           );
         },
       ),
@@ -304,13 +45,13 @@ class ColorDetailsViewBuilder extends StatelessWidget {
 }
 
 class ColorDetailsView extends StatelessWidget {
-  final ColorDetailsViewModel viewModel;
-  final ColorDetailsViewBloc bloc;
+  final ColorDetailsViewState state;
+  final ColorDetailsViewController controller;
 
   const ColorDetailsView({
     super.key,
-    required this.viewModel,
-    required this.bloc,
+    required this.state,
+    required this.controller,
   });
 
   @override
@@ -322,12 +63,12 @@ class ColorDetailsView extends StatelessWidget {
         actions: [
           ShareItemButton(
             onPressed: () {
-              bloc.showShareColorView(context);
+              controller.showShareColorView(context);
             },
           ),
         ],
       ),
-      body: viewModel.isLoading
+      body: state.isLoading
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
@@ -337,89 +78,89 @@ class ColorDetailsView extends StatelessWidget {
                 },
                 children: [
                   HeaderView(
-                    title: viewModel.title,
-                    item: ColorView(hex: viewModel.hex),
+                    title: state.title,
+                    item: ColorView(hex: state.hex),
                     onItemTap: () {
-                      bloc.showShareColorView(context);
+                      controller.showShareColorView(context);
                     },
                   ),
                   StatsView(
                     stats: [
-                      StatsItemViewModel(
+                      StatsItemViewState(
                         label: 'Views',
-                        value: viewModel.numViews,
+                        value: state.numViews,
                       ),
-                      StatsItemViewModel(
+                      StatsItemViewState(
                         label: 'Votes',
-                        value: viewModel.numVotes,
+                        value: state.numVotes,
                       ),
-                      StatsItemViewModel(
+                      StatsItemViewState(
                         label: 'Rank',
-                        value: viewModel.rank,
+                        value: state.rank,
                       ),
                     ],
                   ),
                   _ColorValuesView(
-                    rgb: viewModel.rgb,
-                    hsv: viewModel.hsv,
+                    rgb: state.rgb,
+                    hsv: state.hsv,
                   ),
                   CreatedByView(
-                    user: viewModel.user,
+                    user: state.user,
                     onUserTap: () {
-                      bloc.showUserDetailsView(context);
+                      controller.showUserDetailsView(context);
                     },
                   ),
-                  if (viewModel.relatedColors.isNotEmpty)
+                  if (state.relatedColors.isNotEmpty)
                     RelatedItemsPreviewView(
                       title: 'Related colors',
-                      items: viewModel.relatedColors,
-                      itemBuilder: (viewModel) {
+                      items: state.relatedColors,
+                      itemBuilder: (state) {
                         return ColorTileView(
-                          viewModel: viewModel,
+                          state: state,
                           onTap: () {
-                            bloc.showColorDetailsView(context, viewModel);
+                            controller.showColorDetailsView(context, state);
                           },
                         );
                       },
                       onShowMorePressed: () {
-                        bloc.showRelatedColorsView(context);
+                        controller.showRelatedColorsView(context);
                       },
                     ),
-                  if (viewModel.relatedPalettes.isNotEmpty)
+                  if (state.relatedPalettes.isNotEmpty)
                     RelatedItemsPreviewView(
                       title: 'Related palettes',
-                      items: viewModel.relatedPalettes,
-                      itemBuilder: (viewModel) {
+                      items: state.relatedPalettes,
+                      itemBuilder: (state) {
                         return PaletteTileView(
-                          viewModel: viewModel,
+                          state: state,
                           onTap: () {
-                            bloc.showPaletteDetailsView(context, viewModel);
+                            controller.showPaletteDetailsView(context, state);
                           },
                         );
                       },
                       onShowMorePressed: () {
-                        bloc.showRelatedPalettesView(context);
+                        controller.showRelatedPalettesView(context);
                       },
                     ),
-                  if (viewModel.relatedPatterns.isNotEmpty)
+                  if (state.relatedPatterns.isNotEmpty)
                     RelatedItemsPreviewView(
                       title: 'Related patterns',
-                      items: viewModel.relatedPatterns,
-                      itemBuilder: (viewModel) {
+                      items: state.relatedPatterns,
+                      itemBuilder: (state) {
                         return PatternTileView(
-                          viewModel: viewModel,
+                          state: state,
                           onTap: () {
-                            bloc.showPatternDetailsView(context, viewModel);
+                            controller.showPatternDetailsView(context, state);
                           },
                         );
                       },
                       onShowMorePressed: () {
-                        bloc.showRelatedPatternsView(context);
+                        controller.showRelatedPatternsView(context);
                       },
                     ),
                   CreditsView(
                     itemName: 'color',
-                    itemUrl: '$colourLoversUrl/color/${viewModel.hex}',
+                    itemUrl: '$colourLoversUrl/color/${state.hex}',
                   ),
                 ],
               ),
@@ -429,8 +170,8 @@ class ColorDetailsView extends StatelessWidget {
 }
 
 class _ColorValuesView extends StatelessWidget {
-  final ColorRgbViewModel rgb;
-  final ColorHsvViewModel hsv;
+  final ColorRgbViewState rgb;
+  final ColorHsvViewState hsv;
 
   const _ColorValuesView({
     required this.rgb,

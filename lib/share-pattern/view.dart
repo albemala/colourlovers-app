@@ -1,92 +1,19 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
-import 'package:colourlovers_app/app/routing.dart';
-import 'package:colourlovers_app/clipboard.dart';
-import 'package:colourlovers_app/urls/functions.dart';
+import 'package:colourlovers_app/share-pattern/view-controller.dart';
+import 'package:colourlovers_app/share-pattern/view-state.dart';
 import 'package:colourlovers_app/widgets/app-top-bar.dart';
 import 'package:colourlovers_app/widgets/h1-text.dart';
 import 'package:colourlovers_app/widgets/h2-text.dart';
 import 'package:colourlovers_app/widgets/items.dart';
 import 'package:colourlovers_app/widgets/link.dart';
-import 'package:colourlovers_app/widgets/snack-bar.dart';
 import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-@immutable
-class SharePatternViewModel {
-  final List<String> colors;
-  final String imageUrl;
-  final String templateUrl;
-
-  const SharePatternViewModel({
-    required this.colors,
-    required this.imageUrl,
-    required this.templateUrl,
-  });
-
-  factory SharePatternViewModel.initialState() {
-    return const SharePatternViewModel(
-      colors: [],
-      imageUrl: '',
-      templateUrl: '',
-    );
-  }
-
-  factory SharePatternViewModel.fromColourloversPattern(
-    ColourloversPattern pattern,
-  ) {
-    return SharePatternViewModel(
-      colors: pattern.colors ?? [],
-      imageUrl: httpToHttps(pattern.imageUrl ?? ''),
-      templateUrl: httpToHttps(pattern.template?.url ?? ''),
-    );
-  }
-}
-
-class SharePatternBloc extends Cubit<SharePatternViewModel> {
-  factory SharePatternBloc.fromContext(
-    BuildContext context, {
-    required ColourloversPattern pattern,
-  }) {
-    return SharePatternBloc(
-      pattern,
-    );
-  }
-
-  final ColourloversPattern _pattern;
-
-  SharePatternBloc(
-    this._pattern,
-  ) : super(
-          SharePatternViewModel.initialState(),
-        ) {
-    _init();
-  }
-
-  Future<void> _init() async {
-    emit(
-      SharePatternViewModel.fromColourloversPattern(_pattern),
-    );
-  }
-
-  Future<void> copyColorToClipboard(BuildContext context, String color) async {
-    await copyToClipboard(color);
-    showSnackBar(context, createCopiedToClipboardSnackBar(color));
-  }
-
-  void shareImage() {
-    openUrl(state.imageUrl);
-  }
-
-  void shareTemplate() {
-    openUrl(state.templateUrl);
-  }
-}
-
-class SharePatternViewBuilder extends StatelessWidget {
+class SharePatternViewCreator extends StatelessWidget {
   final ColourloversPattern pattern;
 
-  const SharePatternViewBuilder({
+  const SharePatternViewCreator({
     super.key,
     required this.pattern,
   });
@@ -94,12 +21,17 @@ class SharePatternViewBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => SharePatternBloc(pattern),
-      child: BlocBuilder<SharePatternBloc, SharePatternViewModel>(
-        builder: (context, viewModel) {
+      create: (context) {
+        return SharePatternViewController.fromContext(
+          context,
+          pattern: pattern,
+        );
+      },
+      child: BlocBuilder<SharePatternViewController, SharePatternViewState>(
+        builder: (context, state) {
           return SharePatternView(
-            viewModel: viewModel,
-            bloc: context.read<SharePatternBloc>(),
+            state: state,
+            controller: context.read<SharePatternViewController>(),
           );
         },
       ),
@@ -108,13 +40,13 @@ class SharePatternViewBuilder extends StatelessWidget {
 }
 
 class SharePatternView extends StatelessWidget {
-  final SharePatternViewModel viewModel;
-  final SharePatternBloc bloc;
+  final SharePatternViewState state;
+  final SharePatternViewController controller;
 
   const SharePatternView({
     super.key,
-    required this.viewModel,
-    required this.bloc,
+    required this.state,
+    required this.controller,
   });
 
   @override
@@ -131,7 +63,7 @@ class SharePatternView extends StatelessWidget {
             SizedBox(
               height: 96,
               child: PatternView(
-                imageUrl: viewModel.imageUrl,
+                imageUrl: state.imageUrl,
               ),
             ),
             Padding(
@@ -152,7 +84,7 @@ class SharePatternView extends StatelessWidget {
                         separatorBuilder: () {
                           return const SizedBox(height: 8);
                         },
-                        children: viewModel.colors.map((color) {
+                        children: state.colors.map((color) {
                           return SeparatedRow(
                             separatorBuilder: () {
                               return const SizedBox(width: 8);
@@ -164,7 +96,8 @@ class SharePatternView extends StatelessWidget {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  bloc.copyColorToClipboard(context, color);
+                                  controller.copyColorToClipboard(
+                                      context, color);
                                 },
                                 child: const Text('Copy'),
                               ),
@@ -187,10 +120,10 @@ class SharePatternView extends StatelessWidget {
                         },
                         children: [
                           Flexible(
-                            child: Image.network(viewModel.imageUrl),
+                            child: Image.network(state.imageUrl),
                           ),
                           TextButton(
-                            onPressed: bloc.shareImage,
+                            onPressed: controller.shareImage,
                             child: const Text('Share'),
                           ),
                         ],
@@ -206,7 +139,7 @@ class SharePatternView extends StatelessWidget {
                       const H2TextView('Template'),
                       LinkView(
                         text: 'This pattern template on COLOURlovers.com',
-                        onTap: bloc.shareTemplate,
+                        onTap: controller.shareTemplate,
                       ),
                     ],
                   ),

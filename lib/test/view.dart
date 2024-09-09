@@ -7,40 +7,40 @@ import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class TestViewBloc extends Cubit<void> {
-  factory TestViewBloc.fromContext(BuildContext context) {
-    return TestViewBloc();
+class TestViewController extends Cubit<void> {
+  factory TestViewController.fromContext(BuildContext context) {
+    return TestViewController();
   }
 
-  TestViewBloc() : super(null);
+  TestViewController() : super(null);
 
   void showItemsTestView(BuildContext context) {
-    openRoute(context, const ItemsTestView());
+    openScreen(context, const ItemsTestView());
   }
 
   void showItemDetailsTestView(BuildContext context) {
-    openRoute(context, const ItemDetailsTestViewBuilder());
+    openScreen(context, const ItemDetailsTestViewCreator());
   }
 
   void showShareItemsTestView(BuildContext context) {
-    openRoute(context, const ShareItemsTestViewBuilder());
+    openScreen(context, const ShareItemsTestViewCreator());
   }
 }
 
-class TestViewBuilder extends StatelessWidget {
-  const TestViewBuilder({
+class TestViewCreator extends StatelessWidget {
+  const TestViewCreator({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: TestViewBloc.fromContext,
-      child: BlocBuilder<TestViewBloc, void>(
-        builder: (context, viewModel) {
+      create: TestViewController.fromContext,
+      child: BlocBuilder<TestViewController, void>(
+        builder: (context, state) {
           return TestView(
-            // viewModel: viewModel,
-            bloc: context.read<TestViewBloc>(),
+            // state: state,
+            controller: context.read<TestViewController>(),
           );
         },
       ),
@@ -49,13 +49,13 @@ class TestViewBuilder extends StatelessWidget {
 }
 
 class TestView extends StatelessWidget {
-  // final void viewModel;
-  final TestViewBloc bloc;
+  // final void state;
+  final TestViewController controller;
 
   const TestView({
     super.key,
-    // required this.viewModel,
-    required this.bloc,
+    // required this.state,
+    required this.controller,
   });
 
   @override
@@ -80,19 +80,19 @@ class TestView extends StatelessWidget {
             children: [
               OutlinedButton(
                 onPressed: () {
-                  bloc.showItemsTestView(context);
+                  controller.showItemsTestView(context);
                 },
                 child: const Text('Items'),
               ),
               OutlinedButton(
                 onPressed: () {
-                  bloc.showItemDetailsTestView(context);
+                  controller.showItemDetailsTestView(context);
                 },
                 child: const Text('Item details'),
               ),
               OutlinedButton(
                 onPressed: () {
-                  bloc.showShareItemsTestView(context);
+                  controller.showShareItemsTestView(context);
                 },
                 child: const Text('Share items'),
               ),

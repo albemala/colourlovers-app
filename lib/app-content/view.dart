@@ -1,47 +1,28 @@
 import 'package:colourlovers_app/about/view.dart';
+import 'package:colourlovers_app/app-content/view-controller.dart';
+import 'package:colourlovers_app/app-content/view-state.dart';
 import 'package:colourlovers_app/explore/view.dart';
 import 'package:colourlovers_app/favorites/view.dart';
-import 'package:colourlovers_app/preferences/bloc.dart';
 import 'package:colourlovers_app/test/view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-enum MainRoute {
-  explore,
-  favorites,
-  about,
-  test,
-}
-
-class MainRouteBloc extends Cubit<MainRoute> {
-  factory MainRouteBloc.fromContext(BuildContext context) {
-    return MainRouteBloc();
-  }
-
-  MainRouteBloc() : super(MainRoute.explore);
-
-  void setRoute(int index) {
-    emit(
-      MainRoute.values[index],
-    );
-  }
-}
-
-class AppContentViewBuilder extends StatelessWidget {
-  const AppContentViewBuilder({
-    super.key,
-  });
+class AppContentViewCreator extends StatelessWidget {
+  const AppContentViewCreator({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: MainRouteBloc.fromContext,
-      child: BlocBuilder<MainRouteBloc, MainRoute>(
-        builder: (context, route) {
+    return BlocProvider<AppContentViewController>(
+      create: (context) {
+        return AppContentViewController();
+      },
+      child: BlocBuilder<AppContentViewController, AppContentViewState>(
+        builder: (context, state) {
           return AppContentView(
-            route: route,
+            controller: context.read<AppContentViewController>(),
+            state: state,
           );
         },
       ),
@@ -50,11 +31,13 @@ class AppContentViewBuilder extends StatelessWidget {
 }
 
 class AppContentView extends StatelessWidget {
-  final MainRoute route;
+  final AppContentViewController controller;
+  final AppContentViewState state;
 
   const AppContentView({
     super.key,
-    required this.route,
+    required this.controller,
+    required this.state,
   });
 
   @override
@@ -74,19 +57,17 @@ class AppContentView extends StatelessWidget {
       //   child: _getBody(route),
       // ),
       body: IndexedStack(
-        index: route.index,
+        index: state.currentRoute.index,
         children: const [
-          NavigatorView(child: ExploreViewBuilder()),
+          NavigatorView(child: ExploreViewCreator()),
           NavigatorView(child: FavoritesView()),
           NavigatorView(child: AboutView()),
-          if (kDebugMode) NavigatorView(child: TestViewBuilder()),
+          if (kDebugMode) NavigatorView(child: TestViewCreator()),
         ],
       ),
       bottomNavigationBar: NavigationBar(
-        selectedIndex: route.index,
-        onDestinationSelected: (index) {
-          context.read<MainRouteBloc>().setRoute(index);
-        },
+        selectedIndex: state.currentRoute.index,
+        onDestinationSelected: controller.setCurrentRoute,
         destinations: const [
           NavigationDestination(
             label: 'Explore',
@@ -125,29 +106,6 @@ class NavigatorView extends StatelessWidget {
       onGenerateRoute: (RouteSettings settings) {
         return MaterialPageRoute(
           builder: (BuildContext context) => child,
-        );
-      },
-    );
-  }
-}
-
-class ThemeModeToggleButton extends StatelessWidget {
-  const ThemeModeToggleButton({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<PreferencesBloc, PreferencesBlocModel>(
-      builder: (context, preferences) {
-        return IconButton(
-          onPressed: () {
-            context.read<PreferencesBloc>().toggleThemeMode();
-          },
-          tooltip: 'Toggle light/dark theme',
-          icon: preferences.themeMode == ThemeMode.light //
-              ? const Icon(LucideIcons.moon)
-              : const Icon(LucideIcons.sun),
         );
       },
     );

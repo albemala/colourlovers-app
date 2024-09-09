@@ -1,9 +1,4 @@
-import 'package:colourlovers_app/app-content/view.dart';
-import 'package:colourlovers_app/app/routing.dart';
-import 'package:colourlovers_app/colors/colors.dart';
-import 'package:colourlovers_app/palettes/view.dart';
-import 'package:colourlovers_app/patterns/view.dart';
-import 'package:colourlovers_app/users/view.dart';
+import 'package:colourlovers_app/explore/view-controller.dart';
 import 'package:colourlovers_app/widgets/app-top-bar.dart';
 import 'package:colourlovers_app/widgets/background.dart';
 import 'package:colourlovers_app/widgets/items.dart';
@@ -13,46 +8,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-// TODO create view model and pass tiles data to view from bloc
-
-class ExploreViewBloc extends Cubit<void> {
-  factory ExploreViewBloc.fromContext(BuildContext context) {
-    return ExploreViewBloc();
-  }
-
-  ExploreViewBloc() : super(null);
-
-  void showColorsView(BuildContext context) {
-    openRoute(context, const ColorsViewBuilder());
-  }
-
-  void showPalettesView(BuildContext context) {
-    openRoute(context, const PalettesViewBuilder());
-  }
-
-  void showPatternsView(BuildContext context) {
-    openRoute(context, const PatternsViewBuilder());
-  }
-
-  void showUsersView(BuildContext context) {
-    openRoute(context, const UsersViewBuilder());
-  }
-}
-
-class ExploreViewBuilder extends StatelessWidget {
-  const ExploreViewBuilder({
+class ExploreViewCreator extends StatelessWidget {
+  const ExploreViewCreator({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: ExploreViewBloc.fromContext,
-      child: BlocBuilder<ExploreViewBloc, void>(
-        builder: (context, viewModel) {
+      create: ExploreViewController.fromContext,
+      child: BlocBuilder<ExploreViewController, void>(
+        builder: (context, state) {
           return ExploreView(
-            // viewModel: viewModel,
-            bloc: context.read<ExploreViewBloc>(),
+            // state: state,
+            controller: context.read<ExploreViewController>(),
           );
         },
       ),
@@ -61,13 +30,13 @@ class ExploreViewBuilder extends StatelessWidget {
 }
 
 class ExploreView extends StatelessWidget {
-  // final void viewModel;
-  final ExploreViewBloc bloc;
+  // final void state;
+  final ExploreViewController controller;
 
   const ExploreView({
     super.key,
-    // required this.viewModel,
-    required this.bloc,
+    // required this.state,
+    required this.controller,
   });
 
   @override
@@ -76,10 +45,6 @@ class ExploreView extends StatelessWidget {
       appBar: AppTopBarView(
         context,
         title: 'Explore',
-        actions: const [
-          ThemeModeToggleButton(),
-          // TODO add padding to the left
-        ],
       ),
       body: BackgroundView(
         colors: const [
@@ -98,14 +63,14 @@ class ExploreView extends StatelessWidget {
               children: [
                 ExploreTileView(
                   onTap: () {
-                    bloc.showColorsView(context);
+                    controller.showColorsView(context);
                   },
                   title: 'Colors',
                   child: const ColorView(hex: '1693A5'),
                 ),
                 ExploreTileView(
                   onTap: () {
-                    bloc.showPalettesView(context);
+                    controller.showPalettesView(context);
                   },
                   title: 'Palettes',
                   child: const PaletteView(
@@ -115,7 +80,7 @@ class ExploreView extends StatelessWidget {
                 ),
                 ExploreTileView(
                   onTap: () {
-                    bloc.showPatternsView(context);
+                    controller.showPatternsView(context);
                   },
                   title: 'Patterns',
                   child: const PatternView(
@@ -126,7 +91,7 @@ class ExploreView extends StatelessWidget {
                 ),
                 ExploreTileView(
                   onTap: () {
-                    bloc.showUsersView(context);
+                    controller.showUsersView(context);
                   },
                   title: 'Users',
                   child: const UserView(),

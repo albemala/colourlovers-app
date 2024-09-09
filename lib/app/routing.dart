@@ -2,51 +2,53 @@ import 'package:flutter/material.dart';
 
 void showSnackBar(
   BuildContext context,
-  SnackBar view,
+  SnackBar snackBar,
 ) {
   if (!context.mounted) return;
   ScaffoldMessenger.of(context)
-    ..clearSnackBars()
-    ..showSnackBar(view);
+      // ..clearSnackBars()
+      .showSnackBar(snackBar);
 }
 
-void showModalDialog(
+Future<ReturnType?> openDialog<ReturnType>(
   BuildContext context,
-  AlertDialog view,
-) {
-  if (!context.mounted) return;
-  showDialog<void>(
+  Widget dialog,
+) async {
+  if (!context.mounted) return null;
+  return showDialog<ReturnType>(
     context: context,
-    builder: (_) => view,
+    // barrierDismissible: false,
+    builder: (_) => dialog,
   );
 }
 
-void showBottomSheet(
+void openBottomSheet(
   BuildContext context,
-  Widget view,
+  Widget bottomSheet,
 ) {
   if (!context.mounted) return;
   showModalBottomSheet<void>(
     context: context,
-    builder: (_) => view,
+    builder: (_) => bottomSheet,
   );
 }
 
-void openRoute(
+void openScreen(
   BuildContext context,
-  Widget view, {
-  bool fullscreenDialog = false,
-}) {
+  Widget route,
+) {
   if (!context.mounted) return;
   Navigator.of(context).push(
     MaterialPageRoute<void>(
-      fullscreenDialog: fullscreenDialog,
-      builder: (_) => view,
+      builder: (_) => route,
     ),
   );
 }
 
-void closeCurrentRoute(BuildContext context) {
+void closeCurrentView<ReturnType>(
+  BuildContext context, [
+  ReturnType? result,
+]) {
   if (!context.mounted) return;
-  Navigator.of(context).pop();
+  Navigator.of(context).pop(result);
 }

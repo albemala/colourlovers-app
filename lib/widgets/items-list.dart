@@ -42,19 +42,19 @@ class ItemsPagination<ItemType> extends ChangeNotifier {
 }
 
 @immutable
-class ItemsListViewModel<ItemType> {
+class ItemsListViewState<ItemType> {
   final bool isLoading;
   final List<ItemType> items;
   final bool hasMoreItems;
 
-  const ItemsListViewModel({
+  const ItemsListViewState({
     required this.isLoading,
     required this.items,
     required this.hasMoreItems,
   });
 
-  factory ItemsListViewModel.initialState() {
-    return const ItemsListViewModel(
+  factory ItemsListViewState.initialState() {
+    return const ItemsListViewState(
       isLoading: false,
       items: [],
       hasMoreItems: true,
@@ -63,13 +63,13 @@ class ItemsListViewModel<ItemType> {
 }
 
 class ItemsListView<ItemType> extends StatelessWidget {
-  final ItemsListViewModel<ItemType> viewModel;
+  final ItemsListViewState<ItemType> state;
   final Widget Function(ItemType item) itemTileBuilder;
   final void Function() onLoadMorePressed;
 
   const ItemsListView({
     super.key,
-    required this.viewModel,
+    required this.state,
     required this.itemTileBuilder,
     required this.onLoadMorePressed,
   });
@@ -78,10 +78,10 @@ class ItemsListView<ItemType> extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView.separated(
       padding: const EdgeInsets.all(16),
-      itemCount: viewModel.items.length + (viewModel.hasMoreItems ? 1 : 0),
+      itemCount: state.items.length + (state.hasMoreItems ? 1 : 0),
       itemBuilder: (context, index) {
-        if (viewModel.hasMoreItems && index == viewModel.items.length) {
-          if (viewModel.isLoading) {
+        if (state.hasMoreItems && index == state.items.length) {
+          if (state.isLoading) {
             return const Center(
               child: CircularProgressIndicator(),
             );
@@ -92,7 +92,7 @@ class ItemsListView<ItemType> extends StatelessWidget {
             );
           }
         } else {
-          final pattern = viewModel.items[index];
+          final pattern = state.items[index];
           return itemTileBuilder(pattern);
         }
       },

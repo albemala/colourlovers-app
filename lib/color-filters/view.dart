@@ -4,6 +4,8 @@ import 'package:another_xlider/models/tooltip/tooltip.dart';
 import 'package:another_xlider/models/tooltip/tooltip_box.dart';
 import 'package:another_xlider/models/trackbar.dart';
 import 'package:colourlovers_api/colourlovers_api.dart';
+import 'package:colourlovers_app/color-filters/view-controller.dart';
+import 'package:colourlovers_app/color-filters/view-state.dart';
 import 'package:colourlovers_app/item-filters/defines.dart';
 import 'package:colourlovers_app/item-filters/functions.dart';
 import 'package:colourlovers_app/widgets/app-top-bar.dart';
@@ -12,170 +14,11 @@ import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-@immutable
-class ColorFiltersViewModel {
-  final ItemsFilter filter;
-  final ColourloversRequestOrderBy sortBy;
-  final ColourloversRequestSortBy order;
-  final int hueMin;
-  final int hueMax;
-  final int brightnessMin;
-  final int brightnessMax;
-  final String colorName;
-  final String userName;
+class ColorFiltersViewCreator extends StatelessWidget {
+  final ColorFiltersViewState initialState;
+  final void Function(ColorFiltersViewState) onApply;
 
-  const ColorFiltersViewModel({
-    required this.filter,
-    required this.sortBy,
-    required this.order,
-    required this.hueMin,
-    required this.hueMax,
-    required this.brightnessMin,
-    required this.brightnessMax,
-    required this.colorName,
-    required this.userName,
-  });
-
-  factory ColorFiltersViewModel.initialState() {
-    return const ColorFiltersViewModel(
-      filter: ItemsFilter.newest,
-      sortBy: ColourloversRequestOrderBy.numVotes,
-      order: ColourloversRequestSortBy.DESC,
-      hueMin: 0,
-      hueMax: 359,
-      brightnessMin: 0,
-      brightnessMax: 99,
-      colorName: '',
-      userName: '',
-    );
-  }
-}
-
-class ColorFiltersViewBloc extends Cubit<ColorFiltersViewModel> {
-  factory ColorFiltersViewBloc.fromContext(
-    BuildContext context, {
-    required ColorFiltersViewModel initialState,
-    required void Function(ColorFiltersViewModel) onApply,
-  }) {
-    return ColorFiltersViewBloc(
-      initialState,
-      onApply,
-    );
-  }
-
-  final void Function(ColorFiltersViewModel) onApply;
-
-  late ItemsFilter _filter;
-  late ColourloversRequestOrderBy _sortBy;
-  late ColourloversRequestSortBy _order;
-  late int _hueMin;
-  late int _hueMax;
-  late int _brightnessMin;
-  late int _brightnessMax;
-  final colorNameController = TextEditingController();
-  final userNameController = TextEditingController();
-
-  ColorFiltersViewBloc(
-    super.initialState,
-    this.onApply,
-  ) {
-    _filter = state.filter;
-    _sortBy = state.sortBy;
-    _order = state.order;
-    _hueMin = state.hueMin;
-    _hueMax = state.hueMax;
-    _brightnessMin = state.brightnessMin;
-    _brightnessMax = state.brightnessMax;
-    colorNameController.value = TextEditingValue(
-      text: state.colorName,
-      selection: colorNameController.selection,
-    );
-    userNameController.value = TextEditingValue(
-      text: state.userName,
-      selection: userNameController.selection,
-    );
-  }
-
-  @override
-  Future<void> close() {
-    colorNameController.dispose();
-    userNameController.dispose();
-    return super.close();
-  }
-
-  void setFilter(ItemsFilter value) {
-    _filter = value;
-    _updateState();
-  }
-
-  void setSortBy(ColourloversRequestOrderBy value) {
-    _sortBy = value;
-    _updateState();
-  }
-
-  void setOrder(ColourloversRequestSortBy value) {
-    _order = value;
-    _updateState();
-  }
-
-  void setHueMin(int value) {
-    _hueMin = value;
-    _updateState();
-  }
-
-  void setHueMax(int value) {
-    _hueMax = value;
-    _updateState();
-  }
-
-  void setBrightnessMin(int value) {
-    _brightnessMin = value;
-    _updateState();
-  }
-
-  void setBrightnessMax(int value) {
-    _brightnessMax = value;
-    _updateState();
-  }
-
-  void setColorName(String value) {
-    colorNameController.value = TextEditingValue(
-      text: value,
-      selection: colorNameController.selection,
-    );
-    _updateState();
-  }
-
-  void setUserName(String value) {
-    userNameController.value = TextEditingValue(
-      text: value,
-      selection: userNameController.selection,
-    );
-    _updateState();
-  }
-
-  void _updateState() {
-    emit(
-      ColorFiltersViewModel(
-        filter: _filter,
-        sortBy: _sortBy,
-        order: _order,
-        hueMin: _hueMin,
-        hueMax: _hueMax,
-        brightnessMin: _brightnessMin,
-        brightnessMax: _brightnessMax,
-        colorName: colorNameController.text,
-        userName: userNameController.text,
-      ),
-    );
-  }
-}
-
-class ColorFiltersViewBuilder extends StatelessWidget {
-  final ColorFiltersViewModel initialState;
-  final void Function(ColorFiltersViewModel) onApply;
-
-  const ColorFiltersViewBuilder({
+  const ColorFiltersViewCreator({
     super.key,
     required this.initialState,
     required this.onApply,
@@ -183,17 +26,19 @@ class ColorFiltersViewBuilder extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ColorFiltersViewBloc>(
-      create: (context) => ColorFiltersViewBloc.fromContext(
-        context,
-        initialState: initialState,
-        onApply: onApply,
-      ),
-      child: BlocBuilder<ColorFiltersViewBloc, ColorFiltersViewModel>(
-        builder: (context, viewModel) {
+    return BlocProvider<ColorFiltersViewController>(
+      create: (context) {
+        return ColorFiltersViewController.fromContext(
+          context,
+          initialState: initialState,
+          onApply: onApply,
+        );
+      },
+      child: BlocBuilder<ColorFiltersViewController, ColorFiltersViewState>(
+        builder: (context, state) {
           return ColorFiltersView(
-            viewModel: viewModel,
-            bloc: context.read<ColorFiltersViewBloc>(),
+            state: state,
+            controller: context.read<ColorFiltersViewController>(),
           );
         },
       ),
@@ -202,13 +47,13 @@ class ColorFiltersViewBuilder extends StatelessWidget {
 }
 
 class ColorFiltersView extends StatelessWidget {
-  final ColorFiltersViewModel viewModel;
-  final ColorFiltersViewBloc bloc;
+  final ColorFiltersViewState state;
+  final ColorFiltersViewController controller;
 
   const ColorFiltersView({
     super.key,
-    required this.viewModel,
-    required this.bloc,
+    required this.state,
+    required this.controller,
   });
 
   @override
@@ -230,13 +75,13 @@ class ColorFiltersView extends StatelessWidget {
                   return const SizedBox(height: 32);
                 },
                 children: [
-                  _ShowView(viewModel: viewModel, bloc: bloc),
-                  if (viewModel.filter == ItemsFilter.all)
-                    _SortByView(viewModel: viewModel, bloc: bloc),
-                  _HueView(viewModel: viewModel, bloc: bloc),
-                  _BrightnessView(viewModel: viewModel, bloc: bloc),
-                  _ColorNameView(bloc: bloc),
-                  _UserNameView(bloc: bloc),
+                  _ShowView(state: state, controller: controller),
+                  if (state.filter == ItemsFilter.all)
+                    _SortByView(state: state, controller: controller),
+                  _HueView(state: state, controller: controller),
+                  _BrightnessView(state: state, controller: controller),
+                  _ColorNameView(controller: controller),
+                  _UserNameView(controller: controller),
                 ],
               ),
             ),
@@ -245,7 +90,7 @@ class ColorFiltersView extends StatelessWidget {
             padding: const EdgeInsets.all(16),
             child: FilledButton(
               onPressed: () {
-                bloc.onApply(viewModel);
+                controller.onApply(state);
               },
               child: const Text('Apply'),
             ),
@@ -259,12 +104,12 @@ class ColorFiltersView extends StatelessWidget {
 const handlerWidth = 24.0;
 
 class _ShowView extends StatelessWidget {
-  final ColorFiltersViewModel viewModel;
-  final ColorFiltersViewBloc bloc;
+  final ColorFiltersViewState state;
+  final ColorFiltersViewController controller;
 
   const _ShowView({
-    required this.viewModel,
-    required this.bloc,
+    required this.state,
+    required this.controller,
   });
 
   @override
@@ -285,9 +130,9 @@ class _ShowView extends StatelessWidget {
                   label: Text(
                     getItemFilterName(e),
                   ),
-                  selected: viewModel.filter == e,
+                  selected: state.filter == e,
                   onSelected: (bool value) {
-                    bloc.setFilter(e);
+                    controller.setFilter(e);
                   },
                 ),
               )
@@ -299,12 +144,12 @@ class _ShowView extends StatelessWidget {
 }
 
 class _SortByView extends StatelessWidget {
-  final ColorFiltersViewModel viewModel;
-  final ColorFiltersViewBloc bloc;
+  final ColorFiltersViewState state;
+  final ColorFiltersViewController controller;
 
   const _SortByView({
-    required this.viewModel,
-    required this.bloc,
+    required this.state,
+    required this.controller,
   });
 
   @override
@@ -325,9 +170,9 @@ class _SortByView extends StatelessWidget {
                   label: Text(
                     getColourloversRequestOrderByName(e),
                   ),
-                  selected: viewModel.sortBy == e,
+                  selected: state.sortBy == e,
                   onSelected: (bool value) {
-                    bloc.setSortBy(e);
+                    controller.setSortBy(e);
                   },
                 ),
               )
@@ -342,9 +187,9 @@ class _SortByView extends StatelessWidget {
                   label: Text(
                     getColourloversRequestSortByName(e),
                   ),
-                  selected: viewModel.order == e,
+                  selected: state.order == e,
                   onSelected: (bool value) {
-                    bloc.setOrder(e);
+                    controller.setOrder(e);
                   },
                 ),
               )
@@ -356,12 +201,12 @@ class _SortByView extends StatelessWidget {
 }
 
 class _HueView extends StatelessWidget {
-  final ColorFiltersViewModel viewModel;
-  final ColorFiltersViewBloc bloc;
+  final ColorFiltersViewState state;
+  final ColorFiltersViewController controller;
 
   const _HueView({
-    required this.viewModel,
-    required this.bloc,
+    required this.state,
+    required this.controller,
   });
 
   @override
@@ -378,11 +223,11 @@ class _HueView extends StatelessWidget {
           min: 0,
           max: 359,
           values: [
-            viewModel.hueMin.toDouble(),
-            viewModel.hueMax.toDouble(),
+            state.hueMin.toDouble(),
+            state.hueMax.toDouble(),
           ],
           onDragging: (handlerIndex, lowerValue, upperValue) {
-            bloc
+            controller
               ..setHueMin((lowerValue as double).toInt())
               ..setHueMax((upperValue as double).toInt());
           },
@@ -391,7 +236,7 @@ class _HueView extends StatelessWidget {
             context,
             color: HSVColor.fromAHSV(
               1,
-              viewModel.hueMin.toDouble(),
+              state.hueMin.toDouble(),
               1,
               1,
             ).toColor(),
@@ -401,7 +246,7 @@ class _HueView extends StatelessWidget {
             context,
             color: HSVColor.fromAHSV(
               1,
-              viewModel.hueMax.toDouble(),
+              state.hueMax.toDouble(),
               1,
               1,
             ).toColor(),
@@ -410,10 +255,10 @@ class _HueView extends StatelessWidget {
           trackBar: buildFlutterSliderTrackBar(
             context,
             colors: List.generate(
-              viewModel.hueMax - viewModel.hueMin,
+              state.hueMax - state.hueMin,
               (index) => HSVColor.fromAHSV(
                 1,
-                (viewModel.hueMin + index).toDouble(),
+                (state.hueMin + index).toDouble(),
                 1,
                 1,
               ).toColor(),
@@ -427,12 +272,12 @@ class _HueView extends StatelessWidget {
 }
 
 class _BrightnessView extends StatelessWidget {
-  final ColorFiltersViewModel viewModel;
-  final ColorFiltersViewBloc bloc;
+  final ColorFiltersViewState state;
+  final ColorFiltersViewController controller;
 
   const _BrightnessView({
-    required this.viewModel,
-    required this.bloc,
+    required this.state,
+    required this.controller,
   });
 
   @override
@@ -449,11 +294,11 @@ class _BrightnessView extends StatelessWidget {
           min: 0,
           max: 99,
           values: [
-            viewModel.brightnessMin.toDouble(),
-            viewModel.brightnessMax.toDouble(),
+            state.brightnessMin.toDouble(),
+            state.brightnessMax.toDouble(),
           ],
           onDragging: (handlerIndex, lowerValue, upperValue) {
-            bloc
+            controller
               ..setBrightnessMin((lowerValue as double).toInt())
               ..setBrightnessMax((upperValue as double).toInt());
           },
@@ -464,7 +309,7 @@ class _BrightnessView extends StatelessWidget {
               1,
               0,
               0,
-              viewModel.brightnessMin / 100,
+              state.brightnessMin / 100,
             ).toColor(),
             handlerWidth: handlerWidth,
           ),
@@ -474,19 +319,19 @@ class _BrightnessView extends StatelessWidget {
               1,
               0,
               0,
-              viewModel.brightnessMax / 100,
+              state.brightnessMax / 100,
             ).toColor(),
             handlerWidth: handlerWidth,
           ),
           trackBar: buildFlutterSliderTrackBar(
             context,
             colors: List.generate(
-              viewModel.brightnessMax - viewModel.brightnessMin,
+              state.brightnessMax - state.brightnessMin,
               (index) => HSVColor.fromAHSV(
                 1,
                 0,
                 0,
-                (viewModel.brightnessMin + index) / 100,
+                (state.brightnessMin + index) / 100,
               ).toColor(),
             ),
           ),
@@ -498,10 +343,10 @@ class _BrightnessView extends StatelessWidget {
 }
 
 class _ColorNameView extends StatelessWidget {
-  final ColorFiltersViewBloc bloc;
+  final ColorFiltersViewController controller;
 
   const _ColorNameView({
-    required this.bloc,
+    required this.controller,
   });
 
   @override
@@ -514,8 +359,8 @@ class _ColorNameView extends StatelessWidget {
       children: [
         const H1TextView('Color name'),
         TextField(
-          controller: bloc.colorNameController,
-          onChanged: bloc.setColorName,
+          controller: controller.colorNameController,
+          onChanged: controller.setColorName,
         ),
       ],
     );
@@ -523,10 +368,10 @@ class _ColorNameView extends StatelessWidget {
 }
 
 class _UserNameView extends StatelessWidget {
-  final ColorFiltersViewBloc bloc;
+  final ColorFiltersViewController controller;
 
   const _UserNameView({
-    required this.bloc,
+    required this.controller,
   });
 
   @override
@@ -539,8 +384,8 @@ class _UserNameView extends StatelessWidget {
       children: [
         const H1TextView('User name'),
         TextField(
-          controller: bloc.userNameController,
-          onChanged: bloc.setUserName,
+          controller: controller.userNameController,
+          onChanged: controller.setUserName,
         ),
       ],
     );

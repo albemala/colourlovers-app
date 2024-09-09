@@ -15,6 +15,10 @@ dependencies:
   equatable: ^2.0.5
   fast_immutable_collections: ^10.2.4
   flutter_bloc: ^8.1.6
+  flutter_data_storage:
+    git:
+      url: https://github.com/albemala/flutter_data_storage.git
+      ref: 2.3.0
 
   colourlovers_api:
     git:
@@ -32,6 +36,7 @@ dependencies:
 
   clipboard: ^0.1.3
   url_launcher: ^6.3.0
+  share_plus: ^7.2.2
 
 dev_dependencies:
   flutter_test:
