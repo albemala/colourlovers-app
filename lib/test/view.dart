@@ -1,31 +1,8 @@
-import 'package:colourlovers_app/app/routing.dart';
-import 'package:colourlovers_app/test/item-details-test.dart';
-import 'package:colourlovers_app/test/items-test.dart';
-import 'package:colourlovers_app/test/share-items-test.dart';
+import 'package:colourlovers_app/test/view-controller.dart';
 import 'package:colourlovers_app/widgets/app-top-bar.dart';
 import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-class TestViewController extends Cubit<void> {
-  factory TestViewController.fromContext(BuildContext context) {
-    return TestViewController();
-  }
-
-  TestViewController() : super(null);
-
-  void showItemsTestView(BuildContext context) {
-    openScreen(context, const ItemsTestView());
-  }
-
-  void showItemDetailsTestView(BuildContext context) {
-    openScreen(context, const ItemDetailsTestViewCreator());
-  }
-
-  void showShareItemsTestView(BuildContext context) {
-    openScreen(context, const ShareItemsTestViewCreator());
-  }
-}
 
 class TestViewCreator extends StatelessWidget {
   const TestViewCreator({
