@@ -115,7 +115,7 @@ class PatternDetailsView extends StatelessWidget {
                   //   ],
                   // ),
                   ItemColorsView(
-                    colorViewStates: state.colorViewStates,
+                    colorViewStates: state.colorViewStates.toList(),
                     onColorTap: (state) {
                       controller.showColorDetailsView(context, state);
                     },
@@ -129,7 +129,7 @@ class PatternDetailsView extends StatelessWidget {
                   if (state.relatedPalettes.isNotEmpty)
                     RelatedItemsPreviewView(
                       title: 'Related palettes',
-                      items: state.relatedPalettes,
+                      items: state.relatedPalettes.toList(),
                       itemBuilder: (state) {
                         return PaletteTileView(
                           state: state,
@@ -145,7 +145,7 @@ class PatternDetailsView extends StatelessWidget {
                   if (state.relatedPatterns.isNotEmpty)
                     RelatedItemsPreviewView(
                       title: 'Related patterns',
-                      items: state.relatedPatterns,
+                      items: state.relatedPatterns.toList(),
                       itemBuilder: (state) {
                         return PatternTileView(
                           state: state,

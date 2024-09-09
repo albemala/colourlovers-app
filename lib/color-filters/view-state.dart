@@ -1,9 +1,11 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/item-filters/defines.dart';
 import 'package:flutter/material.dart';
+import 'package:equatable/equatable.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 
 @immutable
-class ColorFiltersViewState {
+class ColorFiltersViewState extends Equatable {
   final ItemsFilter filter;
   final ColourloversRequestOrderBy sortBy;
   final ColourloversRequestSortBy order;
@@ -26,17 +28,52 @@ class ColorFiltersViewState {
     required this.userName,
   });
 
-  factory ColorFiltersViewState.initialState() {
-    return const ColorFiltersViewState(
-      filter: ItemsFilter.newest,
-      sortBy: ColourloversRequestOrderBy.numVotes,
-      order: ColourloversRequestSortBy.DESC,
-      hueMin: 0,
-      hueMax: 359,
-      brightnessMin: 0,
-      brightnessMax: 99,
-      colorName: '',
-      userName: '',
+  @override
+  List<Object?> get props => [
+    filter,
+    sortBy,
+    order,
+    hueMin,
+    hueMax,
+    brightnessMin,
+    brightnessMax,
+    colorName,
+    userName,
+  ];
+
+  ColorFiltersViewState copyWith({
+    ItemsFilter? filter,
+    ColourloversRequestOrderBy? sortBy,
+    ColourloversRequestSortBy? order,
+    int? hueMin,
+    int? hueMax,
+    int? brightnessMin,
+    int? brightnessMax,
+    String? colorName,
+    String? userName,
+  }) {
+    return ColorFiltersViewState(
+      filter: filter ?? this.filter,
+      sortBy: sortBy ?? this.sortBy,
+      order: order ?? this.order,
+      hueMin: hueMin ?? this.hueMin,
+      hueMax: hueMax ?? this.hueMax,
+      brightnessMin: brightnessMin ?? this.brightnessMin,
+      brightnessMax: brightnessMax ?? this.brightnessMax,
+      colorName: colorName ?? this.colorName,
+      userName: userName ?? this.userName,
     );
   }
 }
+
+const defaultColorFiltersViewState = ColorFiltersViewState(
+  filter: ItemsFilter.newest,
+  sortBy: ColourloversRequestOrderBy.numVotes,
+  order: ColourloversRequestSortBy.DESC,
+  hueMin: 0,
+  hueMax: 359,
+  brightnessMin: 0,
+  brightnessMax: 99,
+  colorName: '',
+  userName: '',
+);

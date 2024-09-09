@@ -35,9 +35,7 @@ class ShareItemsViewController extends Cubit<ShareItemsViewState> {
 
   ShareItemsViewController(
     this._client,
-  ) : super(
-          ShareItemsViewState.initialState(),
-        ) {
+  ) : super(defaultShareItemsViewState) {
     _init();
   }
 

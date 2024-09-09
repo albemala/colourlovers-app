@@ -4,6 +4,7 @@ import 'package:colourlovers_app/pattern-details/view.dart';
 import 'package:colourlovers_app/related-items.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';
 import 'package:colourlovers_app/widgets/items-list.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,9 +27,7 @@ class RelatedPatternsViewController
   RelatedPatternsViewController(
     this._hex,
     this._client,
-  ) : super(
-          ItemsListViewState.initialState(),
-        ) {
+  ) : super(defaultPatternsListViewState) {
     _pagination = ItemsPagination<ColourloversPattern>((numResults, offset) {
       return fetchRelatedPatterns(_client, numResults, offset, _hex);
     });
@@ -61,7 +60,7 @@ class RelatedPatternsViewController
         isLoading: _pagination.isLoading,
         items: _pagination.items //
             .map(PatternTileViewState.fromColourloverPattern)
-            .toList(),
+            .toIList(),
         hasMoreItems: _pagination.hasMoreItems,
       ),
     );

@@ -9,6 +9,7 @@ import 'package:colourlovers_app/user-items.dart';
 import 'package:colourlovers_app/user-palettes/view.dart';
 import 'package:colourlovers_app/user-patterns/view.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,9 +33,7 @@ class UserDetailsViewController extends Cubit<UserDetailsViewState> {
   UserDetailsViewController(
     this._user,
     this._client,
-  ) : super(
-          UserDetailsViewState.empty(),
-        ) {
+  ) : super(defaultUserDetailsViewState) {
     _init();
   }
 
@@ -62,13 +61,13 @@ class UserDetailsViewController extends Cubit<UserDetailsViewState> {
         dateLastActive: _formatDate(_user.dateLastActive),
         userColors: _userColors //
             .map(ColorTileViewState.fromColourloverColor)
-            .toList(),
+            .toIList(),
         userPalettes: _userPalettes //
             .map(PaletteTileViewState.fromColourloverPalette)
-            .toList(),
+            .toIList(),
         userPatterns: _userPatterns //
             .map(PatternTileViewState.fromColourloverPattern)
-            .toList(),
+            .toIList(),
       ),
     );
   }

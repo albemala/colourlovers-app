@@ -1,8 +1,10 @@
 import 'package:colourlovers_app/widgets/item-tiles.dart';
+import 'package:equatable/equatable.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
 @immutable
-class UserDetailsViewState {
+class UserDetailsViewState extends Equatable {
   final bool isLoading;
   final String userName;
   final String numColors;
@@ -13,9 +15,9 @@ class UserDetailsViewState {
   final String location;
   final String dateRegistered;
   final String dateLastActive;
-  final List<ColorTileViewState> userColors;
-  final List<PaletteTileViewState> userPalettes;
-  final List<PatternTileViewState> userPatterns;
+  final IList<ColorTileViewState> userColors;
+  final IList<PaletteTileViewState> userPalettes;
+  final IList<PatternTileViewState> userPatterns;
 
   const UserDetailsViewState({
     required this.isLoading,
@@ -33,21 +35,68 @@ class UserDetailsViewState {
     required this.userPatterns,
   });
 
-  factory UserDetailsViewState.empty() {
-    return const UserDetailsViewState(
-      isLoading: true,
-      userName: '',
-      numColors: '',
-      numPalettes: '',
-      numPatterns: '',
-      rating: '',
-      numLovers: '',
-      location: '',
-      dateRegistered: '',
-      dateLastActive: '',
-      userColors: [],
-      userPalettes: [],
-      userPatterns: [],
+  @override
+  List<Object?> get props => [
+        isLoading,
+        userName,
+        numColors,
+        numPalettes,
+        numPatterns,
+        rating,
+        numLovers,
+        location,
+        dateRegistered,
+        dateLastActive,
+        userColors,
+        userPalettes,
+        userPatterns,
+      ];
+
+  UserDetailsViewState copyWith({
+    bool? isLoading,
+    String? userName,
+    String? numColors,
+    String? numPalettes,
+    String? numPatterns,
+    String? rating,
+    String? numLovers,
+    String? location,
+    String? dateRegistered,
+    String? dateLastActive,
+    IList<ColorTileViewState>? userColors,
+    IList<PaletteTileViewState>? userPalettes,
+    IList<PatternTileViewState>? userPatterns,
+  }) {
+    return UserDetailsViewState(
+      isLoading: isLoading ?? this.isLoading,
+      userName: userName ?? this.userName,
+      numColors: numColors ?? this.numColors,
+      numPalettes: numPalettes ?? this.numPalettes,
+      numPatterns: numPatterns ?? this.numPatterns,
+      rating: rating ?? this.rating,
+      numLovers: numLovers ?? this.numLovers,
+      location: location ?? this.location,
+      dateRegistered: dateRegistered ?? this.dateRegistered,
+      dateLastActive: dateLastActive ?? this.dateLastActive,
+      userColors: userColors ?? this.userColors,
+      userPalettes: userPalettes ?? this.userPalettes,
+      userPatterns: userPatterns ?? this.userPatterns,
     );
   }
 }
+
+const defaultUserDetailsViewState = UserDetailsViewState(
+  isLoading: true,
+  userName: '',
+  numColors: '',
+  numPalettes: '',
+  numPatterns: '',
+  rating: '',
+  numLovers: '',
+  location: '',
+  dateRegistered: '',
+  dateLastActive: '',
+  userColors: IList.empty(),
+  userPalettes: IList.empty(),
+  userPatterns: IList.empty(),
+);

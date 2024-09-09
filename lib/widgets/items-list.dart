@@ -1,3 +1,6 @@
+import 'package:colourlovers_app/widgets/item-tiles.dart';
+import 'package:equatable/equatable.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
 class ItemsPagination<ItemType> extends ChangeNotifier {
@@ -42,9 +45,9 @@ class ItemsPagination<ItemType> extends ChangeNotifier {
 }
 
 @immutable
-class ItemsListViewState<ItemType> {
+class ItemsListViewState<ItemType> extends Equatable {
   final bool isLoading;
-  final List<ItemType> items;
+  final IList<ItemType> items;
   final bool hasMoreItems;
 
   const ItemsListViewState({
@@ -53,14 +56,45 @@ class ItemsListViewState<ItemType> {
     required this.hasMoreItems,
   });
 
-  factory ItemsListViewState.initialState() {
-    return const ItemsListViewState(
-      isLoading: false,
-      items: [],
-      hasMoreItems: true,
+  @override
+  List<Object?> get props => [isLoading, items, hasMoreItems];
+
+  ItemsListViewState<ItemType> copyWith({
+    bool? isLoading,
+    IList<ItemType>? items,
+    bool? hasMoreItems,
+  }) {
+    return ItemsListViewState<ItemType>(
+      isLoading: isLoading ?? this.isLoading,
+      items: items ?? this.items,
+      hasMoreItems: hasMoreItems ?? this.hasMoreItems,
     );
   }
 }
+
+const defaultColorsListViewState = ItemsListViewState<ColorTileViewState>(
+  isLoading: false,
+  items: IList.empty(),
+  hasMoreItems: true,
+);
+
+const defaultPalettesListViewState = ItemsListViewState<PaletteTileViewState>(
+  isLoading: false,
+  items: IList.empty(),
+  hasMoreItems: true,
+);
+
+const defaultPatternsListViewState = ItemsListViewState<PatternTileViewState>(
+  isLoading: false,
+  items: IList.empty(),
+  hasMoreItems: true,
+);
+
+const defaultUsersListViewState = ItemsListViewState<UserTileViewState>(
+  isLoading: false,
+  items: IList.empty(),
+  hasMoreItems: true,
+);
 
 class ItemsListView<ItemType> extends StatelessWidget {
   final ItemsListViewState<ItemType> state;

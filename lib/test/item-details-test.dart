@@ -36,9 +36,7 @@ class ItemDetailsViewController extends Cubit<ItemDetailsViewState> {
 
   ItemDetailsViewController(
     this._client,
-  ) : super(
-          ItemDetailsViewState.initialState(),
-        ) {
+  ) : super(defaultItemDetailsViewState) {
     _init();
   }
 

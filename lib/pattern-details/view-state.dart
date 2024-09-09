@@ -1,20 +1,22 @@
 import 'package:colourlovers_app/widgets/item-tiles.dart';
+import 'package:equatable/equatable.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
 @immutable
-class PatternDetailsViewState {
+class PatternDetailsViewState extends Equatable {
   final bool isLoading;
   final String id;
   final String title;
-  final List<String> colors;
-  final List<ColorTileViewState> colorViewStates;
+  final IList<String> colors;
+  final IList<ColorTileViewState> colorViewStates;
   final String imageUrl;
   final String numViews;
   final String numVotes;
   final String rank;
   final UserTileViewState user;
-  final List<PaletteTileViewState> relatedPalettes;
-  final List<PatternTileViewState> relatedPatterns;
+  final IList<PaletteTileViewState> relatedPalettes;
+  final IList<PatternTileViewState> relatedPatterns;
 
   const PatternDetailsViewState({
     required this.isLoading,
@@ -31,20 +33,64 @@ class PatternDetailsViewState {
     required this.relatedPatterns,
   });
 
-  factory PatternDetailsViewState.empty() {
+  @override
+  List<Object?> get props => [
+        isLoading,
+        id,
+        title,
+        colors,
+        colorViewStates,
+        imageUrl,
+        numViews,
+        numVotes,
+        rank,
+        user,
+        relatedPalettes,
+        relatedPatterns,
+      ];
+
+  PatternDetailsViewState copyWith({
+    bool? isLoading,
+    String? id,
+    String? title,
+    IList<String>? colors,
+    IList<ColorTileViewState>? colorViewStates,
+    String? imageUrl,
+    String? numViews,
+    String? numVotes,
+    String? rank,
+    UserTileViewState? user,
+    IList<PaletteTileViewState>? relatedPalettes,
+    IList<PatternTileViewState>? relatedPatterns,
+  }) {
     return PatternDetailsViewState(
-      isLoading: true,
-      id: '',
-      title: '',
-      colors: const [],
-      colorViewStates: const [],
-      imageUrl: '',
-      numViews: '',
-      numVotes: '',
-      rank: '',
-      user: UserTileViewState.empty(),
-      relatedPalettes: const [],
-      relatedPatterns: const [],
+      isLoading: isLoading ?? this.isLoading,
+      id: id ?? this.id,
+      title: title ?? this.title,
+      colors: colors ?? this.colors,
+      colorViewStates: colorViewStates ?? this.colorViewStates,
+      imageUrl: imageUrl ?? this.imageUrl,
+      numViews: numViews ?? this.numViews,
+      numVotes: numVotes ?? this.numVotes,
+      rank: rank ?? this.rank,
+      user: user ?? this.user,
+      relatedPalettes: relatedPalettes ?? this.relatedPalettes,
+      relatedPatterns: relatedPatterns ?? this.relatedPatterns,
     );
   }
 }
+
+const defaultPatternDetailsViewState = PatternDetailsViewState(
+  isLoading: true,
+  id: '',
+  title: '',
+  colors: IList.empty(),
+  colorViewStates: IList.empty(),
+  imageUrl: '',
+  numViews: '',
+  numVotes: '',
+  rank: '',
+  user: defaultUserTileViewState,
+  relatedPalettes: IList.empty(),
+  relatedPatterns: IList.empty(),
+);

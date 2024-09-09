@@ -62,8 +62,8 @@ class SharePaletteView extends StatelessWidget {
             SizedBox(
               height: 96,
               child: PaletteView(
-                hexs: state.colors,
-                widths: state.colorWidths,
+                hexs: state.colors.toList(),
+                widths: state.colorWidths.toList(),
               ),
             ),
             Padding(

@@ -3,6 +3,7 @@ import 'package:colourlovers_app/app/routing.dart';
 import 'package:colourlovers_app/pattern-details/view.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';
 import 'package:colourlovers_app/widgets/items-list.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,9 +20,7 @@ class PatternsViewController
 
   PatternsViewController(
     this._client,
-  ) : super(
-          ItemsListViewState.initialState(),
-        ) {
+  ) : super(defaultPatternsListViewState) {
     _pagination = ItemsPagination<ColourloversPattern>((numResults, offset) {
       return _client.getPatterns(
         numResults: numResults,
@@ -74,7 +73,7 @@ class PatternsViewController
         isLoading: _pagination.isLoading,
         items: _pagination.items //
             .map(PatternTileViewState.fromColourloverPattern)
-            .toList(),
+            .toIList(),
         hasMoreItems: _pagination.hasMoreItems,
       ),
     );

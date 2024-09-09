@@ -3,6 +3,7 @@ import 'package:colourlovers_app/app/routing.dart';
 import 'package:colourlovers_app/palette-details/view.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';
 import 'package:colourlovers_app/widgets/items-list.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,9 +20,7 @@ class PalettesViewController
 
   PalettesViewController(
     this._client,
-  ) : super(
-          ItemsListViewState.initialState(),
-        ) {
+  ) : super(defaultPalettesListViewState) {
     _pagination = ItemsPagination<ColourloversPalette>((numResults, offset) {
       return _client.getPalettes(
         numResults: numResults,
@@ -75,7 +74,7 @@ class PalettesViewController
         isLoading: _pagination.isLoading,
         items: _pagination.items //
             .map(PaletteTileViewState.fromColourloverPalette)
-            .toList(),
+            .toIList(),
         hasMoreItems: _pagination.hasMoreItems,
       ),
     );

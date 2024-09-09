@@ -21,9 +21,7 @@ class SharePaletteViewController extends Cubit<SharePaletteViewState> {
 
   SharePaletteViewController(
     this._palette,
-  ) : super(
-          SharePaletteViewState.initialState(),
-        ) {
+  ) : super(defaultSharePaletteViewState) {
     _init();
   }
 

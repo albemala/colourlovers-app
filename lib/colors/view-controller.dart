@@ -7,6 +7,7 @@ import 'package:colourlovers_app/colors/view-state.dart';
 import 'package:colourlovers_app/item-filters/defines.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';
 import 'package:colourlovers_app/widgets/items-list.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -23,9 +24,7 @@ class ColorsViewController extends Cubit<ColorsViewState> {
 
   ColorsViewController(
     this._client,
-  ) : super(
-          ColorsViewState.initialState(),
-        ) {
+  ) : super(defaultColorsViewState) {
     _filters = state.filters;
 
     _pagination = ItemsPagination<ColourloversColor>((numResults, offset) {
@@ -128,7 +127,7 @@ class ColorsViewController extends Cubit<ColorsViewState> {
           isLoading: _pagination.isLoading,
           items: _pagination.items //
               .map(ColorTileViewState.fromColourloverColor)
-              .toList(),
+              .toIList(),
           hasMoreItems: _pagination.hasMoreItems,
         ),
       ),

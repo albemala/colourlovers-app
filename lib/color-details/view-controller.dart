@@ -12,6 +12,7 @@ import 'package:colourlovers_app/share-color/view.dart';
 import 'package:colourlovers_app/user-details/view.dart';
 import 'package:colourlovers_app/user-items.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -36,9 +37,7 @@ class ColorDetailsViewController extends Cubit<ColorDetailsViewState> {
   ColorDetailsViewController(
     this._color,
     this._client,
-  ) : super(
-          ColorDetailsViewState.empty(),
-        ) {
+  ) : super(defaultColorDetailsViewState) {
     _init();
   }
 
@@ -67,25 +66,25 @@ class ColorDetailsViewController extends Cubit<ColorDetailsViewState> {
         hex: _color.hex ?? '',
         rgb: _color.rgb != null
             ? ColorRgbViewState.fromColourloverRgb(_color.rgb!)
-            : ColorRgbViewState.empty(),
+            : defaultColorRgbViewState,
         hsv: _color.hsv != null
             ? ColorHsvViewState.fromColourloverHsv(_color.hsv!)
-            : ColorHsvViewState.empty(),
+            : defaultColorHsvViewState,
         numViews: (_color.numViews ?? 0).toString(),
         numVotes: (_color.numVotes ?? 0).toString(),
         rank: (_color.rank ?? 0).toString(),
         user: _user != null
             ? UserTileViewState.fromColourloverUser(_user!)
-            : UserTileViewState.empty(),
+            : defaultUserTileViewState,
         relatedColors: _relatedColors //
             .map(ColorTileViewState.fromColourloverColor)
-            .toList(),
+            .toIList(),
         relatedPalettes: _relatedPalettes //
             .map(PaletteTileViewState.fromColourloverPalette)
-            .toList(),
+            .toIList(),
         relatedPatterns: _relatedPatterns //
             .map(PatternTileViewState.fromColourloverPattern)
-            .toList(),
+            .toIList(),
       ),
     );
   }

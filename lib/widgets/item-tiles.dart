@@ -2,11 +2,13 @@ import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/widgets/items.dart';
 import 'package:colourlovers_app/widgets/pill.dart';
 import 'package:colourlovers_app/widgets/skewed-container.dart';
+import 'package:equatable/equatable.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 @immutable
-class ColorTileViewState {
+class ColorTileViewState extends Equatable {
   final String title;
   final int numViews;
   final int numVotes;
@@ -19,12 +21,20 @@ class ColorTileViewState {
     required this.hex,
   });
 
-  factory ColorTileViewState.empty() {
-    return const ColorTileViewState(
-      title: '',
-      numViews: 0,
-      numVotes: 0,
-      hex: '',
+  @override
+  List<Object?> get props => [title, numViews, numVotes, hex];
+
+  ColorTileViewState copyWith({
+    String? title,
+    int? numViews,
+    int? numVotes,
+    String? hex,
+  }) {
+    return ColorTileViewState(
+      title: title ?? this.title,
+      numViews: numViews ?? this.numViews,
+      numVotes: numVotes ?? this.numVotes,
+      hex: hex ?? this.hex,
     );
   }
 
@@ -63,12 +73,12 @@ class ColorTileView extends StatelessWidget {
 }
 
 @immutable
-class PaletteTileViewState {
+class PaletteTileViewState extends Equatable {
   final String title;
   final int numViews;
   final int numVotes;
-  final List<String> hexs;
-  final List<double> widths;
+  final IList<String> hexs;
+  final IList<double> widths;
 
   const PaletteTileViewState({
     required this.title,
@@ -78,13 +88,22 @@ class PaletteTileViewState {
     required this.widths,
   });
 
-  factory PaletteTileViewState.empty() {
-    return const PaletteTileViewState(
-      title: '',
-      numViews: 0,
-      numVotes: 0,
-      hexs: [],
-      widths: [],
+  @override
+  List<Object?> get props => [title, numViews, numVotes, hexs, widths];
+
+  PaletteTileViewState copyWith({
+    String? title,
+    int? numViews,
+    int? numVotes,
+    IList<String>? hexs,
+    IList<double>? widths,
+  }) {
+    return PaletteTileViewState(
+      title: title ?? this.title,
+      numViews: numViews ?? this.numViews,
+      numVotes: numVotes ?? this.numVotes,
+      hexs: hexs ?? this.hexs,
+      widths: widths ?? this.widths,
     );
   }
 
@@ -95,8 +114,8 @@ class PaletteTileViewState {
       title: palette.title ?? '',
       numViews: palette.numViews ?? 0,
       numVotes: palette.numVotes ?? 0,
-      hexs: palette.colors ?? [],
-      widths: palette.colorWidths ?? [],
+      hexs: IList(palette.colors ?? []),
+      widths: IList(palette.colorWidths ?? []),
     );
   }
 }
@@ -119,15 +138,15 @@ class PaletteTileView extends StatelessWidget {
       numViews: state.numViews,
       numVotes: state.numVotes,
       child: PaletteView(
-        hexs: state.hexs,
-        widths: state.widths,
+        hexs: state.hexs.toList(),
+        widths: state.widths.toList(),
       ),
     );
   }
 }
 
 @immutable
-class PatternTileViewState {
+class PatternTileViewState extends Equatable {
   final String title;
   final int numViews;
   final int numVotes;
@@ -140,12 +159,20 @@ class PatternTileViewState {
     required this.imageUrl,
   });
 
-  factory PatternTileViewState.empty() {
-    return const PatternTileViewState(
-      title: '',
-      numViews: 0,
-      numVotes: 0,
-      imageUrl: '',
+  @override
+  List<Object?> get props => [title, numViews, numVotes, imageUrl];
+
+  PatternTileViewState copyWith({
+    String? title,
+    int? numViews,
+    int? numVotes,
+    String? imageUrl,
+  }) {
+    return PatternTileViewState(
+      title: title ?? this.title,
+      numViews: numViews ?? this.numViews,
+      numVotes: numVotes ?? this.numVotes,
+      imageUrl: imageUrl ?? this.imageUrl,
     );
   }
 
@@ -265,7 +292,7 @@ class _ItemTileView extends StatelessWidget {
 }
 
 @immutable
-class UserTileViewState {
+class UserTileViewState extends Equatable {
   final String userName;
   final int numColors;
   final int numPalettes;
@@ -278,12 +305,20 @@ class UserTileViewState {
     required this.numPatterns,
   });
 
-  factory UserTileViewState.empty() {
-    return const UserTileViewState(
-      userName: '',
-      numColors: 0,
-      numPalettes: 0,
-      numPatterns: 0,
+  @override
+  List<Object?> get props => [userName, numColors, numPalettes, numPatterns];
+
+  UserTileViewState copyWith({
+    String? userName,
+    int? numColors,
+    int? numPalettes,
+    int? numPatterns,
+  }) {
+    return UserTileViewState(
+      userName: userName ?? this.userName,
+      numColors: numColors ?? this.numColors,
+      numPalettes: numPalettes ?? this.numPalettes,
+      numPatterns: numPatterns ?? this.numPatterns,
     );
   }
 
@@ -380,3 +415,32 @@ class UserTileView extends StatelessWidget {
     );
   }
 }
+
+const defaultColorTileViewState = ColorTileViewState(
+  title: '',
+  numViews: 0,
+  numVotes: 0,
+  hex: '',
+);
+
+const defaultPaletteTileViewState = PaletteTileViewState(
+  title: '',
+  numViews: 0,
+  numVotes: 0,
+  hexs: IList.empty(),
+  widths: IList.empty(),
+);
+
+const defaultPatternTileViewState = PatternTileViewState(
+  title: '',
+  numViews: 0,
+  numVotes: 0,
+  imageUrl: '',
+);
+
+const defaultUserTileViewState = UserTileViewState(
+  userName: '',
+  numColors: 0,
+  numPalettes: 0,
+  numPatterns: 0,
+);

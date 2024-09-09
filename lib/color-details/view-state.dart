@@ -1,9 +1,11 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';
+import 'package:equatable/equatable.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
 @immutable
-class ColorRgbViewState {
+class ColorRgbViewState extends Equatable {
   final double red;
   final double green;
   final double blue;
@@ -14,11 +16,18 @@ class ColorRgbViewState {
     required this.blue,
   });
 
-  factory ColorRgbViewState.empty() {
-    return const ColorRgbViewState(
-      red: 0,
-      green: 0,
-      blue: 0,
+  @override
+  List<Object?> get props => [red, green, blue];
+
+  ColorRgbViewState copyWith({
+    double? red,
+    double? green,
+    double? blue,
+  }) {
+    return ColorRgbViewState(
+      red: red ?? this.red,
+      green: green ?? this.green,
+      blue: blue ?? this.blue,
     );
   }
 
@@ -32,7 +41,7 @@ class ColorRgbViewState {
 }
 
 @immutable
-class ColorHsvViewState {
+class ColorHsvViewState extends Equatable {
   final double hue;
   final double saturation;
   final double value;
@@ -43,11 +52,18 @@ class ColorHsvViewState {
     required this.value,
   });
 
-  factory ColorHsvViewState.empty() {
-    return const ColorHsvViewState(
-      hue: 0,
-      saturation: 0,
-      value: 0,
+  @override
+  List<Object?> get props => [hue, saturation, value];
+
+  ColorHsvViewState copyWith({
+    double? hue,
+    double? saturation,
+    double? value,
+  }) {
+    return ColorHsvViewState(
+      hue: hue ?? this.hue,
+      saturation: saturation ?? this.saturation,
+      value: value ?? this.value,
     );
   }
 
@@ -61,7 +77,7 @@ class ColorHsvViewState {
 }
 
 @immutable
-class ColorDetailsViewState {
+class ColorDetailsViewState extends Equatable {
   final bool isLoading;
   final String title;
   final String hex;
@@ -71,9 +87,9 @@ class ColorDetailsViewState {
   final String numVotes;
   final String rank;
   final UserTileViewState user;
-  final List<ColorTileViewState> relatedColors;
-  final List<PaletteTileViewState> relatedPalettes;
-  final List<PatternTileViewState> relatedPatterns;
+  final IList<ColorTileViewState> relatedColors;
+  final IList<PaletteTileViewState> relatedPalettes;
+  final IList<PatternTileViewState> relatedPatterns;
 
   const ColorDetailsViewState({
     required this.isLoading,
@@ -90,20 +106,76 @@ class ColorDetailsViewState {
     required this.relatedPatterns,
   });
 
-  factory ColorDetailsViewState.empty() {
+  @override
+  List<Object?> get props => [
+        isLoading,
+        title,
+        hex,
+        rgb,
+        hsv,
+        numViews,
+        numVotes,
+        rank,
+        user,
+        relatedColors,
+        relatedPalettes,
+        relatedPatterns,
+      ];
+
+  ColorDetailsViewState copyWith({
+    bool? isLoading,
+    String? title,
+    String? hex,
+    ColorRgbViewState? rgb,
+    ColorHsvViewState? hsv,
+    String? numViews,
+    String? numVotes,
+    String? rank,
+    UserTileViewState? user,
+    IList<ColorTileViewState>? relatedColors,
+    IList<PaletteTileViewState>? relatedPalettes,
+    IList<PatternTileViewState>? relatedPatterns,
+  }) {
     return ColorDetailsViewState(
-      isLoading: true,
-      title: '',
-      hex: '',
-      rgb: ColorRgbViewState.empty(),
-      hsv: ColorHsvViewState.empty(),
-      numViews: '',
-      numVotes: '',
-      rank: '',
-      user: UserTileViewState.empty(),
-      relatedColors: const [],
-      relatedPalettes: const [],
-      relatedPatterns: const [],
+      isLoading: isLoading ?? this.isLoading,
+      title: title ?? this.title,
+      hex: hex ?? this.hex,
+      rgb: rgb ?? this.rgb,
+      hsv: hsv ?? this.hsv,
+      numViews: numViews ?? this.numViews,
+      numVotes: numVotes ?? this.numVotes,
+      rank: rank ?? this.rank,
+      user: user ?? this.user,
+      relatedColors: relatedColors ?? this.relatedColors,
+      relatedPalettes: relatedPalettes ?? this.relatedPalettes,
+      relatedPatterns: relatedPatterns ?? this.relatedPatterns,
     );
   }
 }
+
+const defaultColorRgbViewState = ColorRgbViewState(
+  red: 0,
+  green: 0,
+  blue: 0,
+);
+
+const defaultColorHsvViewState = ColorHsvViewState(
+  hue: 0,
+  saturation: 0,
+  value: 0,
+);
+
+const defaultColorDetailsViewState = ColorDetailsViewState(
+  isLoading: true,
+  title: '',
+  hex: '',
+  rgb: defaultColorRgbViewState,
+  hsv: defaultColorHsvViewState,
+  numViews: '',
+  numVotes: '',
+  rank: '',
+  user: defaultUserTileViewState,
+  relatedColors: IList.empty(),
+  relatedPalettes: IList.empty(),
+  relatedPatterns: IList.empty(),
+);

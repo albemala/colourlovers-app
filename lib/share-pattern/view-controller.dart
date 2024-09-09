@@ -21,9 +21,7 @@ class SharePatternViewController extends Cubit<SharePatternViewState> {
 
   SharePatternViewController(
     this._pattern,
-  ) : super(
-          SharePatternViewState.initialState(),
-        ) {
+  ) : super(defaultSharePatternViewState) {
     _init();
   }
 

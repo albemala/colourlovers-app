@@ -130,7 +130,7 @@ class UserDetailsView extends StatelessWidget {
                   if (state.userColors.isNotEmpty)
                     RelatedItemsPreviewView(
                       title: 'Colors',
-                      items: state.userColors,
+                      items: state.userColors.toList(),
                       itemBuilder: (state) {
                         return ColorTileView(
                           state: state,
@@ -146,7 +146,7 @@ class UserDetailsView extends StatelessWidget {
                   if (state.userPalettes.isNotEmpty)
                     RelatedItemsPreviewView(
                       title: 'Palettes',
-                      items: state.userPalettes,
+                      items: state.userPalettes.toList(),
                       itemBuilder: (state) {
                         return PaletteTileView(
                           state: state,
@@ -162,7 +162,7 @@ class UserDetailsView extends StatelessWidget {
                   if (state.userPatterns.isNotEmpty)
                     RelatedItemsPreviewView(
                       title: 'Patterns',
-                      items: state.userPatterns,
+                      items: state.userPatterns.toList(),
                       itemBuilder: (state) {
                         return PatternTileView(
                           state: state,

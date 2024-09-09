@@ -20,9 +20,7 @@ class ShareColorViewController extends Cubit<ShareColorViewState> {
   final ColourloversColor _color;
   ShareColorViewController(
     this._color,
-  ) : super(
-          ShareColorViewState.initialState(),
-        ) {
+  ) : super(defaultShareColorViewState) {
     _init();
   }
 

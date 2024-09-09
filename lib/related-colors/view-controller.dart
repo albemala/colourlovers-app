@@ -4,6 +4,7 @@ import 'package:colourlovers_app/color-details/view.dart';
 import 'package:colourlovers_app/related-items.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';
 import 'package:colourlovers_app/widgets/items-list.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -26,9 +27,7 @@ class RelatedColorsViewController
   RelatedColorsViewController(
     this._hsv,
     this._client,
-  ) : super(
-          ItemsListViewState.initialState(),
-        ) {
+  ) : super(defaultColorsListViewState) {
     _pagination = ItemsPagination<ColourloversColor>((numResults, offset) {
       return fetchRelatedColors(_client, numResults, offset, _hsv);
     });
@@ -61,7 +60,7 @@ class RelatedColorsViewController
         isLoading: _pagination.isLoading,
         items: _pagination.items //
             .map(ColorTileViewState.fromColourloverColor)
-            .toList(),
+            .toIList(),
         hasMoreItems: _pagination.hasMoreItems,
       ),
     );
