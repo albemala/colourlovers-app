@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SharePaletteViewController extends Cubit<SharePaletteViewState> {
+  final ColourloversPalette _palette;
+
   factory SharePaletteViewController.fromContext(
     BuildContext context, {
     required ColourloversPalette palette,
@@ -16,8 +18,6 @@ class SharePaletteViewController extends Cubit<SharePaletteViewState> {
       palette,
     );
   }
-
-  final ColourloversPalette _palette;
 
   SharePaletteViewController(
     this._palette,

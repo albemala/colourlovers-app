@@ -17,6 +17,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PaletteDetailsViewController extends Cubit<PaletteDetailsViewState> {
+  final ColourloversPalette _palette;
+  final ColourloversApiClient _client;
+  ColourloversLover? _user;
+  List<ColourloversColor> _colors = [];
+  List<ColourloversPalette> _relatedPalettes = [];
+  List<ColourloversPattern> _relatedPatterns = [];
+
   factory PaletteDetailsViewController.fromContext(
     BuildContext context, {
     required ColourloversPalette palette,
@@ -26,13 +33,6 @@ class PaletteDetailsViewController extends Cubit<PaletteDetailsViewState> {
       ColourloversApiClient(),
     );
   }
-
-  final ColourloversPalette _palette;
-  final ColourloversApiClient _client;
-  ColourloversLover? _user;
-  List<ColourloversColor> _colors = [];
-  List<ColourloversPalette> _relatedPalettes = [];
-  List<ColourloversPattern> _relatedPatterns = [];
 
   PaletteDetailsViewController(
     this._palette,

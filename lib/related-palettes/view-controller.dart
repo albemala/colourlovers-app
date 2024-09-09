@@ -10,6 +10,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RelatedPalettesViewController
     extends Cubit<ItemsListViewState<PaletteTileViewState>> {
+  final List<String> _hex;
+  final ColourloversApiClient _client;
+  late final ItemsPagination<ColourloversPalette> _pagination;
+
   factory RelatedPalettesViewController.fromContext(
     BuildContext context, {
     required List<String> hex,
@@ -19,10 +23,6 @@ class RelatedPalettesViewController
       ColourloversApiClient(),
     );
   }
-
-  final List<String> _hex;
-  final ColourloversApiClient _client;
-  late final ItemsPagination<ColourloversPalette> _pagination;
 
   RelatedPalettesViewController(
     this._hex,

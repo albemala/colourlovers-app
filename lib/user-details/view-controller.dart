@@ -14,6 +14,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UserDetailsViewController extends Cubit<UserDetailsViewState> {
+  final ColourloversLover _user;
+  final ColourloversApiClient _client;
+  List<ColourloversColor> _userColors = [];
+  List<ColourloversPalette> _userPalettes = [];
+  List<ColourloversPattern> _userPatterns = [];
+
   factory UserDetailsViewController.fromContext(
     BuildContext context, {
     required ColourloversLover user,
@@ -23,12 +29,6 @@ class UserDetailsViewController extends Cubit<UserDetailsViewState> {
       ColourloversApiClient(),
     );
   }
-
-  final ColourloversLover _user;
-  final ColourloversApiClient _client;
-  List<ColourloversColor> _userColors = [];
-  List<ColourloversPalette> _userPalettes = [];
-  List<ColourloversPattern> _userPatterns = [];
 
   UserDetailsViewController(
     this._user,

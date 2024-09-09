@@ -10,6 +10,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class RelatedColorsViewController
     extends Cubit<ItemsListViewState<ColorTileViewState>> {
+  final Hsv _hsv;
+  final ColourloversApiClient _client;
+  late final ItemsPagination<ColourloversColor> _pagination;
+
   factory RelatedColorsViewController.fromContext(
     BuildContext context, {
     required Hsv hsv,
@@ -19,10 +23,6 @@ class RelatedColorsViewController
       ColourloversApiClient(),
     );
   }
-
-  final Hsv _hsv;
-  final ColourloversApiClient _client;
-  late final ItemsPagination<ColourloversColor> _pagination;
 
   RelatedColorsViewController(
     this._hsv,

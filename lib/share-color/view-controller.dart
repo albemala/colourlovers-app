@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ShareColorViewController extends Cubit<ShareColorViewState> {
+  final ColourloversColor _color;
+
   factory ShareColorViewController.fromContext(
     BuildContext context, {
     required ColourloversColor color,
@@ -17,7 +19,6 @@ class ShareColorViewController extends Cubit<ShareColorViewState> {
     );
   }
 
-  final ColourloversColor _color;
   ShareColorViewController(
     this._color,
   ) : super(defaultShareColorViewState) {

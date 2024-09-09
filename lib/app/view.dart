@@ -3,7 +3,6 @@ import 'package:colourlovers_app/app/defines.dart';
 import 'package:colourlovers_app/app/theme.dart';
 import 'package:colourlovers_app/app/view-controller.dart';
 import 'package:colourlovers_app/app/view-state.dart';
-import 'package:colourlovers_app/preferences/data-controller.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,9 +15,7 @@ class AppViewCreator extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<AppViewController>(
       create: (context) {
-        return AppViewController(
-          context.read<PreferencesDataController>(),
-        );
+        return AppViewController.fromContext(context);
       },
       child: BlocBuilder<AppViewController, AppViewState>(
         builder: (context, state) {

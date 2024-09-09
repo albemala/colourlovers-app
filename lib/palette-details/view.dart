@@ -24,10 +24,12 @@ class PaletteDetailsViewCreator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => PaletteDetailsViewController.fromContext(
-        context,
-        palette: palette,
-      ),
+      create: (context) {
+        return PaletteDetailsViewController.fromContext(
+          context,
+          palette: palette,
+        );
+      },
       child: BlocBuilder<PaletteDetailsViewController, PaletteDetailsViewState>(
         builder: (context, state) {
           return PaletteDetailsView(

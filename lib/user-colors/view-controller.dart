@@ -10,6 +10,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UserColorsViewController
     extends Cubit<ItemsListViewState<ColorTileViewState>> {
+  final String _userName;
+  final ColourloversApiClient _client;
+  late final ItemsPagination<ColourloversColor> _pagination;
+
   factory UserColorsViewController.fromContext(
     BuildContext context, {
     required String userName,
@@ -19,10 +23,6 @@ class UserColorsViewController
       ColourloversApiClient(),
     );
   }
-
-  final String _userName;
-  final ColourloversApiClient _client;
-  late final ItemsPagination<ColourloversColor> _pagination;
 
   UserColorsViewController(
     this._userName,

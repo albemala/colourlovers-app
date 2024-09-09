@@ -5,17 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ColorFiltersViewController extends Cubit<ColorFiltersViewState> {
-  factory ColorFiltersViewController.fromContext(
-    BuildContext context, {
-    required ColorFiltersViewState initialState,
-    required void Function(ColorFiltersViewState) onApply,
-  }) {
-    return ColorFiltersViewController(
-      initialState,
-      onApply,
-    );
-  }
-
   final void Function(ColorFiltersViewState) onApply;
 
   late ItemsFilter _filter;
@@ -27,6 +16,17 @@ class ColorFiltersViewController extends Cubit<ColorFiltersViewState> {
   late int _brightnessMax;
   final colorNameController = TextEditingController();
   final userNameController = TextEditingController();
+
+  factory ColorFiltersViewController.fromContext(
+    BuildContext context, {
+    required ColorFiltersViewState initialState,
+    required void Function(ColorFiltersViewState) onApply,
+  }) {
+    return ColorFiltersViewController(
+      initialState,
+      onApply,
+    );
+  }
 
   ColorFiltersViewController(
     super.initialState,

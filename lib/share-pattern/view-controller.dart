@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SharePatternViewController extends Cubit<SharePatternViewState> {
+  final ColourloversPattern _pattern;
+
   factory SharePatternViewController.fromContext(
     BuildContext context, {
     required ColourloversPattern pattern,
@@ -16,8 +18,6 @@ class SharePatternViewController extends Cubit<SharePatternViewState> {
       pattern,
     );
   }
-
-  final ColourloversPattern _pattern;
 
   SharePatternViewController(
     this._pattern,

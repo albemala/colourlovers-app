@@ -1,19 +1,16 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
-import 'package:colourlovers_app/share-color/view.dart';
-import 'package:colourlovers_app/share-palette/view.dart';
-import 'package:colourlovers_app/share-pattern/view.dart';
 import 'package:colourlovers_app/test/share-items/view-state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ShareItemsViewController extends Cubit<ShareItemsViewState> {
+  final ColourloversApiClient _client;
+
   factory ShareItemsViewController.fromContext(BuildContext context) {
     return ShareItemsViewController(
       ColourloversApiClient(),
     );
   }
-
-  final ColourloversApiClient _client;
 
   ShareItemsViewController(
     this._client,

@@ -16,7 +16,7 @@ class AppContentViewCreator extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<AppContentViewController>(
       create: (context) {
-        return AppContentViewController();
+        return AppContentViewController.fromContext(context);
       },
       child: BlocBuilder<AppContentViewController, AppContentViewState>(
         builder: (context, state) {

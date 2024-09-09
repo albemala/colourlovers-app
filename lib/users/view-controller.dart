@@ -8,14 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UsersViewController extends Cubit<ItemsListViewState<UserTileViewState>> {
+  final ColourloversApiClient _client;
+  late final ItemsPagination<ColourloversLover> _pagination;
+
   factory UsersViewController.fromContext(BuildContext context) {
     return UsersViewController(
       ColourloversApiClient(),
     );
   }
-
-  final ColourloversApiClient _client;
-  late final ItemsPagination<ColourloversLover> _pagination;
 
   UsersViewController(
     this._client,

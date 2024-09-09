@@ -9,14 +9,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PalettesViewController
     extends Cubit<ItemsListViewState<PaletteTileViewState>> {
+  final ColourloversApiClient _client;
+  late final ItemsPagination<ColourloversPalette> _pagination;
+
   factory PalettesViewController.fromContext(BuildContext context) {
     return PalettesViewController(
       ColourloversApiClient(),
     );
   }
-
-  final ColourloversApiClient _client;
-  late final ItemsPagination<ColourloversPalette> _pagination;
 
   PalettesViewController(
     this._client,

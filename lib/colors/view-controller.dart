@@ -12,15 +12,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ColorsViewController extends Cubit<ColorsViewState> {
+  final ColourloversApiClient _client;
+  late ColorFiltersViewState _filters;
+  late final ItemsPagination<ColourloversColor> _pagination;
+
   factory ColorsViewController.fromContext(BuildContext context) {
     return ColorsViewController(
       ColourloversApiClient(),
     );
   }
-
-  final ColourloversApiClient _client;
-  late ColorFiltersViewState _filters;
-  late final ItemsPagination<ColourloversColor> _pagination;
 
   ColorsViewController(
     this._client,
