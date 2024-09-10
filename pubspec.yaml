@@ -51,8 +51,9 @@ dev_dependencies:
 flutter:
   uses-material-design: true
 
-#  assets:
-#    - assets/fonts/
+  assets:
+    - assets/fonts/Archivo/
+    - assets/fonts/Archivo_Narrow/
 
 # dart run icons_launcher:create && flutter clean && flutter pub get
 icons_launcher:
