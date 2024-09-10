@@ -1,6 +1,6 @@
 import 'package:colourlovers_app/color-filters/view-state.dart';
-import 'package:colourlovers_app/widgets/item-tiles.dart';
-import 'package:colourlovers_app/widgets/items-list.dart';
+import 'package:colourlovers_app/widgets/item-tiles/color-tile/view-state.dart';
+import 'package:colourlovers_app/widgets/items-list/view-state.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 

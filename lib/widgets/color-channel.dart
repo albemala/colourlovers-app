@@ -1,4 +1,5 @@
-import 'package:colourlovers_app/widgets/color-value-indicator.dart';
+import 'package:colourlovers_app/widgets/color-channel-track.dart';
+import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -20,7 +21,8 @@ class ColorChannelView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return SeparatedRow(
+      separatorBuilder: () => const SizedBox(width: 8),
       children: [
         SizedBox(
           width: 12,
@@ -32,16 +34,14 @@ class ColorChannelView extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(width: 8),
         Expanded(
-          child: ColorChannelValueView(
+          child: ColorChannelTrackView(
             value: value,
             minValue: minValue,
             maxValue: maxValue,
             trackColors: trackColors,
           ),
         ),
-        const SizedBox(width: 8),
         SizedBox(
           width: 32,
           child: Text(

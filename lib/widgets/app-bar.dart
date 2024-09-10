@@ -2,8 +2,8 @@ import 'package:colourlovers_app/widgets/skewed-container.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AppTopBarView extends AppBar {
-  AppTopBarView(
+class AppBarView extends AppBar {
+  AppBarView(
     BuildContext context, {
     super.key,
     required String title,

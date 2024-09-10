@@ -1,8 +1,10 @@
 import 'package:colourlovers_app/patterns/view-controller.dart';
-import 'package:colourlovers_app/widgets/app-top-bar.dart';
-import 'package:colourlovers_app/widgets/item-tiles.dart';
-import 'package:colourlovers_app/widgets/items-list.dart';
-import 'package:colourlovers_app/widgets/random-item-button.dart';
+import 'package:colourlovers_app/widgets/app-bar.dart';
+import 'package:colourlovers_app/widgets/icon-buttons.dart';
+import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view-state.dart';
+import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view.dart';
+import 'package:colourlovers_app/widgets/items-list/view-state.dart';
+import 'package:colourlovers_app/widgets/items-list/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -41,7 +43,7 @@ class PatternsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppTopBarView(
+      appBar: AppBarView(
         context,
         title: 'Patterns',
         actions: [

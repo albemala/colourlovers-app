@@ -9,7 +9,10 @@ import 'package:colourlovers_app/user-details/view-state.dart';
 import 'package:colourlovers_app/user-items.dart';
 import 'package:colourlovers_app/user-palettes/view.dart';
 import 'package:colourlovers_app/user-patterns/view.dart';
-import 'package:colourlovers_app/widgets/item-tiles.dart';
+import 'package:colourlovers_app/widgets/item-tiles/color-tile/view-state.dart';
+import 'package:colourlovers_app/widgets/item-tiles/functions.dart';
+import 'package:colourlovers_app/widgets/item-tiles/palette-tile/view-state.dart';
+import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view-state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

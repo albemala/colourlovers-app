@@ -1,11 +1,10 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/share-pattern/view-controller.dart';
 import 'package:colourlovers_app/share-pattern/view-state.dart';
-import 'package:colourlovers_app/widgets/app-top-bar.dart';
-import 'package:colourlovers_app/widgets/h1-text.dart';
-import 'package:colourlovers_app/widgets/h2-text.dart';
-import 'package:colourlovers_app/widgets/items.dart';
+import 'package:colourlovers_app/widgets/app-bar.dart';
+import 'package:colourlovers_app/widgets/items/pattern.dart';
 import 'package:colourlovers_app/widgets/link.dart';
+import 'package:colourlovers_app/widgets/text.dart';
 import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -52,7 +51,7 @@ class SharePatternView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppTopBarView(
+      appBar: AppBarView(
         context,
         title: 'Share Pattern',
       ),

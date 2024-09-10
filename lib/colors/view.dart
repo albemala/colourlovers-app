@@ -1,16 +1,11 @@
-import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/colors/view-controller.dart';
 import 'package:colourlovers_app/colors/view-state.dart';
-import 'package:colourlovers_app/item-filters/defines.dart';
-import 'package:colourlovers_app/item-filters/functions.dart';
-import 'package:colourlovers_app/widgets/app-top-bar.dart';
-import 'package:colourlovers_app/widgets/color-value-indicator.dart';
-import 'package:colourlovers_app/widgets/item-tiles.dart';
-import 'package:colourlovers_app/widgets/items-list.dart';
-import 'package:colourlovers_app/widgets/random-item-button.dart';
+import 'package:colourlovers_app/widgets/app-bar.dart';
+import 'package:colourlovers_app/widgets/icon-buttons.dart';
+import 'package:colourlovers_app/widgets/item-tiles/color-tile/view.dart';
+import 'package:colourlovers_app/widgets/items-list/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:lucide_icons/lucide_icons.dart';
 
 class ColorsViewCreator extends StatelessWidget {
   const ColorsViewCreator({
@@ -46,7 +41,7 @@ class ColorsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppTopBarView(
+      appBar: AppBarView(
         context,
         title: 'Colors',
         actions: [
@@ -61,7 +56,8 @@ class ColorsView extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SingleChildScrollView(
+/*
+  SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
             child: Wrap(
@@ -179,7 +175,9 @@ class ColorsView extends StatelessWidget {
                   ),
               ],
             ),
-          ),
+          )
+        ,
+          */
           Expanded(
             child: ItemsListView(
               state: state.itemsList,

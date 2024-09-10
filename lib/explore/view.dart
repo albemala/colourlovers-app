@@ -1,7 +1,10 @@
 import 'package:colourlovers_app/explore/view-controller.dart';
-import 'package:colourlovers_app/widgets/app-top-bar.dart';
+import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background.dart';
-import 'package:colourlovers_app/widgets/items.dart';
+import 'package:colourlovers_app/widgets/items/color.dart';
+import 'package:colourlovers_app/widgets/items/palette.dart';
+import 'package:colourlovers_app/widgets/items/pattern.dart';
+import 'package:colourlovers_app/widgets/items/user.dart';
 import 'package:colourlovers_app/widgets/skewed-container.dart';
 import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +45,7 @@ class ExploreView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppTopBarView(
+      appBar: AppBarView(
         context,
         title: 'Explore',
       ),

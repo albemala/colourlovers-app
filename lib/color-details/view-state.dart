@@ -1,5 +1,8 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
-import 'package:colourlovers_app/widgets/item-tiles.dart';
+import 'package:colourlovers_app/widgets/item-tiles/color-tile/view-state.dart';
+import 'package:colourlovers_app/widgets/item-tiles/palette-tile/view-state.dart';
+import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view-state.dart';
+import 'package:colourlovers_app/widgets/item-tiles/user-tile/view-state.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';

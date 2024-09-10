@@ -1,5 +1,5 @@
 import 'package:colourlovers_app/test/view-controller.dart';
-import 'package:colourlovers_app/widgets/app-top-bar.dart';
+import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,7 +38,7 @@ class TestView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppTopBarView(
+      appBar: AppBarView(
         context,
         title: 'Test',
         actions: const [

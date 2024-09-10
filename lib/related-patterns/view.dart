@@ -1,7 +1,9 @@
 import 'package:colourlovers_app/related-patterns/view-controller.dart';
-import 'package:colourlovers_app/widgets/app-top-bar.dart';
-import 'package:colourlovers_app/widgets/item-tiles.dart';
-import 'package:colourlovers_app/widgets/items-list.dart';
+import 'package:colourlovers_app/widgets/app-bar.dart';
+import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view-state.dart';
+import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view.dart';
+import 'package:colourlovers_app/widgets/items-list/view-state.dart';
+import 'package:colourlovers_app/widgets/items-list/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -48,7 +50,7 @@ class RelatedPatternsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppTopBarView(
+      appBar: AppBarView(
         context,
         title: 'Related patterns',
       ),

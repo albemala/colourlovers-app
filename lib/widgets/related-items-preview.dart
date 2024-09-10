@@ -1,4 +1,4 @@
-import 'package:colourlovers_app/widgets/h2-text.dart';
+import 'package:colourlovers_app/widgets/text.dart';
 import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 

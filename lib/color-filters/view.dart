@@ -8,8 +8,8 @@ import 'package:colourlovers_app/color-filters/view-controller.dart';
 import 'package:colourlovers_app/color-filters/view-state.dart';
 import 'package:colourlovers_app/item-filters/defines.dart';
 import 'package:colourlovers_app/item-filters/functions.dart';
-import 'package:colourlovers_app/widgets/app-top-bar.dart';
-import 'package:colourlovers_app/widgets/h1-text.dart';
+import 'package:colourlovers_app/widgets/app-bar.dart';
+import 'package:colourlovers_app/widgets/text.dart';
 import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -59,7 +59,7 @@ class ColorFiltersView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppTopBarView(
+      appBar: AppBarView(
         context,
         title: 'Filter Colors',
       ),
