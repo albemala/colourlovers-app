@@ -236,7 +236,7 @@ class _ColorValuesView extends StatelessWidget {
               maxValue: 100,
               trackColors: [
                 const Color(0xFF000000),
-                HSVColor.fromAHSV(1, hsv.hue, 1, 1).toColor()
+                HSVColor.fromAHSV(1, hsv.hue, 1, 1).toColor(),
               ],
             ),
             ColorChannelView(

@@ -5,6 +5,7 @@ import 'package:colourlovers_app/color-filters/view-state.dart';
 import 'package:colourlovers_app/color-filters/view.dart';
 import 'package:colourlovers_app/colors/view-state.dart';
 import 'package:colourlovers_app/item-filters/defines.dart';
+import 'package:colourlovers_app/items-pagination.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';
 import 'package:colourlovers_app/widgets/items-list.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -84,7 +85,7 @@ class ColorsViewController extends Cubit<ColorsViewState> {
       ColorFiltersViewCreator(
         initialState: _filters,
         onApply: (filters) {
-          closeCurrentView(context);
+          closeCurrentView<void>(context);
           _filters = filters;
           _pagination.reset();
           _updateState();

@@ -1,5 +1,6 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/app/routing.dart';
+import 'package:colourlovers_app/items-pagination.dart';
 import 'package:colourlovers_app/pattern-details/view.dart';
 import 'package:colourlovers_app/related-items.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';

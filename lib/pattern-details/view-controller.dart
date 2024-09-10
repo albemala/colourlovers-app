@@ -2,6 +2,7 @@ import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/app/routing.dart';
 import 'package:colourlovers_app/color-details/view.dart';
 import 'package:colourlovers_app/colors.dart';
+import 'package:colourlovers_app/formatters.dart';
 import 'package:colourlovers_app/palette-details/view.dart';
 import 'package:colourlovers_app/pattern-details/view-state.dart';
 import 'package:colourlovers_app/pattern-details/view.dart';
@@ -42,45 +43,63 @@ class PatternDetailsViewController extends Cubit<PatternDetailsViewState> {
   }
 
   Future<void> _init() async {
-    _user = _pattern.userName != null
-        ? await fetchUser(_client, _pattern.userName!)
-        : null;
-    _colors = _pattern.colors != null
-        ? await fetchColors(_client, _pattern.colors!)
-        : <ColourloversColor>[];
-    _relatedPalettes = _pattern.colors != null
-        ? await fetchRelatedPalettesPreview(_client, _pattern.colors!)
-        : <ColourloversPalette>[];
-    _relatedPatterns = _pattern.colors != null
-        ? await fetchRelatedPatternsPreview(_client, _pattern.colors!)
-        : <ColourloversPattern>[];
-
+    await _initUser();
+    await _initColors();
+    await _initRelatedPalettes();
+    await _initRelatedPatterns();
     _updateState();
+  }
+
+  Future<void> _initUser() async {
+    final userName = _pattern.userName;
+    if (userName == null) return;
+    _user = await fetchUser(_client, userName);
+  }
+
+  Future<void> _initColors() async {
+    final colors = _pattern.colors;
+    if (colors == null) return;
+    _colors = await fetchColors(_client, colors);
+  }
+
+  Future<void> _initRelatedPalettes() async {
+    final colors = _pattern.colors;
+    if (colors == null) return;
+    _relatedPalettes = await fetchRelatedPalettesPreview(_client, colors);
+  }
+
+  Future<void> _initRelatedPatterns() async {
+    final colors = _pattern.colors;
+    if (colors == null) return;
+    _relatedPatterns = await fetchRelatedPatternsPreview(_client, colors);
   }
 
   void _updateState() {
     emit(
       PatternDetailsViewState(
         isLoading: false,
-        id: (_pattern.id ?? 0).toString(),
+        id: _pattern.id.formatted(),
         title: _pattern.title ?? '',
         colors: _pattern.colors?.toIList() ?? const IList.empty(),
-        colorViewStates: _colors //
-            .map(ColorTileViewState.fromColourloverColor)
-            .toIList(),
+        colorViewStates: mapToTileViewState(
+          _colors,
+          ColorTileViewState.fromColourloverColor,
+        ),
         imageUrl: _pattern.imageUrl ?? '',
-        numViews: (_pattern.numViews ?? 0).toString(),
-        numVotes: (_pattern.numVotes ?? 0).toString(),
-        rank: (_pattern.rank ?? 0).toString(),
-        user: _user != null //
+        numViews: _pattern.numViews.formatted(),
+        numVotes: _pattern.numVotes.formatted(),
+        rank: _pattern.rank.formatted(),
+        user: _user != null
             ? UserTileViewState.fromColourloverUser(_user!)
             : defaultUserTileViewState,
-        relatedPalettes: _relatedPalettes //
-            .map(PaletteTileViewState.fromColourloverPalette)
-            .toIList(),
-        relatedPatterns: _relatedPatterns //
-            .map(PatternTileViewState.fromColourloverPattern)
-            .toIList(),
+        relatedPalettes: mapToTileViewState(
+          _relatedPalettes,
+          PaletteTileViewState.fromColourloverPalette,
+        ),
+        relatedPatterns: mapToTileViewState(
+          _relatedPatterns,
+          PatternTileViewState.fromColourloverPattern,
+        ),
       ),
     );
   }
@@ -94,9 +113,10 @@ class PatternDetailsViewController extends Cubit<PatternDetailsViewState> {
     ColorTileViewState tileViewState,
   ) {
     final index = state.colorViewStates.indexOf(tileViewState);
+    final color = _colors[index];
     openScreen(
       context,
-      ColorDetailsViewCreator(color: _colors[index]),
+      ColorDetailsViewCreator(color: color),
     );
   }
 
@@ -105,9 +125,10 @@ class PatternDetailsViewController extends Cubit<PatternDetailsViewState> {
     PaletteTileViewState tileViewState,
   ) {
     final index = state.relatedPalettes.indexOf(tileViewState);
+    final palette = _relatedPalettes[index];
     openScreen(
       context,
-      PaletteDetailsViewCreator(palette: _relatedPalettes[index]),
+      PaletteDetailsViewCreator(palette: palette),
     );
   }
 
@@ -116,33 +137,37 @@ class PatternDetailsViewController extends Cubit<PatternDetailsViewState> {
     PatternTileViewState tileViewState,
   ) {
     final index = state.relatedPatterns.indexOf(tileViewState);
+    final pattern = _relatedPatterns[index];
     openScreen(
       context,
-      PatternDetailsViewCreator(pattern: _relatedPatterns[index]),
+      PatternDetailsViewCreator(pattern: pattern),
     );
   }
 
   void showUserDetailsView(BuildContext context) {
-    if (_user == null) return;
+    final user = _user;
+    if (user == null) return;
     openScreen(
       context,
-      UserDetailsViewCreator(user: _user!),
+      UserDetailsViewCreator(user: user),
     );
   }
 
   void showRelatedPalettesView(BuildContext context) {
-    if (_pattern.colors == null) return;
+    final colors = _pattern.colors;
+    if (colors == null) return;
     openScreen(
       context,
-      RelatedPalettesViewCreator(hex: _pattern.colors!),
+      RelatedPalettesViewCreator(hex: colors),
     );
   }
 
   void showRelatedPatternsView(BuildContext context) {
-    if (_pattern.colors == null) return;
+    final colors = _pattern.colors;
+    if (colors == null) return;
     openScreen(
       context,
-      RelatedPatternsViewCreator(hex: _pattern.colors!),
+      RelatedPatternsViewCreator(hex: colors),
     );
   }
 }

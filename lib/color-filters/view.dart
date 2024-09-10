@@ -265,7 +265,7 @@ class _HueView extends StatelessWidget {
             ),
           ),
           tooltip: buildFlutterSliderTooltip(context),
-        )
+        ),
       ],
     );
   }

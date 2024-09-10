@@ -1,8 +1,7 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/item-filters/defines.dart';
-import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:flutter/material.dart';
 
 @immutable
 class ColorFiltersViewState extends Equatable {
@@ -30,16 +29,16 @@ class ColorFiltersViewState extends Equatable {
 
   @override
   List<Object?> get props => [
-    filter,
-    sortBy,
-    order,
-    hueMin,
-    hueMax,
-    brightnessMin,
-    brightnessMax,
-    colorName,
-    userName,
-  ];
+        filter,
+        sortBy,
+        order,
+        hueMin,
+        hueMax,
+        brightnessMin,
+        brightnessMax,
+        colorName,
+        userName,
+      ];
 
   ColorFiltersViewState copyWith({
     ItemsFilter? filter,

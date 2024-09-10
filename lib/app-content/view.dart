@@ -3,6 +3,7 @@ import 'package:colourlovers_app/app-content/view-controller.dart';
 import 'package:colourlovers_app/app-content/view-state.dart';
 import 'package:colourlovers_app/explore/view.dart';
 import 'package:colourlovers_app/favorites/view.dart';
+import 'package:colourlovers_app/preferences/view.dart';
 import 'package:colourlovers_app/test/view.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -43,6 +44,7 @@ class AppContentView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // TODO keep or remove
       // appBar: AppTopBarView(
       //   context,
       //   title: getRouteTitle(route),
@@ -61,6 +63,7 @@ class AppContentView extends StatelessWidget {
         children: const [
           NavigatorView(child: ExploreViewCreator()),
           NavigatorView(child: FavoritesView()),
+          NavigatorView(child: PreferencesView()),
           NavigatorView(child: AboutView()),
           if (kDebugMode) NavigatorView(child: TestViewCreator()),
         ],
@@ -76,6 +79,10 @@ class AppContentView extends StatelessWidget {
           NavigationDestination(
             label: 'Favorites',
             icon: Icon(LucideIcons.star),
+          ),
+          NavigationDestination(
+            label: 'Preferences',
+            icon: Icon(LucideIcons.settings),
           ),
           NavigationDestination(
             label: 'About',

@@ -1,8 +1,7 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/urls/functions.dart';
-import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:flutter/material.dart';
 
 @immutable
 class ShareColorViewState extends Equatable {

@@ -97,7 +97,9 @@ class SharePatternView extends StatelessWidget {
                               TextButton(
                                 onPressed: () {
                                   controller.copyColorToClipboard(
-                                      context, color);
+                                    context,
+                                    color,
+                                  );
                                 },
                                 child: const Text('Copy'),
                               ),

@@ -2,6 +2,7 @@ import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/app/routing.dart';
 import 'package:colourlovers_app/color-details/view-state.dart';
 import 'package:colourlovers_app/color-details/view.dart';
+import 'package:colourlovers_app/formatters.dart';
 import 'package:colourlovers_app/palette-details/view.dart';
 import 'package:colourlovers_app/pattern-details/view.dart';
 import 'package:colourlovers_app/related-colors/view.dart';
@@ -12,7 +13,6 @@ import 'package:colourlovers_app/share-color/view.dart';
 import 'package:colourlovers_app/user-details/view.dart';
 import 'package:colourlovers_app/user-items.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -42,20 +42,35 @@ class ColorDetailsViewController extends Cubit<ColorDetailsViewState> {
   }
 
   Future<void> _init() async {
-    _user = _color.userName != null
-        ? await fetchUser(_client, _color.userName!)
-        : null;
-    _relatedColors = _color.hsv != null
-        ? await fetchRelatedColorsPreview(_client, _color.hsv!)
-        : <ColourloversColor>[];
-    _relatedPalettes = _color.hex != null
-        ? await fetchRelatedPalettesPreview(_client, [_color.hex!])
-        : <ColourloversPalette>[];
-    _relatedPatterns = _color.hex != null
-        ? await fetchRelatedPatternsPreview(_client, [_color.hex!])
-        : <ColourloversPattern>[];
-
+    await _initUser();
+    await _initRelatedColors();
+    await _initRelatedPalettes();
+    await _initRelatedPatterns();
     _updateState();
+  }
+
+  Future<void> _initUser() async {
+    final userName = _color.userName;
+    if (userName == null) return;
+    _user = await fetchUser(_client, userName);
+  }
+
+  Future<void> _initRelatedColors() async {
+    final hsv = _color.hsv;
+    if (hsv == null) return;
+    _relatedColors = await fetchRelatedColorsPreview(_client, hsv);
+  }
+
+  Future<void> _initRelatedPalettes() async {
+    final hex = _color.hex;
+    if (hex == null) return;
+    _relatedPalettes = await fetchRelatedPalettesPreview(_client, [hex]);
+  }
+
+  Future<void> _initRelatedPatterns() async {
+    final hex = _color.hex;
+    if (hex == null) return;
+    _relatedPatterns = await fetchRelatedPatternsPreview(_client, [hex]);
   }
 
   void _updateState() {
@@ -70,21 +85,24 @@ class ColorDetailsViewController extends Cubit<ColorDetailsViewState> {
         hsv: _color.hsv != null
             ? ColorHsvViewState.fromColourloverHsv(_color.hsv!)
             : defaultColorHsvViewState,
-        numViews: (_color.numViews ?? 0).toString(),
-        numVotes: (_color.numVotes ?? 0).toString(),
-        rank: (_color.rank ?? 0).toString(),
+        numViews: _color.numViews.formatted(),
+        numVotes: _color.numVotes.formatted(),
+        rank: _color.rank.formatted(),
         user: _user != null
             ? UserTileViewState.fromColourloverUser(_user!)
             : defaultUserTileViewState,
-        relatedColors: _relatedColors //
-            .map(ColorTileViewState.fromColourloverColor)
-            .toIList(),
-        relatedPalettes: _relatedPalettes //
-            .map(PaletteTileViewState.fromColourloverPalette)
-            .toIList(),
-        relatedPatterns: _relatedPatterns //
-            .map(PatternTileViewState.fromColourloverPattern)
-            .toIList(),
+        relatedColors: mapToTileViewState(
+          _relatedColors,
+          ColorTileViewState.fromColourloverColor,
+        ),
+        relatedPalettes: mapToTileViewState(
+          _relatedPalettes,
+          PaletteTileViewState.fromColourloverPalette,
+        ),
+        relatedPatterns: mapToTileViewState(
+          _relatedPatterns,
+          PatternTileViewState.fromColourloverPattern,
+        ),
       ),
     );
   }
@@ -98,9 +116,10 @@ class ColorDetailsViewController extends Cubit<ColorDetailsViewState> {
     ColorTileViewState tileViewState,
   ) {
     final index = state.relatedColors.indexOf(tileViewState);
+    final color = _relatedColors[index];
     openScreen(
       context,
-      ColorDetailsViewCreator(color: _relatedColors[index]),
+      ColorDetailsViewCreator(color: color),
     );
   }
 
@@ -109,9 +128,10 @@ class ColorDetailsViewController extends Cubit<ColorDetailsViewState> {
     PaletteTileViewState tileViewState,
   ) {
     final index = state.relatedPalettes.indexOf(tileViewState);
+    final palette = _relatedPalettes[index];
     openScreen(
       context,
-      PaletteDetailsViewCreator(palette: _relatedPalettes[index]),
+      PaletteDetailsViewCreator(palette: palette),
     );
   }
 
@@ -120,41 +140,46 @@ class ColorDetailsViewController extends Cubit<ColorDetailsViewState> {
     PatternTileViewState tileViewState,
   ) {
     final index = state.relatedPatterns.indexOf(tileViewState);
+    final pattern = _relatedPatterns[index];
     openScreen(
       context,
-      PatternDetailsViewCreator(pattern: _relatedPatterns[index]),
+      PatternDetailsViewCreator(pattern: pattern),
     );
   }
 
   void showUserDetailsView(BuildContext context) {
-    if (_user == null) return;
+    final user = _user;
+    if (user == null) return;
     openScreen(
       context,
-      UserDetailsViewCreator(user: _user!),
+      UserDetailsViewCreator(user: user),
     );
   }
 
   void showRelatedColorsView(BuildContext context) {
-    if (_color.hsv == null) return;
+    final hsv = _color.hsv;
+    if (hsv == null) return;
     openScreen(
       context,
-      RelatedColorsViewCreator(hsv: _color.hsv!),
+      RelatedColorsViewCreator(hsv: hsv),
     );
   }
 
   void showRelatedPalettesView(BuildContext context) {
-    if (_color.hex == null) return;
+    final hex = _color.hex;
+    if (hex == null) return;
     openScreen(
       context,
-      RelatedPalettesViewCreator(hex: [_color.hex!]),
+      RelatedPalettesViewCreator(hex: [hex]),
     );
   }
 
   void showRelatedPatternsView(BuildContext context) {
-    if (_color.hex == null) return;
+    final hex = _color.hex;
+    if (hex == null) return;
     openScreen(
       context,
-      RelatedPatternsViewCreator(hex: [_color.hex!]),
+      RelatedPatternsViewCreator(hex: [hex]),
     );
   }
 }

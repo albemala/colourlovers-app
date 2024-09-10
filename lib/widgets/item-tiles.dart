@@ -7,6 +7,10 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
+IList<T> mapToTileViewState<T, U>(List<U> items, T Function(U) mapper) {
+  return items.map(mapper).toIList();
+}
+
 @immutable
 class ColorTileViewState extends Equatable {
   final String title;

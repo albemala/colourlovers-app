@@ -1,6 +1,7 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/app/routing.dart';
 import 'package:colourlovers_app/color-details/view.dart';
+import 'package:colourlovers_app/formatters.dart';
 import 'package:colourlovers_app/palette-details/view.dart';
 import 'package:colourlovers_app/pattern-details/view.dart';
 import 'package:colourlovers_app/user-colors/view.dart';
@@ -9,7 +10,6 @@ import 'package:colourlovers_app/user-items.dart';
 import 'package:colourlovers_app/user-palettes/view.dart';
 import 'package:colourlovers_app/user-patterns/view.dart';
 import 'package:colourlovers_app/widgets/item-tiles.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -51,30 +51,28 @@ class UserDetailsViewController extends Cubit<UserDetailsViewState> {
       UserDetailsViewState(
         isLoading: false,
         userName: _user.userName ?? '',
-        numColors: (_user.numColors ?? 0).toString(),
-        numPalettes: (_user.numPalettes ?? 0).toString(),
-        numPatterns: (_user.numPatterns ?? 0).toString(),
-        rating: (_user.rating ?? 0).toString(),
-        numLovers: (_user.numLovers ?? 0).toString(),
+        numColors: _user.numColors.formatted(),
+        numPalettes: _user.numPalettes.formatted(),
+        numPatterns: _user.numPatterns.formatted(),
+        rating: _user.rating.formatted(),
+        numLovers: _user.numLovers.formatted(),
         location: _user.location ?? '',
-        dateRegistered: _formatDate(_user.dateRegistered),
-        dateLastActive: _formatDate(_user.dateLastActive),
-        userColors: _userColors //
-            .map(ColorTileViewState.fromColourloverColor)
-            .toIList(),
-        userPalettes: _userPalettes //
-            .map(PaletteTileViewState.fromColourloverPalette)
-            .toIList(),
-        userPatterns: _userPatterns //
-            .map(PatternTileViewState.fromColourloverPattern)
-            .toIList(),
+        dateRegistered: _user.dateRegistered.formatted(),
+        dateLastActive: _user.dateLastActive.formatted(),
+        userColors: mapToTileViewState(
+          _userColors,
+          ColorTileViewState.fromColourloverColor,
+        ),
+        userPalettes: mapToTileViewState(
+          _userPalettes,
+          PaletteTileViewState.fromColourloverPalette,
+        ),
+        userPatterns: mapToTileViewState(
+          _userPatterns,
+          PatternTileViewState.fromColourloverPattern,
+        ),
       ),
     );
-  }
-
-  String _formatDate(DateTime? date) {
-    if (date == null) return '';
-    return '${date.year}/${date.month.toString().padLeft(2, '0')}/${date.day.toString().padLeft(2, '0')}';
   }
 
   void showColorDetailsView(
@@ -82,9 +80,10 @@ class UserDetailsViewController extends Cubit<UserDetailsViewState> {
     ColorTileViewState tileViewState,
   ) {
     final index = state.userColors.indexOf(tileViewState);
+    final color = _userColors[index];
     openScreen(
       context,
-      ColorDetailsViewCreator(color: _userColors[index]),
+      ColorDetailsViewCreator(color: color),
     );
   }
 
@@ -93,9 +92,10 @@ class UserDetailsViewController extends Cubit<UserDetailsViewState> {
     PaletteTileViewState tileViewState,
   ) {
     final index = state.userPalettes.indexOf(tileViewState);
+    final palette = _userPalettes[index];
     openScreen(
       context,
-      PaletteDetailsViewCreator(palette: _userPalettes[index]),
+      PaletteDetailsViewCreator(palette: palette),
     );
   }
 
@@ -104,33 +104,37 @@ class UserDetailsViewController extends Cubit<UserDetailsViewState> {
     PatternTileViewState tileViewState,
   ) {
     final index = state.userPatterns.indexOf(tileViewState);
+    final pattern = _userPatterns[index];
     openScreen(
       context,
-      PatternDetailsViewCreator(pattern: _userPatterns[index]),
+      PatternDetailsViewCreator(pattern: pattern),
     );
   }
 
   void showUserColorsView(BuildContext context) {
-    if (_user.userName == null) return;
+    final userName = _user.userName;
+    if (userName == null) return;
     openScreen(
       context,
-      UserColorsViewCreator(userName: _user.userName!),
+      UserColorsViewCreator(userName: userName),
     );
   }
 
   void showUserPalettesView(BuildContext context) {
-    if (_user.userName == null) return;
+    final userName = _user.userName;
+    if (userName == null) return;
     openScreen(
       context,
-      UserPalettesViewCreator(userName: _user.userName!),
+      UserPalettesViewCreator(userName: userName),
     );
   }
 
   void showUserPatternsView(BuildContext context) {
-    if (_user.userName == null) return;
+    final userName = _user.userName;
+    if (userName == null) return;
     openScreen(
       context,
-      UserPatternsViewCreator(userName: _user.userName!),
+      UserPatternsViewCreator(userName: userName),
     );
   }
 }
