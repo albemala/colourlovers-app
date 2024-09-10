@@ -12,10 +12,6 @@ class AboutView extends StatelessWidget {
       appBar: AppBarView(
         context,
         title: 'About',
-        actions: const [
-          // ThemeModeToggleButton(),
-          // TODO add padding to the left
-        ],
       ),
       body: const Center(
         child: Text('About'),

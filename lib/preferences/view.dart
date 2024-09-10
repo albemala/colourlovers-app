@@ -12,10 +12,6 @@ class PreferencesView extends StatelessWidget {
       appBar: AppBarView(
         context,
         title: 'Preferences',
-        actions: const [
-          // ThemeModeToggleButton(),
-          // TODO add padding to the left
-        ],
       ),
       body: const Center(
         child: Text('Preferences'),

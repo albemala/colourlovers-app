@@ -41,40 +41,33 @@ class TestView extends StatelessWidget {
       appBar: AppBarView(
         context,
         title: 'Test',
-        actions: const [
-          // ThemeModeToggleButton(),
-          // TODO add padding to the left
-        ],
       ),
       body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          child: SeparatedColumn(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            separatorBuilder: () {
-              return const SizedBox(height: 8);
-            },
-            children: [
-              OutlinedButton(
-                onPressed: () {
-                  controller.showItemsTestView(context);
-                },
-                child: const Text('Items'),
-              ),
-              OutlinedButton(
-                onPressed: () {
-                  controller.showItemDetailsTestView(context);
-                },
-                child: const Text('Item details'),
-              ),
-              OutlinedButton(
-                onPressed: () {
-                  controller.showShareItemsTestView(context);
-                },
-                child: const Text('Share items'),
-              ),
-            ],
-          ),
+        child: SeparatedColumn(
+          mainAxisAlignment: MainAxisAlignment.center,
+          separatorBuilder: () {
+            return const SizedBox(height: 8);
+          },
+          children: [
+            FilledButton(
+              onPressed: () {
+                controller.showItemsTestView(context);
+              },
+              child: const Text('Items'),
+            ),
+            FilledButton(
+              onPressed: () {
+                controller.showItemDetailsTestView(context);
+              },
+              child: const Text('Item details'),
+            ),
+            FilledButton(
+              onPressed: () {
+                controller.showShareItemsTestView(context);
+              },
+              child: const Text('Share items'),
+            ),
+          ],
         ),
       ),
     );
