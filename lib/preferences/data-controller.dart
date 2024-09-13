@@ -1,4 +1,5 @@
 import 'package:colourlovers_app/preferences/data-state.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_data_storage/flutter_data_storage.dart';
 
@@ -23,4 +24,7 @@ class PreferencesDataController extends StoredCubit<PreferencesDataState> {
 
   ThemeMode get themeMode => state.themeMode;
   set themeMode(ThemeMode mode) => emit(state.copyWith(themeMode: mode));
+
+  FlexScheme get flexScheme => state.flexScheme;
+  set flexScheme(FlexScheme scheme) => emit(state.copyWith(flexScheme: scheme));
 }

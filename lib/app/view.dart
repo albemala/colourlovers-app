@@ -54,8 +54,8 @@ class AppView extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: appName,
-      theme: getLightTheme(),
-      darkTheme: getDarkTheme(),
+      theme: getLightTheme(state.flexScheme),
+      darkTheme: getDarkTheme(state.flexScheme),
       themeMode: state.themeMode,
       home: const AppContentViewCreator(),
     );

@@ -22,7 +22,9 @@ class AppViewController extends Cubit<AppViewState> {
     this._preferencesDataController,
   ) : super(defaultAppViewState) {
     _preferencesDataControllerSubscription =
-        _preferencesDataController.stream.listen((_) => _updateState());
+        _preferencesDataController.stream.listen((_) {
+      _updateState();
+    });
     _updateState();
   }
 
@@ -34,8 +36,9 @@ class AppViewController extends Cubit<AppViewState> {
 
   void _updateState() {
     emit(
-      state.copyWith(
+      AppViewState(
         themeMode: _preferencesDataController.state.themeMode,
+        flexScheme: _preferencesDataController.state.flexScheme,
       ),
     );
   }
