@@ -1,36 +1,23 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/filters/defines.dart';
-import 'package:colourlovers_app/widgets/item-tiles/palette-tile/view-state.dart';
-import 'package:colourlovers_app/widgets/items-list/view-state.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
 @immutable
-class PalettesViewState extends Equatable {
-  // filters
+class PatternFiltersViewState extends Equatable {
   final ContentShowCriteria showCriteria;
   final ColourloversRequestOrderBy sortBy;
   final ColourloversRequestSortBy sortOrder;
   final ColorFilter colorFilter;
   final IList<ColourloversRequestHueRange> hueRanges;
-  final String hex;
-  final String paletteName;
-  final String userName;
 
-  // items
-  final ItemsListViewState<PaletteTileViewState> itemsList;
-
-  const PalettesViewState({
+  const PatternFiltersViewState({
     required this.showCriteria,
     required this.sortBy,
     required this.sortOrder,
     required this.colorFilter,
     required this.hueRanges,
-    required this.hex,
-    required this.paletteName,
-    required this.userName,
-    required this.itemsList,
   });
 
   @override
@@ -40,45 +27,29 @@ class PalettesViewState extends Equatable {
         sortOrder,
         colorFilter,
         hueRanges,
-        hex,
-        paletteName,
-        userName,
-        itemsList,
       ];
 
-  PalettesViewState copyWith({
+  PatternFiltersViewState copyWith({
     ContentShowCriteria? showCriteria,
     ColourloversRequestOrderBy? sortBy,
     ColourloversRequestSortBy? sortOrder,
     ColorFilter? colorFilter,
     IList<ColourloversRequestHueRange>? hueRanges,
-    String? hex,
-    String? paletteName,
-    String? userName,
-    ItemsListViewState<PaletteTileViewState>? itemsList,
   }) {
-    return PalettesViewState(
+    return PatternFiltersViewState(
       showCriteria: showCriteria ?? this.showCriteria,
       sortBy: sortBy ?? this.sortBy,
       sortOrder: sortOrder ?? this.sortOrder,
       colorFilter: colorFilter ?? this.colorFilter,
       hueRanges: hueRanges ?? this.hueRanges,
-      hex: hex ?? this.hex,
-      paletteName: paletteName ?? this.paletteName,
-      userName: userName ?? this.userName,
-      itemsList: itemsList ?? this.itemsList,
     );
   }
 }
 
-const defaultPalettesViewState = PalettesViewState(
+const defaultPatternFiltersViewState = PatternFiltersViewState(
   showCriteria: ContentShowCriteria.newest,
   sortBy: ColourloversRequestOrderBy.dateCreated,
   sortOrder: ColourloversRequestSortBy.DESC,
   colorFilter: ColorFilter.none,
   hueRanges: IList.empty(),
-  hex: '',
-  paletteName: '',
-  userName: '',
-  itemsList: defaultPalettesListViewState,
 );

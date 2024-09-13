@@ -1,52 +1,49 @@
+import 'dart:async';
+
 import 'package:colourlovers_api/colourlovers_api.dart';
+import 'package:colourlovers_app/color-filters/data-controller.dart';
+import 'package:colourlovers_app/color-filters/data-state.dart';
 import 'package:colourlovers_app/color-filters/view-state.dart';
-import 'package:colourlovers_app/item-filters/defines.dart';
+import 'package:colourlovers_app/filters/defines.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ColorFiltersViewController extends Cubit<ColorFiltersViewState> {
-  final void Function(ColorFiltersViewState) onApply;
+  final ColorFiltersDataController dataController;
 
-  late ItemsFilter _filter;
-  late ColourloversRequestOrderBy _sortBy;
-  late ColourloversRequestSortBy _order;
-  late int _hueMin;
-  late int _hueMax;
-  late int _brightnessMin;
-  late int _brightnessMax;
+  var _showCriteria = defaultColorFiltersViewState.showCriteria;
+  var _sortBy = defaultColorFiltersViewState.sortBy;
+  var _sortOrder = defaultColorFiltersViewState.sortOrder;
+  var _hueMin = defaultColorFiltersViewState.hueMin;
+  var _hueMax = defaultColorFiltersViewState.hueMax;
+  var _brightnessMin = defaultColorFiltersViewState.brightnessMin;
+  var _brightnessMax = defaultColorFiltersViewState.brightnessMax;
   final colorNameController = TextEditingController();
   final userNameController = TextEditingController();
 
-  factory ColorFiltersViewController.fromContext(
-    BuildContext context, {
-    required ColorFiltersViewState initialState,
-    required void Function(ColorFiltersViewState) onApply,
-  }) {
+  factory ColorFiltersViewController.fromContext(BuildContext context) {
     return ColorFiltersViewController(
-      initialState,
-      onApply,
+      context.read<ColorFiltersDataController>(),
     );
   }
 
   ColorFiltersViewController(
-    super.initialState,
-    this.onApply,
-  ) {
-    _filter = state.filter;
-    _sortBy = state.sortBy;
-    _order = state.order;
-    _hueMin = state.hueMin;
-    _hueMax = state.hueMax;
-    _brightnessMin = state.brightnessMin;
-    _brightnessMax = state.brightnessMax;
+    this.dataController,
+  ) : super(defaultColorFiltersViewState) {
+    _showCriteria = dataController.showCriteria;
+    _sortBy = dataController.sortBy;
+    _sortOrder = dataController.sortOrder;
+    _hueMin = dataController.hueMin;
+    _hueMax = dataController.hueMax;
+    _brightnessMin = dataController.brightnessMin;
+    _brightnessMax = dataController.brightnessMax;
     colorNameController.value = TextEditingValue(
-      text: state.colorName,
-      selection: colorNameController.selection,
+      text: dataController.colorName,
     );
     userNameController.value = TextEditingValue(
-      text: state.userName,
-      selection: userNameController.selection,
+      text: dataController.userName,
     );
+    _updateState();
   }
 
   @override
@@ -56,8 +53,8 @@ class ColorFiltersViewController extends Cubit<ColorFiltersViewState> {
     return super.close();
   }
 
-  void setFilter(ItemsFilter value) {
-    _filter = value;
+  void setShowCriteria(ContentShowCriteria value) {
+    _showCriteria = value;
     _updateState();
   }
 
@@ -67,7 +64,7 @@ class ColorFiltersViewController extends Cubit<ColorFiltersViewState> {
   }
 
   void setOrder(ColourloversRequestSortBy value) {
-    _order = value;
+    _sortOrder = value;
     _updateState();
   }
 
@@ -91,34 +88,46 @@ class ColorFiltersViewController extends Cubit<ColorFiltersViewState> {
     _updateState();
   }
 
-  void setColorName(String value) {
+  void resetFilters() {
+    _showCriteria = defaultColorFiltersDataState.showCriteria;
+    _sortBy = defaultColorFiltersDataState.sortBy;
+    _sortOrder = defaultColorFiltersDataState.sortOrder;
+    _hueMin = defaultColorFiltersDataState.hueMin;
+    _hueMax = defaultColorFiltersDataState.hueMax;
+    _brightnessMin = defaultColorFiltersDataState.brightnessMin;
+    _brightnessMax = defaultColorFiltersDataState.brightnessMax;
     colorNameController.value = TextEditingValue(
-      text: value,
-      selection: colorNameController.selection,
+      text: defaultColorFiltersDataState.colorName,
+    );
+    userNameController.value = TextEditingValue(
+      text: defaultColorFiltersDataState.userName,
     );
     _updateState();
   }
 
-  void setUserName(String value) {
-    userNameController.value = TextEditingValue(
-      text: value,
-      selection: userNameController.selection,
-    );
-    _updateState();
+  void applyFilters() {
+    dataController
+      ..showCriteria = _showCriteria
+      ..sortBy = _sortBy
+      ..sortOrder = _sortOrder
+      ..hueMin = _hueMin
+      ..hueMax = _hueMax
+      ..brightnessMin = _brightnessMin
+      ..brightnessMax = _brightnessMax
+      ..colorName = colorNameController.text
+      ..userName = userNameController.text;
   }
 
   void _updateState() {
     emit(
       ColorFiltersViewState(
-        filter: _filter,
+        showCriteria: _showCriteria,
         sortBy: _sortBy,
-        order: _order,
+        sortOrder: _sortOrder,
         hueMin: _hueMin,
         hueMax: _hueMax,
         brightnessMin: _brightnessMin,
         brightnessMax: _brightnessMax,
-        colorName: colorNameController.text,
-        userName: userNameController.text,
       ),
     );
   }

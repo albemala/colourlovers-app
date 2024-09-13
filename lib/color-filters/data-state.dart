@@ -1,13 +1,10 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/filters/defines.dart';
-import 'package:colourlovers_app/widgets/item-tiles/color-tile/view-state.dart';
-import 'package:colourlovers_app/widgets/items-list/view-state.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 @immutable
-class ColorsViewState extends Equatable {
-  // filters
+class ColorFiltersDataState extends Equatable {
   final ContentShowCriteria showCriteria;
   final ColourloversRequestOrderBy sortBy;
   final ColourloversRequestSortBy sortOrder;
@@ -18,10 +15,7 @@ class ColorsViewState extends Equatable {
   final String colorName;
   final String userName;
 
-  // items
-  final ItemsListViewState<ColorTileViewState> itemsList;
-
-  const ColorsViewState({
+  const ColorFiltersDataState({
     required this.showCriteria,
     required this.sortBy,
     required this.sortOrder,
@@ -31,11 +25,10 @@ class ColorsViewState extends Equatable {
     required this.brightnessMax,
     required this.colorName,
     required this.userName,
-    required this.itemsList,
   });
 
   @override
-  List<Object?> get props => [
+  List<Object> get props => [
         showCriteria,
         sortBy,
         sortOrder,
@@ -45,10 +38,9 @@ class ColorsViewState extends Equatable {
         brightnessMax,
         colorName,
         userName,
-        itemsList,
       ];
 
-  ColorsViewState copyWith({
+  ColorFiltersDataState copyWith({
     ContentShowCriteria? showCriteria,
     ColourloversRequestOrderBy? sortBy,
     ColourloversRequestSortBy? sortOrder,
@@ -58,9 +50,8 @@ class ColorsViewState extends Equatable {
     int? brightnessMax,
     String? colorName,
     String? userName,
-    ItemsListViewState<ColorTileViewState>? itemsList,
   }) {
-    return ColorsViewState(
+    return ColorFiltersDataState(
       showCriteria: showCriteria ?? this.showCriteria,
       sortBy: sortBy ?? this.sortBy,
       sortOrder: sortOrder ?? this.sortOrder,
@@ -70,12 +61,53 @@ class ColorsViewState extends Equatable {
       brightnessMax: brightnessMax ?? this.brightnessMax,
       colorName: colorName ?? this.colorName,
       userName: userName ?? this.userName,
-      itemsList: itemsList ?? this.itemsList,
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'showCriteria': showCriteria.name,
+      'sortBy': sortBy.name,
+      'sortOrder': sortOrder.name,
+      'hueMin': hueMin,
+      'hueMax': hueMax,
+      'brightnessMin': brightnessMin,
+      'brightnessMax': brightnessMax,
+      'colorName': colorName,
+      'userName': userName,
+    };
+  }
+
+  factory ColorFiltersDataState.fromMap(Map<String, dynamic> map) {
+    return switch (map) {
+      {
+        'showCriteria': final String showCriteria,
+        'sortBy': final String sortBy,
+        'sortOrder': final String sortOrder,
+        'hueMin': final int hueMin,
+        'hueMax': final int hueMax,
+        'brightnessMin': final int brightnessMin,
+        'brightnessMax': final int brightnessMax,
+        'colorName': final String colorName,
+        'userName': final String userName,
+      } =>
+        ColorFiltersDataState(
+          showCriteria: ContentShowCriteria.values.byName(showCriteria),
+          sortBy: ColourloversRequestOrderBy.values.byName(sortBy),
+          sortOrder: ColourloversRequestSortBy.values.byName(sortOrder),
+          hueMin: hueMin,
+          hueMax: hueMax,
+          brightnessMin: brightnessMin,
+          brightnessMax: brightnessMax,
+          colorName: colorName,
+          userName: userName,
+        ),
+      _ => defaultColorFiltersDataState,
+    };
   }
 }
 
-const defaultColorsViewState = ColorsViewState(
+const defaultColorFiltersDataState = ColorFiltersDataState(
   showCriteria: ContentShowCriteria.newest,
   sortBy: ColourloversRequestOrderBy.dateCreated,
   sortOrder: ColourloversRequestSortBy.DESC,
@@ -85,5 +117,4 @@ const defaultColorsViewState = ColorsViewState(
   brightnessMax: 99,
   colorName: '',
   userName: '',
-  itemsList: defaultColorsListViewState,
 );

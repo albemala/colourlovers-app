@@ -17,7 +17,6 @@ Future<ReturnType?> openDialog<ReturnType>(
   if (!context.mounted) return null;
   return showDialog<ReturnType>(
     context: context,
-    // barrierDismissible: false,
     builder: (_) => dialog,
   );
 }
@@ -35,12 +34,14 @@ void openBottomSheet(
 
 void openScreen(
   BuildContext context,
-  Widget route,
-) {
+  Widget route, {
+  bool isFullscreenDialog = false,
+}) {
   if (!context.mounted) return;
   Navigator.of(context).push(
     MaterialPageRoute<void>(
       builder: (_) => route,
+      fullscreenDialog: isFullscreenDialog,
     ),
   );
 }

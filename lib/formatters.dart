@@ -13,3 +13,10 @@ extension DateTimeFormatting on DateTime? {
     return '$year/$month/$day';
   }
 }
+extension DoubleToIntString on String {
+  String toIntString() {
+    final double? value = double.tryParse(this);
+    if (value == null) return this;
+    return value.truncate().toString();
+  }
+}

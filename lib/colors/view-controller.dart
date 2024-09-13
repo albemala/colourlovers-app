@@ -1,10 +1,13 @@
+import 'dart:async';
+
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/app/routing.dart';
 import 'package:colourlovers_app/color-details/view.dart';
-import 'package:colourlovers_app/color-filters/view-state.dart';
+import 'package:colourlovers_app/color-filters/data-controller.dart';
+import 'package:colourlovers_app/color-filters/data-state.dart';
 import 'package:colourlovers_app/color-filters/view.dart';
 import 'package:colourlovers_app/colors/view-state.dart';
-import 'package:colourlovers_app/item-filters/defines.dart';
+import 'package:colourlovers_app/filters/defines.dart';
 import 'package:colourlovers_app/items-pagination.dart';
 import 'package:colourlovers_app/widgets/item-tiles/color-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/items-list/view-state.dart';
@@ -14,52 +17,64 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ColorsViewController extends Cubit<ColorsViewState> {
   final ColourloversApiClient _client;
-  late ColorFiltersViewState _filters;
+  final ColorFiltersDataController dataController;
+
   late final ItemsPagination<ColourloversColor> _pagination;
+
+  StreamSubscription<ColorFiltersDataState>? _dataControllerSubscription;
 
   factory ColorsViewController.fromContext(BuildContext context) {
     return ColorsViewController(
       ColourloversApiClient(),
+      context.read<ColorFiltersDataController>(),
     );
   }
 
   ColorsViewController(
     this._client,
+    this.dataController,
   ) : super(defaultColorsViewState) {
-    _filters = state.filters;
-
+    _dataControllerSubscription = dataController.stream.listen((state) {
+      _pagination.reset();
+      _updateState();
+      _pagination.load();
+    });
     _pagination = ItemsPagination<ColourloversColor>((numResults, offset) {
-      switch (_filters.filter) {
-        case ItemsFilter.newest:
+      switch (dataController.showCriteria) {
+        case ContentShowCriteria.newest:
           return _client.getNewColors(
-            lover: _filters.userName,
-            hueMin: _filters.hueMin,
-            hueMax: _filters.hueMax,
-            brightnessMin: _filters.brightnessMin,
-            brightnessMax: _filters.brightnessMax,
-            keywords: _filters.colorName,
+            lover: dataController.userName,
+            hueMin: dataController.hueMin,
+            hueMax: dataController.hueMax,
+            brightnessMin: dataController.brightnessMin,
+            brightnessMax: dataController.brightnessMax,
+            keywords: dataController.colorName,
             numResults: numResults,
             resultOffset: offset,
           );
-        case ItemsFilter.top:
+        case ContentShowCriteria.top:
           return _client.getTopColors(
-            lover: _filters.userName,
-            hueMin: _filters.hueMin,
-            hueMax: _filters.hueMax,
-            brightnessMin: _filters.brightnessMin,
-            brightnessMax: _filters.brightnessMax,
-            keywords: _filters.colorName,
+            lover: dataController.userName,
+            hueMin: dataController.hueMin,
+            hueMax: dataController.hueMax,
+            brightnessMin: dataController.brightnessMin,
+            brightnessMax: dataController.brightnessMax,
+            keywords: dataController.colorName,
+            numResults: numResults,
+            resultOffset: offset,
           );
-        case ItemsFilter.all:
+        case ContentShowCriteria.all:
           return _client.getColors(
-            lover: _filters.userName,
-            hueMin: _filters.hueMin,
-            hueMax: _filters.hueMax,
-            brightnessMin: _filters.brightnessMin,
-            brightnessMax: _filters.brightnessMax,
-            keywords: _filters.colorName,
-            sortBy: _filters.order,
-            orderBy: _filters.sortBy,
+            lover: dataController.userName,
+            hueMin: dataController.hueMin,
+            hueMax: dataController.hueMax,
+            brightnessMin: dataController.brightnessMin,
+            brightnessMax: dataController.brightnessMax,
+            keywords: dataController.colorName,
+            sortBy: dataController.sortOrder,
+            orderBy: dataController.sortBy,
+            numResults: numResults,
+            resultOffset: offset,
           );
       }
     });
@@ -69,6 +84,7 @@ class ColorsViewController extends Cubit<ColorsViewState> {
 
   @override
   Future<void> close() {
+    _dataControllerSubscription?.cancel();
     _pagination.removeListener(_updateState);
     return super.close();
   }
@@ -82,17 +98,8 @@ class ColorsViewController extends Cubit<ColorsViewState> {
   ) {
     openScreen(
       context,
-      ColorFiltersViewCreator(
-        initialState: _filters,
-        onApply: (filters) {
-          closeCurrentView<void>(context);
-          _filters = filters;
-          _pagination.reset();
-          _updateState();
-          _pagination.load();
-        },
-      ),
-      // fullscreenDialog: true, // TODO
+      const ColorFiltersViewCreator(),
+      isFullscreenDialog: true,
     );
   }
 
@@ -123,7 +130,15 @@ class ColorsViewController extends Cubit<ColorsViewState> {
   void _updateState() {
     emit(
       ColorsViewState(
-        filters: _filters,
+        showCriteria: dataController.showCriteria,
+        sortBy: dataController.sortBy,
+        sortOrder: dataController.sortOrder,
+        hueMin: dataController.hueMin,
+        hueMax: dataController.hueMax,
+        brightnessMin: dataController.brightnessMin,
+        brightnessMax: dataController.brightnessMax,
+        colorName: dataController.colorName,
+        userName: dataController.userName,
         itemsList: ItemsListViewState(
           isLoading: _pagination.isLoading,
           items: _pagination.items //

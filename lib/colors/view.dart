@@ -1,11 +1,17 @@
+import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/colors/view-controller.dart';
 import 'package:colourlovers_app/colors/view-state.dart';
+import 'package:colourlovers_app/filters/defines.dart';
+import 'package:colourlovers_app/filters/functions.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
+import 'package:colourlovers_app/widgets/color-values-range-indicator.dart';
 import 'package:colourlovers_app/widgets/icon-buttons.dart';
 import 'package:colourlovers_app/widgets/item-tiles/color-tile/view.dart';
 import 'package:colourlovers_app/widgets/items-list/view.dart';
+import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
 class ColorsViewCreator extends StatelessWidget {
   const ColorsViewCreator({
@@ -56,12 +62,11 @@ class ColorsView extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-/*
-  SingleChildScrollView(
+          SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Wrap(
-              spacing: 8,
+            child: SeparatedRow(
+              separatorBuilder: () => const SizedBox(width: 8),
               children: [
                 IconButton.outlined(
                   onPressed: () {
@@ -69,6 +74,7 @@ class ColorsView extends StatelessWidget {
                   },
                   icon: const Icon(
                     LucideIcons.slidersHorizontal,
+                    size: 18,
                   ),
                   tooltip: 'Filters',
                 ),
@@ -77,26 +83,20 @@ class ColorsView extends StatelessWidget {
                     controller.showColorFilters(context);
                   },
                   label: Text(
-                    getItemFilterName(state.filters.filter),
+                    getContentShowCriteriaName(state.showCriteria),
                   ),
                   tooltip: 'Show',
                 ),
-                if (state.filters.filter == ItemsFilter.all)
+                if (state.showCriteria == ContentShowCriteria.all)
                   FilterChip(
                     onSelected: (value) {
                       controller.showColorFilters(context);
                     },
-                    avatar: state.filters.order == ColourloversRequestSortBy.ASC
-                        ? Icon(
-                            LucideIcons.arrowUp,
-                            color: Theme.of(context).colorScheme.secondary,
-                          )
-                        : Icon(
-                            LucideIcons.arrowDown,
-                            color: Theme.of(context).colorScheme.secondary,
-                          ),
+                    avatar: state.sortOrder == ColourloversRequestSortBy.ASC
+                        ? const Icon(LucideIcons.arrowUp)
+                        : const Icon(LucideIcons.arrowDown),
                     label: Text(
-                      getColourloversRequestOrderByName(state.filters.sortBy),
+                      getColourloversRequestOrderByName(state.sortBy),
                     ),
                     tooltip: 'Sort by',
                   ),
@@ -104,23 +104,18 @@ class ColorsView extends StatelessWidget {
                   onSelected: (value) {
                     controller.showColorFilters(context);
                   },
-                  avatar: Icon(
-                    LucideIcons.rainbow,
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
+                  avatar: const Icon(LucideIcons.rainbow),
                   label: SizedBox(
                     width: 128,
                     height: 8,
-                    child: ColorChannelTrackView(
-                      trackColors: List.generate(
-                        state.filters.hueMax - state.filters.hueMin,
-                        (index) => HSVColor.fromAHSV(
-                          1,
-                          (state.filters.hueMin + index).toDouble(),
-                          1,
-                          1,
-                        ).toColor(),
-                      ),
+                    child: ColorValueRangeIndicatorView(
+                      min: 0,
+                      max: 359,
+                      lowerValue: state.hueMin.toDouble(),
+                      upperValue: state.hueMax.toDouble(),
+                      getColor: (value) {
+                        return HSVColor.fromAHSV(1, value, 1, 1).toColor();
+                      },
                     ),
                   ),
                 ),
@@ -128,56 +123,43 @@ class ColorsView extends StatelessWidget {
                   onSelected: (value) {
                     controller.showColorFilters(context);
                   },
-                  avatar: Icon(
-                    LucideIcons.sun,
-                    color: Theme.of(context).colorScheme.secondary,
-                  ),
+                  avatar: const Icon(LucideIcons.sun),
                   label: SizedBox(
                     width: 128,
                     height: 8,
-                    child: ColorChannelTrackView(
-                      trackColors: List.generate(
-                        state.filters.brightnessMax -
-                            state.filters.brightnessMin,
-                        (index) => HSVColor.fromAHSV(
-                          1,
-                          0,
-                          0,
-                          (state.filters.brightnessMin + index) / 100,
-                        ).toColor(),
-                      ),
+                    child: ColorValueRangeIndicatorView(
+                      min: 0,
+                      max: 99,
+                      lowerValue: state.brightnessMin.toDouble(),
+                      upperValue: state.brightnessMax.toDouble(),
+                      getColor: (value) {
+                        return HSVColor.fromAHSV(1, 0, 0, value / 100)
+                            .toColor();
+                      },
                     ),
                   ),
                 ),
-                if (state.filters.colorName.isNotEmpty)
+                if (state.colorName.isNotEmpty)
                   FilterChip(
                     onSelected: (value) {
                       controller.showColorFilters(context);
                     },
-                    avatar: Icon(
-                      LucideIcons.tag,
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                    label: Text(state.filters.colorName),
+                    avatar: const Icon(LucideIcons.tag),
+                    label: Text(state.colorName),
                     tooltip: 'Color name',
                   ),
-                if (state.filters.userName.isNotEmpty)
+                if (state.userName.isNotEmpty)
                   FilterChip(
                     onSelected: (value) {
                       controller.showColorFilters(context);
                     },
-                    avatar: Icon(
-                      LucideIcons.userCircle2,
-                      color: Theme.of(context).colorScheme.secondary,
-                    ),
-                    label: Text(state.filters.userName),
+                    avatar: const Icon(LucideIcons.userCircle2),
+                    label: Text(state.userName),
                     tooltip: 'User name',
                   ),
               ],
             ),
-          )
-        ,
-          */
+          ),
           Expanded(
             child: ItemsListView(
               state: state.itemsList,

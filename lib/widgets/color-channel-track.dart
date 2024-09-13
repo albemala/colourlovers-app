@@ -72,13 +72,14 @@ class ColorChannelIndicatorPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
+    final rect = Offset.zero & size;
     canvas.drawCircle(
-      Offset.zero,
+      rect.center,
       size.height / 2,
       Paint()
-        ..color = Colors.white
+        ..style = PaintingStyle.stroke
         ..strokeWidth = 2
-        ..style = PaintingStyle.stroke,
+        ..color = Colors.white,
     );
   }
 }

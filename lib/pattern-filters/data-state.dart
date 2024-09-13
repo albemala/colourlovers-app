@@ -1,14 +1,11 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/filters/defines.dart';
-import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view-state.dart';
-import 'package:colourlovers_app/widgets/items-list/view-state.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 @immutable
-class PatternsViewState extends Equatable {
-  // filters
+class PatternFiltersDataState extends Equatable {
   final ContentShowCriteria showCriteria;
   final ColourloversRequestOrderBy sortBy;
   final ColourloversRequestSortBy sortOrder;
@@ -18,10 +15,7 @@ class PatternsViewState extends Equatable {
   final String patternName;
   final String userName;
 
-  // items
-  final ItemsListViewState<PatternTileViewState> itemsList;
-
-  const PatternsViewState({
+  const PatternFiltersDataState({
     required this.showCriteria,
     required this.sortBy,
     required this.sortOrder,
@@ -30,11 +24,10 @@ class PatternsViewState extends Equatable {
     required this.hex,
     required this.patternName,
     required this.userName,
-    required this.itemsList,
   });
 
   @override
-  List<Object?> get props => [
+  List<Object> get props => [
         showCriteria,
         sortBy,
         sortOrder,
@@ -43,10 +36,9 @@ class PatternsViewState extends Equatable {
         hex,
         patternName,
         userName,
-        itemsList,
       ];
 
-  PatternsViewState copyWith({
+  PatternFiltersDataState copyWith({
     ContentShowCriteria? showCriteria,
     ColourloversRequestOrderBy? sortBy,
     ColourloversRequestSortBy? sortOrder,
@@ -55,9 +47,8 @@ class PatternsViewState extends Equatable {
     String? hex,
     String? patternName,
     String? userName,
-    ItemsListViewState<PatternTileViewState>? itemsList,
   }) {
-    return PatternsViewState(
+    return PatternFiltersDataState(
       showCriteria: showCriteria ?? this.showCriteria,
       sortBy: sortBy ?? this.sortBy,
       sortOrder: sortOrder ?? this.sortOrder,
@@ -66,12 +57,52 @@ class PatternsViewState extends Equatable {
       hex: hex ?? this.hex,
       patternName: patternName ?? this.patternName,
       userName: userName ?? this.userName,
-      itemsList: itemsList ?? this.itemsList,
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'showCriteria': showCriteria.name,
+      'sortBy': sortBy.name,
+      'sortOrder': sortOrder.name,
+      'colorFilter': colorFilter.name,
+      'hueRanges': hueRanges.map((range) => range.name).toList(),
+      'hex': hex,
+      'patternName': patternName,
+      'userName': userName,
+    };
+  }
+
+  factory PatternFiltersDataState.fromMap(Map<String, dynamic> map) {
+    return switch (map) {
+      {
+        'showCriteria': final String showCriteria,
+        'sortBy': final String sortBy,
+        'sortOrder': final String sortOrder,
+        'colorFilter': final String colorFilter,
+        'hueRanges': final List<dynamic> hueRanges,
+        'hex': final String hex,
+        'patternName': final String patternName,
+        'userName': final String userName,
+      } =>
+        PatternFiltersDataState(
+          showCriteria: ContentShowCriteria.values.byName(showCriteria),
+          sortBy: ColourloversRequestOrderBy.values.byName(sortBy),
+          sortOrder: ColourloversRequestSortBy.values.byName(sortOrder),
+          colorFilter: ColorFilter.values.byName(colorFilter),
+          hueRanges: hueRanges.map((range) {
+            return ColourloversRequestHueRange.values.byName(range as String);
+          }).toIList(),
+          hex: hex,
+          patternName: patternName,
+          userName: userName,
+        ),
+      _ => defaultPatternFiltersDataState,
+    };
   }
 }
 
-const defaultPatternsViewState = PatternsViewState(
+const defaultPatternFiltersDataState = PatternFiltersDataState(
   showCriteria: ContentShowCriteria.newest,
   sortBy: ColourloversRequestOrderBy.dateCreated,
   sortOrder: ColourloversRequestSortBy.DESC,
@@ -80,5 +111,4 @@ const defaultPatternsViewState = PatternsViewState(
   hex: '',
   patternName: '',
   userName: '',
-  itemsList: defaultPatternsListViewState,
 );

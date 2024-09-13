@@ -1,32 +1,31 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/app/routing.dart';
-import 'package:colourlovers_app/color-filters/view-controller.dart';
-import 'package:colourlovers_app/color-filters/view-state.dart';
 import 'package:colourlovers_app/filters/defines.dart';
 import 'package:colourlovers_app/filters/functions.dart';
+import 'package:colourlovers_app/user-filters/view-controller.dart';
+import 'package:colourlovers_app/user-filters/view-state.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
-import 'package:colourlovers_app/widgets/color-values-range-selector.dart';
 import 'package:colourlovers_app/widgets/text.dart';
 import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ColorFiltersViewCreator extends StatelessWidget {
-  const ColorFiltersViewCreator({
+class UserFiltersViewCreator extends StatelessWidget {
+  const UserFiltersViewCreator({
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ColorFiltersViewController>(
+    return BlocProvider<UserFiltersViewController>(
       create: (context) {
-        return ColorFiltersViewController.fromContext(context);
+        return UserFiltersViewController.fromContext(context);
       },
-      child: BlocBuilder<ColorFiltersViewController, ColorFiltersViewState>(
+      child: BlocBuilder<UserFiltersViewController, UserFiltersViewState>(
         builder: (context, state) {
-          return ColorFiltersView(
+          return UserFiltersView(
             state: state,
-            controller: context.read<ColorFiltersViewController>(),
+            controller: context.read<UserFiltersViewController>(),
           );
         },
       ),
@@ -34,11 +33,11 @@ class ColorFiltersViewCreator extends StatelessWidget {
   }
 }
 
-class ColorFiltersView extends StatelessWidget {
-  final ColorFiltersViewState state;
-  final ColorFiltersViewController controller;
+class UserFiltersView extends StatelessWidget {
+  final UserFiltersViewState state;
+  final UserFiltersViewController controller;
 
-  const ColorFiltersView({
+  const UserFiltersView({
     super.key,
     required this.state,
     required this.controller,
@@ -49,7 +48,7 @@ class ColorFiltersView extends StatelessWidget {
     return Scaffold(
       appBar: AppBarView(
         context,
-        title: 'Filter Colors',
+        title: 'Filter Users',
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -66,10 +65,9 @@ class ColorFiltersView extends StatelessWidget {
                   _ShowView(state: state, controller: controller),
                   if (state.showCriteria == ContentShowCriteria.all)
                     _SortByView(state: state, controller: controller),
-                  _HueView(state: state, controller: controller),
-                  _BrightnessView(state: state, controller: controller),
-                  _ColorNameView(controller: controller),
-                  _UserNameView(controller: controller),
+                  // It looks like there is no API parameter to filter by user name
+                  // So I'm going to leave it this here for now
+                  // _UserNameView(controller: controller),
                 ],
               ),
             ),
@@ -101,8 +99,8 @@ class ColorFiltersView extends StatelessWidget {
 }
 
 class _ShowView extends StatelessWidget {
-  final ColorFiltersViewState state;
-  final ColorFiltersViewController controller;
+  final UserFiltersViewState state;
+  final UserFiltersViewController controller;
 
   const _ShowView({
     required this.state,
@@ -140,8 +138,8 @@ class _ShowView extends StatelessWidget {
 }
 
 class _SortByView extends StatelessWidget {
-  final ColorFiltersViewState state;
-  final ColorFiltersViewController controller;
+  final UserFiltersViewState state;
+  final UserFiltersViewController controller;
 
   const _SortByView({
     required this.state,
@@ -197,106 +195,8 @@ class _SortByView extends StatelessWidget {
   }
 }
 
-class _HueView extends StatelessWidget {
-  final ColorFiltersViewState state;
-  final ColorFiltersViewController controller;
-
-  const _HueView({
-    required this.state,
-    required this.controller,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SeparatedColumn(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      separatorBuilder: () {
-        return const SizedBox(height: 12);
-      },
-      children: [
-        const H1TextView('Hue'),
-        ColorValueRangeSelectorView(
-          min: 0,
-          max: 359,
-          lowerValue: state.hueMin.toDouble(),
-          upperValue: state.hueMax.toDouble(),
-          onChanged: (lower, upper) {
-            controller
-              ..setHueMin(lower.toInt())
-              ..setHueMax(upper.toInt());
-          },
-          getColor: (value) {
-            return HSVColor.fromAHSV(1, value, 1, 1).toColor();
-          },
-        ),
-      ],
-    );
-  }
-}
-
-class _BrightnessView extends StatelessWidget {
-  final ColorFiltersViewState state;
-  final ColorFiltersViewController controller;
-
-  const _BrightnessView({
-    required this.state,
-    required this.controller,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SeparatedColumn(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      separatorBuilder: () {
-        return const SizedBox(height: 12);
-      },
-      children: [
-        const H1TextView('Brightness'),
-        ColorValueRangeSelectorView(
-          min: 0,
-          max: 99,
-          lowerValue: state.brightnessMin.toDouble(),
-          upperValue: state.brightnessMax.toDouble(),
-          onChanged: (lower, upper) {
-            controller
-              ..setBrightnessMin(lower.toInt())
-              ..setBrightnessMax(upper.toInt());
-          },
-          getColor: (value) {
-            return HSVColor.fromAHSV(1, 0, 0, value / 100).toColor();
-          },
-        ),
-      ],
-    );
-  }
-}
-
-class _ColorNameView extends StatelessWidget {
-  final ColorFiltersViewController controller;
-
-  const _ColorNameView({
-    required this.controller,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SeparatedColumn(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      separatorBuilder: () {
-        return const SizedBox(height: 12);
-      },
-      children: [
-        const H1TextView('Color name'),
-        TextField(
-          controller: controller.colorNameController,
-        ),
-      ],
-    );
-  }
-}
-
 class _UserNameView extends StatelessWidget {
-  final ColorFiltersViewController controller;
+  final UserFiltersViewController controller;
 
   const _UserNameView({
     required this.controller,

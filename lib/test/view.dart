@@ -67,6 +67,12 @@ class TestView extends StatelessWidget {
               },
               child: const Text('Share items'),
             ),
+            FilledButton(
+              onPressed: () {
+                controller.showFiltersTestView(context);
+              },
+              child: const Text('Filters'),
+            ),
           ],
         ),
       ),

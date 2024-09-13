@@ -1,11 +1,15 @@
+import 'package:colourlovers_api/colourlovers_api.dart';
+import 'package:colourlovers_app/filters/defines.dart';
+import 'package:colourlovers_app/filters/functions.dart';
 import 'package:colourlovers_app/users/view-controller.dart';
+import 'package:colourlovers_app/users/view-state.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
-import 'package:colourlovers_app/widgets/item-tiles/user-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/user-tile/view.dart';
-import 'package:colourlovers_app/widgets/items-list/view-state.dart';
 import 'package:colourlovers_app/widgets/items-list/view.dart';
+import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
 class UsersViewCreator extends StatelessWidget {
   const UsersViewCreator({
@@ -16,11 +20,10 @@ class UsersViewCreator extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<UsersViewController>(
       create: UsersViewController.fromContext,
-      child: BlocBuilder<UsersViewController,
-          ItemsListViewState<UserTileViewState>>(
+      child: BlocBuilder<UsersViewController, UsersViewState>(
         builder: (context, state) {
           return UsersView(
-            listViewState: state,
+            state: state,
             controller: context.read<UsersViewController>(),
           );
         },
@@ -30,12 +33,12 @@ class UsersViewCreator extends StatelessWidget {
 }
 
 class UsersView extends StatelessWidget {
-  final ItemsListViewState<UserTileViewState> listViewState;
+  final UsersViewState state;
   final UsersViewController controller;
 
   const UsersView({
     super.key,
-    required this.listViewState,
+    required this.state,
     required this.controller,
   });
 
@@ -45,25 +48,75 @@ class UsersView extends StatelessWidget {
       appBar: AppBarView(
         context,
         title: 'Users',
-        actions: [
-          // _FilterButton(
-          //   onPressed: () {
-          //     // TODO
-          //   },
-          // ),
-        ],
       ),
-      body: ItemsListView(
-        state: listViewState,
-        itemTileBuilder: (itemViewState) {
-          return UserTileView(
-            state: itemViewState,
-            onTap: () {
-              controller.showUserDetails(context, itemViewState);
-            },
-          );
-        },
-        onLoadMorePressed: controller.loadMore,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: SeparatedRow(
+              separatorBuilder: () => const SizedBox(width: 8),
+              children: [
+                IconButton.outlined(
+                  onPressed: () {
+                    controller.showUserFilters(context);
+                  },
+                  icon: const Icon(
+                    LucideIcons.slidersHorizontal,
+                    size: 18,
+                  ),
+                  tooltip: 'Filters',
+                ),
+                FilterChip(
+                  onSelected: (value) {
+                    controller.showUserFilters(context);
+                  },
+                  label: Text(
+                    getContentShowCriteriaName(state.showCriteria),
+                  ),
+                  tooltip: 'Show',
+                ),
+                if (state.showCriteria == ContentShowCriteria.all)
+                  FilterChip(
+                    onSelected: (value) {
+                      controller.showUserFilters(context);
+                    },
+                    avatar: state.sortOrder == ColourloversRequestSortBy.ASC
+                        ? const Icon(LucideIcons.arrowUp)
+                        : const Icon(LucideIcons.arrowDown),
+                    label: Text(
+                      getColourloversRequestOrderByName(state.sortBy),
+                    ),
+                    tooltip: 'Sort by',
+                  ),
+                if (state.userName.isNotEmpty)
+                  FilterChip(
+                    onSelected: (value) {
+                      controller.showUserFilters(context);
+                    },
+                    avatar: const Icon(LucideIcons.userCircle2),
+                    label: Text(state.userName),
+                    tooltip: 'User name',
+                  ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: ItemsListView(
+              state: state.itemsList,
+              itemTileBuilder: (itemViewState) {
+                return UserTileView(
+                  state: itemViewState,
+                  onTap: () {
+                    controller.showUserDetails(context, itemViewState);
+                  },
+                );
+              },
+              onLoadMorePressed: controller.loadMore,
+            ),
+          ),
+        ],
       ),
     );
   }

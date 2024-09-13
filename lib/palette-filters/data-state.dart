@@ -1,14 +1,11 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/filters/defines.dart';
-import 'package:colourlovers_app/widgets/item-tiles/palette-tile/view-state.dart';
-import 'package:colourlovers_app/widgets/items-list/view-state.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 
 @immutable
-class PalettesViewState extends Equatable {
-  // filters
+class PaletteFiltersDataState extends Equatable {
   final ContentShowCriteria showCriteria;
   final ColourloversRequestOrderBy sortBy;
   final ColourloversRequestSortBy sortOrder;
@@ -18,10 +15,7 @@ class PalettesViewState extends Equatable {
   final String paletteName;
   final String userName;
 
-  // items
-  final ItemsListViewState<PaletteTileViewState> itemsList;
-
-  const PalettesViewState({
+  const PaletteFiltersDataState({
     required this.showCriteria,
     required this.sortBy,
     required this.sortOrder,
@@ -30,11 +24,10 @@ class PalettesViewState extends Equatable {
     required this.hex,
     required this.paletteName,
     required this.userName,
-    required this.itemsList,
   });
 
   @override
-  List<Object?> get props => [
+  List<Object> get props => [
         showCriteria,
         sortBy,
         sortOrder,
@@ -43,10 +36,9 @@ class PalettesViewState extends Equatable {
         hex,
         paletteName,
         userName,
-        itemsList,
       ];
 
-  PalettesViewState copyWith({
+  PaletteFiltersDataState copyWith({
     ContentShowCriteria? showCriteria,
     ColourloversRequestOrderBy? sortBy,
     ColourloversRequestSortBy? sortOrder,
@@ -55,9 +47,8 @@ class PalettesViewState extends Equatable {
     String? hex,
     String? paletteName,
     String? userName,
-    ItemsListViewState<PaletteTileViewState>? itemsList,
   }) {
-    return PalettesViewState(
+    return PaletteFiltersDataState(
       showCriteria: showCriteria ?? this.showCriteria,
       sortBy: sortBy ?? this.sortBy,
       sortOrder: sortOrder ?? this.sortOrder,
@@ -66,12 +57,52 @@ class PalettesViewState extends Equatable {
       hex: hex ?? this.hex,
       paletteName: paletteName ?? this.paletteName,
       userName: userName ?? this.userName,
-      itemsList: itemsList ?? this.itemsList,
     );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'showCriteria': showCriteria.name,
+      'sortBy': sortBy.name,
+      'sortOrder': sortOrder.name,
+      'colorFilter': colorFilter.name,
+      'hueRanges': hueRanges.map((range) => range.name).toList(),
+      'hex': hex,
+      'paletteName': paletteName,
+      'userName': userName,
+    };
+  }
+
+  factory PaletteFiltersDataState.fromMap(Map<String, dynamic> map) {
+    return switch (map) {
+      {
+        'showCriteria': final String showCriteria,
+        'sortBy': final String sortBy,
+        'sortOrder': final String sortOrder,
+        'colorFilter': final String colorFilter,
+        'hueRanges': final List<dynamic> hueRanges,
+        'hex': final String hex,
+        'paletteName': final String paletteName,
+        'userName': final String userName,
+      } =>
+        PaletteFiltersDataState(
+          showCriteria: ContentShowCriteria.values.byName(showCriteria),
+          sortBy: ColourloversRequestOrderBy.values.byName(sortBy),
+          sortOrder: ColourloversRequestSortBy.values.byName(sortOrder),
+          colorFilter: ColorFilter.values.byName(colorFilter),
+          hueRanges: hueRanges.map((range) {
+            return ColourloversRequestHueRange.values.byName(range as String);
+          }).toIList(),
+          hex: hex,
+          paletteName: paletteName,
+          userName: userName,
+        ),
+      _ => defaultPaletteFiltersDataState,
+    };
   }
 }
 
-const defaultPalettesViewState = PalettesViewState(
+const defaultPaletteFiltersDataState = PaletteFiltersDataState(
   showCriteria: ContentShowCriteria.newest,
   sortBy: ColourloversRequestOrderBy.dateCreated,
   sortOrder: ColourloversRequestSortBy.DESC,
@@ -80,5 +111,4 @@ const defaultPalettesViewState = PalettesViewState(
   hex: '',
   paletteName: '',
   userName: '',
-  itemsList: defaultPalettesListViewState,
 );

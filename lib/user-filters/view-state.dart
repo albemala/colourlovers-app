@@ -1,27 +1,18 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/filters/defines.dart';
-import 'package:colourlovers_app/widgets/item-tiles/user-tile/view-state.dart';
-import 'package:colourlovers_app/widgets/items-list/view-state.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 
 @immutable
-class UsersViewState extends Equatable {
-  // filters
+class UserFiltersViewState extends Equatable {
   final ContentShowCriteria showCriteria;
   final ColourloversRequestOrderBy sortBy;
   final ColourloversRequestSortBy sortOrder;
-  final String userName;
 
-  // items
-  final ItemsListViewState<UserTileViewState> itemsList;
-
-  const UsersViewState({
+  const UserFiltersViewState({
     required this.showCriteria,
     required this.sortBy,
     required this.sortOrder,
-    required this.userName,
-    required this.itemsList,
   });
 
   @override
@@ -29,31 +20,23 @@ class UsersViewState extends Equatable {
         showCriteria,
         sortBy,
         sortOrder,
-        userName,
-        itemsList,
       ];
 
-  UsersViewState copyWith({
+  UserFiltersViewState copyWith({
     ContentShowCriteria? showCriteria,
     ColourloversRequestOrderBy? sortBy,
     ColourloversRequestSortBy? sortOrder,
-    String? userName,
-    ItemsListViewState<UserTileViewState>? itemsList,
   }) {
-    return UsersViewState(
+    return UserFiltersViewState(
       showCriteria: showCriteria ?? this.showCriteria,
       sortBy: sortBy ?? this.sortBy,
       sortOrder: sortOrder ?? this.sortOrder,
-      userName: userName ?? this.userName,
-      itemsList: itemsList ?? this.itemsList,
     );
   }
 }
 
-const defaultUsersViewState = UsersViewState(
+const defaultUserFiltersViewState = UserFiltersViewState(
   showCriteria: ContentShowCriteria.newest,
   sortBy: ColourloversRequestOrderBy.dateCreated,
   sortOrder: ColourloversRequestSortBy.DESC,
-  userName: '',
-  itemsList: defaultUsersListViewState,
 );
