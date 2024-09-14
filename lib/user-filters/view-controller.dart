@@ -1,12 +1,10 @@
 import 'dart:async';
 
 import 'package:colourlovers_api/colourlovers_api.dart';
-import 'package:colourlovers_app/app/routing.dart';
 import 'package:colourlovers_app/filters/defines.dart';
 import 'package:colourlovers_app/user-filters/data-controller.dart';
 import 'package:colourlovers_app/user-filters/data-state.dart';
 import 'package:colourlovers_app/user-filters/view-state.dart';
-import 'package:colourlovers_app/widgets/snack-bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

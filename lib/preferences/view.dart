@@ -148,6 +148,7 @@ class _ThemeTileView extends StatelessWidget {
     ];
     return Card(
       elevation: 0,
+      margin: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
         side: BorderSide(

@@ -64,7 +64,7 @@ class AppContentView extends StatelessWidget {
           NavigatorView(child: ExploreViewCreator()),
           NavigatorView(child: FavoritesView()),
           NavigatorView(child: PreferencesViewCreator()),
-          NavigatorView(child: AboutView()),
+          NavigatorView(child: AboutViewCreator()),
           if (kDebugMode) NavigatorView(child: TestViewCreator()),
         ],
       ),
