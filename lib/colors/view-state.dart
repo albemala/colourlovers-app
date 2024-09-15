@@ -1,8 +1,10 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/filters/defines.dart';
+import 'package:colourlovers_app/widgets/background/defines.dart';
 import 'package:colourlovers_app/widgets/item-tiles/color-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/items-list/view-state.dart';
 import 'package:equatable/equatable.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
 @immutable
@@ -20,6 +22,7 @@ class ColorsViewState extends Equatable {
 
   // items
   final ItemsListViewState<ColorTileViewState> itemsList;
+  final IList<BackgroundBlob> backgroundBlobs;
 
   const ColorsViewState({
     required this.showCriteria,
@@ -32,6 +35,7 @@ class ColorsViewState extends Equatable {
     required this.colorName,
     required this.userName,
     required this.itemsList,
+    required this.backgroundBlobs,
   });
 
   @override
@@ -46,6 +50,7 @@ class ColorsViewState extends Equatable {
         colorName,
         userName,
         itemsList,
+        backgroundBlobs,
       ];
 
   ColorsViewState copyWith({
@@ -59,6 +64,7 @@ class ColorsViewState extends Equatable {
     String? colorName,
     String? userName,
     ItemsListViewState<ColorTileViewState>? itemsList,
+    IList<BackgroundBlob>? backgroundBlobs,
   }) {
     return ColorsViewState(
       showCriteria: showCriteria ?? this.showCriteria,
@@ -71,6 +77,7 @@ class ColorsViewState extends Equatable {
       colorName: colorName ?? this.colorName,
       userName: userName ?? this.userName,
       itemsList: itemsList ?? this.itemsList,
+      backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );
   }
 }
@@ -86,4 +93,5 @@ const defaultColorsViewState = ColorsViewState(
   colorName: '',
   userName: '',
   itemsList: defaultColorsListViewState,
+  backgroundBlobs: IList.empty(),
 );

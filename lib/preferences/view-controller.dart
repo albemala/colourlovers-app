@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:colourlovers_app/preferences/data-controller.dart';
 import 'package:colourlovers_app/preferences/data-state.dart';
 import 'package:colourlovers_app/preferences/view-state.dart';
+import 'package:colourlovers_app/widgets/background/functions.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,6 +28,9 @@ class PreferencesViewController extends Cubit<PreferencesViewState> {
         _preferencesDataController.stream.listen((_) {
       _updateState();
     });
+    emit(state.copyWith(
+        backgroundBlobs:
+            generateBackgroundBlobs(getRandomPalette()).toIList()));
     _updateState();
   }
 
@@ -37,7 +42,7 @@ class PreferencesViewController extends Cubit<PreferencesViewState> {
 
   void _updateState() {
     emit(
-      PreferencesViewState(
+      state.copyWith(
         themeMode: _preferencesDataController.state.themeMode,
         flexScheme: _preferencesDataController.state.flexScheme,
       ),

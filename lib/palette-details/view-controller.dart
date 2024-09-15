@@ -12,6 +12,7 @@ import 'package:colourlovers_app/related-patterns/view.dart';
 import 'package:colourlovers_app/share-palette/view.dart';
 import 'package:colourlovers_app/user-details/view.dart';
 import 'package:colourlovers_app/user-items.dart';
+import 'package:colourlovers_app/widgets/background/functions.dart';
 import 'package:colourlovers_app/widgets/item-tiles/color-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/functions.dart';
 import 'package:colourlovers_app/widgets/item-tiles/palette-tile/view-state.dart';
@@ -43,6 +44,9 @@ class PaletteDetailsViewController extends Cubit<PaletteDetailsViewState> {
     this._palette,
     this._client,
   ) : super(defaultPaletteDetailsViewState) {
+    emit(state.copyWith(
+        backgroundBlobs:
+            generateBackgroundBlobs(getRandomPalette()).toIList()));
     _init();
   }
 
@@ -80,7 +84,7 @@ class PaletteDetailsViewController extends Cubit<PaletteDetailsViewState> {
 
   void _updateState() {
     emit(
-      PaletteDetailsViewState(
+      state.copyWith(
         isLoading: false,
         id: _palette.id.formatted(),
         title: _palette.title ?? '',

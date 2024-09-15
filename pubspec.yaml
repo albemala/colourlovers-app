@@ -30,7 +30,7 @@ dependencies:
   lucide_icons: ^0.257.0
   flextras: ^1.0.0
   another_xlider: ^3.0.2
-  aurora: ^1.0.0 # TODO remove if not needed
+  aurora: ^1.0.0
 
   hexcolor: ^3.0.1
 
@@ -58,7 +58,7 @@ flutter:
   uses-material-design: true
 
   assets:
-    - assets/app-icon
+    - assets/app-icon/
     - assets/fonts/Archivo/
     - assets/fonts/Archivo_Narrow/
 

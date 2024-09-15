@@ -2,6 +2,7 @@ import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/share-palette/view-controller.dart';
 import 'package:colourlovers_app/share-palette/view-state.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
+import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/items/palette.dart';
 import 'package:colourlovers_app/widgets/text.dart';
 import 'package:flextras/flextras.dart';
@@ -54,87 +55,79 @@ class SharePaletteView extends StatelessWidget {
         context,
         title: 'Share Palette',
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SizedBox(
-              height: 96,
-              child: PaletteView(
-                hexs: state.colors.toList(),
-                widths: state.colorWidths.toList(),
+      body: BackgroundView(
+        blobs: state.backgroundBlobs.toList(),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              SizedBox(
+                height: 96,
+                child: PaletteView(
+                  hexs: state.colors.toList(),
+                  widths: state.colorWidths.toList(),
+                ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-              child: SeparatedColumn(
-                separatorBuilder: () {
-                  return const SizedBox(height: 32);
-                },
-                children: [
-                  SeparatedColumn(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    separatorBuilder: () {
-                      return const SizedBox(height: 16);
-                    },
-                    children: [
-                      const H2TextView('Values'),
-                      SeparatedColumn(
-                        separatorBuilder: () {
-                          return const SizedBox(height: 8);
-                        },
-                        children: state.colors.map((color) {
-                          return SeparatedRow(
-                            separatorBuilder: () {
-                              return const SizedBox(width: 8);
-                            },
-                            children: [
-                              SizedBox(
-                                width: 120,
-                                child: H1TextView('#$color'),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  controller.copyColorToClipboard(
-                                    context,
-                                    color,
-                                  );
-                                },
-                                child: const Text('Copy'),
-                              ),
-                            ],
-                          );
-                        }).toList(),
-                      ),
-                    ],
-                  ),
-                  SeparatedColumn(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    separatorBuilder: () {
-                      return const SizedBox(height: 16);
-                    },
-                    children: [
-                      const H2TextView('Image'),
-                      SeparatedRow(
-                        separatorBuilder: () {
-                          return const SizedBox(width: 8);
-                        },
-                        children: [
-                          Flexible(
-                            child: Image.network(state.imageUrl),
-                          ),
-                          TextButton(
-                            onPressed: controller.shareImage,
-                            child: const Text('Share'),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+                child: SeparatedColumn(
+                  separatorBuilder: () => const SizedBox(height: 32),
+                  children: [
+                    SeparatedColumn(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      separatorBuilder: () => const SizedBox(height: 16),
+                      children: [
+                        const H2TextView('Values'),
+                        SeparatedColumn(
+                          separatorBuilder: () => const SizedBox(height: 8),
+                          children: state.colors.map((color) {
+                            return SeparatedRow(
+                              separatorBuilder: () => const SizedBox(width: 8),
+                              children: [
+                                SizedBox(
+                                  width: 120,
+                                  child: H1TextView('#$color'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    controller.copyColorToClipboard(
+                                      context,
+                                      color,
+                                    );
+                                  },
+                                  child: const Text('Copy'),
+                                ),
+                              ],
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
+                    SeparatedColumn(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      separatorBuilder: () => const SizedBox(height: 16),
+                      children: [
+                        const H2TextView('Image'),
+                        SeparatedRow(
+                          separatorBuilder: () => const SizedBox(width: 8),
+                          children: [
+                            Flexible(
+                              child: Image.network(state.imageUrl),
+                            ),
+                            TextButton(
+                              onPressed: controller.shareImage,
+                              child: const Text('Share'),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

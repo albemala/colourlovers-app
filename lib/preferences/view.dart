@@ -1,6 +1,7 @@
 import 'package:colourlovers_app/preferences/view-controller.dart';
 import 'package:colourlovers_app/preferences/view-state.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
+import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/text.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flextras/flextras.dart';
@@ -49,77 +50,81 @@ class PreferencesView extends StatelessWidget {
         context,
         title: 'Preferences',
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-        child: SeparatedColumn(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          separatorBuilder: () => const SizedBox(height: 32),
-          children: [
-            SeparatedColumn(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              separatorBuilder: () => const SizedBox(height: 8),
-              children: [
-                const H1TextView('App theme'),
-                Column(
-                  children: [
-                    RadioListTile<ThemeMode>(
-                      title: const Text('Dark'),
-                      value: ThemeMode.dark,
-                      groupValue: state.themeMode,
-                      onChanged: (value) {
-                        if (value == null) return;
-                        controller.setThemeMode(value);
-                      },
-                    ),
-                    RadioListTile<ThemeMode>(
-                      title: const Text('Light'),
-                      value: ThemeMode.light,
-                      groupValue: state.themeMode,
-                      onChanged: (value) {
-                        if (value == null) return;
-                        controller.setThemeMode(value);
-                      },
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            SeparatedColumn(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              separatorBuilder: () => const SizedBox(height: 8),
-              children: [
-                const H1TextView('Theme colors'),
-                GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 80,
-                    mainAxisSpacing: 8,
-                    crossAxisSpacing: 8,
-                    childAspectRatio: 1,
+      body: BackgroundView(
+        blobs: state.backgroundBlobs.toList(),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+          child: SeparatedColumn(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            separatorBuilder: () => const SizedBox(height: 32),
+            children: [
+              SeparatedColumn(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                separatorBuilder: () => const SizedBox(height: 8),
+                children: [
+                  const H1TextView('App theme'),
+                  Column(
+                    children: [
+                      RadioListTile<ThemeMode>(
+                        title: const Text('Dark'),
+                        value: ThemeMode.dark,
+                        groupValue: state.themeMode,
+                        onChanged: (value) {
+                          if (value == null) return;
+                          controller.setThemeMode(value);
+                        },
+                      ),
+                      RadioListTile<ThemeMode>(
+                        title: const Text('Light'),
+                        value: ThemeMode.light,
+                        groupValue: state.themeMode,
+                        onChanged: (value) {
+                          if (value == null) return;
+                          controller.setThemeMode(value);
+                        },
+                      ),
+                    ],
                   ),
-                  itemCount: schemes.length,
-                  itemBuilder: (context, index) {
-                    final scheme = schemes[index];
-                    final schemeData = FlexColor.schemesWithCustom[scheme];
-                    if (schemeData == null) return Container();
+                ],
+              ),
+              SeparatedColumn(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                separatorBuilder: () => const SizedBox(height: 8),
+                children: [
+                  const H1TextView('Theme colors'),
+                  GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithMaxCrossAxisExtent(
+                      maxCrossAxisExtent: 80,
+                      mainAxisSpacing: 8,
+                      crossAxisSpacing: 8,
+                      childAspectRatio: 1,
+                    ),
+                    itemCount: schemes.length,
+                    itemBuilder: (context, index) {
+                      final scheme = schemes[index];
+                      final schemeData = FlexColor.schemesWithCustom[scheme];
+                      if (schemeData == null) return Container();
 
-                    final schemeColors = state.themeMode == ThemeMode.dark
-                        ? FlexColorScheme.dark(scheme: scheme)
-                        : FlexColorScheme.light(scheme: scheme);
+                      final schemeColors = state.themeMode == ThemeMode.dark
+                          ? FlexColorScheme.dark(scheme: scheme)
+                          : FlexColorScheme.light(scheme: scheme);
 
-                    return _ThemeTileView(
-                      colors: schemeColors,
-                      isSelected: state.flexScheme == scheme,
-                      onPressed: () {
-                        controller.setFlexScheme(scheme);
-                      },
-                    );
-                  },
-                ),
-              ],
-            ),
-          ],
+                      return _ThemeTileView(
+                        colors: schemeColors,
+                        isSelected: state.flexScheme == scheme,
+                        onPressed: () {
+                          controller.setFlexScheme(scheme);
+                        },
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

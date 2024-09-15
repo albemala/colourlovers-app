@@ -5,11 +5,13 @@ import 'package:colourlovers_app/color-filters/data-controller.dart';
 import 'package:colourlovers_app/color-filters/data-state.dart';
 import 'package:colourlovers_app/color-filters/view-state.dart';
 import 'package:colourlovers_app/filters/defines.dart';
+import 'package:colourlovers_app/widgets/background/functions.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ColorFiltersViewController extends Cubit<ColorFiltersViewState> {
-  final ColorFiltersDataController dataController;
+  final ColorFiltersDataController _dataController;
 
   var _showCriteria = defaultColorFiltersViewState.showCriteria;
   var _sortBy = defaultColorFiltersViewState.sortBy;
@@ -28,21 +30,25 @@ class ColorFiltersViewController extends Cubit<ColorFiltersViewState> {
   }
 
   ColorFiltersViewController(
-    this.dataController,
+    this._dataController,
   ) : super(defaultColorFiltersViewState) {
-    _showCriteria = dataController.showCriteria;
-    _sortBy = dataController.sortBy;
-    _sortOrder = dataController.sortOrder;
-    _hueMin = dataController.hueMin;
-    _hueMax = dataController.hueMax;
-    _brightnessMin = dataController.brightnessMin;
-    _brightnessMax = dataController.brightnessMax;
+    _showCriteria = _dataController.showCriteria;
+    _sortBy = _dataController.sortBy;
+    _sortOrder = _dataController.sortOrder;
+    _hueMin = _dataController.hueMin;
+    _hueMax = _dataController.hueMax;
+    _brightnessMin = _dataController.brightnessMin;
+    _brightnessMax = _dataController.brightnessMax;
     colorNameController.value = TextEditingValue(
-      text: dataController.colorName,
+      text: _dataController.colorName,
     );
     userNameController.value = TextEditingValue(
-      text: dataController.userName,
+      text: _dataController.userName,
     );
+
+    emit(state.copyWith(
+        backgroundBlobs:
+            generateBackgroundBlobs(getRandomPalette()).toIList()));
     _updateState();
   }
 
@@ -106,7 +112,7 @@ class ColorFiltersViewController extends Cubit<ColorFiltersViewState> {
   }
 
   void applyFilters() {
-    dataController
+    _dataController
       ..showCriteria = _showCriteria
       ..sortBy = _sortBy
       ..sortOrder = _sortOrder
@@ -120,7 +126,7 @@ class ColorFiltersViewController extends Cubit<ColorFiltersViewState> {
 
   void _updateState() {
     emit(
-      ColorFiltersViewState(
+      state.copyWith(
         showCriteria: _showCriteria,
         sortBy: _sortBy,
         sortOrder: _sortOrder,

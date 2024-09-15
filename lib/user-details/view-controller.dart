@@ -9,10 +9,12 @@ import 'package:colourlovers_app/user-details/view-state.dart';
 import 'package:colourlovers_app/user-items.dart';
 import 'package:colourlovers_app/user-palettes/view.dart';
 import 'package:colourlovers_app/user-patterns/view.dart';
+import 'package:colourlovers_app/widgets/background/functions.dart';
 import 'package:colourlovers_app/widgets/item-tiles/color-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/functions.dart';
 import 'package:colourlovers_app/widgets/item-tiles/palette-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view-state.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -37,6 +39,9 @@ class UserDetailsViewController extends Cubit<UserDetailsViewState> {
     this._user,
     this._client,
   ) : super(defaultUserDetailsViewState) {
+    emit(state.copyWith(
+        backgroundBlobs:
+            generateBackgroundBlobs(getRandomPalette()).toIList()));
     _init();
   }
 
@@ -45,13 +50,12 @@ class UserDetailsViewController extends Cubit<UserDetailsViewState> {
     _userColors = await fetchUserColorsPreview(_client, userName);
     _userPalettes = await fetchUserPalettesPreview(_client, userName);
     _userPatterns = await fetchUserPatternsPreview(_client, userName);
-
     _updateState();
   }
 
   void _updateState() {
     emit(
-      UserDetailsViewState(
+      state.copyWith(
         isLoading: false,
         userName: _user.userName ?? '',
         numColors: _user.numColors.formatted(),

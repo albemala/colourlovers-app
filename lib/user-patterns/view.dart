@@ -1,8 +1,8 @@
 import 'package:colourlovers_app/user-patterns/view-controller.dart';
+import 'package:colourlovers_app/user-patterns/view-state.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
-import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view-state.dart';
+import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view.dart';
-import 'package:colourlovers_app/widgets/items-list/view-state.dart';
 import 'package:colourlovers_app/widgets/items-list/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,11 +24,10 @@ class UserPatternsViewCreator extends StatelessWidget {
           userName: userName,
         );
       },
-      child: BlocBuilder<UserPatternsViewController,
-          ItemsListViewState<PatternTileViewState>>(
+      child: BlocBuilder<UserPatternsViewController, UserPatternsViewState>(
         builder: (context, state) {
           return UserPatternsView(
-            listViewState: state,
+            state: state,
             controller: context.read<UserPatternsViewController>(),
           );
         },
@@ -38,12 +37,12 @@ class UserPatternsViewCreator extends StatelessWidget {
 }
 
 class UserPatternsView extends StatelessWidget {
-  final ItemsListViewState<PatternTileViewState> listViewState;
+  final UserPatternsViewState state;
   final UserPatternsViewController controller;
 
   const UserPatternsView({
     super.key,
-    required this.listViewState,
+    required this.state,
     required this.controller,
   });
 
@@ -54,17 +53,20 @@ class UserPatternsView extends StatelessWidget {
         context,
         title: 'User patterns',
       ),
-      body: ItemsListView(
-        state: listViewState,
-        itemTileBuilder: (itemViewState) {
-          return PatternTileView(
-            state: itemViewState,
-            onTap: () {
-              controller.showPatternDetails(context, itemViewState);
-            },
-          );
-        },
-        onLoadMorePressed: controller.loadMore,
+      body: BackgroundView(
+        blobs: state.backgroundBlobs.toList(),
+        child: ItemsListView(
+          state: state.itemsList,
+          itemTileBuilder: (itemViewState) {
+            return PatternTileView(
+              state: itemViewState,
+              onTap: () {
+                controller.showPatternDetails(context, itemViewState);
+              },
+            );
+          },
+          onLoadMorePressed: controller.loadMore,
+        ),
       ),
     );
   }

@@ -1,4 +1,5 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
+import 'package:colourlovers_app/widgets/background/defines.dart';
 import 'package:colourlovers_app/widgets/item-tiles/color-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/palette-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view-state.dart';
@@ -93,6 +94,7 @@ class ColorDetailsViewState extends Equatable {
   final IList<ColorTileViewState> relatedColors;
   final IList<PaletteTileViewState> relatedPalettes;
   final IList<PatternTileViewState> relatedPatterns;
+  final IList<BackgroundBlob> backgroundBlobs;
 
   const ColorDetailsViewState({
     required this.isLoading,
@@ -107,6 +109,7 @@ class ColorDetailsViewState extends Equatable {
     required this.relatedColors,
     required this.relatedPalettes,
     required this.relatedPatterns,
+    required this.backgroundBlobs,
   });
 
   @override
@@ -123,6 +126,7 @@ class ColorDetailsViewState extends Equatable {
         relatedColors,
         relatedPalettes,
         relatedPatterns,
+        backgroundBlobs,
       ];
 
   ColorDetailsViewState copyWith({
@@ -138,6 +142,7 @@ class ColorDetailsViewState extends Equatable {
     IList<ColorTileViewState>? relatedColors,
     IList<PaletteTileViewState>? relatedPalettes,
     IList<PatternTileViewState>? relatedPatterns,
+    IList<BackgroundBlob>? backgroundBlobs,
   }) {
     return ColorDetailsViewState(
       isLoading: isLoading ?? this.isLoading,
@@ -152,6 +157,7 @@ class ColorDetailsViewState extends Equatable {
       relatedColors: relatedColors ?? this.relatedColors,
       relatedPalettes: relatedPalettes ?? this.relatedPalettes,
       relatedPatterns: relatedPatterns ?? this.relatedPatterns,
+      backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );
   }
 }
@@ -181,4 +187,5 @@ const defaultColorDetailsViewState = ColorDetailsViewState(
   relatedColors: IList.empty(),
   relatedPalettes: IList.empty(),
   relatedPatterns: IList.empty(),
+  backgroundBlobs: IList.empty(),
 );

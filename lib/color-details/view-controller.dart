@@ -12,11 +12,13 @@ import 'package:colourlovers_app/related-patterns/view.dart';
 import 'package:colourlovers_app/share-color/view.dart';
 import 'package:colourlovers_app/user-details/view.dart';
 import 'package:colourlovers_app/user-items.dart';
+import 'package:colourlovers_app/widgets/background/functions.dart';
 import 'package:colourlovers_app/widgets/item-tiles/color-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/functions.dart';
 import 'package:colourlovers_app/widgets/item-tiles/palette-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/user-tile/view-state.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -42,6 +44,9 @@ class ColorDetailsViewController extends Cubit<ColorDetailsViewState> {
     this._color,
     this._client,
   ) : super(defaultColorDetailsViewState) {
+    emit(state.copyWith(
+        backgroundBlobs:
+            generateBackgroundBlobs(getRandomPalette()).toIList()));
     _init();
   }
 
@@ -79,7 +84,7 @@ class ColorDetailsViewController extends Cubit<ColorDetailsViewState> {
 
   void _updateState() {
     emit(
-      ColorDetailsViewState(
+      state.copyWith(
         isLoading: false,
         title: _color.title ?? '',
         hex: _color.hex ?? '',

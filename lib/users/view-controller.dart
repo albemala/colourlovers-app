@@ -9,6 +9,7 @@ import 'package:colourlovers_app/user-filters/data-controller.dart';
 import 'package:colourlovers_app/user-filters/data-state.dart';
 import 'package:colourlovers_app/user-filters/view.dart';
 import 'package:colourlovers_app/users/view-state.dart';
+import 'package:colourlovers_app/widgets/background/functions.dart';
 import 'package:colourlovers_app/widgets/item-tiles/user-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/items-list/view-state.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -17,7 +18,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UsersViewController extends Cubit<UsersViewState> {
   final ColourloversApiClient _client;
-  final UserFiltersDataController dataController;
+  final UserFiltersDataController _dataController;
 
   late final ItemsPagination<ColourloversLover> _pagination;
 
@@ -32,17 +33,17 @@ class UsersViewController extends Cubit<UsersViewState> {
 
   UsersViewController(
     this._client,
-    this.dataController,
+    this._dataController,
   ) : super(defaultUsersViewState) {
-    _dataControllerSubscription = dataController.stream.listen((state) {
+    _dataControllerSubscription = _dataController.stream.listen((state) {
       _pagination.reset();
       _updateState();
       _pagination.load();
     });
-    _pagination = ItemsPagination<ColourloversLover>((numResults, offset) {
-      final userName = dataController.userName;
 
-      switch (dataController.showCriteria) {
+    _pagination = ItemsPagination<ColourloversLover>((numResults, offset) {
+      final userName = _dataController.userName;
+      switch (_dataController.showCriteria) {
         case ContentShowCriteria.newest:
           return _client.getNewLovers(
             numResults: numResults,
@@ -55,8 +56,8 @@ class UsersViewController extends Cubit<UsersViewState> {
           );
         case ContentShowCriteria.all:
           return _client.getLovers(
-            sortBy: dataController.sortOrder,
-            orderBy: dataController.sortBy,
+            sortBy: _dataController.sortOrder,
+            orderBy: _dataController.sortBy,
             numResults: numResults,
             resultOffset: offset,
           );
@@ -64,6 +65,10 @@ class UsersViewController extends Cubit<UsersViewState> {
     });
     _pagination.addListener(_updateState);
     _pagination.load();
+
+    emit(state.copyWith(
+        backgroundBlobs:
+            generateBackgroundBlobs(getRandomPalette()).toIList()));
   }
 
   @override
@@ -105,11 +110,11 @@ class UsersViewController extends Cubit<UsersViewState> {
 
   void _updateState() {
     emit(
-      UsersViewState(
-        showCriteria: dataController.showCriteria,
-        sortBy: dataController.sortBy,
-        sortOrder: dataController.sortOrder,
-        userName: dataController.userName,
+      state.copyWith(
+        showCriteria: _dataController.showCriteria,
+        sortBy: _dataController.sortBy,
+        sortOrder: _dataController.sortOrder,
+        userName: _dataController.userName,
         itemsList: ItemsListViewState(
           isLoading: _pagination.isLoading,
           items: _pagination.items

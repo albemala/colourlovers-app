@@ -3,7 +3,9 @@ import 'package:colourlovers_app/app/routing.dart';
 import 'package:colourlovers_app/clipboard.dart';
 import 'package:colourlovers_app/share-color/view-state.dart';
 import 'package:colourlovers_app/urls/functions.dart';
+import 'package:colourlovers_app/widgets/background/functions.dart';
 import 'package:colourlovers_app/widgets/snack-bar.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,12 +24,18 @@ class ShareColorViewController extends Cubit<ShareColorViewState> {
   ShareColorViewController(
     this._color,
   ) : super(defaultShareColorViewState) {
+    emit(state.copyWith(
+        backgroundBlobs:
+            generateBackgroundBlobs(getRandomPalette()).toIList()));
     _init();
   }
 
   Future<void> _init() async {
     emit(
-      ShareColorViewState.fromColourloversColor(_color),
+      state.copyWith(
+        hex: _color.hex ?? '',
+        imageUrl: httpToHttps(_color.imageUrl ?? ''),
+      ),
     );
   }
 

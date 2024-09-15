@@ -1,9 +1,9 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/related-colors/view-controller.dart';
+import 'package:colourlovers_app/related-colors/view-state.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
-import 'package:colourlovers_app/widgets/item-tiles/color-tile/view-state.dart';
+import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/item-tiles/color-tile/view.dart';
-import 'package:colourlovers_app/widgets/items-list/view-state.dart';
 import 'package:colourlovers_app/widgets/items-list/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,11 +25,10 @@ class RelatedColorsViewCreator extends StatelessWidget {
           hsv: hsv,
         );
       },
-      child: BlocBuilder<RelatedColorsViewController,
-          ItemsListViewState<ColorTileViewState>>(
+      child: BlocBuilder<RelatedColorsViewController, RelatedColorsViewState>(
         builder: (context, state) {
           return RelatedColorsView(
-            listViewState: state,
+            state: state,
             controller: context.read<RelatedColorsViewController>(),
           );
         },
@@ -39,12 +38,12 @@ class RelatedColorsViewCreator extends StatelessWidget {
 }
 
 class RelatedColorsView extends StatelessWidget {
-  final ItemsListViewState<ColorTileViewState> listViewState;
+  final RelatedColorsViewState state;
   final RelatedColorsViewController controller;
 
   const RelatedColorsView({
     super.key,
-    required this.listViewState,
+    required this.state,
     required this.controller,
   });
 
@@ -55,17 +54,20 @@ class RelatedColorsView extends StatelessWidget {
         context,
         title: 'Related colors',
       ),
-      body: ItemsListView(
-        state: listViewState,
-        itemTileBuilder: (itemViewState) {
-          return ColorTileView(
-            state: itemViewState,
-            onTap: () {
-              controller.showColorDetails(context, itemViewState);
-            },
-          );
-        },
-        onLoadMorePressed: controller.loadMore,
+      body: BackgroundView(
+        blobs: state.backgroundBlobs.toList(),
+        child: ItemsListView(
+          state: state.itemsList,
+          itemTileBuilder: (itemViewState) {
+            return ColorTileView(
+              state: itemViewState,
+              onTap: () {
+                controller.showColorDetails(context, itemViewState);
+              },
+            );
+          },
+          onLoadMorePressed: controller.loadMore,
+        ),
       ),
     );
   }

@@ -2,15 +2,16 @@ import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/app/routing.dart';
 import 'package:colourlovers_app/color-details/view.dart';
 import 'package:colourlovers_app/items-pagination.dart';
+import 'package:colourlovers_app/user-colors/view-state.dart';
 import 'package:colourlovers_app/user-items.dart';
+import 'package:colourlovers_app/widgets/background/functions.dart';
 import 'package:colourlovers_app/widgets/item-tiles/color-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/items-list/view-state.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class UserColorsViewController
-    extends Cubit<ItemsListViewState<ColorTileViewState>> {
+class UserColorsViewController extends Cubit<UserColorsViewState> {
   final String _userName;
   final ColourloversApiClient _client;
   late final ItemsPagination<ColourloversColor> _pagination;
@@ -28,12 +29,16 @@ class UserColorsViewController
   UserColorsViewController(
     this._userName,
     this._client,
-  ) : super(defaultColorsListViewState) {
+  ) : super(defaultUserColorsViewState) {
     _pagination = ItemsPagination<ColourloversColor>((numResults, offset) {
       return fetchUserColors(_client, numResults, offset, _userName);
     });
     _pagination.addListener(_updateState);
     _pagination.load();
+
+    emit(state.copyWith(
+        backgroundBlobs:
+            generateBackgroundBlobs(getRandomPalette()).toIList()));
   }
 
   @override
@@ -50,19 +55,21 @@ class UserColorsViewController
     BuildContext context,
     ColorTileViewState tileViewState,
   ) {
-    final index = state.items.indexOf(tileViewState);
+    final index = state.itemsList.items.indexOf(tileViewState);
     final color = _pagination.items[index];
     openScreen(context, ColorDetailsViewCreator(color: color));
   }
 
   void _updateState() {
     emit(
-      ItemsListViewState(
-        isLoading: _pagination.isLoading,
-        items: _pagination.items //
-            .map(ColorTileViewState.fromColourloverColor)
-            .toIList(),
-        hasMoreItems: _pagination.hasMoreItems,
+      state.copyWith(
+        itemsList: ItemsListViewState(
+          isLoading: _pagination.isLoading,
+          items: _pagination.items //
+              .map(ColorTileViewState.fromColourloverColor)
+              .toIList(),
+          hasMoreItems: _pagination.hasMoreItems,
+        ),
       ),
     );
   }

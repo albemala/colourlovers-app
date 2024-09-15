@@ -1,8 +1,10 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/filters/defines.dart';
+import 'package:colourlovers_app/widgets/background/defines.dart';
 import 'package:colourlovers_app/widgets/item-tiles/user-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/items-list/view-state.dart';
 import 'package:equatable/equatable.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
 @immutable
@@ -15,6 +17,7 @@ class UsersViewState extends Equatable {
 
   // items
   final ItemsListViewState<UserTileViewState> itemsList;
+  final IList<BackgroundBlob> backgroundBlobs;
 
   const UsersViewState({
     required this.showCriteria,
@@ -22,6 +25,7 @@ class UsersViewState extends Equatable {
     required this.sortOrder,
     required this.userName,
     required this.itemsList,
+    required this.backgroundBlobs,
   });
 
   @override
@@ -31,6 +35,7 @@ class UsersViewState extends Equatable {
         sortOrder,
         userName,
         itemsList,
+        backgroundBlobs,
       ];
 
   UsersViewState copyWith({
@@ -39,6 +44,7 @@ class UsersViewState extends Equatable {
     ColourloversRequestSortBy? sortOrder,
     String? userName,
     ItemsListViewState<UserTileViewState>? itemsList,
+    IList<BackgroundBlob>? backgroundBlobs,
   }) {
     return UsersViewState(
       showCriteria: showCriteria ?? this.showCriteria,
@@ -46,6 +52,7 @@ class UsersViewState extends Equatable {
       sortOrder: sortOrder ?? this.sortOrder,
       userName: userName ?? this.userName,
       itemsList: itemsList ?? this.itemsList,
+      backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );
   }
 }
@@ -56,4 +63,5 @@ const defaultUsersViewState = UsersViewState(
   sortOrder: ColourloversRequestSortBy.DESC,
   userName: '',
   itemsList: defaultUsersListViewState,
+  backgroundBlobs: IList.empty(),
 );

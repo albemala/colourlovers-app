@@ -45,9 +45,7 @@ class TestView extends StatelessWidget {
       body: Center(
         child: SeparatedColumn(
           mainAxisAlignment: MainAxisAlignment.center,
-          separatorBuilder: () {
-            return const SizedBox(height: 8);
-          },
+          separatorBuilder: () => const SizedBox(height: 8),
           children: [
             FilledButton(
               onPressed: () {

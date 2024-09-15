@@ -5,6 +5,8 @@ import 'package:colourlovers_app/feedback.dart';
 import 'package:colourlovers_app/share.dart';
 import 'package:colourlovers_app/urls/defines.dart';
 import 'package:colourlovers_app/urls/functions.dart';
+import 'package:colourlovers_app/widgets/background/functions.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:in_app_review/in_app_review.dart';
@@ -15,6 +17,9 @@ class AboutViewController extends Cubit<AboutViewState> {
   }
 
   AboutViewController() : super(defaultAboutViewState) {
+    emit(state.copyWith(
+        backgroundBlobs:
+            generateBackgroundBlobs(getRandomPalette()).toIList()));
     _init();
   }
 

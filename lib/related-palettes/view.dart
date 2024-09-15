@@ -1,8 +1,8 @@
 import 'package:colourlovers_app/related-palettes/view-controller.dart';
+import 'package:colourlovers_app/related-palettes/view-state.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
-import 'package:colourlovers_app/widgets/item-tiles/palette-tile/view-state.dart';
+import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/item-tiles/palette-tile/view.dart';
-import 'package:colourlovers_app/widgets/items-list/view-state.dart';
 import 'package:colourlovers_app/widgets/items-list/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,11 +24,11 @@ class RelatedPalettesViewCreator extends StatelessWidget {
           hex: hex,
         );
       },
-      child: BlocBuilder<RelatedPalettesViewController,
-          ItemsListViewState<PaletteTileViewState>>(
+      child:
+          BlocBuilder<RelatedPalettesViewController, RelatedPalettesViewState>(
         builder: (context, state) {
           return RelatedPalettesView(
-            listViewState: state,
+            state: state,
             controller: context.read<RelatedPalettesViewController>(),
           );
         },
@@ -38,12 +38,12 @@ class RelatedPalettesViewCreator extends StatelessWidget {
 }
 
 class RelatedPalettesView extends StatelessWidget {
-  final ItemsListViewState<PaletteTileViewState> listViewState;
+  final RelatedPalettesViewState state;
   final RelatedPalettesViewController controller;
 
   const RelatedPalettesView({
     super.key,
-    required this.listViewState,
+    required this.state,
     required this.controller,
   });
 
@@ -54,17 +54,20 @@ class RelatedPalettesView extends StatelessWidget {
         context,
         title: 'Related palettes',
       ),
-      body: ItemsListView(
-        state: listViewState,
-        itemTileBuilder: (itemViewState) {
-          return PaletteTileView(
-            state: itemViewState,
-            onTap: () {
-              controller.showPaletteDetails(context, itemViewState);
-            },
-          );
-        },
-        onLoadMorePressed: controller.loadMore,
+      body: BackgroundView(
+        blobs: state.backgroundBlobs.toList(),
+        child: ItemsListView(
+          state: state.itemsList,
+          itemTileBuilder: (itemViewState) {
+            return PaletteTileView(
+              state: itemViewState,
+              onTap: () {
+                controller.showPaletteDetails(context, itemViewState);
+              },
+            );
+          },
+          onLoadMorePressed: controller.loadMore,
+        ),
       ),
     );
   }

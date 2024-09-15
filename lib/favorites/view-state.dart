@@ -4,39 +4,27 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
 @immutable
-class ShareColorViewState extends Equatable {
-  final String hex;
-  final String imageUrl;
+class FavoritesViewState extends Equatable {
   final IList<BackgroundBlob> backgroundBlobs;
 
-  const ShareColorViewState({
-    required this.hex,
-    required this.imageUrl,
+  const FavoritesViewState({
     required this.backgroundBlobs,
   });
 
   @override
-  List<Object?> get props => [
-        hex,
-        imageUrl,
+  List<Object> get props => [
         backgroundBlobs,
       ];
 
-  ShareColorViewState copyWith({
-    String? hex,
-    String? imageUrl,
+  FavoritesViewState copyWith({
     IList<BackgroundBlob>? backgroundBlobs,
   }) {
-    return ShareColorViewState(
-      hex: hex ?? this.hex,
-      imageUrl: imageUrl ?? this.imageUrl,
+    return FavoritesViewState(
       backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );
   }
 }
 
-const defaultShareColorViewState = ShareColorViewState(
-  hex: '',
-  imageUrl: '',
+const defaultFavoritesViewState = FavoritesViewState(
   backgroundBlobs: IList.empty(),
 );

@@ -44,25 +44,11 @@ class AppContentView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // TODO keep or remove
-      // appBar: AppTopBarView(
-      //   context,
-      //   title: getRouteTitle(route),
-      //   actions: const [
-      //     ThemeModeToggleButton(),
-      //     // TODO add padding to the left
-      //   ],
-      // ),
-      // TODO
-      // body: BackgroundWidget(
-      //   colors: defaultBackgroundColors,
-      //   child: _getBody(route),
-      // ),
       body: IndexedStack(
         index: state.currentRoute.index,
         children: const [
           NavigatorView(child: ExploreViewCreator()),
-          NavigatorView(child: FavoritesView()),
+          NavigatorView(child: FavoritesViewCreator()),
           NavigatorView(child: PreferencesViewCreator()),
           NavigatorView(child: AboutViewCreator()),
           if (kDebugMode) NavigatorView(child: TestViewCreator()),

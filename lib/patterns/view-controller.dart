@@ -9,6 +9,7 @@ import 'package:colourlovers_app/pattern-filters/data-controller.dart';
 import 'package:colourlovers_app/pattern-filters/data-state.dart';
 import 'package:colourlovers_app/pattern-filters/view.dart';
 import 'package:colourlovers_app/patterns/view-state.dart';
+import 'package:colourlovers_app/widgets/background/functions.dart';
 import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/items-list/view-state.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -17,7 +18,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PatternsViewController extends Cubit<PatternsViewState> {
   final ColourloversApiClient _client;
-  final PatternFiltersDataController dataController;
+  final PatternFiltersDataController _dataController;
 
   late final ItemsPagination<ColourloversPattern> _pagination;
 
@@ -32,24 +33,25 @@ class PatternsViewController extends Cubit<PatternsViewState> {
 
   PatternsViewController(
     this._client,
-    this.dataController,
+    this._dataController,
   ) : super(defaultPatternsViewState) {
-    _dataControllerSubscription = dataController.stream.listen((state) {
+    _dataControllerSubscription = _dataController.stream.listen((state) {
       _pagination.reset();
       _updateState();
       _pagination.load();
     });
-    _pagination = ItemsPagination<ColourloversPattern>((numResults, offset) {
-      final lover = dataController.userName;
-      final hueRanges = dataController.colorFilter == ColorFilter.hueRanges
-          ? dataController.hueRanges.toList()
-          : <ColourloversRequestHueRange>[];
-      final hex = dataController.colorFilter == ColorFilter.hex
-          ? [dataController.hex]
-          : <String>[];
-      final keywords = dataController.patternName;
 
-      switch (dataController.showCriteria) {
+    _pagination = ItemsPagination<ColourloversPattern>((numResults, offset) {
+      final lover = _dataController.userName;
+      final hueRanges = _dataController.colorFilter == ColorFilter.hueRanges
+          ? _dataController.hueRanges.toList()
+          : <ColourloversRequestHueRange>[];
+      final hex = _dataController.colorFilter == ColorFilter.hex
+          ? [_dataController.hex]
+          : <String>[];
+      final keywords = _dataController.patternName;
+
+      switch (_dataController.showCriteria) {
         case ContentShowCriteria.newest:
           return _client.getNewPatterns(
             lover: lover,
@@ -74,8 +76,8 @@ class PatternsViewController extends Cubit<PatternsViewState> {
             hueRanges: hueRanges,
             hex: hex,
             keywords: keywords,
-            sortBy: dataController.sortOrder,
-            orderBy: dataController.sortBy,
+            sortBy: _dataController.sortOrder,
+            orderBy: _dataController.sortBy,
             numResults: numResults,
             resultOffset: offset,
           );
@@ -83,6 +85,10 @@ class PatternsViewController extends Cubit<PatternsViewState> {
     });
     _pagination.addListener(_updateState);
     _pagination.load();
+
+    emit(state.copyWith(
+        backgroundBlobs:
+            generateBackgroundBlobs(getRandomPalette()).toIList()));
   }
 
   @override
@@ -132,15 +138,15 @@ class PatternsViewController extends Cubit<PatternsViewState> {
 
   void _updateState() {
     emit(
-      PatternsViewState(
-        showCriteria: dataController.showCriteria,
-        sortBy: dataController.sortBy,
-        sortOrder: dataController.sortOrder,
-        colorFilter: dataController.colorFilter,
-        hueRanges: dataController.hueRanges,
-        hex: dataController.hex,
-        patternName: dataController.patternName,
-        userName: dataController.userName,
+      state.copyWith(
+        showCriteria: _dataController.showCriteria,
+        sortBy: _dataController.sortBy,
+        sortOrder: _dataController.sortOrder,
+        colorFilter: _dataController.colorFilter,
+        hueRanges: _dataController.hueRanges,
+        hex: _dataController.hex,
+        patternName: _dataController.patternName,
+        userName: _dataController.userName,
         itemsList: ItemsListViewState(
           isLoading: _pagination.isLoading,
           items: _pagination.items

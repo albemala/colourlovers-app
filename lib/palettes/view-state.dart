@@ -1,5 +1,6 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/filters/defines.dart';
+import 'package:colourlovers_app/widgets/background/defines.dart';
 import 'package:colourlovers_app/widgets/item-tiles/palette-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/items-list/view-state.dart';
 import 'package:equatable/equatable.dart';
@@ -20,6 +21,7 @@ class PalettesViewState extends Equatable {
 
   // items
   final ItemsListViewState<PaletteTileViewState> itemsList;
+  final IList<BackgroundBlob> backgroundBlobs;
 
   const PalettesViewState({
     required this.showCriteria,
@@ -31,6 +33,7 @@ class PalettesViewState extends Equatable {
     required this.paletteName,
     required this.userName,
     required this.itemsList,
+    required this.backgroundBlobs,
   });
 
   @override
@@ -44,6 +47,7 @@ class PalettesViewState extends Equatable {
         paletteName,
         userName,
         itemsList,
+        backgroundBlobs,
       ];
 
   PalettesViewState copyWith({
@@ -56,6 +60,7 @@ class PalettesViewState extends Equatable {
     String? paletteName,
     String? userName,
     ItemsListViewState<PaletteTileViewState>? itemsList,
+    IList<BackgroundBlob>? backgroundBlobs,
   }) {
     return PalettesViewState(
       showCriteria: showCriteria ?? this.showCriteria,
@@ -67,6 +72,7 @@ class PalettesViewState extends Equatable {
       paletteName: paletteName ?? this.paletteName,
       userName: userName ?? this.userName,
       itemsList: itemsList ?? this.itemsList,
+      backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );
   }
 }
@@ -81,4 +87,5 @@ const defaultPalettesViewState = PalettesViewState(
   paletteName: '',
   userName: '',
   itemsList: defaultPalettesListViewState,
+  backgroundBlobs: IList.empty(),
 );

@@ -1,5 +1,6 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/filters/defines.dart';
+import 'package:colourlovers_app/widgets/background/defines.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ class PatternFiltersViewState extends Equatable {
   final ColourloversRequestSortBy sortOrder;
   final ColorFilter colorFilter;
   final IList<ColourloversRequestHueRange> hueRanges;
+  final IList<BackgroundBlob> backgroundBlobs;
 
   const PatternFiltersViewState({
     required this.showCriteria,
@@ -18,6 +20,7 @@ class PatternFiltersViewState extends Equatable {
     required this.sortOrder,
     required this.colorFilter,
     required this.hueRanges,
+    required this.backgroundBlobs,
   });
 
   @override
@@ -27,6 +30,7 @@ class PatternFiltersViewState extends Equatable {
         sortOrder,
         colorFilter,
         hueRanges,
+        backgroundBlobs,
       ];
 
   PatternFiltersViewState copyWith({
@@ -35,6 +39,7 @@ class PatternFiltersViewState extends Equatable {
     ColourloversRequestSortBy? sortOrder,
     ColorFilter? colorFilter,
     IList<ColourloversRequestHueRange>? hueRanges,
+    IList<BackgroundBlob>? backgroundBlobs,
   }) {
     return PatternFiltersViewState(
       showCriteria: showCriteria ?? this.showCriteria,
@@ -42,6 +47,7 @@ class PatternFiltersViewState extends Equatable {
       sortOrder: sortOrder ?? this.sortOrder,
       colorFilter: colorFilter ?? this.colorFilter,
       hueRanges: hueRanges ?? this.hueRanges,
+      backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );
   }
 }
@@ -52,4 +58,5 @@ const defaultPatternFiltersViewState = PatternFiltersViewState(
   sortOrder: ColourloversRequestSortBy.DESC,
   colorFilter: ColorFilter.none,
   hueRanges: IList.empty(),
+  backgroundBlobs: IList.empty(),
 );

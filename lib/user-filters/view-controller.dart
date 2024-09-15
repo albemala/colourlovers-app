@@ -5,11 +5,13 @@ import 'package:colourlovers_app/filters/defines.dart';
 import 'package:colourlovers_app/user-filters/data-controller.dart';
 import 'package:colourlovers_app/user-filters/data-state.dart';
 import 'package:colourlovers_app/user-filters/view-state.dart';
+import 'package:colourlovers_app/widgets/background/functions.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class UserFiltersViewController extends Cubit<UserFiltersViewState> {
-  final UserFiltersDataController dataController;
+  final UserFiltersDataController _dataController;
 
   var _showCriteria = defaultUserFiltersViewState.showCriteria;
   var _sortBy = defaultUserFiltersViewState.sortBy;
@@ -23,14 +25,18 @@ class UserFiltersViewController extends Cubit<UserFiltersViewState> {
   }
 
   UserFiltersViewController(
-    this.dataController,
+    this._dataController,
   ) : super(defaultUserFiltersViewState) {
-    _showCriteria = dataController.showCriteria;
-    _sortBy = dataController.sortBy;
-    _sortOrder = dataController.sortOrder;
+    _showCriteria = _dataController.showCriteria;
+    _sortBy = _dataController.sortBy;
+    _sortOrder = _dataController.sortOrder;
     userNameController.value = TextEditingValue(
-      text: dataController.userName,
+      text: _dataController.userName,
     );
+
+    emit(state.copyWith(
+        backgroundBlobs:
+            generateBackgroundBlobs(getRandomPalette()).toIList()));
     _updateState();
   }
 
@@ -68,7 +74,7 @@ class UserFiltersViewController extends Cubit<UserFiltersViewState> {
   }
 
   void applyFilters() {
-    dataController
+    _dataController
       ..showCriteria = _showCriteria
       ..sortBy = _sortBy
       ..sortOrder = _sortOrder
@@ -77,7 +83,7 @@ class UserFiltersViewController extends Cubit<UserFiltersViewState> {
 
   void _updateState() {
     emit(
-      UserFiltersViewState(
+      state.copyWith(
         showCriteria: _showCriteria,
         sortBy: _sortBy,
         sortOrder: _sortOrder,

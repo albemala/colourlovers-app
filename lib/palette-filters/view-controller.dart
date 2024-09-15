@@ -6,13 +6,14 @@ import 'package:colourlovers_app/filters/defines.dart';
 import 'package:colourlovers_app/palette-filters/data-controller.dart';
 import 'package:colourlovers_app/palette-filters/data-state.dart';
 import 'package:colourlovers_app/palette-filters/view-state.dart';
+import 'package:colourlovers_app/widgets/background/functions.dart';
 import 'package:colourlovers_app/widgets/snack-bar.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PaletteFiltersViewController extends Cubit<PaletteFiltersViewState> {
-  final PaletteFiltersDataController dataController;
+  final PaletteFiltersDataController _dataController;
 
   var _showCriteria = defaultPaletteFiltersViewState.showCriteria;
   var _sortBy = defaultPaletteFiltersViewState.sortBy;
@@ -30,20 +31,24 @@ class PaletteFiltersViewController extends Cubit<PaletteFiltersViewState> {
   }
 
   PaletteFiltersViewController(
-    this.dataController,
+    this._dataController,
   ) : super(defaultPaletteFiltersViewState) {
-    _showCriteria = dataController.showCriteria;
-    _sortBy = dataController.sortBy;
-    _sortOrder = dataController.sortOrder;
-    _colorFilter = dataController.colorFilter;
-    _hueRanges = dataController.hueRanges;
-    hexController.text = dataController.hex;
+    _showCriteria = _dataController.showCriteria;
+    _sortBy = _dataController.sortBy;
+    _sortOrder = _dataController.sortOrder;
+    _colorFilter = _dataController.colorFilter;
+    _hueRanges = _dataController.hueRanges;
+    hexController.text = _dataController.hex;
     paletteNameController.value = TextEditingValue(
-      text: dataController.paletteName,
+      text: _dataController.paletteName,
     );
     userNameController.value = TextEditingValue(
-      text: dataController.userName,
+      text: _dataController.userName,
     );
+
+    emit(state.copyWith(
+        backgroundBlobs:
+            generateBackgroundBlobs(getRandomPalette()).toIList()));
     _updateState();
   }
 
@@ -124,7 +129,7 @@ class PaletteFiltersViewController extends Cubit<PaletteFiltersViewState> {
   }
 
   void applyFilters() {
-    dataController
+    _dataController
       ..showCriteria = _showCriteria
       ..sortBy = _sortBy
       ..sortOrder = _sortOrder
@@ -137,7 +142,7 @@ class PaletteFiltersViewController extends Cubit<PaletteFiltersViewState> {
 
   void _updateState() {
     emit(
-      PaletteFiltersViewState(
+      state.copyWith(
         showCriteria: _showCriteria,
         sortBy: _sortBy,
         sortOrder: _sortOrder,

@@ -5,6 +5,7 @@ import 'package:colourlovers_app/filters/functions.dart';
 import 'package:colourlovers_app/palette-filters/view-controller.dart';
 import 'package:colourlovers_app/palette-filters/view-state.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
+import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/text.dart';
 import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
@@ -50,53 +51,54 @@ class PaletteFiltersView extends StatelessWidget {
         context,
         title: 'Filter Palettes',
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
+      body: BackgroundView(
+        blobs: state.backgroundBlobs.toList(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(16),
+                child: SeparatedColumn(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  separatorBuilder: () => const SizedBox(height: 32),
+                  children: [
+                    _ShowView(state: state, controller: controller),
+                    if (state.showCriteria == ContentShowCriteria.all)
+                      _SortByView(state: state, controller: controller),
+                    _ColorFilterView(state: state, controller: controller),
+                    if (state.colorFilter == ColorFilter.hueRanges)
+                      _HueRangesView(state: state, controller: controller),
+                    if (state.colorFilter == ColorFilter.hex)
+                      _HexView(state: state, controller: controller),
+                    _PaletteNameView(controller: controller),
+                    _UserNameView(controller: controller),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
               padding: const EdgeInsets.all(16),
-              child: SeparatedColumn(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                separatorBuilder: () {
-                  return const SizedBox(height: 32);
-                },
+              child: SeparatedRow(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                separatorBuilder: () => const SizedBox(width: 16),
                 children: [
-                  _ShowView(state: state, controller: controller),
-                  if (state.showCriteria == ContentShowCriteria.all)
-                    _SortByView(state: state, controller: controller),
-                  _ColorFilterView(state: state, controller: controller),
-                  if (state.colorFilter == ColorFilter.hueRanges)
-                    _HueRangesView(state: state, controller: controller),
-                  if (state.colorFilter == ColorFilter.hex)
-                    _HexView(state: state, controller: controller),
-                  _PaletteNameView(controller: controller),
-                  _UserNameView(controller: controller),
+                  OutlinedButton(
+                    onPressed: controller.resetFilters,
+                    child: const Text('Reset filters'),
+                  ),
+                  FilledButton(
+                    onPressed: () {
+                      controller.applyFilters();
+                      closeCurrentView<void>(context);
+                    },
+                    child: const Text('Apply'),
+                  ),
                 ],
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: SeparatedRow(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              separatorBuilder: () => const SizedBox(width: 16),
-              children: [
-                OutlinedButton(
-                  onPressed: controller.resetFilters,
-                  child: const Text('Reset filters'),
-                ),
-                FilledButton(
-                  onPressed: () {
-                    controller.applyFilters();
-                    closeCurrentView<void>(context);
-                  },
-                  child: const Text('Apply'),
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -115,9 +117,7 @@ class _ShowView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SeparatedColumn(
       crossAxisAlignment: CrossAxisAlignment.start,
-      separatorBuilder: () {
-        return const SizedBox(height: 12);
-      },
+      separatorBuilder: () => const SizedBox(height: 12),
       children: [
         const H1TextView('Show'),
         SeparatedRow(
@@ -154,9 +154,7 @@ class _SortByView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SeparatedColumn(
       crossAxisAlignment: CrossAxisAlignment.start,
-      separatorBuilder: () {
-        return const SizedBox(height: 12);
-      },
+      separatorBuilder: () => const SizedBox(height: 12),
       children: [
         const H1TextView('Sort By'),
         SingleChildScrollView(
@@ -212,9 +210,7 @@ class _ColorFilterView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SeparatedColumn(
       crossAxisAlignment: CrossAxisAlignment.start,
-      separatorBuilder: () {
-        return const SizedBox(height: 12);
-      },
+      separatorBuilder: () => const SizedBox(height: 12),
       children: [
         const H1TextView('Color Filter'),
         SingleChildScrollView(
@@ -365,9 +361,7 @@ class _PaletteNameView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SeparatedColumn(
       crossAxisAlignment: CrossAxisAlignment.start,
-      separatorBuilder: () {
-        return const SizedBox(height: 12);
-      },
+      separatorBuilder: () => const SizedBox(height: 12),
       children: [
         const H1TextView('Palette name'),
         TextField(
@@ -389,9 +383,7 @@ class _UserNameView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SeparatedColumn(
       crossAxisAlignment: CrossAxisAlignment.start,
-      separatorBuilder: () {
-        return const SizedBox(height: 12);
-      },
+      separatorBuilder: () => const SizedBox(height: 12),
       children: [
         const H1TextView('User name'),
         TextField(

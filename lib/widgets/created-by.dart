@@ -18,9 +18,7 @@ class CreatedByView extends StatelessWidget {
   Widget build(BuildContext context) {
     return SeparatedColumn(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      separatorBuilder: () {
-        return const SizedBox(height: 16);
-      },
+      separatorBuilder: () => const SizedBox(height: 16),
       children: [
         const H2TextView('Created by'),
         UserTileView(

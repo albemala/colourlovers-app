@@ -9,6 +9,7 @@ import 'package:colourlovers_app/color-filters/view.dart';
 import 'package:colourlovers_app/colors/view-state.dart';
 import 'package:colourlovers_app/filters/defines.dart';
 import 'package:colourlovers_app/items-pagination.dart';
+import 'package:colourlovers_app/widgets/background/functions.dart';
 import 'package:colourlovers_app/widgets/item-tiles/color-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/items-list/view-state.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -17,7 +18,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ColorsViewController extends Cubit<ColorsViewState> {
   final ColourloversApiClient _client;
-  final ColorFiltersDataController dataController;
+  final ColorFiltersDataController _dataController;
 
   late final ItemsPagination<ColourloversColor> _pagination;
 
@@ -32,47 +33,48 @@ class ColorsViewController extends Cubit<ColorsViewState> {
 
   ColorsViewController(
     this._client,
-    this.dataController,
+    this._dataController,
   ) : super(defaultColorsViewState) {
-    _dataControllerSubscription = dataController.stream.listen((state) {
+    _dataControllerSubscription = _dataController.stream.listen((state) {
       _pagination.reset();
       _updateState();
       _pagination.load();
     });
+
     _pagination = ItemsPagination<ColourloversColor>((numResults, offset) {
-      switch (dataController.showCriteria) {
+      switch (_dataController.showCriteria) {
         case ContentShowCriteria.newest:
           return _client.getNewColors(
-            lover: dataController.userName,
-            hueMin: dataController.hueMin,
-            hueMax: dataController.hueMax,
-            brightnessMin: dataController.brightnessMin,
-            brightnessMax: dataController.brightnessMax,
-            keywords: dataController.colorName,
+            lover: _dataController.userName,
+            hueMin: _dataController.hueMin,
+            hueMax: _dataController.hueMax,
+            brightnessMin: _dataController.brightnessMin,
+            brightnessMax: _dataController.brightnessMax,
+            keywords: _dataController.colorName,
             numResults: numResults,
             resultOffset: offset,
           );
         case ContentShowCriteria.top:
           return _client.getTopColors(
-            lover: dataController.userName,
-            hueMin: dataController.hueMin,
-            hueMax: dataController.hueMax,
-            brightnessMin: dataController.brightnessMin,
-            brightnessMax: dataController.brightnessMax,
-            keywords: dataController.colorName,
+            lover: _dataController.userName,
+            hueMin: _dataController.hueMin,
+            hueMax: _dataController.hueMax,
+            brightnessMin: _dataController.brightnessMin,
+            brightnessMax: _dataController.brightnessMax,
+            keywords: _dataController.colorName,
             numResults: numResults,
             resultOffset: offset,
           );
         case ContentShowCriteria.all:
           return _client.getColors(
-            lover: dataController.userName,
-            hueMin: dataController.hueMin,
-            hueMax: dataController.hueMax,
-            brightnessMin: dataController.brightnessMin,
-            brightnessMax: dataController.brightnessMax,
-            keywords: dataController.colorName,
-            sortBy: dataController.sortOrder,
-            orderBy: dataController.sortBy,
+            lover: _dataController.userName,
+            hueMin: _dataController.hueMin,
+            hueMax: _dataController.hueMax,
+            brightnessMin: _dataController.brightnessMin,
+            brightnessMax: _dataController.brightnessMax,
+            keywords: _dataController.colorName,
+            sortBy: _dataController.sortOrder,
+            orderBy: _dataController.sortBy,
             numResults: numResults,
             resultOffset: offset,
           );
@@ -80,6 +82,10 @@ class ColorsViewController extends Cubit<ColorsViewState> {
     });
     _pagination.addListener(_updateState);
     _pagination.load();
+
+    emit(state.copyWith(
+        backgroundBlobs:
+            generateBackgroundBlobs(getRandomPalette()).toIList()));
   }
 
   @override
@@ -129,16 +135,16 @@ class ColorsViewController extends Cubit<ColorsViewState> {
 
   void _updateState() {
     emit(
-      ColorsViewState(
-        showCriteria: dataController.showCriteria,
-        sortBy: dataController.sortBy,
-        sortOrder: dataController.sortOrder,
-        hueMin: dataController.hueMin,
-        hueMax: dataController.hueMax,
-        brightnessMin: dataController.brightnessMin,
-        brightnessMax: dataController.brightnessMax,
-        colorName: dataController.colorName,
-        userName: dataController.userName,
+      state.copyWith(
+        showCriteria: _dataController.showCriteria,
+        sortBy: _dataController.sortBy,
+        sortOrder: _dataController.sortOrder,
+        hueMin: _dataController.hueMin,
+        hueMax: _dataController.hueMax,
+        brightnessMin: _dataController.brightnessMin,
+        brightnessMax: _dataController.brightnessMax,
+        colorName: _dataController.colorName,
+        userName: _dataController.userName,
         itemsList: ItemsListViewState(
           isLoading: _pagination.isLoading,
           items: _pagination.items //

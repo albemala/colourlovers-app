@@ -17,9 +17,7 @@ class DetailsHeaderView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SeparatedColumn(
-      separatorBuilder: () {
-        return const SizedBox(height: 16);
-      },
+      separatorBuilder: () => const SizedBox(height: 16),
       children: [
         Center(
           child: Text(

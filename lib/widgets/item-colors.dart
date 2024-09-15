@@ -17,15 +17,11 @@ class ItemColorsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SeparatedColumn(
-      separatorBuilder: () {
-        return const SizedBox(height: 16);
-      },
+      separatorBuilder: () => const SizedBox(height: 16),
       children: [
         const H2TextView('Colors'),
         SeparatedColumn(
-          separatorBuilder: () {
-            return const SizedBox(height: 8);
-          },
+          separatorBuilder: () => const SizedBox(height: 8),
           children: colorViewStates.map((state) {
             return ColorTileView(
               state: state,

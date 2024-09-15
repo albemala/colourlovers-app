@@ -1,3 +1,4 @@
+import 'package:colourlovers_app/widgets/background/defines.dart';
 import 'package:colourlovers_app/widgets/item-tiles/color-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/palette-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view-state.dart';
@@ -20,6 +21,7 @@ class UserDetailsViewState extends Equatable {
   final IList<ColorTileViewState> userColors;
   final IList<PaletteTileViewState> userPalettes;
   final IList<PatternTileViewState> userPatterns;
+  final IList<BackgroundBlob> backgroundBlobs;
 
   const UserDetailsViewState({
     required this.isLoading,
@@ -35,6 +37,7 @@ class UserDetailsViewState extends Equatable {
     required this.userColors,
     required this.userPalettes,
     required this.userPatterns,
+    required this.backgroundBlobs,
   });
 
   @override
@@ -52,6 +55,7 @@ class UserDetailsViewState extends Equatable {
         userColors,
         userPalettes,
         userPatterns,
+        backgroundBlobs,
       ];
 
   UserDetailsViewState copyWith({
@@ -68,6 +72,7 @@ class UserDetailsViewState extends Equatable {
     IList<ColorTileViewState>? userColors,
     IList<PaletteTileViewState>? userPalettes,
     IList<PatternTileViewState>? userPatterns,
+    IList<BackgroundBlob>? backgroundBlobs,
   }) {
     return UserDetailsViewState(
       isLoading: isLoading ?? this.isLoading,
@@ -83,6 +88,7 @@ class UserDetailsViewState extends Equatable {
       userColors: userColors ?? this.userColors,
       userPalettes: userPalettes ?? this.userPalettes,
       userPatterns: userPatterns ?? this.userPatterns,
+      backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );
   }
 }
@@ -101,4 +107,5 @@ const defaultUserDetailsViewState = UserDetailsViewState(
   userColors: IList.empty(),
   userPalettes: IList.empty(),
   userPatterns: IList.empty(),
+  backgroundBlobs: IList.empty(),
 );

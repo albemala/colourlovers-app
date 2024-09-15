@@ -4,6 +4,7 @@ import 'package:colourlovers_app/filters/functions.dart';
 import 'package:colourlovers_app/users/view-controller.dart';
 import 'package:colourlovers_app/users/view-state.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
+import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/item-tiles/user-tile/view.dart';
 import 'package:colourlovers_app/widgets/items-list/view.dart';
 import 'package:flextras/flextras.dart';
@@ -49,74 +50,77 @@ class UsersView extends StatelessWidget {
         context,
         title: 'Users',
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: SeparatedRow(
-              separatorBuilder: () => const SizedBox(width: 8),
-              children: [
-                IconButton.outlined(
-                  onPressed: () {
-                    controller.showUserFilters(context);
-                  },
-                  icon: const Icon(
-                    LucideIcons.slidersHorizontal,
-                    size: 18,
-                  ),
-                  tooltip: 'Filters',
-                ),
-                FilterChip(
-                  onSelected: (value) {
-                    controller.showUserFilters(context);
-                  },
-                  label: Text(
-                    getContentShowCriteriaName(state.showCriteria),
-                  ),
-                  tooltip: 'Show',
-                ),
-                if (state.showCriteria == ContentShowCriteria.all)
-                  FilterChip(
-                    onSelected: (value) {
+      body: BackgroundView(
+        blobs: state.backgroundBlobs.toList(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: SeparatedRow(
+                separatorBuilder: () => const SizedBox(width: 8),
+                children: [
+                  IconButton.outlined(
+                    onPressed: () {
                       controller.showUserFilters(context);
                     },
-                    avatar: state.sortOrder == ColourloversRequestSortBy.ASC
-                        ? const Icon(LucideIcons.arrowUp)
-                        : const Icon(LucideIcons.arrowDown),
-                    label: Text(
-                      getColourloversRequestOrderByName(state.sortBy),
+                    icon: const Icon(
+                      LucideIcons.slidersHorizontal,
+                      size: 18,
                     ),
-                    tooltip: 'Sort by',
+                    tooltip: 'Filters',
                   ),
-                if (state.userName.isNotEmpty)
                   FilterChip(
                     onSelected: (value) {
                       controller.showUserFilters(context);
                     },
-                    avatar: const Icon(LucideIcons.userCircle2),
-                    label: Text(state.userName),
-                    tooltip: 'User name',
+                    label: Text(
+                      getContentShowCriteriaName(state.showCriteria),
+                    ),
+                    tooltip: 'Show',
                   ),
-              ],
+                  if (state.showCriteria == ContentShowCriteria.all)
+                    FilterChip(
+                      onSelected: (value) {
+                        controller.showUserFilters(context);
+                      },
+                      avatar: state.sortOrder == ColourloversRequestSortBy.ASC
+                          ? const Icon(LucideIcons.arrowUp)
+                          : const Icon(LucideIcons.arrowDown),
+                      label: Text(
+                        getColourloversRequestOrderByName(state.sortBy),
+                      ),
+                      tooltip: 'Sort by',
+                    ),
+                  if (state.userName.isNotEmpty)
+                    FilterChip(
+                      onSelected: (value) {
+                        controller.showUserFilters(context);
+                      },
+                      avatar: const Icon(LucideIcons.userCircle2),
+                      label: Text(state.userName),
+                      tooltip: 'User name',
+                    ),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: ItemsListView(
-              state: state.itemsList,
-              itemTileBuilder: (itemViewState) {
-                return UserTileView(
-                  state: itemViewState,
-                  onTap: () {
-                    controller.showUserDetails(context, itemViewState);
-                  },
-                );
-              },
-              onLoadMorePressed: controller.loadMore,
+            Expanded(
+              child: ItemsListView(
+                state: state.itemsList,
+                itemTileBuilder: (itemViewState) {
+                  return UserTileView(
+                    state: itemViewState,
+                    onTap: () {
+                      controller.showUserDetails(context, itemViewState);
+                    },
+                  );
+                },
+                onLoadMorePressed: controller.loadMore,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

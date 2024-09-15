@@ -1,6 +1,7 @@
 import 'package:colourlovers_app/explore/view-controller.dart';
+import 'package:colourlovers_app/explore/view-state.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
-import 'package:colourlovers_app/widgets/background.dart';
+import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/items/color.dart';
 import 'package:colourlovers_app/widgets/items/palette.dart';
 import 'package:colourlovers_app/widgets/items/pattern.dart';
@@ -20,10 +21,10 @@ class ExploreViewCreator extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: ExploreViewController.fromContext,
-      child: BlocBuilder<ExploreViewController, void>(
+      child: BlocBuilder<ExploreViewController, ExploreViewState>(
         builder: (context, state) {
           return ExploreView(
-            // state: state,
+            state: state,
             controller: context.read<ExploreViewController>(),
           );
         },
@@ -33,12 +34,12 @@ class ExploreViewCreator extends StatelessWidget {
 }
 
 class ExploreView extends StatelessWidget {
-  // final void state;
+  final ExploreViewState state;
   final ExploreViewController controller;
 
   const ExploreView({
     super.key,
-    // required this.state,
+    required this.state,
     required this.controller,
   });
 
@@ -50,57 +51,50 @@ class ExploreView extends StatelessWidget {
         title: 'Explore',
       ),
       body: BackgroundView(
-        colors: const [
-          Color(0xFFFE4365),
-          Color(0xFFFC9D9A),
-          Color(0xFFF9CDAD),
-          Color(0xFFC8C8A9),
-          Color(0xFF83AF9B),
-        ],
-        child: Center(
-          child: SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
-            child: SeparatedColumn(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              separatorBuilder: () => const SizedBox(height: 8),
-              children: [
-                ExploreTileView(
-                  onTap: () {
-                    controller.showColorsView(context);
-                  },
-                  title: 'Colors',
-                  child: const ColorView(hex: '1693A5'),
+        blobs: state.backgroundBlobs.toList(),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+          child: SeparatedColumn(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            separatorBuilder: () => const SizedBox(height: 8),
+            children: [
+              ExploreTileView(
+                onTap: () {
+                  controller.showColorsView(context);
+                },
+                title: 'Colors',
+                child: const ColorView(hex: '1693A5'),
+              ),
+              ExploreTileView(
+                onTap: () {
+                  controller.showPalettesView(context);
+                },
+                title: 'Palettes',
+                child: const PaletteView(
+                  hexs: ['FE4365', 'FC9D9A', 'F9CDAD', 'C8C8A9', '83AF9B'],
+                  widths: [0.23, 0.07, 0.06, 0.07, 0.57],
                 ),
-                ExploreTileView(
-                  onTap: () {
-                    controller.showPalettesView(context);
-                  },
-                  title: 'Palettes',
-                  child: const PaletteView(
-                    hexs: ['FE4365', 'FC9D9A', 'F9CDAD', 'C8C8A9', '83AF9B'],
-                    widths: [0.23, 0.07, 0.06, 0.07, 0.57],
-                  ),
+              ),
+              ExploreTileView(
+                onTap: () {
+                  controller.showPatternsView(context);
+                },
+                title: 'Patterns',
+                child: const PatternView(
+                  // TODO store locally
+                  imageUrl:
+                      'http://static.colourlovers.com/images/patterns/1101/1101098.png',
                 ),
-                ExploreTileView(
-                  onTap: () {
-                    controller.showPatternsView(context);
-                  },
-                  title: 'Patterns',
-                  child: const PatternView(
-                    // TODO store locally
-                    imageUrl:
-                        'http://static.colourlovers.com/images/patterns/1101/1101098.png',
-                  ),
-                ),
-                ExploreTileView(
-                  onTap: () {
-                    controller.showUsersView(context);
-                  },
-                  title: 'Users',
-                  child: const UserView(),
-                ),
-              ],
-            ),
+              ),
+              ExploreTileView(
+                onTap: () {
+                  controller.showUsersView(context);
+                },
+                title: 'Users',
+                child: const UserView(),
+              ),
+            ],
           ),
         ),
       ),

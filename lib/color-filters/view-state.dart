@@ -1,6 +1,8 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/filters/defines.dart';
+import 'package:colourlovers_app/widgets/background/defines.dart';
 import 'package:equatable/equatable.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
 @immutable
@@ -12,6 +14,7 @@ class ColorFiltersViewState extends Equatable {
   final int hueMax;
   final int brightnessMin;
   final int brightnessMax;
+  final IList<BackgroundBlob> backgroundBlobs;
 
   const ColorFiltersViewState({
     required this.showCriteria,
@@ -21,6 +24,7 @@ class ColorFiltersViewState extends Equatable {
     required this.hueMax,
     required this.brightnessMin,
     required this.brightnessMax,
+    required this.backgroundBlobs,
   });
 
   @override
@@ -32,6 +36,7 @@ class ColorFiltersViewState extends Equatable {
         hueMax,
         brightnessMin,
         brightnessMax,
+        backgroundBlobs,
       ];
 
   ColorFiltersViewState copyWith({
@@ -42,6 +47,7 @@ class ColorFiltersViewState extends Equatable {
     int? hueMax,
     int? brightnessMin,
     int? brightnessMax,
+    IList<BackgroundBlob>? backgroundBlobs,
   }) {
     return ColorFiltersViewState(
       showCriteria: showCriteria ?? this.showCriteria,
@@ -51,6 +57,7 @@ class ColorFiltersViewState extends Equatable {
       hueMax: hueMax ?? this.hueMax,
       brightnessMin: brightnessMin ?? this.brightnessMin,
       brightnessMax: brightnessMax ?? this.brightnessMax,
+      backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );
   }
 }
@@ -63,4 +70,5 @@ const defaultColorFiltersViewState = ColorFiltersViewState(
   hueMax: 359,
   brightnessMin: 0,
   brightnessMax: 99,
+  backgroundBlobs: IList.empty(),
 );

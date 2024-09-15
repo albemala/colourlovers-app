@@ -4,6 +4,7 @@ import 'package:colourlovers_app/filters/functions.dart';
 import 'package:colourlovers_app/palettes/view-controller.dart';
 import 'package:colourlovers_app/palettes/view-state.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
+import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/icon-buttons.dart';
 import 'package:colourlovers_app/widgets/item-tiles/palette-tile/view.dart';
 import 'package:colourlovers_app/widgets/items-list/view.dart';
@@ -58,122 +59,125 @@ class PalettesView extends StatelessWidget {
           ),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: SeparatedRow(
-              separatorBuilder: () => const SizedBox(width: 8),
-              children: [
-                IconButton.outlined(
-                  onPressed: () {
-                    controller.showPaletteFilters(context);
-                  },
-                  icon: const Icon(
-                    LucideIcons.slidersHorizontal,
-                    size: 18,
+      body: BackgroundView(
+        blobs: state.backgroundBlobs.toList(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: SeparatedRow(
+                separatorBuilder: () => const SizedBox(width: 8),
+                children: [
+                  IconButton.outlined(
+                    onPressed: () {
+                      controller.showPaletteFilters(context);
+                    },
+                    icon: const Icon(
+                      LucideIcons.slidersHorizontal,
+                      size: 18,
+                    ),
+                    tooltip: 'Filters',
                   ),
-                  tooltip: 'Filters',
-                ),
-                FilterChip(
-                  onSelected: (value) {
-                    controller.showPaletteFilters(context);
-                  },
-                  label: Text(
-                    getContentShowCriteriaName(state.showCriteria),
-                  ),
-                  tooltip: 'Show',
-                ),
-                if (state.showCriteria == ContentShowCriteria.all)
                   FilterChip(
                     onSelected: (value) {
                       controller.showPaletteFilters(context);
                     },
-                    avatar: state.sortOrder == ColourloversRequestSortBy.ASC
-                        ? const Icon(LucideIcons.arrowUp)
-                        : const Icon(LucideIcons.arrowDown),
                     label: Text(
-                      getColourloversRequestOrderByName(state.sortBy),
+                      getContentShowCriteriaName(state.showCriteria),
                     ),
-                    tooltip: 'Sort by',
+                    tooltip: 'Show',
                   ),
-                if (state.colorFilter == ColorFilter.hueRanges)
-                  FilterChip(
-                    onSelected: (value) {
-                      controller.showPaletteFilters(context);
-                    },
-                    avatar: const Icon(LucideIcons.rainbow),
-                    label: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: state.hueRanges.map((hueRange) {
-                        return Container(
-                          width: 12,
-                          height: 12,
-                          margin: const EdgeInsets.symmetric(horizontal: 2),
-                          decoration: BoxDecoration(
-                            color:
-                                getColourloversRequestHueRangeColor(hueRange),
-                            shape: BoxShape.circle,
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                    tooltip: 'Hue Ranges',
-                  ),
-                if (state.colorFilter == ColorFilter.hex)
-                  FilterChip(
-                    onSelected: (value) {
-                      controller.showPaletteFilters(context);
-                    },
-                    avatar: const Icon(LucideIcons.palette),
-                    label: Container(
-                      width: 24,
-                      height: 12,
-                      decoration: BoxDecoration(
-                        color: Color(int.parse('FF${state.hex}', radix: 16)),
-                        borderRadius: BorderRadius.circular(4),
+                  if (state.showCriteria == ContentShowCriteria.all)
+                    FilterChip(
+                      onSelected: (value) {
+                        controller.showPaletteFilters(context);
+                      },
+                      avatar: state.sortOrder == ColourloversRequestSortBy.ASC
+                          ? const Icon(LucideIcons.arrowUp)
+                          : const Icon(LucideIcons.arrowDown),
+                      label: Text(
+                        getColourloversRequestOrderByName(state.sortBy),
                       ),
+                      tooltip: 'Sort by',
                     ),
-                    tooltip: 'Color Hex',
-                  ),
-                if (state.paletteName.isNotEmpty)
-                  FilterChip(
-                    onSelected: (value) {
-                      controller.showPaletteFilters(context);
-                    },
-                    avatar: const Icon(LucideIcons.tag),
-                    label: Text(state.paletteName),
-                    tooltip: 'Palette name',
-                  ),
-                if (state.userName.isNotEmpty)
-                  FilterChip(
-                    onSelected: (value) {
-                      controller.showPaletteFilters(context);
-                    },
-                    avatar: const Icon(LucideIcons.userCircle2),
-                    label: Text(state.userName),
-                    tooltip: 'User name',
-                  ),
-              ],
+                  if (state.colorFilter == ColorFilter.hueRanges)
+                    FilterChip(
+                      onSelected: (value) {
+                        controller.showPaletteFilters(context);
+                      },
+                      avatar: const Icon(LucideIcons.rainbow),
+                      label: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: state.hueRanges.map((hueRange) {
+                          return Container(
+                            width: 12,
+                            height: 12,
+                            margin: const EdgeInsets.symmetric(horizontal: 2),
+                            decoration: BoxDecoration(
+                              color:
+                                  getColourloversRequestHueRangeColor(hueRange),
+                              shape: BoxShape.circle,
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                      tooltip: 'Hue Ranges',
+                    ),
+                  if (state.colorFilter == ColorFilter.hex)
+                    FilterChip(
+                      onSelected: (value) {
+                        controller.showPaletteFilters(context);
+                      },
+                      avatar: const Icon(LucideIcons.palette),
+                      label: Container(
+                        width: 24,
+                        height: 12,
+                        decoration: BoxDecoration(
+                          color: Color(int.parse('FF${state.hex}', radix: 16)),
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                      ),
+                      tooltip: 'Color Hex',
+                    ),
+                  if (state.paletteName.isNotEmpty)
+                    FilterChip(
+                      onSelected: (value) {
+                        controller.showPaletteFilters(context);
+                      },
+                      avatar: const Icon(LucideIcons.tag),
+                      label: Text(state.paletteName),
+                      tooltip: 'Palette name',
+                    ),
+                  if (state.userName.isNotEmpty)
+                    FilterChip(
+                      onSelected: (value) {
+                        controller.showPaletteFilters(context);
+                      },
+                      avatar: const Icon(LucideIcons.userCircle2),
+                      label: Text(state.userName),
+                      tooltip: 'User name',
+                    ),
+                ],
+              ),
             ),
-          ),
-          Expanded(
-            child: ItemsListView(
-              state: state.itemsList,
-              itemTileBuilder: (itemViewState) {
-                return PaletteTileView(
-                  state: itemViewState,
-                  onTap: () {
-                    controller.showPaletteDetails(context, itemViewState);
-                  },
-                );
-              },
-              onLoadMorePressed: controller.loadMore,
+            Expanded(
+              child: ItemsListView(
+                state: state.itemsList,
+                itemTileBuilder: (itemViewState) {
+                  return PaletteTileView(
+                    state: itemViewState,
+                    onTap: () {
+                      controller.showPaletteDetails(context, itemViewState);
+                    },
+                  );
+                },
+                onLoadMorePressed: controller.loadMore,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
