@@ -32,38 +32,30 @@ class UserTileView extends StatelessWidget {
           Material(
             type: MaterialType.transparency,
             child: InkWell(
-              onTap: () {
-                onTap();
-                // TODO
-                // ref.read(routingProvider.notifier).showScreen(context, UserDetailsView(lover: lover));
-              },
+              onTap: onTap,
             ),
           ),
           Positioned(
             top: 8,
             left: -4,
             // right: 8,
-            child: SkewedContainerView(
-              padding: const EdgeInsets.fromLTRB(8, 4, 12, 4),
-              color: Theme.of(context).colorScheme.inverseSurface,
-              elevation: 4,
-              child: Text(
-                state.userName,
-                // maxLines: 1,
-                // overflow: TextOverflow.fade,
-                // softWrap: false,
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.onInverseSurface,
-                    ),
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 8,
-            left: 8,
-            // right: 8,
             child: Row(
               children: [
+                SkewedContainerView(
+                  padding: const EdgeInsets.fromLTRB(8, 4, 12, 4),
+                  color: Theme.of(context).colorScheme.inverseSurface,
+                  elevation: 4,
+                  child: Text(
+                    state.userName,
+                    // maxLines: 1,
+                    // overflow: TextOverflow.fade,
+                    // softWrap: false,
+                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.onInverseSurface,
+                        ),
+                  ),
+                ),
+                const SizedBox(width: 8),
                 PillView(
                   text: state.numColors.toString(),
                   icon: LucideIcons.square,

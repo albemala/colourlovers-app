@@ -9,16 +9,24 @@ class UserView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ColoredBox(
-      color:
-          Theme.of(context).colorScheme.primaryContainer, // TODO review colors
+      color: Theme.of(context).colorScheme.primaryContainer,
       child: Align(
-        alignment: Alignment.centerRight, // TODO left?
+        alignment: Alignment.centerRight,
         child: Padding(
-          padding: const EdgeInsets.only(right: 8), // TODO review padding
-          child: Icon(
-            LucideIcons.userCircle2,
-            size: 56,
-            color: Theme.of(context).colorScheme.primary,
+          padding: const EdgeInsets.only(right: 8),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+              shape: BoxShape.circle,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Icon(
+                LucideIcons.userCircle2,
+                size: 24,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
           ),
         ),
       ),
