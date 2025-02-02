@@ -1,4 +1,4 @@
-import 'package:colourlovers_app/app/routing.dart';
+import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/test/filters/view.dart';
 import 'package:colourlovers_app/test/item-details/view.dart';
 import 'package:colourlovers_app/test/items/view.dart';

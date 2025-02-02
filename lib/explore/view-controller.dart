@@ -1,8 +1,8 @@
-import 'package:colourlovers_app/app/routing.dart';
 import 'package:colourlovers_app/colors/view.dart';
 import 'package:colourlovers_app/explore/view-state.dart';
 import 'package:colourlovers_app/palettes/view.dart';
 import 'package:colourlovers_app/patterns/view.dart';
+import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/users/view.dart';
 import 'package:colourlovers_app/widgets/background/functions.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';

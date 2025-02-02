@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:colourlovers_api/colourlovers_api.dart';
-import 'package:colourlovers_app/app/routing.dart';
 import 'package:colourlovers_app/filters/defines.dart';
 import 'package:colourlovers_app/items-pagination.dart';
 import 'package:colourlovers_app/palette-details/view.dart';
@@ -9,6 +8,7 @@ import 'package:colourlovers_app/palette-filters/data-controller.dart';
 import 'package:colourlovers_app/palette-filters/data-state.dart';
 import 'package:colourlovers_app/palette-filters/view.dart';
 import 'package:colourlovers_app/palettes/view-state.dart';
+import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/widgets/background/functions.dart';
 import 'package:colourlovers_app/widgets/item-tiles/palette-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/items-list/view-state.dart';
@@ -108,7 +108,7 @@ class PalettesViewController extends Cubit<PalettesViewState> {
     openScreen(
       context,
       const PaletteFiltersViewCreator(),
-      isFullscreenDialog: true,
+      fullscreenDialog: true,
     );
   }
 

@@ -1,6 +1,6 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
-import 'package:colourlovers_app/app/routing.dart';
 import 'package:colourlovers_app/clipboard.dart';
+import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/share-color/view-state.dart';
 import 'package:colourlovers_app/urls/functions.dart';
 import 'package:colourlovers_app/widgets/background/functions.dart';

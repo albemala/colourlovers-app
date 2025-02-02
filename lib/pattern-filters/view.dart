@@ -1,9 +1,9 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
-import 'package:colourlovers_app/app/routing.dart';
 import 'package:colourlovers_app/filters/defines.dart';
 import 'package:colourlovers_app/filters/functions.dart';
 import 'package:colourlovers_app/pattern-filters/view-controller.dart';
 import 'package:colourlovers_app/pattern-filters/view-state.dart';
+import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/text.dart';

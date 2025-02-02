@@ -1,8 +1,8 @@
 import 'package:colourlovers_app/app-content/view.dart';
 import 'package:colourlovers_app/app/defines.dart';
-import 'package:colourlovers_app/app/theme.dart';
 import 'package:colourlovers_app/app/view-controller.dart';
 import 'package:colourlovers_app/app/view-state.dart';
+import 'package:colourlovers_app/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

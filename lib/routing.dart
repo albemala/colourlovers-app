@@ -21,27 +21,27 @@ Future<ReturnType?> openDialog<ReturnType>(
   );
 }
 
-void openBottomSheet(
+Future<ReturnType?> openBottomSheet<ReturnType>(
   BuildContext context,
   Widget bottomSheet,
-) {
-  if (!context.mounted) return;
-  showModalBottomSheet<void>(
+) async {
+  if (!context.mounted) return null;
+  return showModalBottomSheet<ReturnType>(
     context: context,
     builder: (_) => bottomSheet,
   );
 }
 
-void openScreen(
+Future<ReturnType?> openScreen<ReturnType>(
   BuildContext context,
   Widget route, {
-  bool isFullscreenDialog = false,
-}) {
-  if (!context.mounted) return;
-  Navigator.of(context).push(
-    MaterialPageRoute<void>(
+  bool fullscreenDialog = false,
+}) async {
+  if (!context.mounted) return null;
+  return Navigator.of(context).push(
+    MaterialPageRoute<ReturnType>(
+      fullscreenDialog: fullscreenDialog,
       builder: (_) => route,
-      fullscreenDialog: isFullscreenDialog,
     ),
   );
 }

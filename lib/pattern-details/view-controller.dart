@@ -1,5 +1,4 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
-import 'package:colourlovers_app/app/routing.dart';
 import 'package:colourlovers_app/color-details/view.dart';
 import 'package:colourlovers_app/colors.dart';
 import 'package:colourlovers_app/formatters.dart';
@@ -9,6 +8,7 @@ import 'package:colourlovers_app/pattern-details/view.dart';
 import 'package:colourlovers_app/related-items.dart';
 import 'package:colourlovers_app/related-palettes/view.dart';
 import 'package:colourlovers_app/related-patterns/view.dart';
+import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/share-pattern/view.dart';
 import 'package:colourlovers_app/user-details/view.dart';
 import 'package:colourlovers_app/user-items.dart';

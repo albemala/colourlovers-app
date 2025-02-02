@@ -10,7 +10,9 @@ const _visualDensity = VisualDensity.compact;
 // const _visualDensity = VisualDensity.comfortablePlatformDensity;
 final _fontFamily = GoogleFonts.archivo().fontFamily;
 
-ThemeData getLightTheme(FlexScheme flexScheme,) {
+ThemeData getLightTheme(
+  FlexScheme flexScheme,
+) {
   return _applyThemeDefaults(
     FlexThemeData.light(
       // tones: FlexTones.soft(Brightness.light),
@@ -30,7 +32,9 @@ ThemeData getLightTheme(FlexScheme flexScheme,) {
   );
 }
 
-ThemeData getDarkTheme(FlexScheme flexScheme,) {
+ThemeData getDarkTheme(
+  FlexScheme flexScheme,
+) {
   return _applyThemeDefaults(
     FlexThemeData.dark(
       // tones: FlexTones.soft(Brightness.dark),

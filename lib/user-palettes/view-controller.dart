@@ -1,7 +1,7 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
-import 'package:colourlovers_app/app/routing.dart';
 import 'package:colourlovers_app/items-pagination.dart';
 import 'package:colourlovers_app/palette-details/view.dart';
+import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/user-items.dart';
 import 'package:colourlovers_app/user-palettes/view-state.dart';
 import 'package:colourlovers_app/widgets/background/functions.dart';
