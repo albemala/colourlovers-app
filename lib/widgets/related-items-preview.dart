@@ -1,5 +1,4 @@
 import 'package:colourlovers_app/widgets/text.dart';
-import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 
 class RelatedItemsPreviewView<ItemType> extends StatelessWidget {
@@ -18,14 +17,14 @@ class RelatedItemsPreviewView<ItemType> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SeparatedColumn(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      separatorBuilder: () => const SizedBox(height: 16),
+      spacing: 16,
       children: [
         H2TextView(title),
-        SeparatedColumn(
+        Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          separatorBuilder: () => const SizedBox(height: 8),
+          spacing: 8,
           children: [
             ...items.map(itemBuilder),
             OutlinedButton(

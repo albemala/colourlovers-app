@@ -4,7 +4,6 @@ import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/text.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
-import 'package:flextras/flextras.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -54,13 +53,13 @@ class PreferencesView extends StatelessWidget {
         blobs: state.backgroundBlobs.toList(),
         child: SingleChildScrollView(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-          child: SeparatedColumn(
+          child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            separatorBuilder: () => const SizedBox(height: 32),
+            spacing: 32,
             children: [
-              SeparatedColumn(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                separatorBuilder: () => const SizedBox(height: 8),
+                spacing: 8,
                 children: [
                   const H1TextView('App theme'),
                   Column(
@@ -87,9 +86,9 @@ class PreferencesView extends StatelessWidget {
                   ),
                 ],
               ),
-              SeparatedColumn(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                separatorBuilder: () => const SizedBox(height: 8),
+                spacing: 8,
                 children: [
                   const H1TextView('Theme colors'),
                   GridView.builder(

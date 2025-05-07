@@ -7,7 +7,6 @@ import 'package:colourlovers_app/widgets/items/palette.dart';
 import 'package:colourlovers_app/widgets/items/pattern.dart';
 import 'package:colourlovers_app/widgets/items/user.dart';
 import 'package:colourlovers_app/widgets/skewed-container.dart';
-import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -54,10 +53,10 @@ class ExploreView extends StatelessWidget {
         blobs: state.backgroundBlobs.toList(),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-          child: SeparatedColumn(
+          child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
-            separatorBuilder: () => const SizedBox(height: 8),
+            spacing: 8,
             children: [
               ExploreTileView(
                 onTap: () {

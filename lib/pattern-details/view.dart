@@ -14,7 +14,6 @@ import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view.dart';
 import 'package:colourlovers_app/widgets/items/pattern.dart';
 import 'package:colourlovers_app/widgets/label-value.dart';
 import 'package:colourlovers_app/widgets/related-items-preview.dart';
-import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -78,8 +77,8 @@ class PatternDetailsView extends StatelessWidget {
             : SingleChildScrollView(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-                child: SeparatedColumn(
-                  separatorBuilder: () => const SizedBox(height: 32),
+                child: Column(
+                  spacing: 32,
                   children: [
                     DetailsHeaderView(
                       title: state.title,

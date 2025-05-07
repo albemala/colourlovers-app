@@ -7,7 +7,6 @@ import 'package:colourlovers_app/user-filters/view-state.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/text.dart';
-import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -59,9 +58,9 @@ class UserFiltersView extends StatelessWidget {
             Expanded(
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(16),
-                child: SeparatedColumn(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  separatorBuilder: () => const SizedBox(height: 32),
+                  spacing: 32,
                   children: [
                     _ShowView(state: state, controller: controller),
                     if (state.showCriteria == ContentShowCriteria.all)
@@ -75,9 +74,9 @@ class UserFiltersView extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.all(16),
-              child: SeparatedRow(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                separatorBuilder: () => const SizedBox(width: 16),
+                spacing: 16,
                 children: [
                   OutlinedButton(
                     onPressed: controller.resetFilters,
@@ -111,13 +110,13 @@ class _ShowView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SeparatedColumn(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      separatorBuilder: () => const SizedBox(height: 12),
+      spacing: 12,
       children: [
         const H1TextView('Show'),
-        SeparatedRow(
-          separatorBuilder: () => const SizedBox(width: 8),
+        Row(
+          spacing: 8,
           children: ContentShowCriteria.values.map(
             (showCriteria) {
               return ChoiceChip(
@@ -148,15 +147,15 @@ class _SortByView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SeparatedColumn(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      separatorBuilder: () => const SizedBox(height: 12),
+      spacing: 12,
       children: [
         const H1TextView('Sort By'),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
-          child: SeparatedRow(
-            separatorBuilder: () => const SizedBox(width: 8),
+          child: Row(
+            spacing: 8,
             children: ColourloversRequestOrderBy.values.map(
               (sortBy) {
                 return ChoiceChip(
@@ -172,8 +171,8 @@ class _SortByView extends StatelessWidget {
             ).toList(),
           ),
         ),
-        SeparatedRow(
-          separatorBuilder: () => const SizedBox(width: 8),
+        Row(
+          spacing: 8,
           children: ColourloversRequestSortBy.values.map(
             (sortOrder) {
               return ChoiceChip(
@@ -202,9 +201,9 @@ class _UserNameView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SeparatedColumn(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      separatorBuilder: () => const SizedBox(height: 12),
+      spacing: 12,
       children: [
         const H1TextView('User name'),
         TextField(

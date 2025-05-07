@@ -6,7 +6,6 @@ import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/items/pattern.dart';
 import 'package:colourlovers_app/widgets/link.dart';
 import 'package:colourlovers_app/widgets/text.dart';
-import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -71,19 +70,19 @@ class SharePatternView extends StatelessWidget {
               Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-                child: SeparatedColumn(
-                  separatorBuilder: () => const SizedBox(height: 32),
+                child: Column(
+                  spacing: 32,
                   children: [
-                    SeparatedColumn(
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
-                      separatorBuilder: () => const SizedBox(height: 16),
+                      spacing: 16,
                       children: [
                         const H2TextView('Values'),
-                        SeparatedColumn(
-                          separatorBuilder: () => const SizedBox(height: 8),
+                        Column(
+                          spacing: 8,
                           children: state.colors.map((color) {
-                            return SeparatedRow(
-                              separatorBuilder: () => const SizedBox(width: 8),
+                            return Row(
+                              spacing: 8,
                               children: [
                                 SizedBox(
                                   width: 120,
@@ -104,13 +103,13 @@ class SharePatternView extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SeparatedColumn(
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
-                      separatorBuilder: () => const SizedBox(height: 16),
+                      spacing: 16,
                       children: [
                         const H2TextView('Image'),
-                        SeparatedRow(
-                          separatorBuilder: () => const SizedBox(width: 8),
+                        Row(
+                          spacing: 8,
                           children: [
                             Flexible(
                               child: Image.network(state.imageUrl),
@@ -123,9 +122,9 @@ class SharePatternView extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SeparatedColumn(
+                    Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
-                      separatorBuilder: () => const SizedBox(height: 16),
+                      spacing: 16,
                       children: [
                         const H2TextView('Template'),
                         LinkView(

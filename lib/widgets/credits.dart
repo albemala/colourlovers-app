@@ -1,7 +1,6 @@
 import 'package:colourlovers_app/urls/defines.dart';
 import 'package:colourlovers_app/urls/functions.dart';
 import 'package:colourlovers_app/widgets/link.dart';
-import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 
 class CreditsView extends StatelessWidget {
@@ -16,9 +15,9 @@ class CreditsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SeparatedColumn(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-      separatorBuilder: () => const SizedBox(height: 16),
+      spacing: 16,
       children: [
         LinkView(
           text: 'This $itemName on COLOURlovers.com',

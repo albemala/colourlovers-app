@@ -7,7 +7,6 @@ import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/item-tiles/user-tile/view.dart';
 import 'package:colourlovers_app/widgets/items-list/view.dart';
-import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons/lucide_icons.dart';
@@ -58,8 +57,8 @@ class UsersView extends StatelessWidget {
             SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: SeparatedRow(
-                separatorBuilder: () => const SizedBox(width: 8),
+              child: Row(
+                spacing: 8,
                 children: [
                   IconButton.outlined(
                     onPressed: () {

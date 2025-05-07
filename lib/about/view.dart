@@ -6,7 +6,6 @@ import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/link.dart';
 import 'package:colourlovers_app/widgets/text.dart';
-import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -54,21 +53,21 @@ class AboutView extends StatelessWidget {
         blobs: state.backgroundBlobs.toList(),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-          child: SeparatedColumn(
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
-            separatorBuilder: () => const SizedBox(height: 32),
+            spacing: 32,
             children: [
-              SeparatedColumn(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                separatorBuilder: () => const SizedBox(height: 0),
+                spacing: 0,
                 children: [
                   const H1TextView(appName),
                   H2TextView(state.appVersion),
                 ],
               ),
-              SeparatedRow(
-                separatorBuilder: () => const SizedBox(width: 16),
+              Row(
+                spacing: 16,
                 children: [
                   Builder(
                     builder: (context) {
@@ -86,9 +85,9 @@ class AboutView extends StatelessWidget {
                   ),
                 ],
               ),
-              SeparatedColumn(
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                separatorBuilder: () => const SizedBox(height: 16),
+                spacing: 16,
                 children: [
                   const H1TextView('Help & Support'),
                   OutlinedButton(

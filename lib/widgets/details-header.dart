@@ -1,5 +1,4 @@
 import 'package:colourlovers_app/widgets/item-button.dart';
-import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 
 class DetailsHeaderView extends StatelessWidget {
@@ -16,8 +15,8 @@ class DetailsHeaderView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SeparatedColumn(
-      separatorBuilder: () => const SizedBox(height: 16),
+    return Column(
+      spacing: 16,
       children: [
         Center(
           child: Text(

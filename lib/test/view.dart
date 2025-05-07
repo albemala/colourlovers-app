@@ -1,6 +1,5 @@
 import 'package:colourlovers_app/test/view-controller.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
-import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -43,9 +42,9 @@ class TestView extends StatelessWidget {
         title: 'Test',
       ),
       body: Center(
-        child: SeparatedColumn(
+        child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          separatorBuilder: () => const SizedBox(height: 8),
+          spacing: 8,
           children: [
             FilledButton(
               onPressed: () {

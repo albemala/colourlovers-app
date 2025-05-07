@@ -10,7 +10,6 @@ import 'package:colourlovers_app/widgets/item-tiles/palette-tile/view.dart';
 import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view.dart';
 import 'package:colourlovers_app/widgets/label-value.dart';
 import 'package:colourlovers_app/widgets/related-items-preview.dart';
-import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -71,8 +70,8 @@ class UserDetailsView extends StatelessWidget {
             : SingleChildScrollView(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-                child: SeparatedColumn(
-                  separatorBuilder: () => const SizedBox(height: 32),
+                child: Column(
+                  spacing: 32,
                   children: [
                     Center(
                       child: Text(
@@ -80,8 +79,8 @@ class UserDetailsView extends StatelessWidget {
                         style: Theme.of(context).textTheme.titleLarge,
                       ),
                     ),
-                    SeparatedColumn(
-                      separatorBuilder: () => const SizedBox(height: 8),
+                    Column(
+                      spacing: 8,
                       children: [
                         Column(
                           children: [

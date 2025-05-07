@@ -1,7 +1,6 @@
 import 'package:colourlovers_app/widgets/item-tiles/color-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/color-tile/view.dart';
 import 'package:colourlovers_app/widgets/text.dart';
-import 'package:flextras/flextras.dart';
 import 'package:flutter/material.dart';
 
 class ItemColorsView extends StatelessWidget {
@@ -16,12 +15,12 @@ class ItemColorsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SeparatedColumn(
-      separatorBuilder: () => const SizedBox(height: 16),
+    return Column(
+      spacing: 16,
       children: [
         const H2TextView('Colors'),
-        SeparatedColumn(
-          separatorBuilder: () => const SizedBox(height: 8),
+        Column(
+          spacing: 8,
           children: colorViewStates.map((state) {
             return ColorTileView(
               state: state,
