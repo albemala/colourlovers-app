@@ -5,11 +5,7 @@ class H1TextView extends StatelessWidget {
   final String text;
   final Color? color;
 
-  const H1TextView(
-    this.text, {
-    super.key,
-    this.color,
-  });
+  const H1TextView(this.text, {super.key, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +23,7 @@ class H1TextView extends StatelessWidget {
 class H2TextView extends StatelessWidget {
   final String text;
 
-  const H2TextView(
-    this.text, {
-    super.key,
-  });
+  const H2TextView(this.text, {super.key});
 
   @override
   Widget build(BuildContext context) {

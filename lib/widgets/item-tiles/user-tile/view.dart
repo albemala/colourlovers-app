@@ -9,11 +9,7 @@ class UserTileView extends StatelessWidget {
   final void Function() onTap;
   final UserTileViewState state;
 
-  const UserTileView({
-    super.key,
-    required this.onTap,
-    required this.state,
-  });
+  const UserTileView({super.key, required this.onTap, required this.state});
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +27,7 @@ class UserTileView extends StatelessWidget {
           ),
           Material(
             type: MaterialType.transparency,
-            child: InkWell(
-              onTap: onTap,
-            ),
+            child: InkWell(onTap: onTap),
           ),
           Positioned(
             top: 8,
@@ -43,7 +37,7 @@ class UserTileView extends StatelessWidget {
               children: [
                 SkewedContainerView(
                   padding: const EdgeInsets.fromLTRB(8, 4, 12, 4),
-                  color: Theme.of(context).colorScheme.inverseSurface,
+                  color: Theme.of(context).colorScheme.onSurface,
                   elevation: 4,
                   child: Text(
                     state.userName,
@@ -51,8 +45,8 @@ class UserTileView extends StatelessWidget {
                     // overflow: TextOverflow.fade,
                     // softWrap: false,
                     style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.onInverseSurface,
-                        ),
+                      color: Theme.of(context).colorScheme.surface,
+                    ),
                   ),
                 ),
                 const SizedBox(width: 8),

@@ -23,11 +23,7 @@ class ColorRgbViewState extends Equatable {
   @override
   List<Object?> get props => [red, green, blue];
 
-  ColorRgbViewState copyWith({
-    double? red,
-    double? green,
-    double? blue,
-  }) {
+  ColorRgbViewState copyWith({double? red, double? green, double? blue}) {
     return ColorRgbViewState(
       red: red ?? this.red,
       green: green ?? this.green,
@@ -59,11 +55,7 @@ class ColorHsvViewState extends Equatable {
   @override
   List<Object?> get props => [hue, saturation, value];
 
-  ColorHsvViewState copyWith({
-    double? hue,
-    double? saturation,
-    double? value,
-  }) {
+  ColorHsvViewState copyWith({double? hue, double? saturation, double? value}) {
     return ColorHsvViewState(
       hue: hue ?? this.hue,
       saturation: saturation ?? this.saturation,
@@ -114,20 +106,20 @@ class ColorDetailsViewState extends Equatable {
 
   @override
   List<Object?> get props => [
-        isLoading,
-        title,
-        hex,
-        rgb,
-        hsv,
-        numViews,
-        numVotes,
-        rank,
-        user,
-        relatedColors,
-        relatedPalettes,
-        relatedPatterns,
-        backgroundBlobs,
-      ];
+    isLoading,
+    title,
+    hex,
+    rgb,
+    hsv,
+    numViews,
+    numVotes,
+    rank,
+    user,
+    relatedColors,
+    relatedPalettes,
+    relatedPatterns,
+    backgroundBlobs,
+  ];
 
   ColorDetailsViewState copyWith({
     bool? isLoading,
@@ -162,11 +154,7 @@ class ColorDetailsViewState extends Equatable {
   }
 }
 
-const defaultColorRgbViewState = ColorRgbViewState(
-  red: 0,
-  green: 0,
-  blue: 0,
-);
+const defaultColorRgbViewState = ColorRgbViewState(red: 0, green: 0, blue: 0);
 
 const defaultColorHsvViewState = ColorHsvViewState(
   hue: 0,

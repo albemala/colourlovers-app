@@ -10,10 +10,6 @@ class AppContentViewController extends Cubit<AppContentViewState> {
   AppContentViewController() : super(defaultAppContentViewState);
 
   void setCurrentRoute(int index) {
-    emit(
-      state.copyWith(
-        currentRoute: MainRoute.values[index],
-      ),
-    );
+    emit(state.copyWith(currentRoute: MainRoute.values[index]));
   }
 }

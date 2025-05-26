@@ -6,11 +6,7 @@ class ItemButtonView extends StatelessWidget {
   final void Function() onTap;
   final Widget child;
 
-  const ItemButtonView({
-    super.key,
-    required this.onTap,
-    required this.child,
-  });
+  const ItemButtonView({super.key, required this.onTap, required this.child});
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +22,7 @@ class ItemButtonView extends StatelessWidget {
           ),
           Material(
             type: MaterialType.transparency,
-            child: InkWell(
-              onTap: onTap,
-            ),
+            child: InkWell(onTap: onTap),
           ),
         ],
       ),

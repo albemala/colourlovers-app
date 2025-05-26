@@ -14,18 +14,18 @@ class TestViewController extends Cubit<void> {
   TestViewController() : super(null);
 
   void showItemsTestView(BuildContext context) {
-    openScreen(context, const ItemsTestView());
+    openScreen<void>(context, const ItemsTestView());
   }
 
   void showItemDetailsTestView(BuildContext context) {
-    openScreen(context, const ItemDetailsTestViewCreator());
+    openScreen<void>(context, const ItemDetailsTestViewCreator());
   }
 
   void showShareItemsTestView(BuildContext context) {
-    openScreen(context, const ShareItemsTestViewCreator());
+    openScreen<void>(context, const ShareItemsTestViewCreator());
   }
 
   void showFiltersTestView(BuildContext context) {
-    openScreen(context, const FiltersTestView());
+    openScreen<void>(context, const FiltersTestView());
   }
 }

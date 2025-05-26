@@ -4,11 +4,7 @@ class LinkView extends StatelessWidget {
   final String text;
   final void Function() onTap;
 
-  const LinkView({
-    super.key,
-    required this.text,
-    required this.onTap,
-  });
+  const LinkView({super.key, required this.text, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +16,10 @@ class LinkView extends StatelessWidget {
         child: Text(
           text,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: Theme.of(context).colorScheme.primary,
-                decoration: TextDecoration.underline,
-                decorationColor: Theme.of(context).colorScheme.primary,
-              ),
+            color: Theme.of(context).colorScheme.primary,
+            decoration: TextDecoration.underline,
+            decorationColor: Theme.of(context).colorScheme.primary,
+          ),
         ),
       ),
     );

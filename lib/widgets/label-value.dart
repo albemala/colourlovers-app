@@ -5,11 +5,7 @@ class LabelValueView extends StatelessWidget {
   final String label;
   final String value;
 
-  const LabelValueView({
-    super.key,
-    required this.label,
-    required this.value,
-  });
+  const LabelValueView({super.key, required this.label, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +36,9 @@ class LabelValueView extends StatelessWidget {
             overflow: TextOverflow.fade,
             softWrap: false,
             style: GoogleFonts.archivo(
-              textStyle: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                    fontWeight: FontWeight.w100,
-                  ),
+              textStyle: Theme.of(
+                context,
+              ).textTheme.headlineMedium?.copyWith(fontWeight: FontWeight.w100),
               // color: Theme.of(context).colorScheme.tertiary, // TODO review
               // color: color, // TODO ?? Theme.of(context).textTheme.bodyLarge?.color,
               // letterSpacing: -0.6,

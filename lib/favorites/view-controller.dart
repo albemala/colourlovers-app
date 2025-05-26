@@ -10,8 +10,10 @@ class FavoritesViewController extends Cubit<FavoritesViewState> {
   }
 
   FavoritesViewController() : super(defaultFavoritesViewState) {
-    emit(state.copyWith(
-        backgroundBlobs:
-            generateBackgroundBlobs(getRandomPalette()).toIList()));
+    emit(
+      state.copyWith(
+        backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
+      ),
+    );
   }
 }

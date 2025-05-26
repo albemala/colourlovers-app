@@ -23,30 +23,17 @@ class UserFiltersDataController extends StoredCubit<UserFiltersDataState> {
   }
 
   ContentShowCriteria get showCriteria => state.showCriteria;
-  set showCriteria(ContentShowCriteria value) => emit(
-        state.copyWith(
-          showCriteria: value,
-        ),
-      );
+  set showCriteria(ContentShowCriteria value) =>
+      emit(state.copyWith(showCriteria: value));
 
   ColourloversRequestOrderBy get sortBy => state.sortBy;
-  set sortBy(ColourloversRequestOrderBy value) => emit(
-        state.copyWith(
-          sortBy: value,
-        ),
-      );
+  set sortBy(ColourloversRequestOrderBy value) =>
+      emit(state.copyWith(sortBy: value));
 
   ColourloversRequestSortBy get sortOrder => state.sortOrder;
-  set sortOrder(ColourloversRequestSortBy value) => emit(
-        state.copyWith(
-          sortOrder: value,
-        ),
-      );
+  set sortOrder(ColourloversRequestSortBy value) =>
+      emit(state.copyWith(sortOrder: value));
 
   String get userName => state.userName;
-  set userName(String value) => emit(
-        state.copyWith(
-          userName: value,
-        ),
-      );
+  set userName(String value) => emit(state.copyWith(userName: value));
 }

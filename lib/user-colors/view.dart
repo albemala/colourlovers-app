@@ -10,10 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class UserColorsViewCreator extends StatelessWidget {
   final String userName;
 
-  const UserColorsViewCreator({
-    super.key,
-    required this.userName,
-  });
+  const UserColorsViewCreator({super.key, required this.userName});
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +46,7 @@ class UserColorsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarView(
-        context,
-        title: 'User colors',
-      ),
+      appBar: AppBarView(context, title: 'User colors'),
       body: BackgroundView(
         blobs: state.backgroundBlobs.toList(),
         child: ItemsListView(

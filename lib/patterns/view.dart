@@ -13,9 +13,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 class PatternsViewCreator extends StatelessWidget {
-  const PatternsViewCreator({
-    super.key,
-  });
+  const PatternsViewCreator({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -73,19 +71,14 @@ class PatternsView extends StatelessWidget {
                     onPressed: () {
                       controller.showPatternFilters(context);
                     },
-                    icon: const Icon(
-                      LucideIcons.slidersHorizontal,
-                      size: 18,
-                    ),
+                    icon: const Icon(LucideIcons.slidersHorizontal, size: 18),
                     tooltip: 'Filters',
                   ),
                   FilterChip(
                     onSelected: (value) {
                       controller.showPatternFilters(context);
                     },
-                    label: Text(
-                      getContentShowCriteriaName(state.showCriteria),
-                    ),
+                    label: Text(getContentShowCriteriaName(state.showCriteria)),
                     tooltip: 'Show',
                   ),
                   if (state.showCriteria == ContentShowCriteria.all)
@@ -93,9 +86,10 @@ class PatternsView extends StatelessWidget {
                       onSelected: (value) {
                         controller.showPatternFilters(context);
                       },
-                      avatar: state.sortOrder == ColourloversRequestSortBy.ASC
-                          ? const Icon(LucideIcons.arrowUp)
-                          : const Icon(LucideIcons.arrowDown),
+                      avatar:
+                          state.sortOrder == ColourloversRequestSortBy.ASC
+                              ? const Icon(LucideIcons.arrowUp)
+                              : const Icon(LucideIcons.arrowDown),
                       label: Text(
                         getColourloversRequestOrderByName(state.sortBy),
                       ),
@@ -109,18 +103,22 @@ class PatternsView extends StatelessWidget {
                       avatar: const Icon(LucideIcons.rainbow),
                       label: Row(
                         mainAxisSize: MainAxisSize.min,
-                        children: state.hueRanges.map((hueRange) {
-                          return Container(
-                            width: 12,
-                            height: 12,
-                            margin: const EdgeInsets.symmetric(horizontal: 2),
-                            decoration: BoxDecoration(
-                              color:
-                                  getColourloversRequestHueRangeColor(hueRange),
-                              shape: BoxShape.circle,
-                            ),
-                          );
-                        }).toList(),
+                        children:
+                            state.hueRanges.map((hueRange) {
+                              return Container(
+                                width: 12,
+                                height: 12,
+                                margin: const EdgeInsets.symmetric(
+                                  horizontal: 2,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: getColourloversRequestHueRangeColor(
+                                    hueRange,
+                                  ),
+                                  shape: BoxShape.circle,
+                                ),
+                              );
+                            }).toList(),
                       ),
                       tooltip: 'Hue Ranges',
                     ),

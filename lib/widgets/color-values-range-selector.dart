@@ -35,10 +35,7 @@ class ColorValueRangeSelectorView extends StatelessWidget {
         onChanged(lowerValue as double, upperValue as double);
       },
       handlerWidth: 24,
-      handler: buildFlutterSliderHandler(
-        context,
-        color: getColor(lowerValue),
-      ),
+      handler: buildFlutterSliderHandler(context, color: getColor(lowerValue)),
       rightHandler: buildFlutterSliderHandler(
         context,
         color: getColor(upperValue),
@@ -64,7 +61,7 @@ FlutterSliderHandler buildFlutterSliderHandler(
       color: color,
       shape: BoxShape.circle,
       border: Border.all(
-        color: Theme.of(context).colorScheme.background,
+        color: Theme.of(context).colorScheme.surface,
         width: 4,
       ),
     ),
@@ -78,7 +75,7 @@ FlutterSliderTrackBar buildFlutterSliderTrackBar(
 }) {
   final colorScheme = Theme.of(context).colorScheme;
   final borderRadius = BorderRadius.circular(6);
-  final border = Border.all(color: colorScheme.onBackground);
+  final border = Border.all(color: colorScheme.onSurface);
   return FlutterSliderTrackBar(
     activeTrackBarHeight: 12,
     activeTrackBar: BoxDecoration(
@@ -88,7 +85,7 @@ FlutterSliderTrackBar buildFlutterSliderTrackBar(
     ),
     inactiveTrackBarHeight: 12,
     inactiveTrackBar: BoxDecoration(
-      color: colorScheme.background,
+      color: colorScheme.surface,
       border: border,
       borderRadius: borderRadius,
     ),
@@ -100,7 +97,7 @@ FlutterSliderTooltip buildFlutterSliderTooltip(BuildContext context) {
     textStyle: Theme.of(context).textTheme.bodyMedium,
     boxStyle: FlutterSliderTooltipBox(
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surfaceVariant,
+        color: Theme.of(context).colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(32),
       ),
     ),

@@ -31,10 +31,8 @@ class UsersViewController extends Cubit<UsersViewState> {
     );
   }
 
-  UsersViewController(
-    this._client,
-    this._dataController,
-  ) : super(defaultUsersViewState) {
+  UsersViewController(this._client, this._dataController)
+    : super(defaultUsersViewState) {
     _dataControllerSubscription = _dataController.stream.listen((state) {
       _pagination.reset();
       _updateState();
@@ -63,12 +61,15 @@ class UsersViewController extends Cubit<UsersViewState> {
           );
       }
     });
-    _pagination.addListener(_updateState);
-    _pagination.load();
+    _pagination
+      ..addListener(_updateState)
+      ..load();
 
-    emit(state.copyWith(
-        backgroundBlobs:
-            generateBackgroundBlobs(getRandomPalette()).toIList()));
+    emit(
+      state.copyWith(
+        backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
+      ),
+    );
   }
 
   @override
@@ -82,30 +83,22 @@ class UsersViewController extends Cubit<UsersViewState> {
     await _pagination.loadMore();
   }
 
-  void showUserFilters(
-    BuildContext context,
-  ) {
-    openScreen(
+  void showUserFilters(BuildContext context) {
+    openScreen<void>(
       context,
       const UserFiltersViewCreator(),
       fullscreenDialog: true,
     );
   }
 
-  void showUserDetails(
-    BuildContext context,
-    UserTileViewState tileViewState,
-  ) {
+  void showUserDetails(BuildContext context, UserTileViewState tileViewState) {
     final index = state.itemsList.items.indexOf(tileViewState);
     final user = _pagination.items[index];
     _showUserDetails(context, user);
   }
 
-  void _showUserDetails(
-    BuildContext context,
-    ColourloversLover user,
-  ) {
-    openScreen(context, UserDetailsViewCreator(user: user));
+  void _showUserDetails(BuildContext context, ColourloversLover user) {
+    openScreen<void>(context, UserDetailsViewCreator(user: user));
   }
 
   void _updateState() {
@@ -117,9 +110,10 @@ class UsersViewController extends Cubit<UsersViewState> {
         userName: _dataController.userName,
         itemsList: ItemsListViewState(
           isLoading: _pagination.isLoading,
-          items: _pagination.items
-              .map(UserTileViewState.fromColourloverUser)
-              .toIList(),
+          items:
+              _pagination.items
+                  .map(UserTileViewState.fromColourloverUser)
+                  .toIList(),
           hasMoreItems: _pagination.hasMoreItems,
         ),
       ),

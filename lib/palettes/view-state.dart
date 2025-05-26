@@ -38,17 +38,17 @@ class PalettesViewState extends Equatable {
 
   @override
   List<Object?> get props => [
-        showCriteria,
-        sortBy,
-        sortOrder,
-        colorFilter,
-        hueRanges,
-        hex,
-        paletteName,
-        userName,
-        itemsList,
-        backgroundBlobs,
-      ];
+    showCriteria,
+    sortBy,
+    sortOrder,
+    colorFilter,
+    hueRanges,
+    hex,
+    paletteName,
+    userName,
+    itemsList,
+    backgroundBlobs,
+  ];
 
   PalettesViewState copyWith({
     ContentShowCriteria? showCriteria,

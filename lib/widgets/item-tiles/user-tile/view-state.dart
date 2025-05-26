@@ -33,9 +33,7 @@ class UserTileViewState extends Equatable {
     );
   }
 
-  factory UserTileViewState.fromColourloverUser(
-    ColourloversLover user,
-  ) {
+  factory UserTileViewState.fromColourloverUser(ColourloversLover user) {
     return UserTileViewState(
       userName: user.userName ?? '',
       numColors: user.numColors ?? 0,

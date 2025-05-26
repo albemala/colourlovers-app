@@ -9,18 +9,18 @@ class AppBarView extends AppBar {
     required String title,
     super.actions,
   }) : super(
-          centerTitle: true,
-          title: SkewedContainerView(
-            padding: const EdgeInsets.fromLTRB(16, 8, 21, 8),
-            color: Theme.of(context).colorScheme.primaryContainer,
-            child: Text(
-              title.toUpperCase(),
-              style: GoogleFonts.archivoNarrow(
-                textStyle: Theme.of(context).textTheme.bodyLarge,
-                fontWeight: FontWeight.w600,
-                letterSpacing: 0.6,
-              ),
-            ),
-          ),
-        );
+         centerTitle: true,
+         title: SkewedContainerView(
+           padding: const EdgeInsets.fromLTRB(16, 8, 21, 8),
+           color: Theme.of(context).colorScheme.primaryContainer,
+           child: Text(
+             title.toUpperCase(),
+             style: GoogleFonts.archivoNarrow(
+               textStyle: Theme.of(context).textTheme.bodyLarge,
+               fontWeight: FontWeight.w600,
+               letterSpacing: 0.6,
+             ),
+           ),
+         ),
+       );
 }

@@ -16,17 +16,16 @@ class SharePaletteViewController extends Cubit<SharePaletteViewState> {
     BuildContext context, {
     required ColourloversPalette palette,
   }) {
-    return SharePaletteViewController(
-      palette,
-    );
+    return SharePaletteViewController(palette);
   }
 
-  SharePaletteViewController(
-    this._palette,
-  ) : super(defaultSharePaletteViewState) {
-    emit(state.copyWith(
-        backgroundBlobs:
-            generateBackgroundBlobs(getRandomPalette()).toIList()));
+  SharePaletteViewController(this._palette)
+    : super(defaultSharePaletteViewState) {
+    emit(
+      state.copyWith(
+        backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
+      ),
+    );
     _init();
   }
 

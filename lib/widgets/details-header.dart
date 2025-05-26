@@ -19,15 +19,9 @@ class DetailsHeaderView extends StatelessWidget {
       spacing: 16,
       children: [
         Center(
-          child: Text(
-            title,
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
+          child: Text(title, style: Theme.of(context).textTheme.titleLarge),
         ),
-        ItemButtonView(
-          onTap: onItemTap,
-          child: item,
-        ),
+        ItemButtonView(onTap: onItemTap, child: item),
       ],
     );
   }

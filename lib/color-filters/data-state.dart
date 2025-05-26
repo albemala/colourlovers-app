@@ -29,16 +29,16 @@ class ColorFiltersDataState extends Equatable {
 
   @override
   List<Object> get props => [
-        showCriteria,
-        sortBy,
-        sortOrder,
-        hueMin,
-        hueMax,
-        brightnessMin,
-        brightnessMax,
-        colorName,
-        userName,
-      ];
+    showCriteria,
+    sortBy,
+    sortOrder,
+    hueMin,
+    hueMax,
+    brightnessMin,
+    brightnessMax,
+    colorName,
+    userName,
+  ];
 
   ColorFiltersDataState copyWith({
     ContentShowCriteria? showCriteria,

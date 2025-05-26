@@ -10,29 +10,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class RelatedPatternsViewCreator extends StatelessWidget {
   final List<String> hex;
 
-  const RelatedPatternsViewCreator({
-    super.key,
-    required this.hex,
-  });
+  const RelatedPatternsViewCreator({super.key, required this.hex});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<RelatedPatternsViewController>(
       create: (context) {
-        return RelatedPatternsViewController.fromContext(
-          context,
-          hex: hex,
-        );
+        return RelatedPatternsViewController.fromContext(context, hex: hex);
       },
       child:
           BlocBuilder<RelatedPatternsViewController, RelatedPatternsViewState>(
-        builder: (context, state) {
-          return RelatedPatternsView(
-            state: state,
-            controller: context.read<RelatedPatternsViewController>(),
-          );
-        },
-      ),
+            builder: (context, state) {
+              return RelatedPatternsView(
+                state: state,
+                controller: context.read<RelatedPatternsViewController>(),
+              );
+            },
+          ),
     );
   }
 }
@@ -50,10 +44,7 @@ class RelatedPatternsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarView(
-        context,
-        title: 'Related patterns',
-      ),
+      appBar: AppBarView(context, title: 'Related patterns'),
       body: BackgroundView(
         blobs: state.backgroundBlobs.toList(),
         child: ItemsListView(

@@ -12,9 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ColorFiltersViewCreator extends StatelessWidget {
-  const ColorFiltersViewCreator({
-    super.key,
-  });
+  const ColorFiltersViewCreator({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -47,10 +45,7 @@ class ColorFiltersView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarView(
-        context,
-        title: 'Filter Colors',
-      ),
+      appBar: AppBarView(context, title: 'Filter Colors'),
       body: BackgroundView(
         blobs: state.backgroundBlobs.toList(),
         child: Column(
@@ -105,10 +100,7 @@ class _ShowView extends StatelessWidget {
   final ColorFiltersViewState state;
   final ColorFiltersViewController controller;
 
-  const _ShowView({
-    required this.state,
-    required this.controller,
-  });
+  const _ShowView({required this.state, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -119,19 +111,16 @@ class _ShowView extends StatelessWidget {
         const H1TextView('Show'),
         Row(
           spacing: 8,
-          children: ContentShowCriteria.values.map(
-            (showCriteria) {
-              return ChoiceChip(
-                label: Text(
-                  getContentShowCriteriaName(showCriteria),
-                ),
-                selected: state.showCriteria == showCriteria,
-                onSelected: (bool value) {
-                  controller.setShowCriteria(showCriteria);
-                },
-              );
-            },
-          ).toList(),
+          children:
+              ContentShowCriteria.values.map((showCriteria) {
+                return ChoiceChip(
+                  label: Text(getContentShowCriteriaName(showCriteria)),
+                  selected: state.showCriteria == showCriteria,
+                  onSelected: (bool value) {
+                    controller.setShowCriteria(showCriteria);
+                  },
+                );
+              }).toList(),
         ),
       ],
     );
@@ -142,10 +131,7 @@ class _SortByView extends StatelessWidget {
   final ColorFiltersViewState state;
   final ColorFiltersViewController controller;
 
-  const _SortByView({
-    required this.state,
-    required this.controller,
-  });
+  const _SortByView({required this.state, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -158,36 +144,30 @@ class _SortByView extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           child: Row(
             spacing: 8,
-            children: ColourloversRequestOrderBy.values.map(
-              (sortBy) {
-                return ChoiceChip(
-                  label: Text(
-                    getColourloversRequestOrderByName(sortBy),
-                  ),
-                  selected: state.sortBy == sortBy,
-                  onSelected: (bool value) {
-                    controller.setSortBy(sortBy);
-                  },
-                );
-              },
-            ).toList(),
+            children:
+                ColourloversRequestOrderBy.values.map((sortBy) {
+                  return ChoiceChip(
+                    label: Text(getColourloversRequestOrderByName(sortBy)),
+                    selected: state.sortBy == sortBy,
+                    onSelected: (bool value) {
+                      controller.setSortBy(sortBy);
+                    },
+                  );
+                }).toList(),
           ),
         ),
         Row(
           spacing: 8,
-          children: ColourloversRequestSortBy.values.map(
-            (sortOrder) {
-              return ChoiceChip(
-                label: Text(
-                  getColourloversRequestSortByName(sortOrder),
-                ),
-                selected: state.sortOrder == sortOrder,
-                onSelected: (bool value) {
-                  controller.setOrder(sortOrder);
-                },
-              );
-            },
-          ).toList(),
+          children:
+              ColourloversRequestSortBy.values.map((sortOrder) {
+                return ChoiceChip(
+                  label: Text(getColourloversRequestSortByName(sortOrder)),
+                  selected: state.sortOrder == sortOrder,
+                  onSelected: (bool value) {
+                    controller.setOrder(sortOrder);
+                  },
+                );
+              }).toList(),
         ),
       ],
     );
@@ -198,10 +178,7 @@ class _HueView extends StatelessWidget {
   final ColorFiltersViewState state;
   final ColorFiltersViewController controller;
 
-  const _HueView({
-    required this.state,
-    required this.controller,
-  });
+  const _HueView({required this.state, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -233,10 +210,7 @@ class _BrightnessView extends StatelessWidget {
   final ColorFiltersViewState state;
   final ColorFiltersViewController controller;
 
-  const _BrightnessView({
-    required this.state,
-    required this.controller,
-  });
+  const _BrightnessView({required this.state, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -267,9 +241,7 @@ class _BrightnessView extends StatelessWidget {
 class _ColorNameView extends StatelessWidget {
   final ColorFiltersViewController controller;
 
-  const _ColorNameView({
-    required this.controller,
-  });
+  const _ColorNameView({required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -278,9 +250,7 @@ class _ColorNameView extends StatelessWidget {
       spacing: 12,
       children: [
         const H1TextView('Color name'),
-        TextField(
-          controller: controller.colorNameController,
-        ),
+        TextField(controller: controller.colorNameController),
       ],
     );
   }
@@ -289,9 +259,7 @@ class _ColorNameView extends StatelessWidget {
 class _UserNameView extends StatelessWidget {
   final ColorFiltersViewController controller;
 
-  const _UserNameView({
-    required this.controller,
-  });
+  const _UserNameView({required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -300,9 +268,7 @@ class _UserNameView extends StatelessWidget {
       spacing: 12,
       children: [
         const H1TextView('User name'),
-        TextField(
-          controller: controller.userNameController,
-        ),
+        TextField(controller: controller.userNameController),
       ],
     );
   }

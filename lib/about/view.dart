@@ -10,9 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AboutViewCreator extends StatelessWidget {
-  const AboutViewCreator({
-    super.key,
-  });
+  const AboutViewCreator({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,19 +34,12 @@ class AboutView extends StatelessWidget {
   final AboutViewController controller;
   final AboutViewState state;
 
-  const AboutView({
-    required this.controller,
-    required this.state,
-    super.key,
-  });
+  const AboutView({required this.controller, required this.state, super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarView(
-        context,
-        title: 'About',
-      ),
+      appBar: AppBarView(context, title: 'About'),
       body: BackgroundView(
         blobs: state.backgroundBlobs.toList(),
         child: Padding(
@@ -72,9 +63,9 @@ class AboutView extends StatelessWidget {
                   Builder(
                     builder: (context) {
                       return OutlinedButton(
-                        onPressed: () => controller.shareApp(
-                          getSharePosition(context),
-                        ),
+                        onPressed:
+                            () =>
+                                controller.shareApp(getSharePosition(context)),
                         child: const Text('Share $appName'),
                       );
                     },

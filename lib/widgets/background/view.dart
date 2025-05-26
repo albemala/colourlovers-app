@@ -6,11 +6,7 @@ class BackgroundView extends StatelessWidget {
   final Widget child;
   final List<BackgroundBlob> blobs;
 
-  const BackgroundView({
-    super.key,
-    required this.child,
-    required this.blobs,
-  });
+  const BackgroundView({super.key, required this.child, required this.blobs});
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +19,14 @@ class BackgroundView extends StatelessWidget {
             left: MediaQuery.of(context).size.width * blob.positionRatio.dx,
             child: Aurora(
               size: MediaQuery.of(context).size.width * blob.sizeRatio,
-              colors: blob.colors.map((color) {
-                final opacity =
-                    Theme.of(context).brightness == Brightness.dark ? 1.0 : 0.5;
-                return color.withOpacity(opacity);
-              }).toList(),
+              colors:
+                  blob.colors.map((color) {
+                    final opacity =
+                        Theme.of(context).brightness == Brightness.dark
+                            ? 1.0
+                            : 0.5;
+                    return color.withValues(alpha: opacity);
+                  }).toList(),
               blur: blob.blur,
             ),
           ),

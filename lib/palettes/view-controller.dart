@@ -31,10 +31,8 @@ class PalettesViewController extends Cubit<PalettesViewState> {
     );
   }
 
-  PalettesViewController(
-    this._client,
-    this._dataController,
-  ) : super(defaultPalettesViewState) {
+  PalettesViewController(this._client, this._dataController)
+    : super(defaultPalettesViewState) {
     _dataControllerSubscription = _dataController.stream.listen((state) {
       _pagination.reset();
       _updateState();
@@ -43,12 +41,14 @@ class PalettesViewController extends Cubit<PalettesViewState> {
 
     _pagination = ItemsPagination<ColourloversPalette>((numResults, offset) {
       final lover = _dataController.userName;
-      final hueRanges = _dataController.colorFilter == ColorFilter.hueRanges
-          ? _dataController.hueRanges.toList()
-          : <ColourloversRequestHueRange>[];
-      final hex = _dataController.colorFilter == ColorFilter.hex
-          ? [_dataController.hex]
-          : <String>[];
+      final hueRanges =
+          _dataController.colorFilter == ColorFilter.hueRanges
+              ? _dataController.hueRanges.toList()
+              : <ColourloversRequestHueRange>[];
+      final hex =
+          _dataController.colorFilter == ColorFilter.hex
+              ? [_dataController.hex]
+              : <String>[];
       final keywords = _dataController.paletteName;
 
       switch (_dataController.showCriteria) {
@@ -83,12 +83,15 @@ class PalettesViewController extends Cubit<PalettesViewState> {
           );
       }
     });
-    _pagination.addListener(_updateState);
-    _pagination.load();
+    _pagination
+      ..addListener(_updateState)
+      ..load();
 
-    emit(state.copyWith(
-        backgroundBlobs:
-            generateBackgroundBlobs(getRandomPalette()).toIList()));
+    emit(
+      state.copyWith(
+        backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
+      ),
+    );
   }
 
   @override
@@ -102,10 +105,8 @@ class PalettesViewController extends Cubit<PalettesViewState> {
     await _pagination.loadMore();
   }
 
-  void showPaletteFilters(
-    BuildContext context,
-  ) {
-    openScreen(
+  void showPaletteFilters(BuildContext context) {
+    openScreen<void>(
       context,
       const PaletteFiltersViewCreator(),
       fullscreenDialog: true,
@@ -121,19 +122,14 @@ class PalettesViewController extends Cubit<PalettesViewState> {
     _showPaletteDetails(context, palette);
   }
 
-  Future<void> showRandomPalette(
-    BuildContext context,
-  ) async {
+  Future<void> showRandomPalette(BuildContext context) async {
     final palette = await _client.getRandomPalette();
     if (palette == null) return;
     _showPaletteDetails(context, palette);
   }
 
-  void _showPaletteDetails(
-    BuildContext context,
-    ColourloversPalette palette,
-  ) {
-    openScreen(context, PaletteDetailsViewCreator(palette: palette));
+  void _showPaletteDetails(BuildContext context, ColourloversPalette palette) {
+    openScreen<void>(context, PaletteDetailsViewCreator(palette: palette));
   }
 
   void _updateState() {
@@ -149,9 +145,10 @@ class PalettesViewController extends Cubit<PalettesViewState> {
         userName: _dataController.userName,
         itemsList: ItemsListViewState(
           isLoading: _pagination.isLoading,
-          items: _pagination.items
-              .map(PaletteTileViewState.fromColourloverPalette)
-              .toIList(),
+          items:
+              _pagination.items
+                  .map(PaletteTileViewState.fromColourloverPalette)
+                  .toIList(),
           hasMoreItems: _pagination.hasMoreItems,
         ),
       ),

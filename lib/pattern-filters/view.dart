@@ -11,9 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PatternFiltersViewCreator extends StatelessWidget {
-  const PatternFiltersViewCreator({
-    super.key,
-  });
+  const PatternFiltersViewCreator({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +44,7 @@ class PatternFiltersView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarView(
-        context,
-        title: 'Filter Patterns',
-      ),
+      appBar: AppBarView(context, title: 'Filter Patterns'),
       body: BackgroundView(
         blobs: state.backgroundBlobs.toList(),
         child: Column(
@@ -107,10 +102,7 @@ class _ShowView extends StatelessWidget {
   final PatternFiltersViewState state;
   final PatternFiltersViewController controller;
 
-  const _ShowView({
-    required this.state,
-    required this.controller,
-  });
+  const _ShowView({required this.state, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -121,19 +113,16 @@ class _ShowView extends StatelessWidget {
         const H1TextView('Show'),
         Row(
           spacing: 8,
-          children: ContentShowCriteria.values.map(
-            (showCriteria) {
-              return ChoiceChip(
-                label: Text(
-                  getContentShowCriteriaName(showCriteria),
-                ),
-                selected: state.showCriteria == showCriteria,
-                onSelected: (bool value) {
-                  controller.setShowCriteria(showCriteria);
-                },
-              );
-            },
-          ).toList(),
+          children:
+              ContentShowCriteria.values.map((showCriteria) {
+                return ChoiceChip(
+                  label: Text(getContentShowCriteriaName(showCriteria)),
+                  selected: state.showCriteria == showCriteria,
+                  onSelected: (bool value) {
+                    controller.setShowCriteria(showCriteria);
+                  },
+                );
+              }).toList(),
         ),
       ],
     );
@@ -144,10 +133,7 @@ class _SortByView extends StatelessWidget {
   final PatternFiltersViewState state;
   final PatternFiltersViewController controller;
 
-  const _SortByView({
-    required this.state,
-    required this.controller,
-  });
+  const _SortByView({required this.state, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -160,36 +146,30 @@ class _SortByView extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           child: Row(
             spacing: 8,
-            children: ColourloversRequestOrderBy.values.map(
-              (sortBy) {
-                return ChoiceChip(
-                  label: Text(
-                    getColourloversRequestOrderByName(sortBy),
-                  ),
-                  selected: state.sortBy == sortBy,
-                  onSelected: (bool value) {
-                    controller.setSortBy(sortBy);
-                  },
-                );
-              },
-            ).toList(),
+            children:
+                ColourloversRequestOrderBy.values.map((sortBy) {
+                  return ChoiceChip(
+                    label: Text(getColourloversRequestOrderByName(sortBy)),
+                    selected: state.sortBy == sortBy,
+                    onSelected: (bool value) {
+                      controller.setSortBy(sortBy);
+                    },
+                  );
+                }).toList(),
           ),
         ),
         Row(
           spacing: 8,
-          children: ColourloversRequestSortBy.values.map(
-            (sortOrder) {
-              return ChoiceChip(
-                label: Text(
-                  getColourloversRequestSortByName(sortOrder),
-                ),
-                selected: state.sortOrder == sortOrder,
-                onSelected: (bool value) {
-                  controller.setOrder(sortOrder);
-                },
-              );
-            },
-          ).toList(),
+          children:
+              ColourloversRequestSortBy.values.map((sortOrder) {
+                return ChoiceChip(
+                  label: Text(getColourloversRequestSortByName(sortOrder)),
+                  selected: state.sortOrder == sortOrder,
+                  onSelected: (bool value) {
+                    controller.setOrder(sortOrder);
+                  },
+                );
+              }).toList(),
         ),
       ],
     );
@@ -200,10 +180,7 @@ class _ColorFilterView extends StatelessWidget {
   final PatternFiltersViewState state;
   final PatternFiltersViewController controller;
 
-  const _ColorFilterView({
-    required this.state,
-    required this.controller,
-  });
+  const _ColorFilterView({required this.state, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -216,19 +193,16 @@ class _ColorFilterView extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           child: Row(
             spacing: 8,
-            children: ColorFilter.values.map(
-              (colorFilter) {
-                return ChoiceChip(
-                  label: Text(
-                    getColorFilterName(colorFilter),
-                  ),
-                  selected: state.colorFilter == colorFilter,
-                  onSelected: (bool value) {
-                    controller.setColorFilter(colorFilter);
-                  },
-                );
-              },
-            ).toList(),
+            children:
+                ColorFilter.values.map((colorFilter) {
+                  return ChoiceChip(
+                    label: Text(getColorFilterName(colorFilter)),
+                    selected: state.colorFilter == colorFilter,
+                    onSelected: (bool value) {
+                      controller.setColorFilter(colorFilter);
+                    },
+                  );
+                }).toList(),
           ),
         ),
       ],
@@ -240,41 +214,35 @@ class _HueRangesView extends StatelessWidget {
   final PatternFiltersViewState state;
   final PatternFiltersViewController controller;
 
-  const _HueRangesView({
-    required this.state,
-    required this.controller,
-  });
+  const _HueRangesView({required this.state, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return Wrap(
       spacing: 8,
       runSpacing: 8,
-      children: ColourloversRequestHueRange.values.map(
-        (hueRange) {
-          return ChoiceChip(
-            avatar: Container(
-              decoration: BoxDecoration(
-                color: getColourloversRequestHueRangeColor(hueRange),
-                shape: BoxShape.circle,
+      children:
+          ColourloversRequestHueRange.values.map((hueRange) {
+            return ChoiceChip(
+              avatar: Container(
+                decoration: BoxDecoration(
+                  color: getColourloversRequestHueRangeColor(hueRange),
+                  shape: BoxShape.circle,
+                ),
+                width: 18,
+                height: 18,
               ),
-              width: 18,
-              height: 18,
-            ),
-            label: Text(
-              getColourloversRequestHueRangeName(hueRange),
-            ),
-            selected: state.hueRanges.contains(hueRange),
-            onSelected: (bool selected) {
-              if (selected) {
-                controller.addHueRange(context, hueRange);
-              } else {
-                controller.removeHueRange(hueRange);
-              }
-            },
-          );
-        },
-      ).toList(),
+              label: Text(getColourloversRequestHueRangeName(hueRange)),
+              selected: state.hueRanges.contains(hueRange),
+              onSelected: (bool selected) {
+                if (selected) {
+                  controller.addHueRange(context, hueRange);
+                } else {
+                  controller.removeHueRange(hueRange);
+                }
+              },
+            );
+          }).toList(),
     );
   }
 }
@@ -283,10 +251,7 @@ class _HexView extends StatelessWidget {
   final PatternFiltersViewState state;
   final PatternFiltersViewController controller;
 
-  const _HexView({
-    required this.state,
-    required this.controller,
-  });
+  const _HexView({required this.state, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -319,7 +284,7 @@ class _HexView extends StatelessWidget {
                   );
                 },
               ),
-/* // TODO restore
+              /* // TODO restore
               IconButton.outlined(
                 icon: Icon(
                   LucideIcons.pipette,
@@ -352,9 +317,7 @@ class _HexView extends StatelessWidget {
 class _PatternNameView extends StatelessWidget {
   final PatternFiltersViewController controller;
 
-  const _PatternNameView({
-    required this.controller,
-  });
+  const _PatternNameView({required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -363,9 +326,7 @@ class _PatternNameView extends StatelessWidget {
       spacing: 12,
       children: [
         const H1TextView('Pattern name'),
-        TextField(
-          controller: controller.patternNameController,
-        ),
+        TextField(controller: controller.patternNameController),
       ],
     );
   }
@@ -374,9 +335,7 @@ class _PatternNameView extends StatelessWidget {
 class _UserNameView extends StatelessWidget {
   final PatternFiltersViewController controller;
 
-  const _UserNameView({
-    required this.controller,
-  });
+  const _UserNameView({required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -385,9 +344,7 @@ class _UserNameView extends StatelessWidget {
       spacing: 12,
       children: [
         const H1TextView('User name'),
-        TextField(
-          controller: controller.userNameController,
-        ),
+        TextField(controller: controller.userNameController),
       ],
     );
   }

@@ -25,58 +25,31 @@ class PaletteFiltersDataController
   }
 
   ContentShowCriteria get showCriteria => state.showCriteria;
-  set showCriteria(ContentShowCriteria value) => emit(
-        state.copyWith(
-          showCriteria: value,
-        ),
-      );
+  set showCriteria(ContentShowCriteria value) =>
+      emit(state.copyWith(showCriteria: value));
 
   ColourloversRequestOrderBy get sortBy => state.sortBy;
-  set sortBy(ColourloversRequestOrderBy value) => emit(
-        state.copyWith(
-          sortBy: value,
-        ),
-      );
+  set sortBy(ColourloversRequestOrderBy value) =>
+      emit(state.copyWith(sortBy: value));
 
   ColourloversRequestSortBy get sortOrder => state.sortOrder;
-  set sortOrder(ColourloversRequestSortBy value) => emit(
-        state.copyWith(
-          sortOrder: value,
-        ),
-      );
+  set sortOrder(ColourloversRequestSortBy value) =>
+      emit(state.copyWith(sortOrder: value));
 
   ColorFilter get colorFilter => state.colorFilter;
-  set colorFilter(ColorFilter value) => emit(
-        state.copyWith(
-          colorFilter: value,
-        ),
-      );
+  set colorFilter(ColorFilter value) =>
+      emit(state.copyWith(colorFilter: value));
 
   IList<ColourloversRequestHueRange> get hueRanges => state.hueRanges;
-  set hueRanges(IList<ColourloversRequestHueRange> value) => emit(
-        state.copyWith(
-          hueRanges: value,
-        ),
-      );
+  set hueRanges(IList<ColourloversRequestHueRange> value) =>
+      emit(state.copyWith(hueRanges: value));
 
   String get hex => state.hex;
-  set hex(String value) => emit(
-        state.copyWith(
-          hex: value,
-        ),
-      );
+  set hex(String value) => emit(state.copyWith(hex: value));
 
   String get paletteName => state.paletteName;
-  set paletteName(String value) => emit(
-        state.copyWith(
-          paletteName: value,
-        ),
-      );
+  set paletteName(String value) => emit(state.copyWith(paletteName: value));
 
   String get userName => state.userName;
-  set userName(String value) => emit(
-        state.copyWith(
-          userName: value,
-        ),
-      );
+  set userName(String value) => emit(state.copyWith(userName: value));
 }

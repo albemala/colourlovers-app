@@ -7,18 +7,12 @@ import 'package:flutter/material.dart';
 class ExploreViewState extends Equatable {
   final IList<BackgroundBlob> backgroundBlobs;
 
-  const ExploreViewState({
-    required this.backgroundBlobs,
-  });
+  const ExploreViewState({required this.backgroundBlobs});
 
   @override
-  List<Object> get props => [
-        backgroundBlobs,
-      ];
+  List<Object> get props => [backgroundBlobs];
 
-  ExploreViewState copyWith({
-    IList<BackgroundBlob>? backgroundBlobs,
-  }) {
+  ExploreViewState copyWith({IList<BackgroundBlob>? backgroundBlobs}) {
     return ExploreViewState(
       backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );

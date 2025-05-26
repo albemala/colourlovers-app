@@ -1,11 +1,3 @@
-enum ContentShowCriteria {
-  newest,
-  top,
-  all,
-}
+enum ContentShowCriteria { newest, top, all }
 
-enum ColorFilter {
-  none,
-  hueRanges,
-  hex,
-}
+enum ColorFilter { none, hueRanges, hex }

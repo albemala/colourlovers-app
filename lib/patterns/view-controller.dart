@@ -31,10 +31,8 @@ class PatternsViewController extends Cubit<PatternsViewState> {
     );
   }
 
-  PatternsViewController(
-    this._client,
-    this._dataController,
-  ) : super(defaultPatternsViewState) {
+  PatternsViewController(this._client, this._dataController)
+    : super(defaultPatternsViewState) {
     _dataControllerSubscription = _dataController.stream.listen((state) {
       _pagination.reset();
       _updateState();
@@ -43,12 +41,14 @@ class PatternsViewController extends Cubit<PatternsViewState> {
 
     _pagination = ItemsPagination<ColourloversPattern>((numResults, offset) {
       final lover = _dataController.userName;
-      final hueRanges = _dataController.colorFilter == ColorFilter.hueRanges
-          ? _dataController.hueRanges.toList()
-          : <ColourloversRequestHueRange>[];
-      final hex = _dataController.colorFilter == ColorFilter.hex
-          ? [_dataController.hex]
-          : <String>[];
+      final hueRanges =
+          _dataController.colorFilter == ColorFilter.hueRanges
+              ? _dataController.hueRanges.toList()
+              : <ColourloversRequestHueRange>[];
+      final hex =
+          _dataController.colorFilter == ColorFilter.hex
+              ? [_dataController.hex]
+              : <String>[];
       final keywords = _dataController.patternName;
 
       switch (_dataController.showCriteria) {
@@ -83,12 +83,15 @@ class PatternsViewController extends Cubit<PatternsViewState> {
           );
       }
     });
-    _pagination.addListener(_updateState);
-    _pagination.load();
+    _pagination
+      ..addListener(_updateState)
+      ..load();
 
-    emit(state.copyWith(
-        backgroundBlobs:
-            generateBackgroundBlobs(getRandomPalette()).toIList()));
+    emit(
+      state.copyWith(
+        backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
+      ),
+    );
   }
 
   @override
@@ -102,10 +105,8 @@ class PatternsViewController extends Cubit<PatternsViewState> {
     await _pagination.loadMore();
   }
 
-  void showPatternFilters(
-    BuildContext context,
-  ) {
-    openScreen(
+  void showPatternFilters(BuildContext context) {
+    openScreen<void>(
       context,
       const PatternFiltersViewCreator(),
       fullscreenDialog: true,
@@ -121,19 +122,14 @@ class PatternsViewController extends Cubit<PatternsViewState> {
     _showPatternDetails(context, pattern);
   }
 
-  Future<void> showRandomPattern(
-    BuildContext context,
-  ) async {
+  Future<void> showRandomPattern(BuildContext context) async {
     final pattern = await _client.getRandomPattern();
     if (pattern == null) return;
     _showPatternDetails(context, pattern);
   }
 
-  void _showPatternDetails(
-    BuildContext context,
-    ColourloversPattern pattern,
-  ) {
-    openScreen(context, PatternDetailsViewCreator(pattern: pattern));
+  void _showPatternDetails(BuildContext context, ColourloversPattern pattern) {
+    openScreen<void>(context, PatternDetailsViewCreator(pattern: pattern));
   }
 
   void _updateState() {
@@ -149,9 +145,10 @@ class PatternsViewController extends Cubit<PatternsViewState> {
         userName: _dataController.userName,
         itemsList: ItemsListViewState(
           isLoading: _pagination.isLoading,
-          items: _pagination.items
-              .map(PatternTileViewState.fromColourloverPattern)
-              .toIList(),
+          items:
+              _pagination.items
+                  .map(PatternTileViewState.fromColourloverPattern)
+                  .toIList(),
           hasMoreItems: _pagination.hasMoreItems,
         ),
       ),

@@ -20,25 +20,23 @@ class UserPatternsViewController extends Cubit<UserPatternsViewState> {
     BuildContext context, {
     required String userName,
   }) {
-    return UserPatternsViewController(
-      userName,
-      ColourloversApiClient(),
-    );
+    return UserPatternsViewController(userName, ColourloversApiClient());
   }
 
-  UserPatternsViewController(
-    this._userName,
-    this._client,
-  ) : super(defaultUserPatternsViewState) {
+  UserPatternsViewController(this._userName, this._client)
+    : super(defaultUserPatternsViewState) {
     _pagination = ItemsPagination<ColourloversPattern>((numResults, offset) {
       return fetchUserPatterns(_client, numResults, offset, _userName);
     });
-    _pagination.addListener(_updateState);
-    _pagination.load();
+    _pagination
+      ..addListener(_updateState)
+      ..load();
 
-    emit(state.copyWith(
-        backgroundBlobs:
-            generateBackgroundBlobs(getRandomPalette()).toIList()));
+    emit(
+      state.copyWith(
+        backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
+      ),
+    );
   }
 
   @override
@@ -57,7 +55,7 @@ class UserPatternsViewController extends Cubit<UserPatternsViewState> {
   ) {
     final index = state.itemsList.items.indexOf(tileViewState);
     final pattern = _pagination.items[index];
-    openScreen(context, PatternDetailsViewCreator(pattern: pattern));
+    openScreen<void>(context, PatternDetailsViewCreator(pattern: pattern));
   }
 
   void _updateState() {
@@ -65,9 +63,11 @@ class UserPatternsViewController extends Cubit<UserPatternsViewState> {
       state.copyWith(
         itemsList: ItemsListViewState(
           isLoading: _pagination.isLoading,
-          items: _pagination.items //
-              .map(PatternTileViewState.fromColourloverPattern)
-              .toIList(),
+          items:
+              _pagination
+                  .items //
+                  .map(PatternTileViewState.fromColourloverPattern)
+                  .toIList(),
           hasMoreItems: _pagination.hasMoreItems,
         ),
       ),

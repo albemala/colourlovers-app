@@ -22,19 +22,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ColorDetailsViewCreator extends StatelessWidget {
   final ColourloversColor color;
 
-  const ColorDetailsViewCreator({
-    super.key,
-    required this.color,
-  });
+  const ColorDetailsViewCreator({super.key, required this.color});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        return ColorDetailsViewController.fromContext(
-          context,
-          color: color,
-        );
+        return ColorDetailsViewController.fromContext(context, color: color);
       },
       child: BlocBuilder<ColorDetailsViewController, ColorDetailsViewState>(
         builder: (context, state) {
@@ -74,102 +68,105 @@ class ColorDetailsView extends StatelessWidget {
       ),
       body: BackgroundView(
         blobs: state.backgroundBlobs.toList(),
-        child: state.isLoading
-            ? const Center(child: CircularProgressIndicator())
-            : SingleChildScrollView(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
-                child: Column(
-                  spacing: 32,
-                  children: [
-                    DetailsHeaderView(
-                      title: state.title,
-                      item: ColorView(hex: state.hex),
-                      onItemTap: () {
-                        controller.showShareColorView(context);
-                      },
-                    ),
-                    StatsView(
-                      stats: [
-                        StatsItemViewState(
-                          label: 'Views',
-                          value: state.numViews,
-                        ),
-                        StatsItemViewState(
-                          label: 'Votes',
-                          value: state.numVotes,
-                        ),
-                        StatsItemViewState(
-                          label: 'Rank',
-                          value: state.rank,
-                        ),
-                      ],
-                    ),
-                    _ColorValuesView(
-                      rgb: state.rgb,
-                      hsv: state.hsv,
-                    ),
-                    CreatedByView(
-                      user: state.user,
-                      onUserTap: () {
-                        controller.showUserDetailsView(context);
-                      },
-                    ),
-                    if (state.relatedColors.isNotEmpty)
-                      RelatedItemsPreviewView(
-                        title: 'Related colors',
-                        items: state.relatedColors.toList(),
-                        itemBuilder: (state) {
-                          return ColorTileView(
-                            state: state,
-                            onTap: () {
-                              controller.showColorDetailsView(context, state);
-                            },
-                          );
-                        },
-                        onShowMorePressed: () {
-                          controller.showRelatedColorsView(context);
+        child:
+            state.isLoading
+                ? const Center(child: CircularProgressIndicator())
+                : SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 32,
+                  ),
+                  child: Column(
+                    spacing: 32,
+                    children: [
+                      DetailsHeaderView(
+                        title: state.title,
+                        item: ColorView(hex: state.hex),
+                        onItemTap: () {
+                          controller.showShareColorView(context);
                         },
                       ),
-                    if (state.relatedPalettes.isNotEmpty)
-                      RelatedItemsPreviewView(
-                        title: 'Related palettes',
-                        items: state.relatedPalettes.toList(),
-                        itemBuilder: (state) {
-                          return PaletteTileView(
-                            state: state,
-                            onTap: () {
-                              controller.showPaletteDetailsView(context, state);
-                            },
-                          );
-                        },
-                        onShowMorePressed: () {
-                          controller.showRelatedPalettesView(context);
+                      StatsView(
+                        stats: [
+                          StatsItemViewState(
+                            label: 'Views',
+                            value: state.numViews,
+                          ),
+                          StatsItemViewState(
+                            label: 'Votes',
+                            value: state.numVotes,
+                          ),
+                          StatsItemViewState(label: 'Rank', value: state.rank),
+                        ],
+                      ),
+                      _ColorValuesView(rgb: state.rgb, hsv: state.hsv),
+                      CreatedByView(
+                        user: state.user,
+                        onUserTap: () {
+                          controller.showUserDetailsView(context);
                         },
                       ),
-                    if (state.relatedPatterns.isNotEmpty)
-                      RelatedItemsPreviewView(
-                        title: 'Related patterns',
-                        items: state.relatedPatterns.toList(),
-                        itemBuilder: (state) {
-                          return PatternTileView(
-                            state: state,
-                            onTap: () {
-                              controller.showPatternDetailsView(context, state);
-                            },
-                          );
-                        },
-                        onShowMorePressed: () {
-                          controller.showRelatedPatternsView(context);
-                        },
+                      if (state.relatedColors.isNotEmpty)
+                        RelatedItemsPreviewView(
+                          title: 'Related colors',
+                          items: state.relatedColors.toList(),
+                          itemBuilder: (state) {
+                            return ColorTileView(
+                              state: state,
+                              onTap: () {
+                                controller.showColorDetailsView(context, state);
+                              },
+                            );
+                          },
+                          onShowMorePressed: () {
+                            controller.showRelatedColorsView(context);
+                          },
+                        ),
+                      if (state.relatedPalettes.isNotEmpty)
+                        RelatedItemsPreviewView(
+                          title: 'Related palettes',
+                          items: state.relatedPalettes.toList(),
+                          itemBuilder: (state) {
+                            return PaletteTileView(
+                              state: state,
+                              onTap: () {
+                                controller.showPaletteDetailsView(
+                                  context,
+                                  state,
+                                );
+                              },
+                            );
+                          },
+                          onShowMorePressed: () {
+                            controller.showRelatedPalettesView(context);
+                          },
+                        ),
+                      if (state.relatedPatterns.isNotEmpty)
+                        RelatedItemsPreviewView(
+                          title: 'Related patterns',
+                          items: state.relatedPatterns.toList(),
+                          itemBuilder: (state) {
+                            return PatternTileView(
+                              state: state,
+                              onTap: () {
+                                controller.showPatternDetailsView(
+                                  context,
+                                  state,
+                                );
+                              },
+                            );
+                          },
+                          onShowMorePressed: () {
+                            controller.showRelatedPatternsView(context);
+                          },
+                        ),
+                      CreditsView(
+                        itemName: 'color',
+                        itemUrl: '$colourLoversUrl/color/${state.hex}',
                       ),
-                    CreditsView(
-                      itemName: 'color',
-                      itemUrl: '$colourLoversUrl/color/${state.hex}',
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
       ),
     );
   }
@@ -179,10 +176,7 @@ class _ColorValuesView extends StatelessWidget {
   final ColorRgbViewState rgb;
   final ColorHsvViewState hsv;
 
-  const _ColorValuesView({
-    required this.rgb,
-    required this.hsv,
-  });
+  const _ColorValuesView({required this.rgb, required this.hsv});
 
   @override
   Widget build(BuildContext context) {

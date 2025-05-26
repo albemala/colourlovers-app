@@ -41,20 +41,20 @@ class PaletteDetailsViewState extends Equatable {
 
   @override
   List<Object?> get props => [
-        isLoading,
-        id,
-        title,
-        colors,
-        colorWidths,
-        colorViewStates,
-        numViews,
-        numVotes,
-        rank,
-        user,
-        relatedPalettes,
-        relatedPatterns,
-        backgroundBlobs,
-      ];
+    isLoading,
+    id,
+    title,
+    colors,
+    colorWidths,
+    colorViewStates,
+    numViews,
+    numVotes,
+    rank,
+    user,
+    relatedPalettes,
+    relatedPatterns,
+    backgroundBlobs,
+  ];
 
   PaletteDetailsViewState copyWith({
     bool? isLoading,

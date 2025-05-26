@@ -70,15 +70,9 @@ class AppContentView extends StatelessWidget {
             label: 'Preferences',
             icon: Icon(LucideIcons.settings),
           ),
-          NavigationDestination(
-            label: 'About',
-            icon: Icon(LucideIcons.info),
-          ),
+          NavigationDestination(label: 'About', icon: Icon(LucideIcons.info)),
           if (kDebugMode)
-            NavigationDestination(
-              label: 'Test',
-              icon: Icon(LucideIcons.bug),
-            ),
+            NavigationDestination(label: 'Test', icon: Icon(LucideIcons.bug)),
         ],
       ),
     );
@@ -88,18 +82,13 @@ class AppContentView extends StatelessWidget {
 class NavigatorView extends StatelessWidget {
   final Widget child;
 
-  const NavigatorView({
-    super.key,
-    required this.child,
-  });
+  const NavigatorView({super.key, required this.child});
 
   @override
   Widget build(BuildContext context) {
     return Navigator(
       onGenerateRoute: (RouteSettings settings) {
-        return MaterialPageRoute(
-          builder: (BuildContext context) => child,
-        );
+        return MaterialPageRoute(builder: (BuildContext context) => child);
       },
     );
   }

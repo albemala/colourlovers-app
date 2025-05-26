@@ -11,19 +11,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class RelatedColorsViewCreator extends StatelessWidget {
   final Hsv hsv;
 
-  const RelatedColorsViewCreator({
-    super.key,
-    required this.hsv,
-  });
+  const RelatedColorsViewCreator({super.key, required this.hsv});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<RelatedColorsViewController>(
       create: (context) {
-        return RelatedColorsViewController.fromContext(
-          context,
-          hsv: hsv,
-        );
+        return RelatedColorsViewController.fromContext(context, hsv: hsv);
       },
       child: BlocBuilder<RelatedColorsViewController, RelatedColorsViewState>(
         builder: (context, state) {
@@ -50,10 +44,7 @@ class RelatedColorsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarView(
-        context,
-        title: 'Related colors',
-      ),
+      appBar: AppBarView(context, title: 'Related colors'),
       body: BackgroundView(
         blobs: state.backgroundBlobs.toList(),
         child: ItemsListView(

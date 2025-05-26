@@ -31,10 +31,8 @@ class ColorsViewController extends Cubit<ColorsViewState> {
     );
   }
 
-  ColorsViewController(
-    this._client,
-    this._dataController,
-  ) : super(defaultColorsViewState) {
+  ColorsViewController(this._client, this._dataController)
+    : super(defaultColorsViewState) {
     _dataControllerSubscription = _dataController.stream.listen((state) {
       _pagination.reset();
       _updateState();
@@ -80,12 +78,15 @@ class ColorsViewController extends Cubit<ColorsViewState> {
           );
       }
     });
-    _pagination.addListener(_updateState);
-    _pagination.load();
+    _pagination
+      ..addListener(_updateState)
+      ..load();
 
-    emit(state.copyWith(
-        backgroundBlobs:
-            generateBackgroundBlobs(getRandomPalette()).toIList()));
+    emit(
+      state.copyWith(
+        backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
+      ),
+    );
   }
 
   @override
@@ -99,10 +100,8 @@ class ColorsViewController extends Cubit<ColorsViewState> {
     await _pagination.loadMore();
   }
 
-  void showColorFilters(
-    BuildContext context,
-  ) {
-    openScreen(
+  void showColorFilters(BuildContext context) {
+    openScreen<void>(
       context,
       const ColorFiltersViewCreator(),
       fullscreenDialog: true,
@@ -118,19 +117,14 @@ class ColorsViewController extends Cubit<ColorsViewState> {
     _showColorDetails(context, color);
   }
 
-  Future<void> showRandomColor(
-    BuildContext context,
-  ) async {
+  Future<void> showRandomColor(BuildContext context) async {
     final color = await _client.getRandomColor();
     if (color == null) return;
     _showColorDetails(context, color);
   }
 
-  void _showColorDetails(
-    BuildContext context,
-    ColourloversColor color,
-  ) {
-    openScreen(context, ColorDetailsViewCreator(color: color));
+  void _showColorDetails(BuildContext context, ColourloversColor color) {
+    openScreen<void>(context, ColorDetailsViewCreator(color: color));
   }
 
   void _updateState() {
@@ -147,9 +141,11 @@ class ColorsViewController extends Cubit<ColorsViewState> {
         userName: _dataController.userName,
         itemsList: ItemsListViewState(
           isLoading: _pagination.isLoading,
-          items: _pagination.items //
-              .map(ColorTileViewState.fromColourloverColor)
-              .toIList(),
+          items:
+              _pagination
+                  .items //
+                  .map(ColorTileViewState.fromColourloverColor)
+                  .toIList(),
           hasMoreItems: _pagination.hasMoreItems,
         ),
       ),

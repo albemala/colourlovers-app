@@ -12,9 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 class UsersViewCreator extends StatelessWidget {
-  const UsersViewCreator({
-    super.key,
-  });
+  const UsersViewCreator({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,19 +34,12 @@ class UsersView extends StatelessWidget {
   final UsersViewState state;
   final UsersViewController controller;
 
-  const UsersView({
-    super.key,
-    required this.state,
-    required this.controller,
-  });
+  const UsersView({super.key, required this.state, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarView(
-        context,
-        title: 'Users',
-      ),
+      appBar: AppBarView(context, title: 'Users'),
       body: BackgroundView(
         blobs: state.backgroundBlobs.toList(),
         child: Column(
@@ -64,19 +55,14 @@ class UsersView extends StatelessWidget {
                     onPressed: () {
                       controller.showUserFilters(context);
                     },
-                    icon: const Icon(
-                      LucideIcons.slidersHorizontal,
-                      size: 18,
-                    ),
+                    icon: const Icon(LucideIcons.slidersHorizontal, size: 18),
                     tooltip: 'Filters',
                   ),
                   FilterChip(
                     onSelected: (value) {
                       controller.showUserFilters(context);
                     },
-                    label: Text(
-                      getContentShowCriteriaName(state.showCriteria),
-                    ),
+                    label: Text(getContentShowCriteriaName(state.showCriteria)),
                     tooltip: 'Show',
                   ),
                   if (state.showCriteria == ContentShowCriteria.all)
@@ -84,9 +70,10 @@ class UsersView extends StatelessWidget {
                       onSelected: (value) {
                         controller.showUserFilters(context);
                       },
-                      avatar: state.sortOrder == ColourloversRequestSortBy.ASC
-                          ? const Icon(LucideIcons.arrowUp)
-                          : const Icon(LucideIcons.arrowDown),
+                      avatar:
+                          state.sortOrder == ColourloversRequestSortBy.ASC
+                              ? const Icon(LucideIcons.arrowUp)
+                              : const Icon(LucideIcons.arrowDown),
                       label: Text(
                         getColourloversRequestOrderByName(state.sortBy),
                       ),

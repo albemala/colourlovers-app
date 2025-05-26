@@ -7,11 +7,7 @@ class ColorTileView extends StatelessWidget {
   final void Function() onTap;
   final ColorTileViewState state;
 
-  const ColorTileView({
-    super.key,
-    required this.onTap,
-    required this.state,
-  });
+  const ColorTileView({super.key, required this.onTap, required this.state});
 
   @override
   Widget build(BuildContext context) {

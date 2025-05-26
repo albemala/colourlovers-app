@@ -25,13 +25,13 @@ class PatternFiltersViewState extends Equatable {
 
   @override
   List<Object?> get props => [
-        showCriteria,
-        sortBy,
-        sortOrder,
-        colorFilter,
-        hueRanges,
-        backgroundBlobs,
-      ];
+    showCriteria,
+    sortBy,
+    sortOrder,
+    colorFilter,
+    hueRanges,
+    backgroundBlobs,
+  ];
 
   PatternFiltersViewState copyWith({
     ContentShowCriteria? showCriteria,

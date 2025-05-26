@@ -14,9 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 class ColorsViewCreator extends StatelessWidget {
-  const ColorsViewCreator({
-    super.key,
-  });
+  const ColorsViewCreator({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +36,7 @@ class ColorsView extends StatelessWidget {
   final ColorsViewState state;
   final ColorsViewController controller;
 
-  const ColorsView({
-    super.key,
-    required this.state,
-    required this.controller,
-  });
+  const ColorsView({super.key, required this.state, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -74,19 +68,14 @@ class ColorsView extends StatelessWidget {
                     onPressed: () {
                       controller.showColorFilters(context);
                     },
-                    icon: const Icon(
-                      LucideIcons.slidersHorizontal,
-                      size: 18,
-                    ),
+                    icon: const Icon(LucideIcons.slidersHorizontal, size: 18),
                     tooltip: 'Filters',
                   ),
                   FilterChip(
                     onSelected: (value) {
                       controller.showColorFilters(context);
                     },
-                    label: Text(
-                      getContentShowCriteriaName(state.showCriteria),
-                    ),
+                    label: Text(getContentShowCriteriaName(state.showCriteria)),
                     tooltip: 'Show',
                   ),
                   if (state.showCriteria == ContentShowCriteria.all)
@@ -94,9 +83,10 @@ class ColorsView extends StatelessWidget {
                       onSelected: (value) {
                         controller.showColorFilters(context);
                       },
-                      avatar: state.sortOrder == ColourloversRequestSortBy.ASC
-                          ? const Icon(LucideIcons.arrowUp)
-                          : const Icon(LucideIcons.arrowDown),
+                      avatar:
+                          state.sortOrder == ColourloversRequestSortBy.ASC
+                              ? const Icon(LucideIcons.arrowUp)
+                              : const Icon(LucideIcons.arrowDown),
                       label: Text(
                         getColourloversRequestOrderByName(state.sortBy),
                       ),
@@ -135,8 +125,12 @@ class ColorsView extends StatelessWidget {
                         lowerValue: state.brightnessMin.toDouble(),
                         upperValue: state.brightnessMax.toDouble(),
                         getColor: (value) {
-                          return HSVColor.fromAHSV(1, 0, 0, value / 100)
-                              .toColor();
+                          return HSVColor.fromAHSV(
+                            1,
+                            0,
+                            0,
+                            value / 100,
+                          ).toColor();
                         },
                       ),
                     ),

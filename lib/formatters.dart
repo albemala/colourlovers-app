@@ -16,7 +16,7 @@ extension DateTimeFormatting on DateTime? {
 
 extension DoubleToIntString on String {
   String toIntString() {
-    final double? value = double.tryParse(this);
+    final value = double.tryParse(this);
     if (value == null) return this;
     return value.truncate().toString();
   }

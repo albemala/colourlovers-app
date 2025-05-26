@@ -28,15 +28,15 @@ class PaletteFiltersDataState extends Equatable {
 
   @override
   List<Object> get props => [
-        showCriteria,
-        sortBy,
-        sortOrder,
-        colorFilter,
-        hueRanges,
-        hex,
-        paletteName,
-        userName,
-      ];
+    showCriteria,
+    sortBy,
+    sortOrder,
+    colorFilter,
+    hueRanges,
+    hex,
+    paletteName,
+    userName,
+  ];
 
   PaletteFiltersDataState copyWith({
     ContentShowCriteria? showCriteria,
@@ -90,9 +90,12 @@ class PaletteFiltersDataState extends Equatable {
           sortBy: ColourloversRequestOrderBy.values.byName(sortBy),
           sortOrder: ColourloversRequestSortBy.values.byName(sortOrder),
           colorFilter: ColorFilter.values.byName(colorFilter),
-          hueRanges: hueRanges.map((range) {
-            return ColourloversRequestHueRange.values.byName(range as String);
-          }).toIList(),
+          hueRanges:
+              hueRanges.map((range) {
+                return ColourloversRequestHueRange.values.byName(
+                  range as String,
+                );
+              }).toIList(),
           hex: hex,
           paletteName: paletteName,
           userName: userName,

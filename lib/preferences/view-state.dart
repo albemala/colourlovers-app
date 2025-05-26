@@ -17,11 +17,7 @@ class PreferencesViewState extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-        themeMode,
-        flexScheme,
-        backgroundBlobs,
-      ];
+  List<Object?> get props => [themeMode, flexScheme, backgroundBlobs];
 
   PreferencesViewState copyWith({
     ThemeMode? themeMode,

@@ -11,19 +11,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ShareColorViewCreator extends StatelessWidget {
   final ColourloversColor color;
 
-  const ShareColorViewCreator({
-    super.key,
-    required this.color,
-  });
+  const ShareColorViewCreator({super.key, required this.color});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) {
-        return ShareColorViewController.fromContext(
-          context,
-          color: color,
-        );
+        return ShareColorViewController.fromContext(context, color: color);
       },
       child: BlocBuilder<ShareColorViewController, ShareColorViewState>(
         builder: (context, state) {
@@ -50,23 +44,19 @@ class ShareColorView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarView(
-        context,
-        title: 'Share Color',
-      ),
+      appBar: AppBarView(context, title: 'Share Color'),
       body: BackgroundView(
         blobs: state.backgroundBlobs.toList(),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(
-                height: 96,
-                child: ColorView(hex: state.hex),
-              ),
+              SizedBox(height: 96, child: ColorView(hex: state.hex)),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 32,
+                ),
                 child: Column(
                   spacing: 32,
                   children: [
@@ -100,9 +90,7 @@ class ShareColorView extends StatelessWidget {
                         Row(
                           spacing: 8,
                           children: [
-                            Flexible(
-                              child: Image.network(state.imageUrl),
-                            ),
+                            Flexible(child: Image.network(state.imageUrl)),
                             TextButton(
                               onPressed: controller.shareImage,
                               child: const Text('Share'),

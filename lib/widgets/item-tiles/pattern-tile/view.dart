@@ -7,11 +7,7 @@ class PatternTileView extends StatelessWidget {
   final void Function() onTap;
   final PatternTileViewState state;
 
-  const PatternTileView({
-    super.key,
-    required this.onTap,
-    required this.state,
-  });
+  const PatternTileView({super.key, required this.onTap, required this.state});
 
   @override
   Widget build(BuildContext context) {

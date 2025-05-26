@@ -16,10 +16,7 @@ class RelatedPatternsViewState extends Equatable {
   });
 
   @override
-  List<Object> get props => [
-        itemsList,
-        backgroundBlobs,
-      ];
+  List<Object> get props => [itemsList, backgroundBlobs];
 
   RelatedPatternsViewState copyWith({
     ItemsListViewState<PatternTileViewState>? itemsList,

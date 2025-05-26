@@ -17,24 +17,26 @@ class ExploreViewController extends Cubit<ExploreViewState> {
   }
 
   ExploreViewController() : super(defaultExploreViewState) {
-    emit(state.copyWith(
-        backgroundBlobs:
-            generateBackgroundBlobs(getRandomPalette()).toIList()));
+    emit(
+      state.copyWith(
+        backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
+      ),
+    );
   }
 
   void showColorsView(BuildContext context) {
-    openScreen(context, const ColorsViewCreator());
+    openScreen<void>(context, const ColorsViewCreator());
   }
 
   void showPalettesView(BuildContext context) {
-    openScreen(context, const PalettesViewCreator());
+    openScreen<void>(context, const PalettesViewCreator());
   }
 
   void showPatternsView(BuildContext context) {
-    openScreen(context, const PatternsViewCreator());
+    openScreen<void>(context, const PatternsViewCreator());
   }
 
   void showUsersView(BuildContext context) {
-    openScreen(context, const UsersViewCreator());
+    openScreen<void>(context, const UsersViewCreator());
   }
 }

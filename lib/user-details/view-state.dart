@@ -42,21 +42,21 @@ class UserDetailsViewState extends Equatable {
 
   @override
   List<Object?> get props => [
-        isLoading,
-        userName,
-        numColors,
-        numPalettes,
-        numPatterns,
-        rating,
-        numLovers,
-        location,
-        dateRegistered,
-        dateLastActive,
-        userColors,
-        userPalettes,
-        userPatterns,
-        backgroundBlobs,
-      ];
+    isLoading,
+    userName,
+    numColors,
+    numPalettes,
+    numPatterns,
+    rating,
+    numLovers,
+    location,
+    dateRegistered,
+    dateLastActive,
+    userColors,
+    userPalettes,
+    userPatterns,
+    backgroundBlobs,
+  ];
 
   UserDetailsViewState copyWith({
     bool? isLoading,

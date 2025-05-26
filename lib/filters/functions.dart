@@ -50,7 +50,8 @@ String getColorFilterName(ColorFilter filter) {
 }
 
 String getColourloversRequestHueRangeName(
-    ColourloversRequestHueRange hueRange) {
+  ColourloversRequestHueRange hueRange,
+) {
   switch (hueRange) {
     case ColourloversRequestHueRange.red:
       return 'Red';
@@ -72,7 +73,8 @@ String getColourloversRequestHueRangeName(
 }
 
 Color getColourloversRequestHueRangeColor(
-    ColourloversRequestHueRange hueRange) {
+  ColourloversRequestHueRange hueRange,
+) {
   switch (hueRange) {
     case ColourloversRequestHueRange.red:
       return Colors.red;

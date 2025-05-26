@@ -28,10 +28,7 @@ class SkewedContainerView extends StatelessWidget {
         elevation: elevation,
         child: Transform(
           transform: Matrix4.skewX(-3),
-          child: Padding(
-            padding: padding,
-            child: child,
-          ),
+          child: Padding(padding: padding, child: child),
         ),
       ),
     );

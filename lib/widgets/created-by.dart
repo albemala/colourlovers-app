@@ -7,11 +7,7 @@ class CreatedByView extends StatelessWidget {
   final UserTileViewState user;
   final void Function() onUserTap;
 
-  const CreatedByView({
-    super.key,
-    required this.user,
-    required this.onUserTap,
-  });
+  const CreatedByView({super.key, required this.user, required this.onUserTap});
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +16,7 @@ class CreatedByView extends StatelessWidget {
       spacing: 16,
       children: [
         const H2TextView('Created by'),
-        UserTileView(
-          state: user,
-          onTap: onUserTap,
-        ),
+        UserTileView(state: user, onTap: onUserTap),
       ],
     );
   }

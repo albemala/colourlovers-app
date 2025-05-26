@@ -10,29 +10,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class RelatedPalettesViewCreator extends StatelessWidget {
   final List<String> hex;
 
-  const RelatedPalettesViewCreator({
-    super.key,
-    required this.hex,
-  });
+  const RelatedPalettesViewCreator({super.key, required this.hex});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider<RelatedPalettesViewController>(
       create: (context) {
-        return RelatedPalettesViewController.fromContext(
-          context,
-          hex: hex,
-        );
+        return RelatedPalettesViewController.fromContext(context, hex: hex);
       },
       child:
           BlocBuilder<RelatedPalettesViewController, RelatedPalettesViewState>(
-        builder: (context, state) {
-          return RelatedPalettesView(
-            state: state,
-            controller: context.read<RelatedPalettesViewController>(),
-          );
-        },
-      ),
+            builder: (context, state) {
+              return RelatedPalettesView(
+                state: state,
+                controller: context.read<RelatedPalettesViewController>(),
+              );
+            },
+          ),
     );
   }
 }
@@ -50,10 +44,7 @@ class RelatedPalettesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarView(
-        context,
-        title: 'Related palettes',
-      ),
+      appBar: AppBarView(context, title: 'Related palettes'),
       body: BackgroundView(
         blobs: state.backgroundBlobs.toList(),
         child: ItemsListView(

@@ -29,19 +29,16 @@ class UserDetailsViewController extends Cubit<UserDetailsViewState> {
     BuildContext context, {
     required ColourloversLover user,
   }) {
-    return UserDetailsViewController(
-      user,
-      ColourloversApiClient(),
-    );
+    return UserDetailsViewController(user, ColourloversApiClient());
   }
 
-  UserDetailsViewController(
-    this._user,
-    this._client,
-  ) : super(defaultUserDetailsViewState) {
-    emit(state.copyWith(
-        backgroundBlobs:
-            generateBackgroundBlobs(getRandomPalette()).toIList()));
+  UserDetailsViewController(this._user, this._client)
+    : super(defaultUserDetailsViewState) {
+    emit(
+      state.copyWith(
+        backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
+      ),
+    );
     _init();
   }
 
@@ -88,10 +85,7 @@ class UserDetailsViewController extends Cubit<UserDetailsViewState> {
   ) {
     final index = state.userColors.indexOf(tileViewState);
     final color = _userColors[index];
-    openScreen(
-      context,
-      ColorDetailsViewCreator(color: color),
-    );
+    openScreen<void>(context, ColorDetailsViewCreator(color: color));
   }
 
   void showPaletteDetailsView(
@@ -100,10 +94,7 @@ class UserDetailsViewController extends Cubit<UserDetailsViewState> {
   ) {
     final index = state.userPalettes.indexOf(tileViewState);
     final palette = _userPalettes[index];
-    openScreen(
-      context,
-      PaletteDetailsViewCreator(palette: palette),
-    );
+    openScreen<void>(context, PaletteDetailsViewCreator(palette: palette));
   }
 
   void showPatternDetailsView(
@@ -112,36 +103,24 @@ class UserDetailsViewController extends Cubit<UserDetailsViewState> {
   ) {
     final index = state.userPatterns.indexOf(tileViewState);
     final pattern = _userPatterns[index];
-    openScreen(
-      context,
-      PatternDetailsViewCreator(pattern: pattern),
-    );
+    openScreen<void>(context, PatternDetailsViewCreator(pattern: pattern));
   }
 
   void showUserColorsView(BuildContext context) {
     final userName = _user.userName;
     if (userName == null) return;
-    openScreen(
-      context,
-      UserColorsViewCreator(userName: userName),
-    );
+    openScreen<void>(context, UserColorsViewCreator(userName: userName));
   }
 
   void showUserPalettesView(BuildContext context) {
     final userName = _user.userName;
     if (userName == null) return;
-    openScreen(
-      context,
-      UserPalettesViewCreator(userName: userName),
-    );
+    openScreen<void>(context, UserPalettesViewCreator(userName: userName));
   }
 
   void showUserPatternsView(BuildContext context) {
     final userName = _user.userName;
     if (userName == null) return;
-    openScreen(
-      context,
-      UserPatternsViewCreator(userName: userName),
-    );
+    openScreen<void>(context, UserPatternsViewCreator(userName: userName));
   }
 }

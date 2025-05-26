@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
 class UserView extends StatelessWidget {
-  const UserView({
-    super.key,
-  });
+  const UserView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +14,9 @@ class UserView extends StatelessWidget {
           padding: const EdgeInsets.only(right: 8),
           child: Container(
             decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+              color: Theme.of(
+                context,
+              ).colorScheme.primary.withValues(alpha: 0.3),
               shape: BoxShape.circle,
             ),
             child: Padding(

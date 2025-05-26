@@ -6,9 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FavoritesViewCreator extends StatelessWidget {
-  const FavoritesViewCreator({
-    super.key,
-  });
+  const FavoritesViewCreator({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,16 +39,10 @@ class FavoritesView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarView(
-        context,
-        title: 'Favorites',
-        actions: const [],
-      ),
+      appBar: AppBarView(context, title: 'Favorites', actions: const []),
       body: BackgroundView(
         blobs: state.backgroundBlobs.toList(),
-        child: const Center(
-          child: Text('Favorites'),
-        ),
+        child: const Center(child: Text('Favorites')),
       ),
     );
   }

@@ -18,9 +18,7 @@ class RandomItemButton extends StatelessWidget {
     return IconButton(
       onPressed: onPressed,
       tooltip: tooltip,
-      icon: const Icon(
-        LucideIcons.sparkles,
-      ),
+      icon: const Icon(LucideIcons.sparkles),
     );
   }
 }
@@ -28,10 +26,7 @@ class RandomItemButton extends StatelessWidget {
 class ShareItemButton extends StatelessWidget {
   final void Function() onPressed;
 
-  const ShareItemButton({
-    super.key,
-    required this.onPressed,
-  });
+  const ShareItemButton({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {

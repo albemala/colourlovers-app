@@ -34,9 +34,7 @@ class ItemTileView extends StatelessWidget {
           ),
           Material(
             type: MaterialType.transparency,
-            child: InkWell(
-              onTap: onTap,
-            ),
+            child: InkWell(onTap: onTap),
           ),
           Positioned(
             top: 8,
@@ -48,7 +46,7 @@ class ItemTileView extends StatelessWidget {
                 Flexible(
                   child: SkewedContainerView(
                     padding: const EdgeInsets.fromLTRB(8, 4, 12, 4),
-                    color: Theme.of(context).colorScheme.inverseSurface,
+                    color: Theme.of(context).colorScheme.onSurface,
                     elevation: 4,
                     child: Text(
                       title,
@@ -56,9 +54,8 @@ class ItemTileView extends StatelessWidget {
                       overflow: TextOverflow.fade,
                       softWrap: false,
                       style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                            color:
-                                Theme.of(context).colorScheme.onInverseSurface,
-                          ),
+                        color: Theme.of(context).colorScheme.surface,
+                      ),
                     ),
                   ),
                 ),

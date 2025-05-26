@@ -16,21 +16,18 @@ Color _hexToColor(String hexString) {
 List<BackgroundBlob> generateBackgroundBlobs(List<Color> colors) {
   final random = Random();
   final blobCount = random.nextInt(3) + 3; // Random between 3 and 5
-  return List.generate(
-    blobCount,
-    (_) {
-      final blobColors = List.generate(
-        2,
-        (_) => colors[random.nextInt(colors.length)],
-      );
-      return BackgroundBlob(
-        positionRatio: _randomOffset(),
-        sizeRatio: _randomSize(),
-        colors: blobColors,
-        blur: _randomBlur(),
-      );
-    },
-  );
+  return List.generate(blobCount, (_) {
+    final blobColors = List.generate(
+      2,
+      (_) => colors[random.nextInt(colors.length)],
+    );
+    return BackgroundBlob(
+      positionRatio: _randomOffset(),
+      sizeRatio: _randomSize(),
+      colors: blobColors,
+      blur: _randomBlur(),
+    );
+  });
 }
 
 Offset _randomOffset() {

@@ -21,9 +21,7 @@ class ItemsListView<ItemType> extends StatelessWidget {
       itemBuilder: (context, index) {
         if (state.hasMoreItems && index == state.items.length) {
           if (state.isLoading) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
           } else {
             return OutlinedButton(
               onPressed: onLoadMorePressed,

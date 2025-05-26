@@ -41,14 +41,12 @@ class PreferencesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final schemes = FlexScheme.values.toList()
-      // Remove custom one
-      ..removeLast();
+    final schemes =
+        FlexScheme.values.toList()
+          // Remove custom one
+          ..removeLast();
     return Scaffold(
-      appBar: AppBarView(
-        context,
-        title: 'Preferences',
-      ),
+      appBar: AppBarView(context, title: 'Preferences'),
       body: BackgroundView(
         blobs: state.backgroundBlobs.toList(),
         child: SingleChildScrollView(
@@ -96,20 +94,21 @@ class PreferencesView extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     gridDelegate:
                         const SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 80,
-                      mainAxisSpacing: 8,
-                      crossAxisSpacing: 8,
-                      childAspectRatio: 1,
-                    ),
+                          maxCrossAxisExtent: 80,
+                          mainAxisSpacing: 8,
+                          crossAxisSpacing: 8,
+                          childAspectRatio: 1,
+                        ),
                     itemCount: schemes.length,
                     itemBuilder: (context, index) {
                       final scheme = schemes[index];
                       final schemeData = FlexColor.schemesWithCustom[scheme];
                       if (schemeData == null) return Container();
 
-                      final schemeColors = state.themeMode == ThemeMode.dark
-                          ? FlexColorScheme.dark(scheme: scheme)
-                          : FlexColorScheme.light(scheme: scheme);
+                      final schemeColors =
+                          state.themeMode == ThemeMode.dark
+                              ? FlexColorScheme.dark(scheme: scheme)
+                              : FlexColorScheme.light(scheme: scheme);
 
                       return _ThemeTileView(
                         colors: schemeColors,
@@ -157,9 +156,10 @@ class _ThemeTileView extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         side: BorderSide(
           width: 2,
-          color: isSelected
-              ? Theme.of(context).colorScheme.secondary
-              : Colors.transparent,
+          color:
+              isSelected
+                  ? Theme.of(context).colorScheme.secondary
+                  : Colors.transparent,
         ),
       ),
       child: InkWell(
@@ -182,9 +182,7 @@ class _ThemeTileView extends StatelessWidget {
 class _ThemeTilePainter extends CustomPainter {
   final List<Color> colors;
 
-  _ThemeTilePainter({
-    required this.colors,
-  });
+  _ThemeTilePainter({required this.colors});
 
   @override
   void paint(Canvas canvas, Size size) {

@@ -10,10 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class UserPatternsViewCreator extends StatelessWidget {
   final String userName;
 
-  const UserPatternsViewCreator({
-    super.key,
-    required this.userName,
-  });
+  const UserPatternsViewCreator({super.key, required this.userName});
 
   @override
   Widget build(BuildContext context) {
@@ -49,10 +46,7 @@ class UserPatternsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarView(
-        context,
-        title: 'User patterns',
-      ),
+      appBar: AppBarView(context, title: 'User patterns'),
       body: BackgroundView(
         blobs: state.backgroundBlobs.toList(),
         child: ItemsListView(

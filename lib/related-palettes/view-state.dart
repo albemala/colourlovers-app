@@ -16,10 +16,7 @@ class RelatedPalettesViewState extends Equatable {
   });
 
   @override
-  List<Object> get props => [
-        itemsList,
-        backgroundBlobs,
-      ];
+  List<Object> get props => [itemsList, backgroundBlobs];
 
   RelatedPalettesViewState copyWith({
     ItemsListViewState<PaletteTileViewState>? itemsList,

@@ -12,9 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ExploreViewCreator extends StatelessWidget {
-  const ExploreViewCreator({
-    super.key,
-  });
+  const ExploreViewCreator({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -36,19 +34,12 @@ class ExploreView extends StatelessWidget {
   final ExploreViewState state;
   final ExploreViewController controller;
 
-  const ExploreView({
-    super.key,
-    required this.state,
-    required this.controller,
-  });
+  const ExploreView({super.key, required this.state, required this.controller});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarView(
-        context,
-        title: 'Explore',
-      ),
+      appBar: AppBarView(context, title: 'Explore'),
       body: BackgroundView(
         blobs: state.backgroundBlobs.toList(),
         child: Padding(
@@ -128,22 +119,20 @@ class ExploreTileView extends StatelessWidget {
           ),
           Material(
             type: MaterialType.transparency,
-            child: InkWell(
-              onTap: onTap,
-            ),
+            child: InkWell(onTap: onTap),
           ),
           Positioned(
             top: 8,
             left: -4,
             child: SkewedContainerView(
               padding: const EdgeInsets.fromLTRB(16, 8, 21, 8),
-              color: Theme.of(context).colorScheme.inverseSurface,
+              color: Theme.of(context).colorScheme.onSurface,
               elevation: 4,
               child: Text(
                 title.toUpperCase(),
                 style: GoogleFonts.archivoNarrow(
                   textStyle: Theme.of(context).textTheme.bodyLarge,
-                  color: Theme.of(context).colorScheme.onInverseSurface,
+                  color: Theme.of(context).colorScheme.surface,
                   fontWeight: FontWeight.w600,
                   letterSpacing: 0.6,
                 ),

@@ -5,9 +5,7 @@ import 'package:colourlovers_app/users/view.dart';
 import 'package:flutter/material.dart';
 
 class ItemsTestView extends StatelessWidget {
-  const ItemsTestView({
-    super.key,
-  });
+  const ItemsTestView({super.key});
 
   @override
   Widget build(BuildContext context) {

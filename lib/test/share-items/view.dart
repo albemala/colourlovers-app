@@ -7,9 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ShareItemsTestViewCreator extends StatelessWidget {
-  const ShareItemsTestViewCreator({
-    super.key,
-  });
+  const ShareItemsTestViewCreator({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,19 +40,22 @@ class ShareItemsTestView extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: state.color != null
-              ? ShareColorViewCreator(color: state.color!)
-              : const Center(child: CircularProgressIndicator()),
+          child:
+              state.color != null
+                  ? ShareColorViewCreator(color: state.color!)
+                  : const Center(child: CircularProgressIndicator()),
         ),
         Expanded(
-          child: state.palette != null
-              ? SharePaletteViewCreator(palette: state.palette!)
-              : const Center(child: CircularProgressIndicator()),
+          child:
+              state.palette != null
+                  ? SharePaletteViewCreator(palette: state.palette!)
+                  : const Center(child: CircularProgressIndicator()),
         ),
         Expanded(
-          child: state.pattern != null
-              ? SharePatternViewCreator(pattern: state.pattern!)
-              : const Center(child: CircularProgressIndicator()),
+          child:
+              state.pattern != null
+                  ? SharePatternViewCreator(pattern: state.pattern!)
+                  : const Center(child: CircularProgressIndicator()),
         ),
       ],
     );

@@ -23,7 +23,7 @@ class ColorValueRangeIndicatorView extends StatelessWidget {
       height: 24,
       decoration: BoxDecoration(
         border: Border.all(
-          color: Theme.of(context).colorScheme.onBackground,
+          color: Theme.of(context).colorScheme.onSurface,
           width: 1,
         ),
         borderRadius: borderRadius,
@@ -66,16 +66,17 @@ class _ColorRangePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()..style = PaintingStyle.fill;
-    final backgroundColor = Theme.of(context).colorScheme.background;
+    final backgroundColor = Theme.of(context).colorScheme.surface;
     final width = size.width.toInt();
     final height = size.height;
     final range = max - min;
 
     for (var x = 0; x < width; x++) {
       final currentValue = min + (x / width) * range;
-      paint.color = (currentValue >= lowerValue && currentValue <= upperValue)
-          ? getColor(currentValue)
-          : backgroundColor;
+      paint.color =
+          (currentValue >= lowerValue && currentValue <= upperValue)
+              ? getColor(currentValue)
+              : backgroundColor;
       canvas.drawRect(Rect.fromLTWH(x.toDouble(), 0, 1, height), paint);
     }
   }

@@ -7,9 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppViewCreator extends StatelessWidget {
-  const AppViewCreator({
-    super.key,
-  });
+  const AppViewCreator({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,15 +31,11 @@ class AppView extends StatelessWidget {
   final AppViewController controller;
   final AppViewState state;
 
-  const AppView({
-    required this.controller,
-    required this.state,
-    super.key,
-  });
+  const AppView({required this.controller, required this.state, super.key});
 
   @override
   Widget build(BuildContext context) {
-/* TODO
+    /* TODO
         SystemChrome.setSystemUIOverlayStyle(
           SystemUiOverlayStyle(
             statusBarBrightness: themeMode == ThemeMode.dark

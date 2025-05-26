@@ -29,15 +29,15 @@ class ColorFiltersViewState extends Equatable {
 
   @override
   List<Object?> get props => [
-        showCriteria,
-        sortBy,
-        sortOrder,
-        hueMin,
-        hueMax,
-        brightnessMin,
-        brightnessMax,
-        backgroundBlobs,
-      ];
+    showCriteria,
+    sortBy,
+    sortOrder,
+    hueMin,
+    hueMax,
+    brightnessMin,
+    brightnessMax,
+    backgroundBlobs,
+  ];
 
   ColorFiltersViewState copyWith({
     ContentShowCriteria? showCriteria,

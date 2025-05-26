@@ -7,14 +7,10 @@ class ItemDetailsViewController extends Cubit<ItemDetailsViewState> {
   final ColourloversApiClient _client;
 
   factory ItemDetailsViewController.fromContext(BuildContext context) {
-    return ItemDetailsViewController(
-      ColourloversApiClient(),
-    );
+    return ItemDetailsViewController(ColourloversApiClient());
   }
 
-  ItemDetailsViewController(
-    this._client,
-  ) : super(defaultItemDetailsViewState) {
+  ItemDetailsViewController(this._client) : super(defaultItemDetailsViewState) {
     _init();
   }
 

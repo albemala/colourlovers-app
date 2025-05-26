@@ -17,23 +17,19 @@ class AboutViewController extends Cubit<AboutViewState> {
   }
 
   AboutViewController() : super(defaultAboutViewState) {
-    emit(state.copyWith(
-        backgroundBlobs:
-            generateBackgroundBlobs(getRandomPalette()).toIList()));
+    emit(
+      state.copyWith(
+        backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
+      ),
+    );
     _init();
   }
 
   Future<void> _init() async {
-    emit(
-      state.copyWith(
-        appVersion: await getAppVersion(),
-      ),
-    );
+    emit(state.copyWith(appVersion: await getAppVersion()));
   }
 
-  Future<void> shareApp(
-    Rect sharePosition,
-  ) async {
+  Future<void> shareApp(Rect sharePosition) async {
     await shareText(
       position: sharePosition,
       text: '$appName ∙ $appDescription ∙ $websiteUrl',
@@ -42,9 +38,7 @@ class AboutViewController extends Cubit<AboutViewState> {
 
   Future<void> rateApp() async {
     final inAppReview = InAppReview.instance;
-    await inAppReview.openStoreListing(
-      appStoreId: appleAppId,
-    );
+    await inAppReview.openStoreListing(appStoreId: appleAppId);
   }
 
   Future<void> openEmail() async {

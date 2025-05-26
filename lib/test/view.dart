@@ -4,9 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TestViewCreator extends StatelessWidget {
-  const TestViewCreator({
-    super.key,
-  });
+  const TestViewCreator({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +35,7 @@ class TestView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarView(
-        context,
-        title: 'Test',
-      ),
+      appBar: AppBarView(context, title: 'Test'),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

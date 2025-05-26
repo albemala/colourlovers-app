@@ -7,11 +7,7 @@ class PaletteTileView extends StatelessWidget {
   final void Function() onTap;
   final PaletteTileViewState state;
 
-  const PaletteTileView({
-    super.key,
-    required this.onTap,
-    required this.state,
-  });
+  const PaletteTileView({super.key, required this.onTap, required this.state});
 
   @override
   Widget build(BuildContext context) {

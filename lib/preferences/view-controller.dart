@@ -13,24 +13,23 @@ class PreferencesViewController extends Cubit<PreferencesViewState> {
   final PreferencesDataController _preferencesDataController;
 
   StreamSubscription<PreferencesDataState>?
-      _preferencesDataControllerSubscription;
+  _preferencesDataControllerSubscription;
 
   factory PreferencesViewController.fromContext(BuildContext context) {
-    return PreferencesViewController(
-      context.read<PreferencesDataController>(),
-    );
+    return PreferencesViewController(context.read<PreferencesDataController>());
   }
 
-  PreferencesViewController(
-    this._preferencesDataController,
-  ) : super(defaultPreferencesViewState) {
-    _preferencesDataControllerSubscription =
-        _preferencesDataController.stream.listen((_) {
-      _updateState();
-    });
-    emit(state.copyWith(
-        backgroundBlobs:
-            generateBackgroundBlobs(getRandomPalette()).toIList()));
+  PreferencesViewController(this._preferencesDataController)
+    : super(defaultPreferencesViewState) {
+    _preferencesDataControllerSubscription = _preferencesDataController.stream
+        .listen((_) {
+          _updateState();
+        });
+    emit(
+      state.copyWith(
+        backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
+      ),
+    );
     _updateState();
   }
 

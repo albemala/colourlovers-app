@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
+import 'package:flutter/material.dart';
 
 @immutable
 class PreferencesDataState extends Equatable {
@@ -13,10 +13,7 @@ class PreferencesDataState extends Equatable {
   });
 
   @override
-  List<Object> get props => [
-        themeMode,
-        flexScheme,
-      ];
+  List<Object> get props => [themeMode, flexScheme];
 
   PreferencesDataState copyWith({
     ThemeMode? themeMode,
@@ -29,18 +26,12 @@ class PreferencesDataState extends Equatable {
   }
 
   Map<String, dynamic> toMap() {
-    return {
-      'themeMode': themeMode.name,
-      'theme': flexScheme.name,
-    };
+    return {'themeMode': themeMode.name, 'theme': flexScheme.name};
   }
 
   factory PreferencesDataState.fromMap(Map<String, dynamic> map) {
     return switch (map) {
-      {
-        'themeMode': final String themeMode,
-        'theme': final String flexScheme,
-      } =>
+      {'themeMode': final String themeMode, 'theme': final String flexScheme} =>
         PreferencesDataState(
           themeMode: ThemeMode.values.byName(themeMode),
           flexScheme: FlexScheme.values.byName(flexScheme),

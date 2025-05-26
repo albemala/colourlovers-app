@@ -41,20 +41,20 @@ class PatternDetailsViewState extends Equatable {
 
   @override
   List<Object?> get props => [
-        isLoading,
-        id,
-        title,
-        colors,
-        colorViewStates,
-        imageUrl,
-        numViews,
-        numVotes,
-        rank,
-        user,
-        relatedPalettes,
-        relatedPatterns,
-        backgroundBlobs,
-      ];
+    isLoading,
+    id,
+    title,
+    colors,
+    colorViewStates,
+    imageUrl,
+    numViews,
+    numVotes,
+    rank,
+    user,
+    relatedPalettes,
+    relatedPatterns,
+    backgroundBlobs,
+  ];
 
   PatternDetailsViewState copyWith({
     bool? isLoading,

@@ -12,10 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class SharePatternViewCreator extends StatelessWidget {
   final ColourloversPattern pattern;
 
-  const SharePatternViewCreator({
-    super.key,
-    required this.pattern,
-  });
+  const SharePatternViewCreator({super.key, required this.pattern});
 
   @override
   Widget build(BuildContext context) {
@@ -51,10 +48,7 @@ class SharePatternView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBarView(
-        context,
-        title: 'Share Pattern',
-      ),
+      appBar: AppBarView(context, title: 'Share Pattern'),
       body: BackgroundView(
         blobs: state.backgroundBlobs.toList(),
         child: SingleChildScrollView(
@@ -63,13 +57,13 @@ class SharePatternView extends StatelessWidget {
             children: [
               SizedBox(
                 height: 96,
-                child: PatternView(
-                  imageUrl: state.imageUrl,
-                ),
+                child: PatternView(imageUrl: state.imageUrl),
               ),
               Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 32),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 32,
+                ),
                 child: Column(
                   spacing: 32,
                   children: [
@@ -80,26 +74,27 @@ class SharePatternView extends StatelessWidget {
                         const H2TextView('Values'),
                         Column(
                           spacing: 8,
-                          children: state.colors.map((color) {
-                            return Row(
-                              spacing: 8,
-                              children: [
-                                SizedBox(
-                                  width: 120,
-                                  child: H1TextView('#$color'),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    controller.copyColorToClipboard(
-                                      context,
-                                      color,
-                                    );
-                                  },
-                                  child: const Text('Copy'),
-                                ),
-                              ],
-                            );
-                          }).toList(),
+                          children:
+                              state.colors.map((color) {
+                                return Row(
+                                  spacing: 8,
+                                  children: [
+                                    SizedBox(
+                                      width: 120,
+                                      child: H1TextView('#$color'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+                                        controller.copyColorToClipboard(
+                                          context,
+                                          color,
+                                        );
+                                      },
+                                      child: const Text('Copy'),
+                                    ),
+                                  ],
+                                );
+                              }).toList(),
                         ),
                       ],
                     ),
@@ -111,9 +106,7 @@ class SharePatternView extends StatelessWidget {
                         Row(
                           spacing: 8,
                           children: [
-                            Flexible(
-                              child: Image.network(state.imageUrl),
-                            ),
+                            Flexible(child: Image.network(state.imageUrl)),
                             TextButton(
                               onPressed: controller.shareImage,
                               child: const Text('Share'),

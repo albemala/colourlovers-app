@@ -18,12 +18,7 @@ class UserFiltersDataState extends Equatable {
   });
 
   @override
-  List<Object> get props => [
-        showCriteria,
-        sortBy,
-        sortOrder,
-        userName,
-      ];
+  List<Object> get props => [showCriteria, sortBy, sortOrder, userName];
 
   UserFiltersDataState copyWith({
     ContentShowCriteria? showCriteria,

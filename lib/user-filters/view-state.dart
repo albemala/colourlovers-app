@@ -20,12 +20,7 @@ class UserFiltersViewState extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-        showCriteria,
-        sortBy,
-        sortOrder,
-        backgroundBlobs,
-      ];
+  List<Object?> get props => [showCriteria, sortBy, sortOrder, backgroundBlobs];
 
   UserFiltersViewState copyWith({
     ContentShowCriteria? showCriteria,

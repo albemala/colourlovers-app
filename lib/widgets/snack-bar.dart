@@ -13,7 +13,5 @@ SnackBar createGenericSnackBar({
 }
 
 SnackBar createCopiedToClipboardSnackBar(String text) {
-  return createGenericSnackBar(
-    message: '$text copied to clipboard',
-  );
+  return createGenericSnackBar(message: '$text copied to clipboard');
 }

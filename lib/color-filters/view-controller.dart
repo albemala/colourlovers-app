@@ -29,9 +29,8 @@ class ColorFiltersViewController extends Cubit<ColorFiltersViewState> {
     );
   }
 
-  ColorFiltersViewController(
-    this._dataController,
-  ) : super(defaultColorFiltersViewState) {
+  ColorFiltersViewController(this._dataController)
+    : super(defaultColorFiltersViewState) {
     _showCriteria = _dataController.showCriteria;
     _sortBy = _dataController.sortBy;
     _sortOrder = _dataController.sortOrder;
@@ -42,13 +41,13 @@ class ColorFiltersViewController extends Cubit<ColorFiltersViewState> {
     colorNameController.value = TextEditingValue(
       text: _dataController.colorName,
     );
-    userNameController.value = TextEditingValue(
-      text: _dataController.userName,
-    );
+    userNameController.value = TextEditingValue(text: _dataController.userName);
 
-    emit(state.copyWith(
-        backgroundBlobs:
-            generateBackgroundBlobs(getRandomPalette()).toIList()));
+    emit(
+      state.copyWith(
+        backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
+      ),
+    );
     _updateState();
   }
 

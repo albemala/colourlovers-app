@@ -15,11 +15,7 @@ class ItemsPagination<ItemType> extends ChangeNotifier {
     notifyListeners();
 
     const numResults = 20;
-    final newItems = await loadItems(
-          numResults,
-          page * numResults,
-        ) ??
-        [];
+    final newItems = await loadItems(numResults, page * numResults) ?? [];
 
     isLoading = false;
     items = [...items, ...newItems];

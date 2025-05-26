@@ -20,25 +20,23 @@ class UserColorsViewController extends Cubit<UserColorsViewState> {
     BuildContext context, {
     required String userName,
   }) {
-    return UserColorsViewController(
-      userName,
-      ColourloversApiClient(),
-    );
+    return UserColorsViewController(userName, ColourloversApiClient());
   }
 
-  UserColorsViewController(
-    this._userName,
-    this._client,
-  ) : super(defaultUserColorsViewState) {
+  UserColorsViewController(this._userName, this._client)
+    : super(defaultUserColorsViewState) {
     _pagination = ItemsPagination<ColourloversColor>((numResults, offset) {
       return fetchUserColors(_client, numResults, offset, _userName);
     });
-    _pagination.addListener(_updateState);
-    _pagination.load();
+    _pagination
+      ..addListener(_updateState)
+      ..load();
 
-    emit(state.copyWith(
-        backgroundBlobs:
-            generateBackgroundBlobs(getRandomPalette()).toIList()));
+    emit(
+      state.copyWith(
+        backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
+      ),
+    );
   }
 
   @override
@@ -57,7 +55,7 @@ class UserColorsViewController extends Cubit<UserColorsViewState> {
   ) {
     final index = state.itemsList.items.indexOf(tileViewState);
     final color = _pagination.items[index];
-    openScreen(context, ColorDetailsViewCreator(color: color));
+    openScreen<void>(context, ColorDetailsViewCreator(color: color));
   }
 
   void _updateState() {
@@ -65,9 +63,11 @@ class UserColorsViewController extends Cubit<UserColorsViewState> {
       state.copyWith(
         itemsList: ItemsListViewState(
           isLoading: _pagination.isLoading,
-          items: _pagination.items //
-              .map(ColorTileViewState.fromColourloverColor)
-              .toIList(),
+          items:
+              _pagination
+                  .items //
+                  .map(ColorTileViewState.fromColourloverColor)
+                  .toIList(),
           hasMoreItems: _pagination.hasMoreItems,
         ),
       ),

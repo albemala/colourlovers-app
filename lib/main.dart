@@ -16,11 +16,26 @@ Future<void> main() async {
   runApp(
     MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => PreferencesDataController()),
-        BlocProvider(create: (_) => ColorFiltersDataController()),
-        BlocProvider(create: (_) => PaletteFiltersDataController()),
-        BlocProvider(create: (_) => PatternFiltersDataController()),
-        BlocProvider(create: (_) => UserFiltersDataController()),
+        BlocProvider(
+          create: (_) => PreferencesDataController(),
+          lazy: false, //
+        ),
+        BlocProvider(
+          create: (_) => ColorFiltersDataController(),
+          lazy: false, //
+        ),
+        BlocProvider(
+          create: (_) => PaletteFiltersDataController(),
+          lazy: false, //
+        ),
+        BlocProvider(
+          create: (_) => PatternFiltersDataController(),
+          lazy: false, //
+        ),
+        BlocProvider(
+          create: (_) => UserFiltersDataController(),
+          lazy: false, //
+        ),
       ],
       child: const AppViewCreator(),
     ),

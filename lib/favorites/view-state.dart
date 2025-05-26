@@ -7,18 +7,12 @@ import 'package:flutter/material.dart';
 class FavoritesViewState extends Equatable {
   final IList<BackgroundBlob> backgroundBlobs;
 
-  const FavoritesViewState({
-    required this.backgroundBlobs,
-  });
+  const FavoritesViewState({required this.backgroundBlobs});
 
   @override
-  List<Object> get props => [
-        backgroundBlobs,
-      ];
+  List<Object> get props => [backgroundBlobs];
 
-  FavoritesViewState copyWith({
-    IList<BackgroundBlob>? backgroundBlobs,
-  }) {
+  FavoritesViewState copyWith({IList<BackgroundBlob>? backgroundBlobs}) {
     return FavoritesViewState(
       backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );

@@ -19,24 +19,21 @@ class UserFiltersViewController extends Cubit<UserFiltersViewState> {
   final userNameController = TextEditingController();
 
   factory UserFiltersViewController.fromContext(BuildContext context) {
-    return UserFiltersViewController(
-      context.read<UserFiltersDataController>(),
-    );
+    return UserFiltersViewController(context.read<UserFiltersDataController>());
   }
 
-  UserFiltersViewController(
-    this._dataController,
-  ) : super(defaultUserFiltersViewState) {
+  UserFiltersViewController(this._dataController)
+    : super(defaultUserFiltersViewState) {
     _showCriteria = _dataController.showCriteria;
     _sortBy = _dataController.sortBy;
     _sortOrder = _dataController.sortOrder;
-    userNameController.value = TextEditingValue(
-      text: _dataController.userName,
-    );
+    userNameController.value = TextEditingValue(text: _dataController.userName);
 
-    emit(state.copyWith(
-        backgroundBlobs:
-            generateBackgroundBlobs(getRandomPalette()).toIList()));
+    emit(
+      state.copyWith(
+        backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
+      ),
+    );
     _updateState();
   }
 

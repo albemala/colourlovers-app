@@ -34,19 +34,16 @@ class PatternDetailsViewController extends Cubit<PatternDetailsViewState> {
     BuildContext context, {
     required ColourloversPattern pattern,
   }) {
-    return PatternDetailsViewController(
-      pattern,
-      ColourloversApiClient(),
-    );
+    return PatternDetailsViewController(pattern, ColourloversApiClient());
   }
 
-  PatternDetailsViewController(
-    this._pattern,
-    this._client,
-  ) : super(defaultPatternDetailsViewState) {
-    emit(state.copyWith(
-        backgroundBlobs:
-            generateBackgroundBlobs(getRandomPalette()).toIList()));
+  PatternDetailsViewController(this._pattern, this._client)
+    : super(defaultPatternDetailsViewState) {
+    emit(
+      state.copyWith(
+        backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
+      ),
+    );
     _init();
   }
 
@@ -97,9 +94,10 @@ class PatternDetailsViewController extends Cubit<PatternDetailsViewState> {
         numViews: _pattern.numViews.formatted(),
         numVotes: _pattern.numVotes.formatted(),
         rank: _pattern.rank.formatted(),
-        user: _user != null
-            ? UserTileViewState.fromColourloverUser(_user!)
-            : defaultUserTileViewState,
+        user:
+            _user != null
+                ? UserTileViewState.fromColourloverUser(_user!)
+                : defaultUserTileViewState,
         relatedPalettes: mapToTileViewState(
           _relatedPalettes,
           PaletteTileViewState.fromColourloverPalette,
@@ -113,7 +111,7 @@ class PatternDetailsViewController extends Cubit<PatternDetailsViewState> {
   }
 
   void showSharePatternView(BuildContext context) {
-    openScreen(context, SharePatternViewCreator(pattern: _pattern));
+    openScreen<void>(context, SharePatternViewCreator(pattern: _pattern));
   }
 
   void showColorDetailsView(
@@ -122,10 +120,7 @@ class PatternDetailsViewController extends Cubit<PatternDetailsViewState> {
   ) {
     final index = state.colorViewStates.indexOf(tileViewState);
     final color = _colors[index];
-    openScreen(
-      context,
-      ColorDetailsViewCreator(color: color),
-    );
+    openScreen<void>(context, ColorDetailsViewCreator(color: color));
   }
 
   void showPaletteDetailsView(
@@ -134,10 +129,7 @@ class PatternDetailsViewController extends Cubit<PatternDetailsViewState> {
   ) {
     final index = state.relatedPalettes.indexOf(tileViewState);
     final palette = _relatedPalettes[index];
-    openScreen(
-      context,
-      PaletteDetailsViewCreator(palette: palette),
-    );
+    openScreen<void>(context, PaletteDetailsViewCreator(palette: palette));
   }
 
   void showPatternDetailsView(
@@ -146,36 +138,24 @@ class PatternDetailsViewController extends Cubit<PatternDetailsViewState> {
   ) {
     final index = state.relatedPatterns.indexOf(tileViewState);
     final pattern = _relatedPatterns[index];
-    openScreen(
-      context,
-      PatternDetailsViewCreator(pattern: pattern),
-    );
+    openScreen<void>(context, PatternDetailsViewCreator(pattern: pattern));
   }
 
   void showUserDetailsView(BuildContext context) {
     final user = _user;
     if (user == null) return;
-    openScreen(
-      context,
-      UserDetailsViewCreator(user: user),
-    );
+    openScreen<void>(context, UserDetailsViewCreator(user: user));
   }
 
   void showRelatedPalettesView(BuildContext context) {
     final colors = _pattern.colors;
     if (colors == null) return;
-    openScreen(
-      context,
-      RelatedPalettesViewCreator(hex: colors),
-    );
+    openScreen<void>(context, RelatedPalettesViewCreator(hex: colors));
   }
 
   void showRelatedPatternsView(BuildContext context) {
     final colors = _pattern.colors;
     if (colors == null) return;
-    openScreen(
-      context,
-      RelatedPatternsViewCreator(hex: colors),
-    );
+    openScreen<void>(context, RelatedPatternsViewCreator(hex: colors));
   }
 }

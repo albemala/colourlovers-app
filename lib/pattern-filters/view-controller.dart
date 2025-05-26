@@ -30,9 +30,8 @@ class PatternFiltersViewController extends Cubit<PatternFiltersViewState> {
     );
   }
 
-  PatternFiltersViewController(
-    this._dataController,
-  ) : super(defaultPatternFiltersViewState) {
+  PatternFiltersViewController(this._dataController)
+    : super(defaultPatternFiltersViewState) {
     _showCriteria = _dataController.showCriteria;
     _sortBy = _dataController.sortBy;
     _sortOrder = _dataController.sortOrder;
@@ -42,13 +41,13 @@ class PatternFiltersViewController extends Cubit<PatternFiltersViewState> {
     patternNameController.value = TextEditingValue(
       text: _dataController.patternName,
     );
-    userNameController.value = TextEditingValue(
-      text: _dataController.userName,
-    );
+    userNameController.value = TextEditingValue(text: _dataController.userName);
 
-    emit(state.copyWith(
-        backgroundBlobs:
-            generateBackgroundBlobs(getRandomPalette()).toIList()));
+    emit(
+      state.copyWith(
+        backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
+      ),
+    );
     _updateState();
   }
 
@@ -93,9 +92,7 @@ class PatternFiltersViewController extends Cubit<PatternFiltersViewState> {
       } else {
         showSnackBar(
           context,
-          createGenericSnackBar(
-            message: 'You can select up to 5 hue ranges',
-          ),
+          createGenericSnackBar(message: 'You can select up to 5 hue ranges'),
         );
       }
     }

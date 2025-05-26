@@ -7,11 +7,7 @@ class CreditsView extends StatelessWidget {
   final String itemName;
   final String itemUrl;
 
-  const CreditsView({
-    super.key,
-    required this.itemName,
-    required this.itemUrl,
-  });
+  const CreditsView({super.key, required this.itemName, required this.itemUrl});
 
   @override
   Widget build(BuildContext context) {

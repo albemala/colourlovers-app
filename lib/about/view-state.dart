@@ -14,10 +14,7 @@ class AboutViewState extends Equatable {
   });
 
   @override
-  List<Object> get props => [
-        appVersion,
-        backgroundBlobs,
-      ];
+  List<Object> get props => [appVersion, backgroundBlobs];
 
   AboutViewState copyWith({
     String? appVersion,

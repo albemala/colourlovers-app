@@ -16,17 +16,16 @@ class SharePatternViewController extends Cubit<SharePatternViewState> {
     BuildContext context, {
     required ColourloversPattern pattern,
   }) {
-    return SharePatternViewController(
-      pattern,
-    );
+    return SharePatternViewController(pattern);
   }
 
-  SharePatternViewController(
-    this._pattern,
-  ) : super(defaultSharePatternViewState) {
-    emit(state.copyWith(
-        backgroundBlobs:
-            generateBackgroundBlobs(getRandomPalette()).toIList()));
+  SharePatternViewController(this._pattern)
+    : super(defaultSharePatternViewState) {
+    emit(
+      state.copyWith(
+        backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
+      ),
+    );
     _init();
   }
 

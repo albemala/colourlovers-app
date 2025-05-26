@@ -16,10 +16,7 @@ class RelatedColorsViewState extends Equatable {
   });
 
   @override
-  List<Object> get props => [
-        itemsList,
-        backgroundBlobs,
-      ];
+  List<Object> get props => [itemsList, backgroundBlobs];
 
   RelatedColorsViewState copyWith({
     ItemsListViewState<ColorTileViewState>? itemsList,
