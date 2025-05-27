@@ -1,7 +1,7 @@
-import 'package:colourlovers_app/color-filters/view.dart';
-import 'package:colourlovers_app/palette-filters/view.dart';
-import 'package:colourlovers_app/pattern-filters/view.dart';
-import 'package:colourlovers_app/user-filters/view.dart';
+import 'package:colourlovers_app/filters/color/view.dart';
+import 'package:colourlovers_app/filters/palette/view.dart';
+import 'package:colourlovers_app/filters/pattern/view.dart';
+import 'package:colourlovers_app/filters/user/view.dart';
 import 'package:flutter/material.dart';
 
 class FiltersTestView extends StatelessWidget {

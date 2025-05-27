@@ -1,8 +1,8 @@
 import 'package:colourlovers_app/routing.dart';
+import 'package:colourlovers_app/test/details/view.dart';
 import 'package:colourlovers_app/test/filters/view.dart';
-import 'package:colourlovers_app/test/item-details/view.dart';
 import 'package:colourlovers_app/test/items/view.dart';
-import 'package:colourlovers_app/test/share-items/view.dart';
+import 'package:colourlovers_app/test/share/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

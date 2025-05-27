@@ -1,7 +1,7 @@
-import 'package:colourlovers_app/colors/view.dart';
-import 'package:colourlovers_app/palettes/view.dart';
-import 'package:colourlovers_app/patterns/view.dart';
-import 'package:colourlovers_app/users/view.dart';
+import 'package:colourlovers_app/lists/colors/view.dart';
+import 'package:colourlovers_app/lists/palettes/view.dart';
+import 'package:colourlovers_app/lists/patterns/view.dart';
+import 'package:colourlovers_app/lists/users/view.dart';
 import 'package:flutter/material.dart';
 
 class ItemsTestView extends StatelessWidget {

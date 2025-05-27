@@ -6,10 +6,14 @@ analyzer:
 
 linter:
   rules:
+    flutter_style_todos: false
     sort_pub_dependencies: false
     file_names: false
     public_member_api_docs: false
-    flutter_style_todos: false
     sort_constructors_first: false
     sort_unnamed_constructors_first: false
     always_put_required_named_parameters_first: false
+    avoid_positional_boolean_parameters: false
+    use_setters_to_change_properties: false
+    document_ignores: false
+    avoid_catches_without_on_clauses: false
