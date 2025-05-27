@@ -1,12 +1,12 @@
-import 'package:colourlovers_app/widgets/items-list/view-state.dart';
+import 'package:colourlovers_app/widgets/item-list/view-state.dart';
 import 'package:flutter/material.dart';
 
-class ItemsListView<ItemType> extends StatelessWidget {
-  final ItemsListViewState<ItemType> state;
+class ItemListView<ItemType> extends StatelessWidget {
+  final ItemListViewState<ItemType> state;
   final Widget Function(ItemType item) itemTileBuilder;
   final void Function() onLoadMorePressed;
 
-  const ItemsListView({
+  const ItemListView({
     super.key,
     required this.state,
     required this.itemTileBuilder,

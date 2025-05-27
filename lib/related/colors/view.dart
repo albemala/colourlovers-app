@@ -3,8 +3,8 @@ import 'package:colourlovers_app/related/colors/view-controller.dart';
 import 'package:colourlovers_app/related/colors/view-state.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background/view.dart';
+import 'package:colourlovers_app/widgets/item-list/view.dart';
 import 'package:colourlovers_app/widgets/item-tiles/color-tile/view.dart';
-import 'package:colourlovers_app/widgets/items-list/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -47,7 +47,7 @@ class RelatedColorsView extends StatelessWidget {
       appBar: AppBarView(context, title: 'Related colors'),
       body: BackgroundView(
         blobs: state.backgroundBlobs.toList(),
-        child: ItemsListView(
+        child: ItemListView(
           state: state.itemsList,
           itemTileBuilder: (itemViewState) {
             return ColorTileView(

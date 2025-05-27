@@ -5,8 +5,8 @@ import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/user-items.dart';
 import 'package:colourlovers_app/user/patterns/view-state.dart';
 import 'package:colourlovers_app/widgets/background/functions.dart';
+import 'package:colourlovers_app/widgets/item-list/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view-state.dart';
-import 'package:colourlovers_app/widgets/items-list/view-state.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -61,7 +61,7 @@ class UserPatternsViewController extends Cubit<UserPatternsViewState> {
   void _updateState() {
     emit(
       state.copyWith(
-        itemsList: ItemsListViewState(
+        itemsList: ItemListViewState(
           isLoading: _pagination.isLoading,
           items:
               _pagination

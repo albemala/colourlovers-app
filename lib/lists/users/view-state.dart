@@ -1,8 +1,8 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/filters/defines.dart';
 import 'package:colourlovers_app/widgets/background/defines.dart';
+import 'package:colourlovers_app/widgets/item-list/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/user-tile/view-state.dart';
-import 'package:colourlovers_app/widgets/items-list/view-state.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,7 @@ class UsersViewState extends Equatable {
   final String userName;
 
   // items
-  final ItemsListViewState<UserTileViewState> itemsList;
+  final ItemListViewState<UserTileViewState> itemsList;
   final IList<BackgroundBlob> backgroundBlobs;
 
   const UsersViewState({
@@ -43,7 +43,7 @@ class UsersViewState extends Equatable {
     ColourloversRequestOrderBy? sortBy,
     ColourloversRequestSortBy? sortOrder,
     String? userName,
-    ItemsListViewState<UserTileViewState>? itemsList,
+    ItemListViewState<UserTileViewState>? itemsList,
     IList<BackgroundBlob>? backgroundBlobs,
   }) {
     return UsersViewState(

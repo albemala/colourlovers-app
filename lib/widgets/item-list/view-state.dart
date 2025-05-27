@@ -7,12 +7,12 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
 @immutable
-class ItemsListViewState<ItemType> extends Equatable {
+class ItemListViewState<ItemType> extends Equatable {
   final bool isLoading;
   final IList<ItemType> items;
   final bool hasMoreItems;
 
-  const ItemsListViewState({
+  const ItemListViewState({
     required this.isLoading,
     required this.items,
     required this.hasMoreItems,
@@ -21,12 +21,12 @@ class ItemsListViewState<ItemType> extends Equatable {
   @override
   List<Object?> get props => [isLoading, items, hasMoreItems];
 
-  ItemsListViewState<ItemType> copyWith({
+  ItemListViewState<ItemType> copyWith({
     bool? isLoading,
     IList<ItemType>? items,
     bool? hasMoreItems,
   }) {
-    return ItemsListViewState<ItemType>(
+    return ItemListViewState<ItemType>(
       isLoading: isLoading ?? this.isLoading,
       items: items ?? this.items,
       hasMoreItems: hasMoreItems ?? this.hasMoreItems,
@@ -34,25 +34,25 @@ class ItemsListViewState<ItemType> extends Equatable {
   }
 }
 
-const defaultColorsListViewState = ItemsListViewState<ColorTileViewState>(
+const defaultColorsListViewState = ItemListViewState<ColorTileViewState>(
   isLoading: false,
   items: IList.empty(),
   hasMoreItems: true,
 );
 
-const defaultPalettesListViewState = ItemsListViewState<PaletteTileViewState>(
+const defaultPalettesListViewState = ItemListViewState<PaletteTileViewState>(
   isLoading: false,
   items: IList.empty(),
   hasMoreItems: true,
 );
 
-const defaultPatternsListViewState = ItemsListViewState<PatternTileViewState>(
+const defaultPatternsListViewState = ItemListViewState<PatternTileViewState>(
   isLoading: false,
   items: IList.empty(),
   hasMoreItems: true,
 );
 
-const defaultUsersListViewState = ItemsListViewState<UserTileViewState>(
+const defaultUsersListViewState = ItemListViewState<UserTileViewState>(
   isLoading: false,
   items: IList.empty(),
   hasMoreItems: true,

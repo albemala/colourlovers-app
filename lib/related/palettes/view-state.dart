@@ -1,13 +1,13 @@
 import 'package:colourlovers_app/widgets/background/defines.dart';
+import 'package:colourlovers_app/widgets/item-list/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/palette-tile/view-state.dart';
-import 'package:colourlovers_app/widgets/items-list/view-state.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
 @immutable
 class RelatedPalettesViewState extends Equatable {
-  final ItemsListViewState<PaletteTileViewState> itemsList;
+  final ItemListViewState<PaletteTileViewState> itemsList;
   final IList<BackgroundBlob> backgroundBlobs;
 
   const RelatedPalettesViewState({
@@ -19,7 +19,7 @@ class RelatedPalettesViewState extends Equatable {
   List<Object> get props => [itemsList, backgroundBlobs];
 
   RelatedPalettesViewState copyWith({
-    ItemsListViewState<PaletteTileViewState>? itemsList,
+    ItemListViewState<PaletteTileViewState>? itemsList,
     IList<BackgroundBlob>? backgroundBlobs,
   }) {
     return RelatedPalettesViewState(

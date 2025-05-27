@@ -1,8 +1,8 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/filters/defines.dart';
 import 'package:colourlovers_app/widgets/background/defines.dart';
+import 'package:colourlovers_app/widgets/item-list/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view-state.dart';
-import 'package:colourlovers_app/widgets/items-list/view-state.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +20,7 @@ class PatternsViewState extends Equatable {
   final String userName;
 
   // items
-  final ItemsListViewState<PatternTileViewState> itemsList;
+  final ItemListViewState<PatternTileViewState> itemsList;
   final IList<BackgroundBlob> backgroundBlobs;
 
   const PatternsViewState({
@@ -59,7 +59,7 @@ class PatternsViewState extends Equatable {
     String? hex,
     String? patternName,
     String? userName,
-    ItemsListViewState<PatternTileViewState>? itemsList,
+    ItemListViewState<PatternTileViewState>? itemsList,
     IList<BackgroundBlob>? backgroundBlobs,
   }) {
     return PatternsViewState(

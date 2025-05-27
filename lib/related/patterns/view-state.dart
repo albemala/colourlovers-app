@@ -1,13 +1,13 @@
 import 'package:colourlovers_app/widgets/background/defines.dart';
+import 'package:colourlovers_app/widgets/item-list/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view-state.dart';
-import 'package:colourlovers_app/widgets/items-list/view-state.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 
 @immutable
 class RelatedPatternsViewState extends Equatable {
-  final ItemsListViewState<PatternTileViewState> itemsList;
+  final ItemListViewState<PatternTileViewState> itemsList;
   final IList<BackgroundBlob> backgroundBlobs;
 
   const RelatedPatternsViewState({
@@ -19,7 +19,7 @@ class RelatedPatternsViewState extends Equatable {
   List<Object> get props => [itemsList, backgroundBlobs];
 
   RelatedPatternsViewState copyWith({
-    ItemsListViewState<PatternTileViewState>? itemsList,
+    ItemListViewState<PatternTileViewState>? itemsList,
     IList<BackgroundBlob>? backgroundBlobs,
   }) {
     return RelatedPatternsViewState(

@@ -10,8 +10,8 @@ import 'package:colourlovers_app/items-pagination.dart';
 import 'package:colourlovers_app/lists/users/view-state.dart';
 import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/widgets/background/functions.dart';
+import 'package:colourlovers_app/widgets/item-list/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/user-tile/view-state.dart';
-import 'package:colourlovers_app/widgets/items-list/view-state.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -108,7 +108,7 @@ class UsersViewController extends Cubit<UsersViewState> {
         sortBy: _dataController.sortBy,
         sortOrder: _dataController.sortOrder,
         userName: _dataController.userName,
-        itemsList: ItemsListViewState(
+        itemsList: ItemListViewState(
           isLoading: _pagination.isLoading,
           items:
               _pagination.items

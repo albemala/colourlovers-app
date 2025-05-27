@@ -7,8 +7,8 @@ import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/color-values-range-indicator.dart';
 import 'package:colourlovers_app/widgets/icon-buttons.dart';
+import 'package:colourlovers_app/widgets/item-list/view.dart';
 import 'package:colourlovers_app/widgets/item-tiles/color-tile/view.dart';
-import 'package:colourlovers_app/widgets/items-list/view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons/lucide_icons.dart';
@@ -157,7 +157,7 @@ class ColorsView extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: ItemsListView(
+              child: ItemListView(
                 state: state.itemsList,
                 itemTileBuilder: (itemViewState) {
                   return ColorTileView(
