@@ -1,0 +1,69 @@
+platform :ios do
+
+  lane :generate_certificates_profiles do |options|
+    match(
+      type: "development",
+#       force_for_new_devices: true,
+    )
+    match(
+      type: "adhoc",
+    )
+    match(
+      type: "appstore",
+    )
+  end
+
+  lane :production do |options|
+    match(
+      type: "appstore",
+      readonly: true,
+    )
+
+    build_ios_app(
+      scheme: "Runner",
+      export_method: "app-store",
+      output_directory: "build",
+    )
+
+    api_key = app_store_connect_api_key(
+      key_id: ENV["APPLE_KEY_ID"],
+      issuer_id: ENV["APPLE_ISSUER_ID"],
+      key_filepath: ENV["APPLE_KEY_FILEPATH"],
+    )
+    upload_to_app_store(
+      ipa: "build/Runner.ipa",
+      api_key: api_key,
+#       skip_metadata: true,
+      skip_screenshots: true,
+      precheck_include_in_app_purchases: false,
+      submit_for_review: true,
+      automatic_release: true,
+    )
+  end
+
+  lane :beta do |options|
+    match(
+      type: "appstore",
+      readonly: true,
+    )
+
+    build_ios_app(
+      scheme: "Runner",
+      export_method: "app-store",
+      output_directory: "build",
+    )
+
+    api_key = app_store_connect_api_key(
+      key_id: ENV["APPLE_KEY_ID"],
+      issuer_id: ENV["APPLE_ISSUER_ID"],
+      key_filepath: ENV["APPLE_KEY_FILEPATH"],
+    )
+    upload_to_testflight(
+      ipa: "build/Runner.ipa",
+      api_key: api_key,
+      skip_waiting_for_build_processing: false,
+      skip_submission: true,
+    )
+  end
+
+end

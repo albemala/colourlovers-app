@@ -1,13 +1,14 @@
-deprecated/
-
 # Miscellaneous
 *.class
 *.log
 *.pyc
 *.swp
 .DS_Store
+.atom/
 .buildlog/
 .history
+.svn/
+migrate_working_dir/
 
 # IntelliJ related
 *.iml
@@ -26,7 +27,6 @@ deprecated/
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
-.packages
 .pub-cache/
 .pub/
 /build/
@@ -41,3 +41,36 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+### Firebase
+.firebase/
+
+### Nodejs
+node_modules/
+
+### Build Artifacts
+macos-builds/
+windows-builds/
+web-builds/
+app.msix
+
+### Global
+.env
+
+### Android
+key.properties
+upload-key
+private_key.pepk
+
+### iOS and macOS
+build/
+AuthKey_*.p8
+
+### fastlane
+**/fastlane/report.xml
+**/fastlane/Preview.html
+**/fastlane/test_output
+**/fastlane/readme.md
+
+### deprecated
+/deprecated/

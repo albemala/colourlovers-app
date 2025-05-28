@@ -1,0 +1,74 @@
+platform :mac do
+
+  lane :generate_certificates_profiles do |options|
+    match(
+      type: "development",
+#       force_for_new_devices: true,
+    )
+    match(
+      type: "appstore",
+    )
+    match(
+      type: "developer_id",
+      additional_cert_types: [
+        "mac_installer_distribution",
+        "developer_id_installer",
+      ],
+    )
+  end
+
+  lane :production_store do |options|
+    match(
+      type: "appstore",
+      readonly: true,
+    )
+
+    build_mac_app(
+      scheme: "Runner",
+      export_method: "app-store",
+      export_team_id: ENV["TEAM_ID"],
+      output_directory: "build",
+    )
+
+    api_key = app_store_connect_api_key(
+      key_id: ENV["APPLE_KEY_ID"],
+      issuer_id: ENV["APPLE_ISSUER_ID"],
+      key_filepath: ENV["APPLE_KEY_FILEPATH"],
+    )
+    upload_to_app_store(
+      pkg: "build/colourlovers_app.pkg",
+      api_key: api_key,
+#       skip_metadata: true,
+      skip_screenshots: true,
+      precheck_include_in_app_purchases: false,
+      submit_for_review: true,
+      automatic_release: true,
+    )
+  end
+
+  lane :production_standalone do |options|
+    match(
+      type: "developer_id",
+      additional_cert_types: [
+        "mac_installer_distribution",
+        "developer_id_installer",
+      ],
+      readonly: true,
+    )
+
+    build_mac_app(
+      scheme: "Runner",
+      export_method: "developer-id",
+      export_team_id: ENV["TEAM_ID"],
+      output_directory: "build",
+    )
+
+    notarize(
+      asc_provider: ENV["TEAM_ID"],
+      package: "build/colourlovers_app.app",
+#       print_log: true,
+#       verbose: true,
+    )
+  end
+
+end
