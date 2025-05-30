@@ -55,7 +55,7 @@ class SharePaletteView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(
-                height: 96,
+                height: 128,
                 child: PaletteView(
                   hexs: state.colors.toList(),
                   widths: state.colorWidths.toList(),

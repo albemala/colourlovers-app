@@ -56,7 +56,7 @@ class SharePatternView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               SizedBox(
-                height: 96,
+                height: 128,
                 child: PatternView(imageUrl: state.imageUrl),
               ),
               Padding(

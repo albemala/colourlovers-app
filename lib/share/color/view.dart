@@ -51,7 +51,7 @@ class ShareColorView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(height: 96, child: ColorView(hex: state.hex)),
+              SizedBox(height: 128, child: ColorView(hex: state.hex)),
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16,
