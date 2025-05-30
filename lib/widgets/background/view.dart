@@ -12,6 +12,7 @@ class BackgroundView extends StatelessWidget {
   Widget build(BuildContext context) {
     if (blobs.isEmpty) return child;
     return Stack(
+      fit: StackFit.expand,
       children: [
         ...blobs.map(
           (blob) => Positioned(
