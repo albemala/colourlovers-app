@@ -16,6 +16,7 @@ class ItemColorsView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       spacing: 16,
       children: [
         const H2TextView('Colors'),
