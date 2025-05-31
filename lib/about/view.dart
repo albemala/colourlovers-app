@@ -49,12 +49,25 @@ class AboutView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             spacing: 32,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                spacing: 0,
+              Row(
+                spacing: 16,
                 children: [
-                  const H1TextView(appName),
-                  H2TextView(state.appVersion),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    child: Image.asset(
+                      'assets/app-icon/icon.png',
+                      width: 64,
+                      height: 64,
+                    ),
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 0,
+                    children: [
+                      const H1TextView(appName),
+                      H2TextView(state.appVersion),
+                    ],
+                  ),
                 ],
               ),
               Row(
