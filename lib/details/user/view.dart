@@ -1,6 +1,7 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/details/user/view-controller.dart';
 import 'package:colourlovers_app/details/user/view-state.dart';
+import 'package:colourlovers_app/theme/text.dart';
 import 'package:colourlovers_app/urls/defines.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background/view.dart';
@@ -10,6 +11,7 @@ import 'package:colourlovers_app/widgets/item-tiles/palette-tile/view.dart';
 import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view.dart';
 import 'package:colourlovers_app/widgets/label-value.dart';
 import 'package:colourlovers_app/widgets/related-items-preview.dart';
+import 'package:colourlovers_app/widgets/stats.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -68,60 +70,54 @@ class UserDetailsView extends StatelessWidget {
                     vertical: 32,
                   ),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     spacing: 32,
                     children: [
                       Center(
                         child: Text(
                           state.userName,
-                          style: Theme.of(context).textTheme.titleLarge,
+                          style: getUserNameTextStyle(context),
                         ),
                       ),
+                      StatsView(
+                        stats: [
+                          StatsItemViewState(
+                            label: 'Colors',
+                            value: state.numColors,
+                          ),
+                          StatsItemViewState(
+                            label: 'Palettes',
+                            value: state.numPalettes,
+                          ),
+                          StatsItemViewState(
+                            label: 'Patterns',
+                            value: state.numPatterns,
+                          ),
+                        ],
+                      ),
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         spacing: 8,
                         children: [
-                          Column(
-                            children: [
-                              LabelValueView(
-                                label: 'Colors',
-                                value: state.numColors,
-                              ),
-                              LabelValueView(
-                                label: 'Palettes',
-                                value: state.numPalettes,
-                              ),
-                              LabelValueView(
-                                label: 'Patterns',
-                                value: state.numPatterns,
-                              ),
-                            ],
+                          LabelValueView(
+                            label: 'Rating',
+                            value: state.rating,
                           ),
-                          Column(
-                            children: [
-                              LabelValueView(
-                                label: 'Rating',
-                                value: state.rating,
-                              ),
-                              LabelValueView(
-                                label: 'Lovers',
-                                value: state.numLovers,
-                              ),
-                            ],
+                          LabelValueView(
+                            label: 'Lovers',
+                            value: state.numLovers,
                           ),
-                          Column(
-                            children: [
-                              LabelValueView(
-                                label: 'Location',
-                                value: state.location,
-                              ),
-                              LabelValueView(
-                                label: 'Registered',
-                                value: state.dateRegistered,
-                              ),
-                              LabelValueView(
-                                label: 'Last Active',
-                                value: state.dateLastActive,
-                              ),
-                            ],
+                          LabelValueView(
+                            label: 'Location',
+                            value: state.location,
+                          ),
+                          LabelValueView(
+                            label: 'Registered',
+                            value: state.dateRegistered,
+                          ),
+                          LabelValueView(
+                            label: 'Last Active',
+                            value: state.dateLastActive,
                           ),
                         ],
                       ),

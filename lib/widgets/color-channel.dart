@@ -1,6 +1,6 @@
+import 'package:colourlovers_app/theme/text.dart';
 import 'package:colourlovers_app/widgets/color-channel-track.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ColorChannelView extends StatelessWidget {
   final String label;
@@ -25,13 +25,7 @@ class ColorChannelView extends StatelessWidget {
       children: [
         SizedBox(
           width: 12,
-          child: Text(
-            label,
-            style: GoogleFonts.archivoNarrow(
-              textStyle: Theme.of(context).textTheme.bodyMedium,
-              letterSpacing: 0.6,
-            ),
-          ),
+          child: Text(label, style: getColorChannelTextStyle(context)),
         ),
         Expanded(
           child: ColorChannelTrackView(
@@ -45,7 +39,7 @@ class ColorChannelView extends StatelessWidget {
           width: 32,
           child: Text(
             value.toInt().toString(),
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: getColorValueTextStyle(context),
           ),
         ),
       ],

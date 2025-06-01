@@ -1,3 +1,4 @@
+import 'package:colourlovers_app/theme/text.dart';
 import 'package:flutter/material.dart';
 
 class LinkView extends StatelessWidget {
@@ -8,19 +9,11 @@ class LinkView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO can I use a text button instead?
     return Material(
       type: MaterialType.transparency,
       child: InkWell(
         onTap: onTap,
-        child: Text(
-          text,
-          style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-            color: Theme.of(context).colorScheme.primary,
-            decoration: TextDecoration.underline,
-            decorationColor: Theme.of(context).colorScheme.primary,
-          ),
-        ),
+        child: Text(text, style: getLinkTextStyle(context)),
       ),
     );
   }

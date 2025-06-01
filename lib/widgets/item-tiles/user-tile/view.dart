@@ -1,3 +1,4 @@
+import 'package:colourlovers_app/theme/text.dart';
 import 'package:colourlovers_app/widgets/item-tiles/user-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/items/user.dart';
 import 'package:colourlovers_app/widgets/pill.dart';
@@ -44,9 +45,7 @@ class UserTileView extends StatelessWidget {
                     // maxLines: 1,
                     // overflow: TextOverflow.fade,
                     // softWrap: false,
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.surface,
-                    ),
+                    style: getItemTileTextStyle(context),
                   ),
                 ),
                 const SizedBox(width: 8),

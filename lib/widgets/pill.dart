@@ -1,3 +1,4 @@
+import 'package:colourlovers_app/theme/text.dart';
 import 'package:flutter/material.dart';
 
 class PillView extends StatelessWidget {
@@ -22,12 +23,7 @@ class PillView extends StatelessWidget {
             color: Theme.of(context).colorScheme.secondaryContainer,
           ),
           const SizedBox(width: 8),
-          Text(
-            text,
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: Theme.of(context).colorScheme.surface,
-            ),
-          ),
+          Text(text, style: getPillTextStyle(context)),
         ],
       ),
     );

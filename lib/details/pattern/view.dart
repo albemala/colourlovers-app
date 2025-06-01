@@ -12,8 +12,8 @@ import 'package:colourlovers_app/widgets/item-colors.dart';
 import 'package:colourlovers_app/widgets/item-tiles/palette-tile/view.dart';
 import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view.dart';
 import 'package:colourlovers_app/widgets/items/pattern.dart';
-import 'package:colourlovers_app/widgets/label-value.dart';
 import 'package:colourlovers_app/widgets/related-items-preview.dart';
+import 'package:colourlovers_app/widgets/stats.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -87,29 +87,19 @@ class PatternDetailsView extends StatelessWidget {
                           controller.showSharePatternView(context);
                         },
                       ),
-                      Column(
-                        children: [
-                          LabelValueView(label: 'Views', value: state.numViews),
-                          LabelValueView(label: 'Votes', value: state.numVotes),
-                          LabelValueView(label: 'Rank', value: state.rank),
+                      StatsView(
+                        stats: [
+                          StatsItemViewState(
+                            label: 'Views',
+                            value: state.numViews,
+                          ),
+                          StatsItemViewState(
+                            label: 'Votes',
+                            value: state.numVotes,
+                          ),
+                          StatsItemViewState(label: 'Rank', value: state.rank),
                         ],
                       ),
-                      // StatsView(
-                      //   stats: [
-                      //     StatsItemViewState(
-                      //       label: 'Views',
-                      //       value: state.numViews,
-                      //     ),
-                      //     StatsItemViewState(
-                      //       label: 'Votes',
-                      //       value: state.numVotes,
-                      //     ),
-                      //     StatsItemViewState(
-                      //       label: 'Rank',
-                      //       value: state.rank,
-                      //     ),
-                      //   ],
-                      // ),
                       ItemColorsView(
                         colorViewStates: state.colorViewStates.toList(),
                         onColorTap: (state) {

@@ -1,3 +1,4 @@
+import 'package:colourlovers_app/theme/text.dart';
 import 'package:colourlovers_app/widgets/pill.dart';
 import 'package:colourlovers_app/widgets/skewed-container.dart';
 import 'package:flutter/material.dart';
@@ -53,9 +54,7 @@ class ItemTileView extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.fade,
                       softWrap: false,
-                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.surface,
-                      ),
+                      style: getItemTileTextStyle(context),
                     ),
                   ),
                 ),

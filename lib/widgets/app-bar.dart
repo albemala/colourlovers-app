@@ -1,6 +1,6 @@
+import 'package:colourlovers_app/theme/text.dart';
 import 'package:colourlovers_app/widgets/skewed-container.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class AppBarView extends AppBar {
   AppBarView(
@@ -15,11 +15,7 @@ class AppBarView extends AppBar {
            color: Theme.of(context).colorScheme.primaryContainer,
            child: Text(
              title.toUpperCase(),
-             style: GoogleFonts.archivoNarrow(
-               textStyle: Theme.of(context).textTheme.bodyLarge,
-               fontWeight: FontWeight.w600,
-               letterSpacing: 0.6,
-             ),
+             style: getAppBarTitleTextStyle(context),
            ),
          ),
        );

@@ -1,3 +1,4 @@
+import 'package:colourlovers_app/theme/text.dart';
 import 'package:colourlovers_app/widgets/text.dart';
 import 'package:flutter/material.dart';
 
@@ -21,8 +22,10 @@ class StatsView extends StatelessWidget {
       children:
           stats.map((entry) {
             return Column(
-              // crossAxisAlignment: CrossAxisAlignment.start,
-              children: [H2TextView(entry.label), H1TextView(entry.value)],
+              children: [
+                H2TextView(entry.label),
+                Text(entry.value, style: getValueTextStyle(context)),
+              ],
             );
           }).toList(),
     );

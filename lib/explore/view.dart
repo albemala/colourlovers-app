@@ -1,5 +1,6 @@
 import 'package:colourlovers_app/explore/view-controller.dart';
 import 'package:colourlovers_app/explore/view-state.dart';
+import 'package:colourlovers_app/theme/text.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/items/color.dart';
@@ -9,7 +10,6 @@ import 'package:colourlovers_app/widgets/items/user.dart';
 import 'package:colourlovers_app/widgets/skewed-container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 class ExploreViewCreator extends StatelessWidget {
   const ExploreViewCreator({super.key});
@@ -130,12 +130,7 @@ class ExploreTileView extends StatelessWidget {
               elevation: 4,
               child: Text(
                 title.toUpperCase(),
-                style: GoogleFonts.archivoNarrow(
-                  textStyle: Theme.of(context).textTheme.bodyLarge,
-                  color: Theme.of(context).colorScheme.surface,
-                  fontWeight: FontWeight.w600,
-                  letterSpacing: 0.6,
-                ),
+                style: getExploreTileTextStyle(context),
               ),
             ),
           ),

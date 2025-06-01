@@ -7,20 +7,20 @@ Archivo Narrow is a variable font with this axis:
   wght
 
 This means all the styles are contained in these files:
-  ArchivoNarrow-VariableFont_wght.ttf
-  ArchivoNarrow-Italic-VariableFont_wght.ttf
+  Archivo_Narrow/ArchivoNarrow-VariableFont_wght.ttf
+  Archivo_Narrow/ArchivoNarrow-Italic-VariableFont_wght.ttf
 
 If your app fully supports variable fonts, you can now pick intermediate styles
 that aren’t available as static fonts. Not all apps support variable fonts, and
 in those cases you can use the static font files for Archivo Narrow:
-  static/ArchivoNarrow-Regular.ttf
-  static/ArchivoNarrow-Medium.ttf
-  static/ArchivoNarrow-SemiBold.ttf
-  static/ArchivoNarrow-Bold.ttf
-  static/ArchivoNarrow-Italic.ttf
-  static/ArchivoNarrow-MediumItalic.ttf
-  static/ArchivoNarrow-SemiBoldItalic.ttf
-  static/ArchivoNarrow-BoldItalic.ttf
+  Archivo_Narrow/static/ArchivoNarrow-Regular.ttf
+  Archivo_Narrow/static/ArchivoNarrow-Medium.ttf
+  Archivo_Narrow/static/ArchivoNarrow-SemiBold.ttf
+  Archivo_Narrow/static/ArchivoNarrow-Bold.ttf
+  Archivo_Narrow/static/ArchivoNarrow-Italic.ttf
+  Archivo_Narrow/static/ArchivoNarrow-MediumItalic.ttf
+  Archivo_Narrow/static/ArchivoNarrow-SemiBoldItalic.ttf
+  Archivo_Narrow/static/ArchivoNarrow-BoldItalic.ttf
 
 Get started
 -----------

@@ -4,6 +4,7 @@ import 'package:another_xlider/models/tooltip/tooltip.dart';
 import 'package:another_xlider/models/tooltip/tooltip_box.dart';
 import 'package:another_xlider/models/trackbar.dart';
 import 'package:colourlovers_app/formatters.dart';
+import 'package:colourlovers_app/theme/text.dart';
 import 'package:flutter/material.dart';
 
 class ColorValueRangeSelectorView extends StatelessWidget {
@@ -94,7 +95,7 @@ FlutterSliderTrackBar buildFlutterSliderTrackBar(
 
 FlutterSliderTooltip buildFlutterSliderTooltip(BuildContext context) {
   return FlutterSliderTooltip(
-    textStyle: Theme.of(context).textTheme.bodyMedium,
+    textStyle: getColorValueTextStyle(context),
     boxStyle: FlutterSliderTooltipBox(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surfaceContainerHighest,

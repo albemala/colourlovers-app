@@ -1,3 +1,4 @@
+import 'package:colourlovers_app/theme/text.dart';
 import 'package:colourlovers_app/widgets/item-button.dart';
 import 'package:flutter/material.dart';
 
@@ -18,9 +19,7 @@ class DetailsHeaderView extends StatelessWidget {
     return Column(
       spacing: 16,
       children: [
-        Center(
-          child: Text(title, style: Theme.of(context).textTheme.titleLarge),
-        ),
+        Center(child: Text(title, style: getDetailsHeaderTextStyle(context))),
         ItemButtonView(onTap: onItemTap, child: item),
       ],
     );
