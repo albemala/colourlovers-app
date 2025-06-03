@@ -10,6 +10,33 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
+const exploreView = NavigatorView(child: ExploreViewCreator());
+const favoritesView = NavigatorView(child: FavoritesViewCreator());
+const preferencesView = NavigatorView(child: PreferencesViewCreator());
+const aboutView = NavigatorView(child: AboutViewCreator());
+const testView = NavigatorView(child: TestViewCreator());
+
+const exploreDestination = NavigationDestination(
+  label: 'Explore',
+  icon: Icon(LucideIcons.compass),
+);
+const favoritesDestination = NavigationDestination(
+  label: 'Favorites',
+  icon: Icon(LucideIcons.star),
+);
+const preferencesDestination = NavigationDestination(
+  label: 'Preferences',
+  icon: Icon(LucideIcons.settings),
+);
+const aboutDestination = NavigationDestination(
+  label: 'About',
+  icon: Icon(LucideIcons.info),
+);
+const testDestination = NavigationDestination(
+  label: 'Test',
+  icon: Icon(LucideIcons.bug),
+);
+
 class AppContentViewCreator extends StatelessWidget {
   const AppContentViewCreator({super.key});
 
@@ -34,11 +61,15 @@ class AppContentViewCreator extends StatelessWidget {
 class AppContentView extends StatelessWidget {
   final AppContentViewController controller;
   final AppContentViewState state;
+  final List<Widget>? views;
+  final List<NavigationDestination>? destinations;
 
   const AppContentView({
     super.key,
     required this.controller,
     required this.state,
+    @visibleForTesting this.views,
+    @visibleForTesting this.destinations,
   });
 
   @override
@@ -46,34 +77,28 @@ class AppContentView extends StatelessWidget {
     return Scaffold(
       body: IndexedStack(
         index: state.currentRoute.index,
-        children: const [
-          NavigatorView(child: ExploreViewCreator()),
-          NavigatorView(child: FavoritesViewCreator()),
-          NavigatorView(child: PreferencesViewCreator()),
-          NavigatorView(child: AboutViewCreator()),
-          if (kDebugMode) NavigatorView(child: TestViewCreator()),
-        ],
+        children:
+            views ??
+            <Widget>[
+              exploreView,
+              favoritesView,
+              preferencesView,
+              aboutView,
+              if (kDebugMode) testView,
+            ],
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: state.currentRoute.index,
         onDestinationSelected: controller.setCurrentRoute,
-        destinations: const [
-          NavigationDestination(
-            label: 'Explore',
-            icon: Icon(LucideIcons.compass),
-          ),
-          NavigationDestination(
-            label: 'Favorites',
-            icon: Icon(LucideIcons.star),
-          ),
-          NavigationDestination(
-            label: 'Preferences',
-            icon: Icon(LucideIcons.settings),
-          ),
-          NavigationDestination(label: 'About', icon: Icon(LucideIcons.info)),
-          if (kDebugMode)
-            NavigationDestination(label: 'Test', icon: Icon(LucideIcons.bug)),
-        ],
+        destinations:
+            destinations ??
+            <NavigationDestination>[
+              exploreDestination,
+              favoritesDestination,
+              preferencesDestination,
+              aboutDestination,
+              if (kDebugMode) testDestination,
+            ],
       ),
     );
   }

@@ -48,11 +48,14 @@ dependencies:
   colourlovers_api:
     git:
       url: https://github.com/albemala/colourlovers-api-dart.git
-      ref: 1.1.1
+      ref: 2.0.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  mocktail: ^1.0.4
+  # flutter test --update-goldens test/screenshots/take_screenshots_test.dart
+  golden_screenshot: ^3.1.3
 
   build_runner: ^2.4.15
   icons_launcher: ^3.0.1

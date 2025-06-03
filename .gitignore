@@ -74,5 +74,4 @@ AuthKey_*.p8
 **/fastlane/test_output
 **/fastlane/readme.md
 
-### deprecated
-/deprecated/
+temp/
