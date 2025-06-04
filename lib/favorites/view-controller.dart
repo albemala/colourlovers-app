@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:collection/collection.dart';
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/details/color/view.dart';
 import 'package:colourlovers_app/details/palette/view.dart';

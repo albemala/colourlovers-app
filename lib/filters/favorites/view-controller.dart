@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:colourlovers_app/filters/favorites/data-controller.dart';
 import 'package:colourlovers_app/filters/favorites/data-state.dart';
 import 'package:colourlovers_app/filters/favorites/defines.dart';

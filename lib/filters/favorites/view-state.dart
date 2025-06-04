@@ -1,8 +1,8 @@
-import 'package:equatable/equatable.dart';
-import 'package:flutter/foundation.dart';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:colourlovers_app/filters/favorites/defines.dart';
 import 'package:colourlovers_app/widgets/background/defines.dart';
+import 'package:equatable/equatable.dart';
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:flutter/foundation.dart';
 
 @immutable
 class FavoritesFiltersViewState extends Equatable {

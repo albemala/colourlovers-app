@@ -1,6 +1,6 @@
+import 'package:colourlovers_app/filters/favorites/defines.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:colourlovers_app/filters/favorites/defines.dart';
 
 @immutable
 class FavoritesFiltersDataState extends Equatable {

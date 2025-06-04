@@ -1,8 +1,8 @@
 import 'package:colourlovers_app/app/view.dart';
 import 'package:colourlovers_app/favorites/data-controller.dart';
 import 'package:colourlovers_app/filters/color/data-controller.dart';
-import 'package:colourlovers_app/filters/palette/data-controller.dart';
 import 'package:colourlovers_app/filters/favorites/data-controller.dart';
+import 'package:colourlovers_app/filters/palette/data-controller.dart';
 import 'package:colourlovers_app/filters/pattern/data-controller.dart';
 import 'package:colourlovers_app/filters/user/data-controller.dart';
 import 'package:colourlovers_app/preferences/data-controller.dart';

@@ -1,6 +1,7 @@
 import 'package:colourlovers_app/favorites/view-controller.dart';
 import 'package:colourlovers_app/favorites/view-state.dart';
-import 'package:colourlovers_app/routing.dart';
+import 'package:colourlovers_app/filters/favorites/defines.dart';
+import 'package:colourlovers_app/filters/functions.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/item-tiles/color-tile/view-state.dart';
@@ -12,8 +13,6 @@ import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view.dart';
 import 'package:colourlovers_app/widgets/item-tiles/user-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/user-tile/view.dart';
 import 'package:flutter/material.dart';
-import 'package:colourlovers_app/filters/favorites/defines.dart';
-import 'package:colourlovers_app/filters/functions.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
