@@ -19,7 +19,7 @@
     </queries>
 
     <application
-        android:label="colourlovers_app"
+        android:label="LUV"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

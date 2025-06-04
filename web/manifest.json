@@ -1,6 +1,6 @@
 {
-    "name": "colourlovers_app",
-    "short_name": "colourlovers_app",
+    "name": "LUV",
+    "short_name": "LUV",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

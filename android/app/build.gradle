@@ -12,7 +12,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android { 
-    namespace "me.albemala.colourlovers_app"
+    namespace = "me.albemala.luv"
     compileSdk 35
 //    ndkVersion = "27.0.12077973"
 
@@ -26,7 +26,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "me.albemala.colourlovers_app"
+        applicationId = "me.albemala.luv"
         minSdkVersion 21
         targetSdkVersion 35
         versionCode = flutter.versionCode

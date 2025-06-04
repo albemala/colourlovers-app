@@ -1,4 +1,4 @@
-app_identifier "me.albemala.colourlovers_app"
+app_identifier "me.albemala.luv"
 apple_id ENV["APPLE_ID"] # Developer Portal username
 team_id ENV["TEAM_ID"] # Developer Portal Team ID
 itc_team_id ENV["ITC_TEAM_ID"] # App Store Connect Team ID

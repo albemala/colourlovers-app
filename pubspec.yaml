@@ -89,38 +89,32 @@ icons_launcher:
       # image_path: 'assets/ic_logo_border.png'
       # favicon_path: 'assets/ic_logo_round.png'
     android:
-      enable: true
-      # image_path: 'assets/ic_logo_border.png'
-      # adaptive_background_color: '#ffffff'
-      adaptive_background_image: 'assets/app-icon/android-background.png'
-      adaptive_foreground_image: 'assets/app-icon/android-foreground.png'
-      # adaptive_round_image: 'assets/ic_logo_round.png'
+      enable: false
     ios:
-      enable: true
-      # image_path: 'assets/ic_logo_rectangle.png'
+      enable: false
 
 # dart run package_rename
 package_rename_config:
   android:
-    app_name: colourlovers_app
-    package_name: me.albemala.colourlovers_app
+    app_name: LUV
+    package_name: me.albemala.luv
   ios:
-    app_name: colourlovers_app
-    bundle_name: colourlovers_app
-    package_name: me.albemala.colourlovers_app
+    app_name: LUV
+    bundle_name: LUV
+    package_name: me.albemala.luv
   macos:
-    app_name: colourlovers_app
-    package_name: me.albemala.colourlovers_app
+    app_name: LUV
+    package_name: me.albemala.luv
     copyright_notice: Copyright © 2025 Alberto Malagoli (albemala.me). All rights reserved.
   windows:
-    app_name: colourlovers_app
+    app_name: LUV
     organization: albemala.me
     copyright_notice: Copyright © 2025 Alberto Malagoli (albemala.me).
-    exe_name: colourlovers_app
+    exe_name: LUV
   linux:
-    app_name: colourlovers_app
-    package_name: me.albemala.colourlovers_app
-    exe_name: colourlovers_app
+    app_name: LUV
+    package_name: me.albemala.luv
+    exe_name: LUV
   web:
-    app_name: colourlovers_app
+    app_name: LUV
 #    description:

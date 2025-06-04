@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "albemala.me" "\0"
-            VALUE "FileDescription", "colourlovers_app" "\0"
+            VALUE "FileDescription", "LUV" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "colourlovers_app" "\0"
-            VALUE "LegalCopyright", "Copyright © 2023 Alberto Malagoli (albemala.me)." "\0"
-            VALUE "OriginalFilename", "colourlovers_app.exe" "\0"
-            VALUE "ProductName", "colourlovers_app" "\0"
+            VALUE "InternalName", "LUV" "\0"
+            VALUE "LegalCopyright", "Copyright © 2025 Alberto Malagoli (albemala.me)." "\0"
+            VALUE "OriginalFilename", "LUV.exe" "\0"
+            VALUE "ProductName", "LUV" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END
