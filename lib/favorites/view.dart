@@ -1,5 +1,6 @@
 import 'package:colourlovers_app/favorites/view-controller.dart';
 import 'package:colourlovers_app/favorites/view-state.dart';
+import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/item-tiles/color-tile/view-state.dart';
@@ -11,7 +12,10 @@ import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view.dart';
 import 'package:colourlovers_app/widgets/item-tiles/user-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/user-tile/view.dart';
 import 'package:flutter/material.dart';
+import 'package:colourlovers_app/filters/favorites/defines.dart';
+import 'package:colourlovers_app/filters/functions.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lucide_icons/lucide_icons.dart';
 
 class FavoritesViewCreator extends StatelessWidget {
   const FavoritesViewCreator({super.key});
@@ -50,25 +54,68 @@ class FavoritesView extends StatelessWidget {
       appBar: AppBarView(context, title: 'Favorites', actions: const []),
       body: BackgroundView(
         blobs: state.backgroundBlobs.toList(),
-        child:
-            state.items.isEmpty
-                ? const Center(
-                  child: Text(
-                    'No favorites yet',
-                    style: TextStyle(fontSize: 18, color: Colors.grey),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                spacing: 8,
+                children: [
+                  IconButton.outlined(
+                    onPressed: () {
+                      controller.showFavoritesFilters(context);
+                    },
+                    icon: const Icon(LucideIcons.slidersHorizontal, size: 18),
+                    tooltip: 'Filters',
                   ),
-                )
-                : ListView.separated(
-                  padding: const EdgeInsets.all(16),
-                  itemCount: state.items.length,
-                  itemBuilder: (context, index) {
-                    final item = state.items[index];
-                    return _buildTileForItem(context, item);
-                  },
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(height: 12);
-                  },
-                ),
+                  FilterChip(
+                    onSelected: (value) {
+                      controller.showFavoritesFilters(context);
+                    },
+                    label: Text(
+                      getFavoriteItemTypeFilterName(state.typeFilter),
+                    ),
+                    tooltip: 'Filter by type',
+                  ),
+                  FilterChip(
+                    onSelected: (value) {
+                      controller.showFavoritesFilters(context);
+                    },
+                    avatar:
+                        state.sortOrder == FavoriteSortOrder.ascending
+                            ? const Icon(LucideIcons.arrowUp)
+                            : const Icon(LucideIcons.arrowDown),
+                    label: Text(getFavoriteSortByName(state.sortBy)),
+                    tooltip: 'Sort by',
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child:
+                  state.items.isEmpty
+                      ? const Center(
+                        child: Text(
+                          'No favorites yet',
+                          style: TextStyle(fontSize: 18, color: Colors.grey),
+                        ),
+                      )
+                      : ListView.separated(
+                        padding: const EdgeInsets.all(16),
+                        itemCount: state.items.length,
+                        itemBuilder: (context, index) {
+                          final item = state.items[index];
+                          return _buildTileForItem(context, item);
+                        },
+                        separatorBuilder: (context, index) {
+                          return const SizedBox(height: 12);
+                        },
+                      ),
+            ),
+          ],
+        ),
       ),
     );
   }

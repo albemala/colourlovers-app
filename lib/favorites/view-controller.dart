@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:collection/collection.dart';
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/details/color/view.dart';
 import 'package:colourlovers_app/details/palette/view.dart';
@@ -8,6 +9,10 @@ import 'package:colourlovers_app/details/user/view.dart';
 import 'package:colourlovers_app/favorites/data-controller.dart';
 import 'package:colourlovers_app/favorites/data-state.dart';
 import 'package:colourlovers_app/favorites/view-state.dart';
+import 'package:colourlovers_app/filters/favorites/data-controller.dart';
+import 'package:colourlovers_app/filters/favorites/data-state.dart';
+import 'package:colourlovers_app/filters/favorites/defines.dart';
+import 'package:colourlovers_app/filters/favorites/view.dart';
 import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/widgets/background/functions.dart';
 import 'package:colourlovers_app/widgets/item-tiles/color-tile/view-state.dart';
@@ -21,16 +26,28 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FavoritesViewController extends Cubit<FavoritesViewState> {
   final FavoritesDataController _favoritesDataController;
+  final FavoritesFiltersDataController _favoritesFiltersDataController;
   StreamSubscription<FavoritesDataState>? _favoritesDataControllerSubscription;
+  StreamSubscription<FavoritesFiltersDataState>?
+  _favoritesFiltersDataControllerSubscription;
 
   factory FavoritesViewController.fromContext(BuildContext context) {
-    return FavoritesViewController(context.read<FavoritesDataController>());
+    return FavoritesViewController(
+      context.read<FavoritesDataController>(),
+      context.read<FavoritesFiltersDataController>(),
+    );
   }
 
-  FavoritesViewController(this._favoritesDataController)
-    : super(defaultFavoritesViewState) {
+  FavoritesViewController(
+    this._favoritesDataController,
+    this._favoritesFiltersDataController,
+  ) : super(defaultFavoritesViewState) {
     _favoritesDataControllerSubscription = _favoritesDataController.stream
         .listen((_) {
+          _updateItems();
+        });
+    _favoritesFiltersDataControllerSubscription =
+        _favoritesFiltersDataController.stream.listen((_) {
           _updateItems();
         });
     emit(
@@ -44,15 +61,45 @@ class FavoritesViewController extends Cubit<FavoritesViewState> {
   @override
   Future<void> close() {
     _favoritesDataControllerSubscription?.cancel();
+    _favoritesFiltersDataControllerSubscription?.cancel();
     return super.close();
   }
 
   void _updateItems() {
+    final currentFilters = _favoritesFiltersDataController.state;
+    var filteredFavorites = _favoritesDataController.favorites.toList();
+
+    // Apply type filter
+    if (currentFilters.typeFilter != FavoriteItemTypeFilter.all) {
+      filteredFavorites =
+          filteredFavorites.where((item) {
+            return item.type.name == currentFilters.typeFilter.name;
+          }).toList();
+    }
+
+    // Apply sorting
+    if (currentFilters.sortBy == FavoriteSortBy.timeAdded) {
+      if (currentFilters.sortOrder == FavoriteSortOrder.ascending) {
+        filteredFavorites.sort((a, b) => b.timeAdded.compareTo(a.timeAdded));
+      } else {
+        filteredFavorites.sort((a, b) => a.timeAdded.compareTo(b.timeAdded));
+      }
+    }
+
     final items =
-        _favoritesDataController.favorites
-            .map(_convertFavoriteItemToTileViewState)
-            .toIList();
-    emit(state.copyWith(items: items));
+        filteredFavorites.map(_convertFavoriteItemToTileViewState).toIList();
+    emit(
+      state.copyWith(
+        items: items,
+        typeFilter: currentFilters.typeFilter,
+        sortBy: currentFilters.sortBy,
+        sortOrder: currentFilters.sortOrder,
+      ),
+    );
+  }
+
+  void showFavoritesFilters(BuildContext context) {
+    openScreen<void>(context, const FavoritesFiltersViewCreator());
   }
 
   void showColorDetails(

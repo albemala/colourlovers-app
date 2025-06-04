@@ -1,4 +1,5 @@
 import 'package:colourlovers_app/filters/color/view.dart';
+import 'package:colourlovers_app/filters/favorites/view.dart';
 import 'package:colourlovers_app/filters/palette/view.dart';
 import 'package:colourlovers_app/filters/pattern/view.dart';
 import 'package:colourlovers_app/filters/user/view.dart';
@@ -15,6 +16,7 @@ class FiltersTestView extends StatelessWidget {
         Expanded(child: PaletteFiltersViewCreator()),
         Expanded(child: PatternFiltersViewCreator()),
         Expanded(child: UserFiltersViewCreator()),
+        Expanded(child: FavoritesFiltersViewCreator()),
       ],
     );
   }

@@ -1,5 +1,6 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/filters/defines.dart';
+import 'package:colourlovers_app/filters/favorites/defines.dart';
 import 'package:flutter/material.dart';
 
 String getContentShowCriteriaName(ContentShowCriteria criteria) {
@@ -92,5 +93,36 @@ Color getColourloversRequestHueRangeColor(
       return Colors.deepPurpleAccent;
     case ColourloversRequestHueRange.fuchsia:
       return Colors.purpleAccent;
+  }
+}
+
+String getFavoriteItemTypeFilterName(FavoriteItemTypeFilter type) {
+  switch (type) {
+    case FavoriteItemTypeFilter.all:
+      return 'All';
+    case FavoriteItemTypeFilter.color:
+      return 'Colors';
+    case FavoriteItemTypeFilter.palette:
+      return 'Palettes';
+    case FavoriteItemTypeFilter.pattern:
+      return 'Patterns';
+    case FavoriteItemTypeFilter.user:
+      return 'Users';
+  }
+}
+
+String getFavoriteSortByName(FavoriteSortBy sortBy) {
+  switch (sortBy) {
+    case FavoriteSortBy.timeAdded:
+      return 'Time Added';
+  }
+}
+
+String getFavoriteSortOrderName(FavoriteSortOrder sortOrder) {
+  switch (sortOrder) {
+    case FavoriteSortOrder.ascending:
+      return 'Ascending';
+    case FavoriteSortOrder.descending:
+      return 'Descending';
   }
 }
