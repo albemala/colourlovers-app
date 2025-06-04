@@ -61,7 +61,7 @@ dev_dependencies:
   icons_launcher: ^3.0.1
   package_rename: ^1.10.0
 
-  very_good_analysis: ^7.0.0
+  very_good_analysis: ^8.0.0
 
 flutter:
   uses-material-design: true
