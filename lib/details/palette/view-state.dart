@@ -22,6 +22,7 @@ class PaletteDetailsViewState extends Equatable {
   final IList<PaletteTileViewState> relatedPalettes;
   final IList<PatternTileViewState> relatedPatterns;
   final IList<BackgroundBlob> backgroundBlobs;
+  final bool isFavorited;
 
   const PaletteDetailsViewState({
     required this.isLoading,
@@ -37,6 +38,7 @@ class PaletteDetailsViewState extends Equatable {
     required this.relatedPalettes,
     required this.relatedPatterns,
     required this.backgroundBlobs,
+    required this.isFavorited,
   });
 
   @override
@@ -54,6 +56,7 @@ class PaletteDetailsViewState extends Equatable {
     relatedPalettes,
     relatedPatterns,
     backgroundBlobs,
+    isFavorited,
   ];
 
   PaletteDetailsViewState copyWith({
@@ -70,6 +73,7 @@ class PaletteDetailsViewState extends Equatable {
     IList<PaletteTileViewState>? relatedPalettes,
     IList<PatternTileViewState>? relatedPatterns,
     IList<BackgroundBlob>? backgroundBlobs,
+    bool? isFavorited,
   }) {
     return PaletteDetailsViewState(
       isLoading: isLoading ?? this.isLoading,
@@ -85,6 +89,7 @@ class PaletteDetailsViewState extends Equatable {
       relatedPalettes: relatedPalettes ?? this.relatedPalettes,
       relatedPatterns: relatedPatterns ?? this.relatedPatterns,
       backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
+      isFavorited: isFavorited ?? this.isFavorited,
     );
   }
 }
@@ -103,4 +108,5 @@ const defaultPaletteDetailsViewState = PaletteDetailsViewState(
   relatedPalettes: IList.empty(),
   relatedPatterns: IList.empty(),
   backgroundBlobs: IList.empty(),
+  isFavorited: false,
 );

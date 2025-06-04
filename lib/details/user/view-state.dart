@@ -22,6 +22,7 @@ class UserDetailsViewState extends Equatable {
   final IList<PaletteTileViewState> userPalettes;
   final IList<PatternTileViewState> userPatterns;
   final IList<BackgroundBlob> backgroundBlobs;
+  final bool isFavorited;
 
   const UserDetailsViewState({
     required this.isLoading,
@@ -38,6 +39,7 @@ class UserDetailsViewState extends Equatable {
     required this.userPalettes,
     required this.userPatterns,
     required this.backgroundBlobs,
+    required this.isFavorited,
   });
 
   @override
@@ -56,6 +58,7 @@ class UserDetailsViewState extends Equatable {
     userPalettes,
     userPatterns,
     backgroundBlobs,
+    isFavorited,
   ];
 
   UserDetailsViewState copyWith({
@@ -73,6 +76,7 @@ class UserDetailsViewState extends Equatable {
     IList<PaletteTileViewState>? userPalettes,
     IList<PatternTileViewState>? userPatterns,
     IList<BackgroundBlob>? backgroundBlobs,
+    bool? isFavorited,
   }) {
     return UserDetailsViewState(
       isLoading: isLoading ?? this.isLoading,
@@ -89,6 +93,7 @@ class UserDetailsViewState extends Equatable {
       userPalettes: userPalettes ?? this.userPalettes,
       userPatterns: userPatterns ?? this.userPatterns,
       backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
+      isFavorited: isFavorited ?? this.isFavorited,
     );
   }
 }
@@ -108,4 +113,5 @@ const defaultUserDetailsViewState = UserDetailsViewState(
   userPalettes: IList.empty(),
   userPatterns: IList.empty(),
   backgroundBlobs: IList.empty(),
+  isFavorited: false,
 );

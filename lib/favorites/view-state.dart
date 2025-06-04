@@ -6,19 +6,28 @@ import 'package:flutter/material.dart';
 @immutable
 class FavoritesViewState extends Equatable {
   final IList<BackgroundBlob> backgroundBlobs;
+  final IList<Equatable> items;
 
-  const FavoritesViewState({required this.backgroundBlobs});
+  const FavoritesViewState({
+    required this.backgroundBlobs,
+    required this.items,
+  });
 
   @override
-  List<Object> get props => [backgroundBlobs];
+  List<Object> get props => [backgroundBlobs, items];
 
-  FavoritesViewState copyWith({IList<BackgroundBlob>? backgroundBlobs}) {
+  FavoritesViewState copyWith({
+    IList<BackgroundBlob>? backgroundBlobs,
+    IList<Equatable>? items,
+  }) {
     return FavoritesViewState(
       backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
+      items: items ?? this.items,
     );
   }
 }
 
 const defaultFavoritesViewState = FavoritesViewState(
   backgroundBlobs: IList.empty(),
+  items: IList.empty(),
 );

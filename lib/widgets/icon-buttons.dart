@@ -40,3 +40,25 @@ class ShareItemButton extends StatelessWidget {
     );
   }
 }
+
+class FavoriteButton extends StatelessWidget {
+  final bool isFavorited;
+  final VoidCallback onPressed;
+
+  const FavoriteButton({
+    super.key,
+    required this.isFavorited,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      onPressed: onPressed,
+      tooltip: isFavorited ? 'Remove from favorites' : 'Add to favorites',
+      icon: Icon(
+        isFavorited ? LucideIcons.bookmarkMinus : LucideIcons.bookmarkPlus,
+      ),
+    );
+  }
+}

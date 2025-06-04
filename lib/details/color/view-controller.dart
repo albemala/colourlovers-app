@@ -1,9 +1,13 @@
+import 'dart:async';
+
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/details/color/view-state.dart';
 import 'package:colourlovers_app/details/color/view.dart';
 import 'package:colourlovers_app/details/palette/view.dart';
 import 'package:colourlovers_app/details/pattern/view.dart';
 import 'package:colourlovers_app/details/user/view.dart';
+import 'package:colourlovers_app/favorites/data-controller.dart';
+import 'package:colourlovers_app/favorites/data-state.dart';
 import 'package:colourlovers_app/formatters.dart';
 import 'package:colourlovers_app/related-items.dart';
 import 'package:colourlovers_app/related/colors/view.dart';
@@ -25,20 +29,34 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ColorDetailsViewController extends Cubit<ColorDetailsViewState> {
   final ColourloversColor _color;
   final ColourloversApiClient _client;
+  final FavoritesDataController _favoritesDataController;
   ColourloversLover? _user;
   List<ColourloversColor> _relatedColors = [];
   List<ColourloversPalette> _relatedPalettes = [];
   List<ColourloversPattern> _relatedPatterns = [];
 
+  StreamSubscription<FavoritesDataState>? _favoritesDataControllerSubscription;
+
   factory ColorDetailsViewController.fromContext(
     BuildContext context, {
     required ColourloversColor color,
   }) {
-    return ColorDetailsViewController(color, ColourloversApiClient());
+    return ColorDetailsViewController(
+      color,
+      ColourloversApiClient(),
+      context.read<FavoritesDataController>(),
+    );
   }
 
-  ColorDetailsViewController(this._color, this._client)
-    : super(defaultColorDetailsViewState) {
+  ColorDetailsViewController(
+    this._color,
+    this._client,
+    this._favoritesDataController,
+  ) : super(defaultColorDetailsViewState) {
+    _favoritesDataControllerSubscription = _favoritesDataController.stream
+        .listen((_) {
+          _updateIsFavoritedState();
+        });
     emit(
       state.copyWith(
         backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
@@ -47,12 +65,19 @@ class ColorDetailsViewController extends Cubit<ColorDetailsViewState> {
     _init();
   }
 
+  @override
+  Future<void> close() {
+    _favoritesDataControllerSubscription?.cancel();
+    return super.close();
+  }
+
   Future<void> _init() async {
     await _initUser();
     await _initRelatedColors();
     await _initRelatedPalettes();
     await _initRelatedPatterns();
     _updateState();
+    _updateIsFavoritedState();
   }
 
   Future<void> _initUser() async {
@@ -169,5 +194,27 @@ class ColorDetailsViewController extends Cubit<ColorDetailsViewState> {
     final hex = _color.hex;
     if (hex == null) return;
     openScreen<void>(context, RelatedPatternsViewCreator(hex: [hex]));
+  }
+
+  String get colorId => _color.id?.toString() ?? '';
+  IMap<String, dynamic> get colorData => _color.toJson().toIMap();
+
+  void toggleFavorite() {
+    _favoritesDataController.toggleFavorite(
+      FavoriteItemType.color,
+      colorId,
+      colorData,
+    );
+  }
+
+  void _updateIsFavoritedState() {
+    emit(
+      state.copyWith(
+        isFavorited: _favoritesDataController.isFavorite(
+          FavoriteItemType.color,
+          colorId,
+        ),
+      ),
+    );
   }
 }

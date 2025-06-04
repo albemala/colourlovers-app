@@ -59,6 +59,10 @@ class ColorDetailsView extends StatelessWidget {
         context,
         title: 'Color',
         actions: [
+          FavoriteButton(
+            isFavorited: state.isFavorited,
+            onPressed: controller.toggleFavorite,
+          ),
           ShareItemButton(
             onPressed: () {
               controller.showShareColorView(context);

@@ -60,6 +60,10 @@ class PatternDetailsView extends StatelessWidget {
         context,
         title: 'Pattern',
         actions: [
+          FavoriteButton(
+            isFavorited: state.isFavorited,
+            onPressed: controller.toggleFavorite,
+          ),
           ShareItemButton(
             onPressed: () {
               controller.showSharePatternView(context);

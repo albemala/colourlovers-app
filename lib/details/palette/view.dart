@@ -60,6 +60,10 @@ class PaletteDetailsView extends StatelessWidget {
         context,
         title: 'Palette',
         actions: [
+          FavoriteButton(
+            isFavorited: state.isFavorited,
+            onPressed: controller.toggleFavorite,
+          ),
           ShareItemButton(
             onPressed: () {
               controller.showSharePaletteView(context);

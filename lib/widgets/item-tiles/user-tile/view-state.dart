@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 
 @immutable
 class UserTileViewState extends Equatable {
+  final String id;
   final String userName;
   final int numColors;
   final int numPalettes;
   final int numPatterns;
 
   const UserTileViewState({
+    required this.id,
     required this.userName,
     required this.numColors,
     required this.numPalettes,
@@ -17,15 +19,23 @@ class UserTileViewState extends Equatable {
   });
 
   @override
-  List<Object?> get props => [userName, numColors, numPalettes, numPatterns];
+  List<Object?> get props => [
+    id,
+    userName,
+    numColors,
+    numPalettes,
+    numPatterns,
+  ];
 
   UserTileViewState copyWith({
+    String? id,
     String? userName,
     int? numColors,
     int? numPalettes,
     int? numPatterns,
   }) {
     return UserTileViewState(
+      id: id ?? this.id,
       userName: userName ?? this.userName,
       numColors: numColors ?? this.numColors,
       numPalettes: numPalettes ?? this.numPalettes,
@@ -35,6 +45,7 @@ class UserTileViewState extends Equatable {
 
   factory UserTileViewState.fromColourloverUser(ColourloversLover user) {
     return UserTileViewState(
+      id: user.userName ?? '',
       userName: user.userName ?? '',
       numColors: user.numColors ?? 0,
       numPalettes: user.numPalettes ?? 0,
@@ -44,6 +55,7 @@ class UserTileViewState extends Equatable {
 }
 
 const defaultUserTileViewState = UserTileViewState(
+  id: '',
   userName: '',
   numColors: 0,
   numPalettes: 0,

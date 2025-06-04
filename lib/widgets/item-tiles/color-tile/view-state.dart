@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 
 @immutable
 class ColorTileViewState extends Equatable {
+  final String id;
   final String title;
   final int numViews;
   final int numVotes;
   final String hex;
 
   const ColorTileViewState({
+    required this.id,
     required this.title,
     required this.numViews,
     required this.numVotes,
@@ -17,15 +19,17 @@ class ColorTileViewState extends Equatable {
   });
 
   @override
-  List<Object?> get props => [title, numViews, numVotes, hex];
+  List<Object?> get props => [id, title, numViews, numVotes, hex];
 
   ColorTileViewState copyWith({
+    String? id,
     String? title,
     int? numViews,
     int? numVotes,
     String? hex,
   }) {
     return ColorTileViewState(
+      id: id ?? this.id,
       title: title ?? this.title,
       numViews: numViews ?? this.numViews,
       numVotes: numVotes ?? this.numVotes,
@@ -35,6 +39,7 @@ class ColorTileViewState extends Equatable {
 
   factory ColorTileViewState.fromColourloverColor(ColourloversColor color) {
     return ColorTileViewState(
+      id: color.id?.toString() ?? '',
       title: color.title ?? '',
       numViews: color.numViews ?? 0,
       numVotes: color.numVotes ?? 0,
@@ -44,6 +49,7 @@ class ColorTileViewState extends Equatable {
 }
 
 const defaultColorTileViewState = ColorTileViewState(
+  id: '',
   title: '',
   numViews: 0,
   numVotes: 0,

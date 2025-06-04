@@ -36,34 +36,55 @@ class TestView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBarView(context, title: 'Test'),
-      body: Center(
+      body: Padding(
+        padding: const EdgeInsets.all(16),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          spacing: 8,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 32,
           children: [
-            FilledButton(
-              onPressed: () {
-                controller.showItemsTestView(context);
-              },
-              child: const Text('Items'),
+            Text('Screens', style: Theme.of(context).textTheme.titleMedium),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 8,
+              children: [
+                FilledButton(
+                  onPressed: () {
+                    controller.showItemsTestView(context);
+                  },
+                  child: const Text('Items'),
+                ),
+                FilledButton(
+                  onPressed: () {
+                    controller.showItemDetailsTestView(context);
+                  },
+                  child: const Text('Item details'),
+                ),
+                FilledButton(
+                  onPressed: () {
+                    controller.showShareItemsTestView(context);
+                  },
+                  child: const Text('Share items'),
+                ),
+                FilledButton(
+                  onPressed: () {
+                    controller.showFiltersTestView(context);
+                  },
+                  child: const Text('Filters'),
+                ),
+              ],
             ),
-            FilledButton(
-              onPressed: () {
-                controller.showItemDetailsTestView(context);
-              },
-              child: const Text('Item details'),
-            ),
-            FilledButton(
-              onPressed: () {
-                controller.showShareItemsTestView(context);
-              },
-              child: const Text('Share items'),
-            ),
-            FilledButton(
-              onPressed: () {
-                controller.showFiltersTestView(context);
-              },
-              child: const Text('Filters'),
+            Text('Favorites', style: Theme.of(context).textTheme.titleMedium),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 8,
+              children: [
+                FilledButton(
+                  onPressed: () {
+                    controller.removeAllFavorites(context);
+                  },
+                  child: const Text('Remove all favorites'),
+                ),
+              ],
             ),
           ],
         ),

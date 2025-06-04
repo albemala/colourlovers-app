@@ -22,7 +22,7 @@ const exploreDestination = NavigationDestination(
 );
 const favoritesDestination = NavigationDestination(
   label: 'Favorites',
-  icon: Icon(LucideIcons.star),
+  icon: Icon(LucideIcons.bookmark),
 );
 const preferencesDestination = NavigationDestination(
   label: 'Preferences',

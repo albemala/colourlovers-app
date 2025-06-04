@@ -1,3 +1,4 @@
+import 'package:colourlovers_app/favorites/data-controller.dart';
 import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/test/details/view.dart';
 import 'package:colourlovers_app/test/filters/view.dart';
@@ -7,11 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TestViewController extends Cubit<void> {
+  final FavoritesDataController _favoritesDataController;
+
   factory TestViewController.fromContext(BuildContext context) {
-    return TestViewController();
+    return TestViewController(context.read<FavoritesDataController>());
   }
 
-  TestViewController() : super(null);
+  TestViewController(this._favoritesDataController) : super(null);
 
   void showItemsTestView(BuildContext context) {
     openScreen<void>(context, const ItemsTestView());
@@ -27,5 +30,9 @@ class TestViewController extends Cubit<void> {
 
   void showFiltersTestView(BuildContext context) {
     openScreen<void>(context, const FiltersTestView());
+  }
+
+  void removeAllFavorites(BuildContext context) {
+    _favoritesDataController.removeAllFavorites();
   }
 }

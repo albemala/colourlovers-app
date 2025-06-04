@@ -6,6 +6,7 @@ import 'package:colourlovers_app/urls/defines.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/credits.dart';
+import 'package:colourlovers_app/widgets/icon-buttons.dart';
 import 'package:colourlovers_app/widgets/item-tiles/color-tile/view.dart';
 import 'package:colourlovers_app/widgets/item-tiles/palette-tile/view.dart';
 import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view.dart';
@@ -55,8 +56,11 @@ class UserDetailsView extends StatelessWidget {
       appBar: AppBarView(
         context,
         title: 'User',
-        actions: const [
-          // TODO: Implement action buttons if needed
+        actions: [
+          FavoriteButton(
+            isFavorited: state.isFavorited,
+            onPressed: controller.toggleFavorite,
+          ),
         ],
       ),
       body: BackgroundView(
@@ -99,10 +103,7 @@ class UserDetailsView extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         spacing: 8,
                         children: [
-                          LabelValueView(
-                            label: 'Rating',
-                            value: state.rating,
-                          ),
+                          LabelValueView(label: 'Rating', value: state.rating),
                           LabelValueView(
                             label: 'Lovers',
                             value: state.numLovers,

@@ -1,8 +1,12 @@
+import 'dart:async';
+
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/details/color/view.dart';
 import 'package:colourlovers_app/details/palette/view.dart';
 import 'package:colourlovers_app/details/pattern/view.dart';
 import 'package:colourlovers_app/details/user/view-state.dart';
+import 'package:colourlovers_app/favorites/data-controller.dart';
+import 'package:colourlovers_app/favorites/data-state.dart';
 import 'package:colourlovers_app/formatters.dart';
 import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/user-items.dart';
@@ -21,19 +25,33 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class UserDetailsViewController extends Cubit<UserDetailsViewState> {
   final ColourloversLover _user;
   final ColourloversApiClient _client;
+  final FavoritesDataController _favoritesDataController;
   List<ColourloversColor> _userColors = [];
   List<ColourloversPalette> _userPalettes = [];
   List<ColourloversPattern> _userPatterns = [];
+
+  StreamSubscription<FavoritesDataState>? _favoritesDataControllerSubscription;
 
   factory UserDetailsViewController.fromContext(
     BuildContext context, {
     required ColourloversLover user,
   }) {
-    return UserDetailsViewController(user, ColourloversApiClient());
+    return UserDetailsViewController(
+      user,
+      ColourloversApiClient(),
+      context.read<FavoritesDataController>(),
+    );
   }
 
-  UserDetailsViewController(this._user, this._client)
-    : super(defaultUserDetailsViewState) {
+  UserDetailsViewController(
+    this._user,
+    this._client,
+    this._favoritesDataController,
+  ) : super(defaultUserDetailsViewState) {
+    _favoritesDataControllerSubscription = _favoritesDataController.stream
+        .listen((_) {
+          _updateIsFavoritedState();
+        });
     emit(
       state.copyWith(
         backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
@@ -42,12 +60,19 @@ class UserDetailsViewController extends Cubit<UserDetailsViewState> {
     _init();
   }
 
+  @override
+  Future<void> close() {
+    _favoritesDataControllerSubscription?.cancel();
+    return super.close();
+  }
+
   Future<void> _init() async {
     final userName = _user.userName ?? '';
     _userColors = await fetchUserColorsPreview(_client, userName);
     _userPalettes = await fetchUserPalettesPreview(_client, userName);
     _userPatterns = await fetchUserPatternsPreview(_client, userName);
     _updateState();
+    _updateIsFavoritedState();
   }
 
   void _updateState() {
@@ -122,5 +147,27 @@ class UserDetailsViewController extends Cubit<UserDetailsViewState> {
     final userName = _user.userName;
     if (userName == null) return;
     openScreen<void>(context, UserPatternsViewCreator(userName: userName));
+  }
+
+  String get userId => _user.userName ?? '';
+  IMap<String, dynamic> get userData => _user.toJson().toIMap();
+
+  void toggleFavorite() {
+    _favoritesDataController.toggleFavorite(
+      FavoriteItemType.user,
+      userId,
+      userData,
+    );
+  }
+
+  void _updateIsFavoritedState() {
+    emit(
+      state.copyWith(
+        isFavorited: _favoritesDataController.isFavorite(
+          FavoriteItemType.user,
+          userId,
+        ),
+      ),
+    );
   }
 }

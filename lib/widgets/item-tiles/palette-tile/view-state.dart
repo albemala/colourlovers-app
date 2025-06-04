@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 @immutable
 class PaletteTileViewState extends Equatable {
+  final String id;
   final String title;
   final int numViews;
   final int numVotes;
@@ -12,6 +13,7 @@ class PaletteTileViewState extends Equatable {
   final IList<double> widths;
 
   const PaletteTileViewState({
+    required this.id,
     required this.title,
     required this.numViews,
     required this.numVotes,
@@ -20,9 +22,10 @@ class PaletteTileViewState extends Equatable {
   });
 
   @override
-  List<Object?> get props => [title, numViews, numVotes, hexs, widths];
+  List<Object?> get props => [id, title, numViews, numVotes, hexs, widths];
 
   PaletteTileViewState copyWith({
+    String? id,
     String? title,
     int? numViews,
     int? numVotes,
@@ -30,6 +33,7 @@ class PaletteTileViewState extends Equatable {
     IList<double>? widths,
   }) {
     return PaletteTileViewState(
+      id: id ?? this.id,
       title: title ?? this.title,
       numViews: numViews ?? this.numViews,
       numVotes: numVotes ?? this.numVotes,
@@ -42,6 +46,7 @@ class PaletteTileViewState extends Equatable {
     ColourloversPalette palette,
   ) {
     return PaletteTileViewState(
+      id: palette.id?.toString() ?? '',
       title: palette.title ?? '',
       numViews: palette.numViews ?? 0,
       numVotes: palette.numVotes ?? 0,
@@ -52,6 +57,7 @@ class PaletteTileViewState extends Equatable {
 }
 
 const defaultPaletteTileViewState = PaletteTileViewState(
+  id: '',
   title: '',
   numViews: 0,
   numVotes: 0,

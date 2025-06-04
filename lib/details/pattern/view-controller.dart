@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/colors.dart';
 import 'package:colourlovers_app/details/color/view.dart';
@@ -5,6 +7,8 @@ import 'package:colourlovers_app/details/palette/view.dart';
 import 'package:colourlovers_app/details/pattern/view-state.dart';
 import 'package:colourlovers_app/details/pattern/view.dart';
 import 'package:colourlovers_app/details/user/view.dart';
+import 'package:colourlovers_app/favorites/data-controller.dart';
+import 'package:colourlovers_app/favorites/data-state.dart';
 import 'package:colourlovers_app/formatters.dart';
 import 'package:colourlovers_app/related-items.dart';
 import 'package:colourlovers_app/related/palettes/view.dart';
@@ -25,20 +29,34 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class PatternDetailsViewController extends Cubit<PatternDetailsViewState> {
   final ColourloversPattern _pattern;
   final ColourloversApiClient _client;
+  final FavoritesDataController _favoritesDataController;
   ColourloversLover? _user;
   List<ColourloversColor> _colors = [];
   List<ColourloversPalette> _relatedPalettes = [];
   List<ColourloversPattern> _relatedPatterns = [];
 
+  StreamSubscription<FavoritesDataState>? _favoritesDataControllerSubscription;
+
   factory PatternDetailsViewController.fromContext(
     BuildContext context, {
     required ColourloversPattern pattern,
   }) {
-    return PatternDetailsViewController(pattern, ColourloversApiClient());
+    return PatternDetailsViewController(
+      pattern,
+      ColourloversApiClient(),
+      context.read<FavoritesDataController>(),
+    );
   }
 
-  PatternDetailsViewController(this._pattern, this._client)
-    : super(defaultPatternDetailsViewState) {
+  PatternDetailsViewController(
+    this._pattern,
+    this._client,
+    this._favoritesDataController,
+  ) : super(defaultPatternDetailsViewState) {
+    _favoritesDataControllerSubscription = _favoritesDataController.stream
+        .listen((_) {
+          _updateIsFavoritedState();
+        });
     emit(
       state.copyWith(
         backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
@@ -47,12 +65,19 @@ class PatternDetailsViewController extends Cubit<PatternDetailsViewState> {
     _init();
   }
 
+  @override
+  Future<void> close() {
+    _favoritesDataControllerSubscription?.cancel();
+    return super.close();
+  }
+
   Future<void> _init() async {
     await _initUser();
     await _initColors();
     await _initRelatedPalettes();
     await _initRelatedPatterns();
     _updateState();
+    _updateIsFavoritedState();
   }
 
   Future<void> _initUser() async {
@@ -157,5 +182,27 @@ class PatternDetailsViewController extends Cubit<PatternDetailsViewState> {
     final colors = _pattern.colors;
     if (colors == null) return;
     openScreen<void>(context, RelatedPatternsViewCreator(hex: colors));
+  }
+
+  String get patternId => _pattern.id?.toString() ?? '';
+  IMap<String, dynamic> get patternData => _pattern.toJson().toIMap();
+
+  void toggleFavorite() {
+    _favoritesDataController.toggleFavorite(
+      FavoriteItemType.pattern,
+      patternId,
+      patternData,
+    );
+  }
+
+  void _updateIsFavoritedState() {
+    emit(
+      state.copyWith(
+        isFavorited: _favoritesDataController.isFavorite(
+          FavoriteItemType.pattern,
+          patternId,
+        ),
+      ),
+    );
   }
 }
