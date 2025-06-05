@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:colourlovers_app/favorites/data-state.dart';
+import 'package:colourlovers_app/favorites/v1_data_migration.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_data_storage/flutter_data_storage.dart';
@@ -15,7 +16,14 @@ class FavoritesDataController extends StoredCubit<FavoritesDataState> {
     : super(defaultFavoritesDataState, dataStore: dataStore);
 
   @override
-  Future<void> migrateData() async {}
+  Future<void> migrateData() async {
+    if (await dataStore.dataExists) return;
+
+    final v1FavoritesData = await migrateV1FavoritesData();
+    if (v1FavoritesData != null) {
+      await dataStore.writeImmediately(v1FavoritesData.toMap());
+    }
+  }
 
   @override
   String get storeName => favoritesDataStoreName;
