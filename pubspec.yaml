@@ -53,6 +53,8 @@ dependencies:
       url: https://github.com/albemala/colourlovers-api-dart.git
       ref: 2.0.1
 
+  sentry_flutter: ^8.14.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -1,10 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:colourlovers_app/analytics.dart';
 import 'package:colourlovers_app/favorites/data-state.dart';
 import 'package:crypto/crypto.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
-import 'package:flutter/widgets.dart';
 import 'package:path_provider/path_provider.dart';
 
 /// Migrates favorites data from v1 format to v2 format
@@ -29,7 +29,7 @@ Future<String?> _readRawFavoritesData() async {
     try {
       return md5File.readAsStringSync();
     } catch (e) {
-      debugPrint('Error reading MD5 hashed file: $e');
+      await captureException(e);
     }
   }
 
@@ -43,7 +43,7 @@ Future<String?> _readRawFavoritesData() async {
 
       return favoritesValue is String ? favoritesValue : null;
     } catch (e) {
-      debugPrint('Error reading manifest.json: $e');
+      await captureException(e);
     }
   }
 
@@ -68,7 +68,7 @@ FavoritesDataState _parseV1FavoritesData(String rawData) {
 
     return FavoritesDataState(favorites: IList(favorites));
   } catch (e) {
-    debugPrint('Error parsing v1 favorites data: $e');
+    captureException(e);
     return defaultFavoritesDataState;
   }
 }
