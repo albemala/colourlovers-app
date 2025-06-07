@@ -197,8 +197,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "2.0.1"
-      resolved-ref: "24bef4c1443400e608450ad15cd6c135cec80291"
+      ref: main
+      resolved-ref: af43c5a41bf84db121dcfb92f492ed2f7a5c289c
       url: "https://github.com/albemala/colourlovers-api-dart.git"
     source: git
     version: "2.0.1"

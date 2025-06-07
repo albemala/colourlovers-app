@@ -38,8 +38,9 @@ class PatternTileViewState extends Equatable {
   }
 
   factory PatternTileViewState.fromColourloverPattern(
-    ColourloversPattern pattern,
+    ColourloversPattern? pattern,
   ) {
+    if (pattern == null) return defaultPatternTileViewState;
     return PatternTileViewState(
       id: pattern.id?.toString() ?? '',
       title: pattern.title ?? '',

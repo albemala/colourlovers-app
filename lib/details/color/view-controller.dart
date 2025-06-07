@@ -106,38 +106,24 @@ class ColorDetailsViewController extends Cubit<ColorDetailsViewState> {
 
   void _updateState() {
     emit(
-      state.copyWith(
-        isLoading: false,
-        title: _color.title ?? '',
-        hex: _color.hex ?? '',
-        rgb:
-            _color.rgb != null
-                ? ColorRgbViewState.fromColourloverRgb(_color.rgb!)
-                : defaultColorRgbViewState,
-        hsv:
-            _color.hsv != null
-                ? ColorHsvViewState.fromColourloverHsv(_color.hsv!)
-                : defaultColorHsvViewState,
-        numViews: _color.numViews.formatted(),
-        numVotes: _color.numVotes.formatted(),
-        rank: _color.rank.formatted(),
-        user:
-            _user != null
-                ? UserTileViewState.fromColourloverUser(_user!)
-                : defaultUserTileViewState,
-        relatedColors: mapToTileViewState(
-          _relatedColors,
-          ColorTileViewState.fromColourloverColor,
-        ),
-        relatedPalettes: mapToTileViewState(
-          _relatedPalettes,
-          PaletteTileViewState.fromColourloverPalette,
-        ),
-        relatedPatterns: mapToTileViewState(
-          _relatedPatterns,
-          PatternTileViewState.fromColourloverPattern,
-        ),
-      ),
+      state
+          .copyWith(isLoading: false)
+          .copyWithColourloversColor(color: _color)
+          .copyWith(
+            user: UserTileViewState.fromColourloverUser(_user),
+            relatedColors: mapToTileViewState(
+              _relatedColors,
+              ColorTileViewState.fromColourloverColor,
+            ),
+            relatedPalettes: mapToTileViewState(
+              _relatedPalettes,
+              PaletteTileViewState.fromColourloverPalette,
+            ),
+            relatedPatterns: mapToTileViewState(
+              _relatedPatterns,
+              PatternTileViewState.fromColourloverPattern,
+            ),
+          ),
     );
   }
 

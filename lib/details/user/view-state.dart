@@ -2,9 +2,11 @@ import 'package:colourlovers_app/widgets/background/defines.dart';
 import 'package:colourlovers_app/widgets/item-tiles/color-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/palette-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view-state.dart';
+import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
+import 'package:colourlovers_app/formatters.dart';
 
 @immutable
 class UserDetailsViewState extends Equatable {
@@ -94,6 +96,22 @@ class UserDetailsViewState extends Equatable {
       userPatterns: userPatterns ?? this.userPatterns,
       backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
       isFavorited: isFavorited ?? this.isFavorited,
+    );
+  }
+
+  UserDetailsViewState copyWithColourloversLover({
+    required ColourloversLover user,
+  }) {
+    return copyWith(
+      userName: user.userName ?? '',
+      numColors: user.numColors.formatted(),
+      numPalettes: user.numPalettes.formatted(),
+      numPatterns: user.numPatterns.formatted(),
+      rating: user.rating.formatted(),
+      numLovers: user.numLovers.formatted(),
+      location: user.location ?? '',
+      dateRegistered: user.dateRegistered.formatted(),
+      dateLastActive: user.dateLastActive.formatted(),
     );
   }
 }

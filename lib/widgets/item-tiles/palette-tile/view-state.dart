@@ -43,8 +43,9 @@ class PaletteTileViewState extends Equatable {
   }
 
   factory PaletteTileViewState.fromColourloverPalette(
-    ColourloversPalette palette,
+    ColourloversPalette? palette,
   ) {
+    if (palette == null) return defaultPaletteTileViewState;
     return PaletteTileViewState(
       id: palette.id?.toString() ?? '',
       title: palette.title ?? '',

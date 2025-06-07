@@ -77,30 +77,23 @@ class UserDetailsViewController extends Cubit<UserDetailsViewState> {
 
   void _updateState() {
     emit(
-      state.copyWith(
-        isLoading: false,
-        userName: _user.userName ?? '',
-        numColors: _user.numColors.formatted(),
-        numPalettes: _user.numPalettes.formatted(),
-        numPatterns: _user.numPatterns.formatted(),
-        rating: _user.rating.formatted(),
-        numLovers: _user.numLovers.formatted(),
-        location: _user.location ?? '',
-        dateRegistered: _user.dateRegistered.formatted(),
-        dateLastActive: _user.dateLastActive.formatted(),
-        userColors: mapToTileViewState(
-          _userColors,
-          ColorTileViewState.fromColourloverColor,
-        ),
-        userPalettes: mapToTileViewState(
-          _userPalettes,
-          PaletteTileViewState.fromColourloverPalette,
-        ),
-        userPatterns: mapToTileViewState(
-          _userPatterns,
-          PatternTileViewState.fromColourloverPattern,
-        ),
-      ),
+      state
+          .copyWith(isLoading: false)
+          .copyWithColourloversLover(user: _user)
+          .copyWith(
+            userColors: mapToTileViewState(
+              _userColors,
+              ColorTileViewState.fromColourloverColor,
+            ),
+            userPalettes: mapToTileViewState(
+              _userPalettes,
+              PaletteTileViewState.fromColourloverPalette,
+            ),
+            userPatterns: mapToTileViewState(
+              _userPatterns,
+              PatternTileViewState.fromColourloverPattern,
+            ),
+          ),
     );
   }
 

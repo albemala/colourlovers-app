@@ -72,9 +72,7 @@ class ExploreView extends StatelessWidget {
                 },
                 title: 'Patterns',
                 child: const PatternView(
-                  // TODO store locally
-                  imageUrl:
-                      'http://static.colourlovers.com/images/patterns/1101/1101098.png',
+                  imageUrl: 'asset://assets/patterns/1101098.png',
                 ),
               ),
               ExploreTileView(

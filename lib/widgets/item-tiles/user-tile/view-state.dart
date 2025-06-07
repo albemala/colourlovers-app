@@ -43,7 +43,8 @@ class UserTileViewState extends Equatable {
     );
   }
 
-  factory UserTileViewState.fromColourloverUser(ColourloversLover user) {
+  factory UserTileViewState.fromColourloverUser(ColourloversLover? user) {
+    if (user == null) return defaultUserTileViewState;
     return UserTileViewState(
       id: user.userName ?? '',
       userName: user.userName ?? '',

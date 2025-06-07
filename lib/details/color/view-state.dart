@@ -1,4 +1,5 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
+import 'package:colourlovers_app/formatters.dart';
 import 'package:colourlovers_app/widgets/background/defines.dart';
 import 'package:colourlovers_app/widgets/item-tiles/color-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/palette-tile/view-state.dart';
@@ -31,7 +32,8 @@ class ColorRgbViewState extends Equatable {
     );
   }
 
-  factory ColorRgbViewState.fromColourloverRgb(Rgb rgb) {
+  factory ColorRgbViewState.fromColourloverRgb(Rgb? rgb) {
+    if (rgb == null) return defaultColorRgbViewState;
     return ColorRgbViewState(
       red: rgb.red?.toDouble() ?? 0,
       green: rgb.green?.toDouble() ?? 0,
@@ -63,7 +65,8 @@ class ColorHsvViewState extends Equatable {
     );
   }
 
-  factory ColorHsvViewState.fromColourloverHsv(Hsv hsv) {
+  factory ColorHsvViewState.fromColourloverHsv(Hsv? hsv) {
+    if (hsv == null) return defaultColorHsvViewState;
     return ColorHsvViewState(
       hue: hsv.hue?.toDouble() ?? 0,
       saturation: hsv.saturation?.toDouble() ?? 0,
@@ -155,6 +158,20 @@ class ColorDetailsViewState extends Equatable {
       relatedPatterns: relatedPatterns ?? this.relatedPatterns,
       backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
       isFavorited: isFavorited ?? this.isFavorited,
+    );
+  }
+
+  ColorDetailsViewState copyWithColourloversColor({
+    required ColourloversColor color,
+  }) {
+    return copyWith(
+      title: color.title ?? '',
+      hex: color.hex ?? '',
+      rgb: ColorRgbViewState.fromColourloverRgb(color.rgb),
+      hsv: ColorHsvViewState.fromColourloverHsv(color.hsv),
+      numViews: color.numViews.formatted(),
+      numVotes: color.numVotes.formatted(),
+      rank: color.rank.formatted(),
     );
   }
 }

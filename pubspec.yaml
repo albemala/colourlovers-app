@@ -51,7 +51,7 @@ dependencies:
   colourlovers_api:
     git:
       url: https://github.com/albemala/colourlovers-api-dart.git
-      ref: 2.0.1
+      ref: main
 
   sentry_flutter: ^8.14.2
 
@@ -75,6 +75,8 @@ flutter:
     - assets/app-icon/
     - assets/fonts/Archivo/
     - assets/fonts/Archivo_Narrow/
+    - assets/items/
+    - assets/patterns/
 
 # dart run icons_launcher:create && flutter clean && flutter pub get
 icons_launcher:

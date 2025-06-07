@@ -7,6 +7,16 @@ class PatternView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.network(imageUrl, repeat: ImageRepeat.repeat);
+    if (imageUrl.startsWith('http://') || imageUrl.startsWith('https://')) {
+      return Image.network(imageUrl, repeat: ImageRepeat.repeat);
+    } else if (imageUrl.startsWith('asset://')) {
+      return Image.asset(
+        imageUrl.replaceFirst('asset://', ''),
+        repeat: ImageRepeat.repeat,
+      );
+    } else {
+      // Fallback or error handling for unsupported image URLs
+      return const Placeholder();
+    }
   }
 }

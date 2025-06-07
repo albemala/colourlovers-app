@@ -137,7 +137,7 @@ class FavoritesView extends StatelessWidget {
         onTap: () => controller.showUserDetails(context, item),
         state: item as UserTileViewState,
       ),
-      _ => const SizedBox.shrink(),
+      _ => throw Exception('Unknown favorite item type: ${item.runtimeType}'),
     };
   }
 }

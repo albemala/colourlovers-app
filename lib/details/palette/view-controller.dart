@@ -106,32 +106,24 @@ class PaletteDetailsViewController extends Cubit<PaletteDetailsViewState> {
 
   void _updateState() {
     emit(
-      state.copyWith(
-        isLoading: false,
-        id: _palette.id.formatted(),
-        title: _palette.title ?? '',
-        colors: _palette.colors?.toIList() ?? const IList.empty(),
-        colorWidths: _palette.colorWidths?.toIList() ?? const IList.empty(),
-        colorViewStates: mapToTileViewState(
-          _colors,
-          ColorTileViewState.fromColourloverColor,
-        ),
-        numViews: _palette.numViews.formatted(),
-        numVotes: _palette.numVotes.formatted(),
-        rank: _palette.rank.formatted(),
-        user:
-            _user != null
-                ? UserTileViewState.fromColourloverUser(_user!)
-                : defaultUserTileViewState,
-        relatedPalettes: mapToTileViewState(
-          _relatedPalettes,
-          PaletteTileViewState.fromColourloverPalette,
-        ),
-        relatedPatterns: mapToTileViewState(
-          _relatedPatterns,
-          PatternTileViewState.fromColourloverPattern,
-        ),
-      ),
+      state
+          .copyWith(isLoading: false)
+          .copyWithColourloversPalette(palette: _palette)
+          .copyWith(
+            colorViewStates: mapToTileViewState(
+              _colors,
+              ColorTileViewState.fromColourloverColor,
+            ),
+            user: UserTileViewState.fromColourloverUser(_user),
+            relatedPalettes: mapToTileViewState(
+              _relatedPalettes,
+              PaletteTileViewState.fromColourloverPalette,
+            ),
+            relatedPatterns: mapToTileViewState(
+              _relatedPatterns,
+              PatternTileViewState.fromColourloverPattern,
+            ),
+          ),
     );
   }
 

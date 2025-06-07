@@ -37,7 +37,8 @@ class ColorTileViewState extends Equatable {
     );
   }
 
-  factory ColorTileViewState.fromColourloverColor(ColourloversColor color) {
+  factory ColorTileViewState.fromColourloverColor(ColourloversColor? color) {
+    if (color == null) return defaultColorTileViewState;
     return ColorTileViewState(
       id: color.id?.toString() ?? '',
       title: color.title ?? '',
