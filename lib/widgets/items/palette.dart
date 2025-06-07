@@ -11,21 +11,40 @@ class PaletteView extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        return Row(
-          children:
-              hexs.map((color) {
-                return SizedBox(
-                  width: constraints.minWidth * _width(color),
-                  child: Container(color: HexColor(color)),
-                );
-              }).toList(),
+        return CustomPaint(
+          painter: _PalettePainter(hexs: hexs, widths: widths),
+          size: Size(constraints.maxWidth, constraints.maxHeight),
         );
       },
     );
   }
+}
 
-  double _width(String color) {
-    final index = hexs.indexOf(color);
-    return index < widths.length ? widths[index] : 1 / hexs.length;
+class _PalettePainter extends CustomPainter {
+  final List<String> hexs;
+  final List<double> widths;
+
+  _PalettePainter({required this.hexs, required this.widths});
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    double currentX = 0;
+    for (var i = 0; i < hexs.length; i++) {
+      final color = HexColor(hexs[i]);
+      final width = widths.length > i ? widths[i] : 1 / hexs.length;
+      final rectWidth = size.width * width;
+
+      final paint = Paint()..color = color;
+      canvas.drawRect(
+        Rect.fromLTWH(currentX, 0, rectWidth, size.height),
+        paint,
+      );
+      currentX += rectWidth;
+    }
+  }
+
+  @override
+  bool shouldRepaint(covariant _PalettePainter oldDelegate) {
+    return oldDelegate.hexs != hexs || oldDelegate.widths != widths;
   }
 }
