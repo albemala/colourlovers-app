@@ -75,3 +75,4 @@ AuthKey_*.p8
 **/fastlane/readme.md
 
 temp/
+assets/items/*

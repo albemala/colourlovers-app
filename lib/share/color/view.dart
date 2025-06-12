@@ -5,6 +5,7 @@ import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/items/color.dart';
 import 'package:colourlovers_app/widgets/text.dart';
+import 'package:colourlovers_app/widgets/url_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -90,7 +91,9 @@ class ShareColorView extends StatelessWidget {
                         Row(
                           spacing: 8,
                           children: [
-                            Flexible(child: Image.network(state.imageUrl)),
+                            Flexible(
+                              child: UrlImageView(imageUrl: state.imageUrl),
+                            ),
                             TextButton(
                               onPressed: controller.shareImage,
                               child: const Text('Share'),

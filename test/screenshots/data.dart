@@ -18,7 +18,18 @@ import 'package:colourlovers_app/explore/view-state.dart';
 import 'package:colourlovers_app/explore/view.dart';
 import 'package:colourlovers_app/favorites/view-state.dart';
 import 'package:colourlovers_app/favorites/view.dart';
+import 'package:colourlovers_app/filters/color/view-state.dart';
+import 'package:colourlovers_app/filters/color/view.dart';
+import 'package:colourlovers_app/filters/defines.dart';
 import 'package:colourlovers_app/filters/favorites/defines.dart';
+import 'package:colourlovers_app/filters/favorites/view-state.dart';
+import 'package:colourlovers_app/filters/favorites/view.dart';
+import 'package:colourlovers_app/filters/palette/view-state.dart';
+import 'package:colourlovers_app/filters/palette/view.dart';
+import 'package:colourlovers_app/filters/pattern/view-state.dart';
+import 'package:colourlovers_app/filters/pattern/view.dart';
+import 'package:colourlovers_app/filters/user/view-state.dart';
+import 'package:colourlovers_app/filters/user/view.dart';
 import 'package:colourlovers_app/lists/colors/view-state.dart';
 import 'package:colourlovers_app/lists/colors/view.dart';
 import 'package:colourlovers_app/lists/palettes/view-state.dart';
@@ -29,6 +40,12 @@ import 'package:colourlovers_app/lists/users/view-state.dart';
 import 'package:colourlovers_app/lists/users/view.dart';
 import 'package:colourlovers_app/preferences/view-state.dart';
 import 'package:colourlovers_app/preferences/view.dart';
+import 'package:colourlovers_app/share/color/view-state.dart';
+import 'package:colourlovers_app/share/color/view.dart';
+import 'package:colourlovers_app/share/palette/view-state.dart';
+import 'package:colourlovers_app/share/palette/view.dart';
+import 'package:colourlovers_app/share/pattern/view-state.dart';
+import 'package:colourlovers_app/share/pattern/view.dart';
 import 'package:colourlovers_app/widgets/item-list/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/color-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/palette-tile/view-state.dart';
@@ -221,7 +238,91 @@ Future<List<ScreenshotData>> createScreenshotData() async {
     ),
   ];
 
-  return [...appContentViews, ...listViews, ...detailsViews];
+  final shareViews = <ScreenshotData>[
+    ScreenshotData(
+      view: NavigatorView(
+        child: ShareColorView(
+          controller: MockShareColorViewController(),
+          state: _createShareColorViewState(loadedItems),
+        ),
+      ),
+      fileName: 'share_color_view',
+    ),
+    ScreenshotData(
+      view: NavigatorView(
+        child: SharePaletteView(
+          controller: MockSharePaletteViewController(),
+          state: _createSharePaletteViewState(loadedItems),
+        ),
+      ),
+      fileName: 'share_palette_view',
+    ),
+    ScreenshotData(
+      view: NavigatorView(
+        child: SharePatternView(
+          controller: MockSharePatternViewController(),
+          state: _createSharePatternViewState(loadedItems),
+        ),
+      ),
+      fileName: 'share_pattern_view',
+    ),
+  ];
+
+  final filterViews = <ScreenshotData>[
+    ScreenshotData(
+      view: NavigatorView(
+        child: ColorFiltersView(
+          controller: MockColorFiltersViewController(),
+          state: _createColorFiltersViewState(loadedItems),
+        ),
+      ),
+      fileName: 'color_filters_view',
+    ),
+    ScreenshotData(
+      view: NavigatorView(
+        child: PaletteFiltersView(
+          controller: MockPaletteFiltersViewController(),
+          state: _createPaletteFiltersViewState(loadedItems),
+        ),
+      ),
+      fileName: 'palette_filters_view',
+    ),
+    ScreenshotData(
+      view: NavigatorView(
+        child: PatternFiltersView(
+          controller: MockPatternFiltersViewController(),
+          state: _createPatternFiltersViewState(loadedItems),
+        ),
+      ),
+      fileName: 'pattern_filters_view',
+    ),
+    ScreenshotData(
+      view: NavigatorView(
+        child: UserFiltersView(
+          controller: MockUserFiltersViewController(),
+          state: _createUserFiltersViewState(loadedItems),
+        ),
+      ),
+      fileName: 'user_filters_view',
+    ),
+    ScreenshotData(
+      view: NavigatorView(
+        child: FavoritesFiltersView(
+          controller: MockFavoritesFiltersViewController(),
+          state: _createFavoritesFiltersViewState(loadedItems),
+        ),
+      ),
+      fileName: 'favorites_filters_view',
+    ),
+  ];
+
+  return [
+    ...appContentViews,
+    ...listViews,
+    ...detailsViews,
+    ...shareViews,
+    // ...filterViews,
+  ];
 }
 
 Future<_LoadedItems> _loadItemsFromAssets() async {
@@ -248,11 +349,27 @@ Future<_LoadedItems> _loadItemsFromAssets() async {
           .map((e) => ColourloversPattern.fromJson(e as Map<String, dynamic>))
           .toList();
 
+  // Update imageUrl for colors
+  final updatedColors =
+      colors.map((color) {
+        return color.copyWith(
+          imageUrl: 'asset://assets/items/colors/${color.id}.png',
+        );
+      }).toList();
+
+  // Update imageUrl for palettes
+  final updatedPalettes =
+      palettes.map((palette) {
+        return palette.copyWith(
+          imageUrl: 'asset://assets/items/palettes/${palette.id}.png',
+        );
+      }).toList();
+
   // Update imageUrl for patterns
   final updatedPatterns =
       patterns.map((pattern) {
         return pattern.copyWith(
-          imageUrl: 'asset://assets/patterns/${pattern.id}.png',
+          imageUrl: 'asset://assets/items/patterns/${pattern.id}.png',
         );
       }).toList();
 
@@ -262,8 +379,8 @@ Future<_LoadedItems> _loadItemsFromAssets() async {
           .toList();
 
   return _LoadedItems(
-    colors: colors,
-    palettes: palettes,
+    colors: updatedColors,
+    palettes: updatedPalettes,
     patterns: updatedPatterns,
     lovers: lovers,
   );
@@ -351,7 +468,6 @@ PaletteDetailsViewState _createPaletteDetailsViewState(
         user: UserTileViewState.fromColourloverUser(loadedItems.lovers[3]),
         relatedPalettes:
             loadedItems.palettes
-                .skip(1)
                 .take(3)
                 .map(PaletteTileViewState.fromColourloverPalette)
                 .toIList(),
@@ -396,7 +512,6 @@ PatternDetailsViewState _createPatternDetailsViewState(
                 .toIList(),
         relatedPatterns:
             loadedItems.patterns
-                .skip(1)
                 .take(3)
                 .map(PatternTileViewState.fromColourloverPattern)
                 .toIList(),
@@ -482,6 +597,182 @@ UsersViewState _createUsersListViewState(_LoadedItems loadedItems) {
       hasMoreItems: false,
     ),
   );
+}
+
+ShareColorViewState _createShareColorViewState(_LoadedItems loadedItems) {
+  final color = loadedItems.colors[3];
+  return defaultShareColorViewState.copyWith(
+    hex: color.hex,
+    imageUrl: 'asset://assets/items/colors/${color.id}.png',
+    backgroundBlobs: const IList.empty(),
+  );
+}
+
+SharePaletteViewState _createSharePaletteViewState(_LoadedItems loadedItems) {
+  final palette = loadedItems.palettes[0];
+  return defaultSharePaletteViewState.copyWith(
+    colors: IList(palette.colors ?? []),
+    colorWidths: IList(palette.colorWidths ?? []),
+    imageUrl: 'asset://assets/items/palettes/${palette.id}.png',
+    backgroundBlobs: const IList.empty(),
+  );
+}
+
+SharePatternViewState _createSharePatternViewState(_LoadedItems loadedItems) {
+  final pattern = loadedItems.patterns[0];
+  return defaultSharePatternViewState.copyWith(
+    colors: IList(pattern.colors ?? []),
+    imageUrl: 'asset://assets/items/patterns/${pattern.id}.png',
+    templateUrl: 'asset://assets/items/patterns/${pattern.id}.png',
+    backgroundBlobs: const IList.empty(),
+  );
+}
+
+ColorFiltersViewState _createColorFiltersViewState(_LoadedItems loadedItems) {
+  return defaultColorFiltersViewState.copyWith(
+    showCriteria: ContentShowCriteria.top,
+    sortBy: ColourloversRequestOrderBy.numVotes,
+    sortOrder: ColourloversRequestSortBy.ASC,
+    hueMin: 100,
+    hueMax: 200,
+    brightnessMin: 20,
+    brightnessMax: 80,
+    backgroundBlobs: const IList.empty(),
+  );
+}
+
+PaletteFiltersViewState _createPaletteFiltersViewState(
+  _LoadedItems loadedItems,
+) {
+  return defaultPaletteFiltersViewState.copyWith(
+    showCriteria: ContentShowCriteria.top,
+    sortBy: ColourloversRequestOrderBy.numVotes,
+    sortOrder: ColourloversRequestSortBy.ASC,
+    colorFilter: ColorFilter.hueRanges,
+    hueRanges: IList(const [
+      ColourloversRequestHueRange.blue,
+      ColourloversRequestHueRange.green,
+    ]),
+    backgroundBlobs: const IList.empty(),
+  );
+}
+
+PatternFiltersViewState _createPatternFiltersViewState(
+  _LoadedItems loadedItems,
+) {
+  return defaultPatternFiltersViewState.copyWith(
+    showCriteria: ContentShowCriteria.top,
+    sortBy: ColourloversRequestOrderBy.numVotes,
+    sortOrder: ColourloversRequestSortBy.ASC,
+    colorFilter: ColorFilter.hueRanges,
+    hueRanges: IList(const [
+      ColourloversRequestHueRange.red,
+      ColourloversRequestHueRange.yellow,
+    ]),
+    backgroundBlobs: const IList.empty(),
+  );
+}
+
+UserFiltersViewState _createUserFiltersViewState(_LoadedItems loadedItems) {
+  return defaultUserFiltersViewState.copyWith(
+    showCriteria: ContentShowCriteria.top,
+    sortBy: ColourloversRequestOrderBy.numVotes,
+    sortOrder: ColourloversRequestSortBy.ASC,
+    backgroundBlobs: const IList.empty(),
+  );
+}
+
+FavoritesFiltersViewState _createFavoritesFiltersViewState(
+  _LoadedItems loadedItems,
+) {
+  return defaultFavoritesFiltersViewState.copyWith(
+    typeFilter: FavoriteItemTypeFilter.palette,
+    sortBy: FavoriteSortBy.timeAdded,
+    sortOrder: FavoriteSortOrder.ascending,
+    backgroundBlobs: const IList.empty(),
+  );
+}
+
+extension ColourloversColorCopyWith on ColourloversColor {
+  ColourloversColor copyWith({
+    int? id,
+    String? title,
+    String? userName,
+    int? numViews,
+    int? numVotes,
+    int? numComments,
+    double? numHearts,
+    int? rank,
+    DateTime? dateCreated,
+    String? hex,
+    Rgb? rgb,
+    Hsv? hsv,
+    String? description,
+    String? url,
+    String? imageUrl,
+    String? badgeUrl,
+    String? apiUrl,
+  }) {
+    return ColourloversColor(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      userName: userName ?? this.userName,
+      numViews: numViews ?? this.numViews,
+      numVotes: numVotes ?? this.numVotes,
+      numComments: numComments ?? this.numComments,
+      numHearts: numHearts ?? this.numHearts,
+      rank: rank ?? this.rank,
+      dateCreated: dateCreated ?? this.dateCreated,
+      hex: hex ?? this.hex,
+      rgb: rgb ?? this.rgb,
+      hsv: hsv ?? this.hsv,
+      description: description ?? this.description,
+      url: url ?? this.url,
+      imageUrl: imageUrl ?? this.imageUrl,
+      badgeUrl: badgeUrl ?? this.badgeUrl,
+      apiUrl: apiUrl ?? this.apiUrl,
+    );
+  }
+}
+
+extension ColourloversPaletteCopyWith on ColourloversPalette {
+  ColourloversPalette copyWith({
+    int? id,
+    String? title,
+    String? userName,
+    int? numViews,
+    int? numVotes,
+    int? numComments,
+    double? numHearts,
+    int? rank,
+    DateTime? dateCreated,
+    List<String>? colors,
+    List<double>? colorWidths,
+    String? description,
+    String? url,
+    String? imageUrl,
+    String? badgeUrl,
+    String? apiUrl,
+  }) {
+    return ColourloversPalette(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      userName: userName ?? this.userName,
+      numViews: numViews ?? this.numViews,
+      numVotes: numVotes ?? this.numVotes,
+      numComments: numComments ?? this.numComments,
+      numHearts: numHearts ?? this.numHearts,
+      rank: rank ?? this.rank,
+      dateCreated: dateCreated ?? this.dateCreated,
+      colors: colors ?? this.colors,
+      colorWidths: colorWidths ?? this.colorWidths,
+      description: description ?? this.description,
+      url: url ?? this.url,
+      imageUrl: imageUrl ?? this.imageUrl,
+      badgeUrl: badgeUrl ?? this.badgeUrl,
+      apiUrl: apiUrl ?? this.apiUrl,
+    );
+  }
 }
 
 extension ColourloversPatternCopyWith on ColourloversPattern {

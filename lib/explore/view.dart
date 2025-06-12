@@ -72,7 +72,7 @@ class ExploreView extends StatelessWidget {
                 },
                 title: 'Patterns',
                 child: const PatternView(
-                  imageUrl: 'asset://assets/patterns/1101098.png',
+                  imageUrl: 'asset://assets/items/patterns/1101098.png',
                 ),
               ),
               ExploreTileView(

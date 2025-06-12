@@ -7,7 +7,6 @@ import 'package:colourlovers_app/details/pattern/view.dart';
 import 'package:colourlovers_app/details/user/view-state.dart';
 import 'package:colourlovers_app/favorites/data-controller.dart';
 import 'package:colourlovers_app/favorites/data-state.dart';
-import 'package:colourlovers_app/formatters.dart';
 import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/user-items.dart';
 import 'package:colourlovers_app/user/colors/view.dart';

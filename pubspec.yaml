@@ -76,7 +76,9 @@ flutter:
     - assets/fonts/Archivo/
     - assets/fonts/Archivo_Narrow/
     - assets/items/
-    - assets/patterns/
+    - assets/items/colors/
+    - assets/items/palettes/
+    - assets/items/patterns/
 
 # dart run icons_launcher:create && flutter clean && flutter pub get
 icons_launcher:
