@@ -8,6 +8,7 @@ import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/color-values-range-selector.dart';
 import 'package:colourlovers_app/widgets/text.dart';
+import 'package:colourlovers_app/widgets/text-field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -63,8 +64,8 @@ class ColorFiltersView extends StatelessWidget {
                       _SortByView(state: state, controller: controller),
                     _HueView(state: state, controller: controller),
                     _BrightnessView(state: state, controller: controller),
-                    _ColorNameView(controller: controller),
-                    _UserNameView(controller: controller),
+                    _ColorNameView(state: state, controller: controller),
+                    _UserNameView(state: state, controller: controller),
                   ],
                 ),
               ),
@@ -239,9 +240,10 @@ class _BrightnessView extends StatelessWidget {
 }
 
 class _ColorNameView extends StatelessWidget {
+  final ColorFiltersViewState state;
   final ColorFiltersViewController controller;
 
-  const _ColorNameView({required this.controller});
+  const _ColorNameView({required this.state, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -250,16 +252,20 @@ class _ColorNameView extends StatelessWidget {
       spacing: 12,
       children: [
         const H1TextView('Color name'),
-        TextField(controller: controller.colorNameController),
+        TextFieldView(
+          text: state.colorName,
+          onTextChanged: controller.setColorName,
+        ),
       ],
     );
   }
 }
 
 class _UserNameView extends StatelessWidget {
+  final ColorFiltersViewState state;
   final ColorFiltersViewController controller;
 
-  const _UserNameView({required this.controller});
+  const _UserNameView({required this.state, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -268,7 +274,10 @@ class _UserNameView extends StatelessWidget {
       spacing: 12,
       children: [
         const H1TextView('User name'),
-        TextField(controller: controller.userNameController),
+        TextFieldView(
+          text: state.userName,
+          onTextChanged: controller.setUserName,
+        ),
       ],
     );
   }

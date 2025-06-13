@@ -20,9 +20,9 @@ class PatternFiltersViewController extends Cubit<PatternFiltersViewState> {
   var _sortOrder = defaultPatternFiltersViewState.sortOrder;
   var _colorFilter = defaultPatternFiltersViewState.colorFilter;
   var _hueRanges = defaultPatternFiltersViewState.hueRanges;
-  final hexController = TextEditingController();
-  final patternNameController = TextEditingController();
-  final userNameController = TextEditingController();
+  var _hex = defaultPatternFiltersViewState.hex;
+  var _patternName = defaultPatternFiltersViewState.patternName;
+  var _userName = defaultPatternFiltersViewState.userName;
 
   factory PatternFiltersViewController.fromContext(BuildContext context) {
     return PatternFiltersViewController(
@@ -37,11 +37,9 @@ class PatternFiltersViewController extends Cubit<PatternFiltersViewState> {
     _sortOrder = _dataController.sortOrder;
     _colorFilter = _dataController.colorFilter;
     _hueRanges = _dataController.hueRanges;
-    hexController.text = _dataController.hex;
-    patternNameController.value = TextEditingValue(
-      text: _dataController.patternName,
-    );
-    userNameController.value = TextEditingValue(text: _dataController.userName);
+    _hex = _dataController.hex;
+    _patternName = _dataController.patternName;
+    _userName = _dataController.userName;
 
     emit(
       state.copyWith(
@@ -53,9 +51,6 @@ class PatternFiltersViewController extends Cubit<PatternFiltersViewState> {
 
   @override
   Future<void> close() {
-    hexController.dispose();
-    patternNameController.dispose();
-    userNameController.dispose();
     return super.close();
   }
 
@@ -105,6 +100,21 @@ class PatternFiltersViewController extends Cubit<PatternFiltersViewState> {
     }
   }
 
+  void setHex(String value) {
+    _hex = value;
+    _updateState();
+  }
+
+  void setPatternName(String value) {
+    _patternName = value;
+    _updateState();
+  }
+
+  void setUserName(String value) {
+    _userName = value;
+    _updateState();
+  }
+
   void pickHex(BuildContext context) {}
 
   void resetFilters() {
@@ -113,15 +123,9 @@ class PatternFiltersViewController extends Cubit<PatternFiltersViewState> {
     _sortOrder = defaultPatternFiltersDataState.sortOrder;
     _colorFilter = defaultPatternFiltersDataState.colorFilter;
     _hueRanges = defaultPatternFiltersDataState.hueRanges;
-    hexController.value = TextEditingValue(
-      text: defaultPatternFiltersDataState.hex,
-    );
-    patternNameController.value = TextEditingValue(
-      text: defaultPatternFiltersDataState.patternName,
-    );
-    userNameController.value = TextEditingValue(
-      text: defaultPatternFiltersDataState.userName,
-    );
+    _hex = defaultPatternFiltersDataState.hex;
+    _patternName = defaultPatternFiltersDataState.patternName;
+    _userName = defaultPatternFiltersDataState.userName;
     _updateState();
   }
 
@@ -132,9 +136,9 @@ class PatternFiltersViewController extends Cubit<PatternFiltersViewState> {
       ..sortOrder = _sortOrder
       ..colorFilter = _colorFilter
       ..hueRanges = _hueRanges
-      ..hex = hexController.text
-      ..patternName = patternNameController.text
-      ..userName = userNameController.text;
+      ..hex = _hex
+      ..patternName = _patternName
+      ..userName = _userName;
   }
 
   void _updateState() {
@@ -145,6 +149,9 @@ class PatternFiltersViewController extends Cubit<PatternFiltersViewState> {
         sortOrder: _sortOrder,
         colorFilter: _colorFilter,
         hueRanges: _hueRanges,
+        hex: _hex,
+        patternName: _patternName,
+        userName: _userName,
       ),
     );
   }

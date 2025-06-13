@@ -7,6 +7,7 @@ import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/text.dart';
+import 'package:colourlovers_app/widgets/text-field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -65,8 +66,8 @@ class PatternFiltersView extends StatelessWidget {
                       _HueRangesView(state: state, controller: controller),
                     if (state.colorFilter == ColorFilter.hex)
                       _HexView(state: state, controller: controller),
-                    _PatternNameView(controller: controller),
-                    _UserNameView(controller: controller),
+                    _PatternNameView(state: state, controller: controller),
+                    _UserNameView(state: state, controller: controller),
                   ],
                 ),
               ),
@@ -255,51 +256,10 @@ class _HexView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      controller: controller.hexController,
-      decoration: InputDecoration(
-        prefixText: '#',
-        suffixIcon: Padding(
-          padding: const EdgeInsets.only(right: 8),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            spacing: 8,
-            children: [
-              ListenableBuilder(
-                listenable: controller.hexController,
-                builder: (context, child) {
-                  return Container(
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Color(
-                        int.tryParse(
-                              'FF${controller.hexController.text}',
-                              radix: 16,
-                            ) ??
-                            0x00000000,
-                      ),
-                    ),
-                  );
-                },
-              ),
-              /* // TODO restore
-              IconButton.outlined(
-                icon: Icon(
-                  LucideIcons.pipette,
-                  color: Theme.of(context).colorScheme.onBackground,
-                  size: 18,
-                ),
-                onPressed: () {
-                  controller.pickHex(context);
-                },
-              ),
-*/
-            ],
-          ),
-        ),
-      ),
+    return TextFieldView(
+      text: state.hex,
+      onTextChanged: controller.setHex,
+      title: 'Hex',
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Please enter a hex color';
@@ -309,15 +269,46 @@ class _HexView extends StatelessWidget {
         }
         return null;
       },
-      autovalidateMode: AutovalidateMode.always,
+      suffixIcon: Padding(
+        padding: const EdgeInsets.only(right: 8),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          spacing: 8,
+          children: [
+            Container(
+              width: 32,
+              height: 32,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Color(
+                  int.tryParse('FF${state.hex}', radix: 16) ?? 0x00000000,
+                ),
+              ),
+            ),
+            /* // TODO restore
+            IconButton.outlined(
+              icon: Icon(
+                LucideIcons.pipette,
+                color: Theme.of(context).colorScheme.onBackground,
+                size: 18,
+              ),
+              onPressed: () {
+                controller.pickHex(context);
+              },
+            ),
+*/
+          ],
+        ),
+      ),
     );
   }
 }
 
 class _PatternNameView extends StatelessWidget {
+  final PatternFiltersViewState state;
   final PatternFiltersViewController controller;
 
-  const _PatternNameView({required this.controller});
+  const _PatternNameView({required this.state, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -326,16 +317,20 @@ class _PatternNameView extends StatelessWidget {
       spacing: 12,
       children: [
         const H1TextView('Pattern name'),
-        TextField(controller: controller.patternNameController),
+        TextFieldView(
+          text: state.patternName,
+          onTextChanged: controller.setPatternName,
+        ),
       ],
     );
   }
 }
 
 class _UserNameView extends StatelessWidget {
+  final PatternFiltersViewState state;
   final PatternFiltersViewController controller;
 
-  const _UserNameView({required this.controller});
+  const _UserNameView({required this.state, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -344,7 +339,10 @@ class _UserNameView extends StatelessWidget {
       spacing: 12,
       children: [
         const H1TextView('User name'),
-        TextField(controller: controller.userNameController),
+        TextFieldView(
+          text: state.userName,
+          onTextChanged: controller.setUserName,
+        ),
       ],
     );
   }

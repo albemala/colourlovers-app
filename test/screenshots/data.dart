@@ -321,7 +321,7 @@ Future<List<ScreenshotData>> createScreenshotData() async {
     ...listViews,
     ...detailsViews,
     ...shareViews,
-    // ...filterViews,
+    ...filterViews,
   ];
 }
 
@@ -664,11 +664,8 @@ PatternFiltersViewState _createPatternFiltersViewState(
     showCriteria: ContentShowCriteria.top,
     sortBy: ColourloversRequestOrderBy.numVotes,
     sortOrder: ColourloversRequestSortBy.ASC,
-    colorFilter: ColorFilter.hueRanges,
-    hueRanges: IList(const [
-      ColourloversRequestHueRange.red,
-      ColourloversRequestHueRange.yellow,
-    ]),
+    colorFilter: ColorFilter.hex,
+    hex: 'AB21DB',
     backgroundBlobs: const IList.empty(),
   );
 }

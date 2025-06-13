@@ -20,8 +20,8 @@ class ColorFiltersViewController extends Cubit<ColorFiltersViewState> {
   var _hueMax = defaultColorFiltersViewState.hueMax;
   var _brightnessMin = defaultColorFiltersViewState.brightnessMin;
   var _brightnessMax = defaultColorFiltersViewState.brightnessMax;
-  final colorNameController = TextEditingController();
-  final userNameController = TextEditingController();
+  var _colorName = defaultColorFiltersViewState.colorName;
+  var _userName = defaultColorFiltersViewState.userName;
 
   factory ColorFiltersViewController.fromContext(BuildContext context) {
     return ColorFiltersViewController(
@@ -38,10 +38,8 @@ class ColorFiltersViewController extends Cubit<ColorFiltersViewState> {
     _hueMax = _dataController.hueMax;
     _brightnessMin = _dataController.brightnessMin;
     _brightnessMax = _dataController.brightnessMax;
-    colorNameController.value = TextEditingValue(
-      text: _dataController.colorName,
-    );
-    userNameController.value = TextEditingValue(text: _dataController.userName);
+    _colorName = _dataController.colorName;
+    _userName = _dataController.userName;
 
     emit(
       state.copyWith(
@@ -53,8 +51,6 @@ class ColorFiltersViewController extends Cubit<ColorFiltersViewState> {
 
   @override
   Future<void> close() {
-    colorNameController.dispose();
-    userNameController.dispose();
     return super.close();
   }
 
@@ -93,6 +89,16 @@ class ColorFiltersViewController extends Cubit<ColorFiltersViewState> {
     _updateState();
   }
 
+  void setColorName(String value) {
+    _colorName = value;
+    _updateState();
+  }
+
+  void setUserName(String value) {
+    _userName = value;
+    _updateState();
+  }
+
   void resetFilters() {
     _showCriteria = defaultColorFiltersDataState.showCriteria;
     _sortBy = defaultColorFiltersDataState.sortBy;
@@ -101,12 +107,8 @@ class ColorFiltersViewController extends Cubit<ColorFiltersViewState> {
     _hueMax = defaultColorFiltersDataState.hueMax;
     _brightnessMin = defaultColorFiltersDataState.brightnessMin;
     _brightnessMax = defaultColorFiltersDataState.brightnessMax;
-    colorNameController.value = TextEditingValue(
-      text: defaultColorFiltersDataState.colorName,
-    );
-    userNameController.value = TextEditingValue(
-      text: defaultColorFiltersDataState.userName,
-    );
+    _colorName = defaultColorFiltersDataState.colorName;
+    _userName = defaultColorFiltersDataState.userName;
     _updateState();
   }
 
@@ -119,8 +121,8 @@ class ColorFiltersViewController extends Cubit<ColorFiltersViewState> {
       ..hueMax = _hueMax
       ..brightnessMin = _brightnessMin
       ..brightnessMax = _brightnessMax
-      ..colorName = colorNameController.text
-      ..userName = userNameController.text;
+      ..colorName = _colorName
+      ..userName = _userName;
   }
 
   void _updateState() {
@@ -133,6 +135,8 @@ class ColorFiltersViewController extends Cubit<ColorFiltersViewState> {
         hueMax: _hueMax,
         brightnessMin: _brightnessMin,
         brightnessMax: _brightnessMax,
+        colorName: _colorName,
+        userName: _userName,
       ),
     );
   }

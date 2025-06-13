@@ -11,7 +11,7 @@ const _subThemesData = FlexSubThemesData(
   interactionEffects: true,
   tintedDisabledControls: true,
   inputDecoratorIsFilled: true,
-  inputDecoratorBorderType: FlexInputBorderType.underline,
+  inputDecoratorBorderType: FlexInputBorderType.outline,
   alignedDropdown: true,
 );
 

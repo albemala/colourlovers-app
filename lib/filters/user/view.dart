@@ -7,6 +7,7 @@ import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/text.dart';
+import 'package:colourlovers_app/widgets/text-field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -62,7 +63,7 @@ class UserFiltersView extends StatelessWidget {
                       _SortByView(state: state, controller: controller),
                     // It looks like there is no API parameter to filter by user name
                     // So I'm going to leave it this here for now
-                    // _UserNameView(controller: controller),
+                    // _UserNameView(state: state, controller: controller),
                   ],
                 ),
               ),
@@ -173,9 +174,10 @@ class _SortByView extends StatelessWidget {
 }
 
 class _UserNameView extends StatelessWidget {
+  final UserFiltersViewState state;
   final UserFiltersViewController controller;
 
-  const _UserNameView({required this.controller});
+  const _UserNameView({required this.state, required this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -184,7 +186,10 @@ class _UserNameView extends StatelessWidget {
       spacing: 12,
       children: [
         const H1TextView('User name'),
-        TextField(controller: controller.userNameController),
+        TextFieldView(
+          text: state.userName,
+          onTextChanged: controller.setUserName,
+        ),
       ],
     );
   }

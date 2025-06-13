@@ -20,9 +20,9 @@ class PaletteFiltersViewController extends Cubit<PaletteFiltersViewState> {
   var _sortOrder = defaultPaletteFiltersViewState.sortOrder;
   var _colorFilter = defaultPaletteFiltersViewState.colorFilter;
   var _hueRanges = defaultPaletteFiltersViewState.hueRanges;
-  final hexController = TextEditingController();
-  final paletteNameController = TextEditingController();
-  final userNameController = TextEditingController();
+  var _hex = defaultPaletteFiltersViewState.hex;
+  var _paletteName = defaultPaletteFiltersViewState.paletteName;
+  var _userName = defaultPaletteFiltersViewState.userName;
 
   factory PaletteFiltersViewController.fromContext(BuildContext context) {
     return PaletteFiltersViewController(
@@ -37,11 +37,9 @@ class PaletteFiltersViewController extends Cubit<PaletteFiltersViewState> {
     _sortOrder = _dataController.sortOrder;
     _colorFilter = _dataController.colorFilter;
     _hueRanges = _dataController.hueRanges;
-    hexController.text = _dataController.hex;
-    paletteNameController.value = TextEditingValue(
-      text: _dataController.paletteName,
-    );
-    userNameController.value = TextEditingValue(text: _dataController.userName);
+    _hex = _dataController.hex;
+    _paletteName = _dataController.paletteName;
+    _userName = _dataController.userName;
 
     emit(
       state.copyWith(
@@ -53,9 +51,6 @@ class PaletteFiltersViewController extends Cubit<PaletteFiltersViewState> {
 
   @override
   Future<void> close() {
-    hexController.dispose();
-    paletteNameController.dispose();
-    userNameController.dispose();
     return super.close();
   }
 
@@ -105,6 +100,21 @@ class PaletteFiltersViewController extends Cubit<PaletteFiltersViewState> {
     }
   }
 
+  void setHex(String value) {
+    _hex = value;
+    _updateState();
+  }
+
+  void setPaletteName(String value) {
+    _paletteName = value;
+    _updateState();
+  }
+
+  void setUserName(String value) {
+    _userName = value;
+    _updateState();
+  }
+
   void pickHex(BuildContext context) {}
 
   void resetFilters() {
@@ -113,15 +123,9 @@ class PaletteFiltersViewController extends Cubit<PaletteFiltersViewState> {
     _sortOrder = defaultPaletteFiltersDataState.sortOrder;
     _colorFilter = defaultPaletteFiltersDataState.colorFilter;
     _hueRanges = defaultPaletteFiltersDataState.hueRanges;
-    hexController.value = TextEditingValue(
-      text: defaultPaletteFiltersDataState.hex,
-    );
-    paletteNameController.value = TextEditingValue(
-      text: defaultPaletteFiltersDataState.paletteName,
-    );
-    userNameController.value = TextEditingValue(
-      text: defaultPaletteFiltersDataState.userName,
-    );
+    _hex = defaultPaletteFiltersDataState.hex;
+    _paletteName = defaultPaletteFiltersDataState.paletteName;
+    _userName = defaultPaletteFiltersDataState.userName;
     _updateState();
   }
 
@@ -132,9 +136,9 @@ class PaletteFiltersViewController extends Cubit<PaletteFiltersViewState> {
       ..sortOrder = _sortOrder
       ..colorFilter = _colorFilter
       ..hueRanges = _hueRanges
-      ..hex = hexController.text
-      ..paletteName = paletteNameController.text
-      ..userName = userNameController.text;
+      ..hex = _hex
+      ..paletteName = _paletteName
+      ..userName = _userName;
   }
 
   void _updateState() {
@@ -145,6 +149,9 @@ class PaletteFiltersViewController extends Cubit<PaletteFiltersViewState> {
         sortOrder: _sortOrder,
         colorFilter: _colorFilter,
         hueRanges: _hueRanges,
+        hex: _hex,
+        paletteName: _paletteName,
+        userName: _userName,
       ),
     );
   }

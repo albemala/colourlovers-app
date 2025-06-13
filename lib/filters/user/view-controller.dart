@@ -16,7 +16,7 @@ class UserFiltersViewController extends Cubit<UserFiltersViewState> {
   var _showCriteria = defaultUserFiltersViewState.showCriteria;
   var _sortBy = defaultUserFiltersViewState.sortBy;
   var _sortOrder = defaultUserFiltersViewState.sortOrder;
-  final userNameController = TextEditingController();
+  var _userName = defaultUserFiltersViewState.userName;
 
   factory UserFiltersViewController.fromContext(BuildContext context) {
     return UserFiltersViewController(context.read<UserFiltersDataController>());
@@ -27,7 +27,7 @@ class UserFiltersViewController extends Cubit<UserFiltersViewState> {
     _showCriteria = _dataController.showCriteria;
     _sortBy = _dataController.sortBy;
     _sortOrder = _dataController.sortOrder;
-    userNameController.value = TextEditingValue(text: _dataController.userName);
+    _userName = _dataController.userName;
 
     emit(
       state.copyWith(
@@ -39,7 +39,6 @@ class UserFiltersViewController extends Cubit<UserFiltersViewState> {
 
   @override
   Future<void> close() {
-    userNameController.dispose();
     return super.close();
   }
 
@@ -58,15 +57,18 @@ class UserFiltersViewController extends Cubit<UserFiltersViewState> {
     _updateState();
   }
 
+  void setUserName(String value) {
+    _userName = value;
+    _updateState();
+  }
+
   void pickHex(BuildContext context) {}
 
   void resetFilters() {
     _showCriteria = defaultUserFiltersDataState.showCriteria;
     _sortBy = defaultUserFiltersDataState.sortBy;
     _sortOrder = defaultUserFiltersDataState.sortOrder;
-    userNameController.value = TextEditingValue(
-      text: defaultUserFiltersDataState.userName,
-    );
+    _userName = defaultUserFiltersDataState.userName;
     _updateState();
   }
 
@@ -75,7 +77,7 @@ class UserFiltersViewController extends Cubit<UserFiltersViewState> {
       ..showCriteria = _showCriteria
       ..sortBy = _sortBy
       ..sortOrder = _sortOrder
-      ..userName = userNameController.text;
+      ..userName = _userName;
   }
 
   void _updateState() {
@@ -84,6 +86,7 @@ class UserFiltersViewController extends Cubit<UserFiltersViewState> {
         showCriteria: _showCriteria,
         sortBy: _sortBy,
         sortOrder: _sortOrder,
+        userName: _userName,
       ),
     );
   }

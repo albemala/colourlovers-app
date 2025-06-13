@@ -12,6 +12,9 @@ class PaletteFiltersViewState extends Equatable {
   final ColourloversRequestSortBy sortOrder;
   final ColorFilter colorFilter;
   final IList<ColourloversRequestHueRange> hueRanges;
+  final String hex;
+  final String paletteName;
+  final String userName;
   final IList<BackgroundBlob> backgroundBlobs;
 
   const PaletteFiltersViewState({
@@ -20,6 +23,9 @@ class PaletteFiltersViewState extends Equatable {
     required this.sortOrder,
     required this.colorFilter,
     required this.hueRanges,
+    required this.hex,
+    required this.paletteName,
+    required this.userName,
     required this.backgroundBlobs,
   });
 
@@ -30,6 +36,9 @@ class PaletteFiltersViewState extends Equatable {
     sortOrder,
     colorFilter,
     hueRanges,
+    hex,
+    paletteName,
+    userName,
     backgroundBlobs,
   ];
 
@@ -39,6 +48,9 @@ class PaletteFiltersViewState extends Equatable {
     ColourloversRequestSortBy? sortOrder,
     ColorFilter? colorFilter,
     IList<ColourloversRequestHueRange>? hueRanges,
+    String? hex,
+    String? paletteName,
+    String? userName,
     IList<BackgroundBlob>? backgroundBlobs,
   }) {
     return PaletteFiltersViewState(
@@ -47,6 +59,9 @@ class PaletteFiltersViewState extends Equatable {
       sortOrder: sortOrder ?? this.sortOrder,
       colorFilter: colorFilter ?? this.colorFilter,
       hueRanges: hueRanges ?? this.hueRanges,
+      hex: hex ?? this.hex,
+      paletteName: paletteName ?? this.paletteName,
+      userName: userName ?? this.userName,
       backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );
   }
@@ -58,5 +73,8 @@ const defaultPaletteFiltersViewState = PaletteFiltersViewState(
   sortOrder: ColourloversRequestSortBy.DESC,
   colorFilter: ColorFilter.none,
   hueRanges: IList.empty(),
+  hex: '',
+  paletteName: '',
+  userName: '',
   backgroundBlobs: IList.empty(),
 );

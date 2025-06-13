@@ -14,6 +14,8 @@ class ColorFiltersViewState extends Equatable {
   final int hueMax;
   final int brightnessMin;
   final int brightnessMax;
+  final String colorName;
+  final String userName;
   final IList<BackgroundBlob> backgroundBlobs;
 
   const ColorFiltersViewState({
@@ -24,6 +26,8 @@ class ColorFiltersViewState extends Equatable {
     required this.hueMax,
     required this.brightnessMin,
     required this.brightnessMax,
+    required this.colorName,
+    required this.userName,
     required this.backgroundBlobs,
   });
 
@@ -36,6 +40,8 @@ class ColorFiltersViewState extends Equatable {
     hueMax,
     brightnessMin,
     brightnessMax,
+    colorName,
+    userName,
     backgroundBlobs,
   ];
 
@@ -47,6 +53,8 @@ class ColorFiltersViewState extends Equatable {
     int? hueMax,
     int? brightnessMin,
     int? brightnessMax,
+    String? colorName,
+    String? userName,
     IList<BackgroundBlob>? backgroundBlobs,
   }) {
     return ColorFiltersViewState(
@@ -57,6 +65,8 @@ class ColorFiltersViewState extends Equatable {
       hueMax: hueMax ?? this.hueMax,
       brightnessMin: brightnessMin ?? this.brightnessMin,
       brightnessMax: brightnessMax ?? this.brightnessMax,
+      colorName: colorName ?? this.colorName,
+      userName: userName ?? this.userName,
       backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );
   }
@@ -70,5 +80,7 @@ const defaultColorFiltersViewState = ColorFiltersViewState(
   hueMax: 359,
   brightnessMin: 0,
   brightnessMax: 99,
+  colorName: '',
+  userName: '',
   backgroundBlobs: IList.empty(),
 );
