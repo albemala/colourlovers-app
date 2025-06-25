@@ -111,10 +111,13 @@ class NavigatorView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Navigator(
-      onGenerateRoute: (RouteSettings settings) {
-        return MaterialPageRoute(builder: (BuildContext context) => child);
-      },
+    return PopScope(
+      canPop: false,
+      child: Navigator(
+        onGenerateRoute: (RouteSettings settings) {
+          return MaterialPageRoute(builder: (BuildContext context) => child);
+        },
+      ),
     );
   }
 }
