@@ -2,6 +2,7 @@ import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/details/palette/view-controller.dart';
 import 'package:colourlovers_app/details/palette/view-state.dart';
 import 'package:colourlovers_app/urls/defines.dart';
+import 'package:colourlovers_app/widgets/ads.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/created-by.dart';
@@ -157,6 +158,9 @@ class PaletteDetailsView extends StatelessWidget {
                             controller.showRelatedPatternsView(context);
                           },
                         ),
+                      AdView(
+                        adType: selectRandomAdType(includeNoneType: false),
+                      ),
                       CreditsView(
                         itemName: 'palette',
                         itemUrl: '$colourLoversUrl/palette/${state.id}',
