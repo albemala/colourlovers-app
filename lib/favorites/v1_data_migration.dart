@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:colourlovers_app/analytics.dart';
 import 'package:colourlovers_app/favorites/data-state.dart';
+import 'package:colourlovers_app/sentry.dart';
 import 'package:crypto/crypto.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:path_provider/path_provider.dart';

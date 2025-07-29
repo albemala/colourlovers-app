@@ -11,13 +11,10 @@ void configureSentry(SentryFlutterOptions options) {
 }
 
 SentryEvent _beforeSend(SentryEvent event, Hint hint) {
-  return event.copyWith(
-    user: SentryUser(id: ''),
-    contexts: event.contexts.copyWith(
-      culture: const SentryCulture(),
-      device: const SentryDevice(),
-    ),
-  );
+  event.user = SentryUser(id: '');
+  event.contexts.culture = SentryCulture();
+  event.contexts.device = SentryDevice();
+  return event;
 }
 
 Future<void> captureException(dynamic exception) async {
