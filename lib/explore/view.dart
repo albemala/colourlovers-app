@@ -122,10 +122,7 @@ class ExploreTileView extends StatelessWidget {
           Positioned(
             top: 8,
             left: -4,
-            child: SkewedContainerView(
-              padding: const EdgeInsets.fromLTRB(16, 8, 21, 8),
-              color: Theme.of(context).colorScheme.onSurface,
-              elevation: 4,
+            child: SkewedContainerView.large(
               child: Text(
                 title.toUpperCase(),
                 style: getExploreTileTextStyle(context),

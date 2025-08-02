@@ -10,9 +10,9 @@ class AppBarView extends AppBar {
     super.actions,
   }) : super(
          centerTitle: true,
-         title: SkewedContainerView(
-           padding: const EdgeInsets.fromLTRB(16, 8, 21, 8),
+         title: SkewedContainerView.large(
            color: Theme.of(context).colorScheme.primaryContainer,
+           elevation: 0,
            child: Text(
              title.toUpperCase(),
              style: getAppBarTitleTextStyle(context),

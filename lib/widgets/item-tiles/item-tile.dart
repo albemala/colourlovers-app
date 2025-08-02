@@ -45,10 +45,7 @@ class ItemTileView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Flexible(
-                  child: SkewedContainerView(
-                    padding: const EdgeInsets.fromLTRB(8, 4, 12, 4),
-                    color: Theme.of(context).colorScheme.onSurface,
-                    elevation: 4,
+                  child: SkewedContainerView.small(
                     child: Text(
                       title,
                       maxLines: 1,

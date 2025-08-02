@@ -36,10 +36,7 @@ class UserTileView extends StatelessWidget {
             // right: 8,
             child: Row(
               children: [
-                SkewedContainerView(
-                  padding: const EdgeInsets.fromLTRB(8, 4, 12, 4),
-                  color: Theme.of(context).colorScheme.onSurface,
-                  elevation: 4,
+                SkewedContainerView.small(
                   child: Text(
                     state.userName,
                     // maxLines: 1,
