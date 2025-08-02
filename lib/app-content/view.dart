@@ -10,33 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lucide_icons/lucide_icons.dart';
 
-const exploreView = NavigatorView(child: ExploreViewCreator());
-const favoritesView = NavigatorView(child: FavoritesViewCreator());
-const preferencesView = NavigatorView(child: PreferencesViewCreator());
-const aboutView = NavigatorView(child: AboutViewCreator());
-const testView = NavigatorView(child: TestViewCreator());
-
-const exploreDestination = NavigationDestination(
-  label: 'Explore',
-  icon: Icon(LucideIcons.compass),
-);
-const favoritesDestination = NavigationDestination(
-  label: 'Favorites',
-  icon: Icon(LucideIcons.bookmark),
-);
-const preferencesDestination = NavigationDestination(
-  label: 'Preferences',
-  icon: Icon(LucideIcons.settings),
-);
-const aboutDestination = NavigationDestination(
-  label: 'About',
-  icon: Icon(LucideIcons.info),
-);
-const testDestination = NavigationDestination(
-  label: 'Test',
-  icon: Icon(LucideIcons.bug),
-);
-
 class AppContentViewCreator extends StatelessWidget {
   const AppContentViewCreator({super.key});
 
@@ -121,3 +94,30 @@ class NavigatorView extends StatelessWidget {
     );
   }
 }
+
+const exploreView = NavigatorView(child: ExploreViewCreator());
+const favoritesView = NavigatorView(child: FavoritesViewCreator());
+const preferencesView = NavigatorView(child: PreferencesViewCreator());
+const aboutView = NavigatorView(child: AboutViewCreator());
+const testView = NavigatorView(child: TestViewCreator());
+
+const exploreDestination = NavigationDestination(
+  label: 'Explore',
+  icon: Icon(LucideIcons.compass),
+);
+const favoritesDestination = NavigationDestination(
+  label: 'Favorites',
+  icon: Icon(LucideIcons.bookmark),
+);
+const preferencesDestination = NavigationDestination(
+  label: 'Preferences',
+  icon: Icon(LucideIcons.settings),
+);
+const aboutDestination = NavigationDestination(
+  label: 'About',
+  icon: Icon(LucideIcons.info),
+);
+const testDestination = NavigationDestination(
+  label: 'Test',
+  icon: Icon(LucideIcons.bug),
+);

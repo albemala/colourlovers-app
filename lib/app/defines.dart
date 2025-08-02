@@ -1,3 +1,3 @@
 const appName = 'LUV';
-const appDescription = '...'; // TODO
-const appleAppId = '...'; // TODO
+const appDescription =
+    'Discover endless color inspiration from the COLOURlovers community';
