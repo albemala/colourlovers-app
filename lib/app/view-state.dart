@@ -7,16 +7,26 @@ import 'package:flutter/material.dart';
 class AppViewState extends Equatable {
   final ThemeMode themeMode;
   final FlexScheme flexScheme;
+  final bool isLoading;
 
-  const AppViewState({required this.themeMode, required this.flexScheme});
+  const AppViewState({
+    required this.themeMode,
+    required this.flexScheme,
+    required this.isLoading,
+  });
 
   @override
   List<Object?> get props => [themeMode, flexScheme];
 
-  AppViewState copyWith({ThemeMode? themeMode, FlexScheme? flexScheme}) {
+  AppViewState copyWith({
+    ThemeMode? themeMode,
+    FlexScheme? flexScheme,
+    bool? isLoading,
+  }) {
     return AppViewState(
       themeMode: themeMode ?? this.themeMode,
       flexScheme: flexScheme ?? this.flexScheme,
+      isLoading: isLoading ?? this.isLoading,
     );
   }
 }
@@ -24,4 +34,5 @@ class AppViewState extends Equatable {
 const defaultAppViewState = AppViewState(
   themeMode: defaultThemeMode,
   flexScheme: defaultFlexScheme,
+  isLoading: false,
 );

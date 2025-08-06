@@ -1,19 +1,24 @@
 import 'package:collection/collection.dart';
+import 'package:colourlovers_app/app_usage/data-controller.dart';
 import 'package:colourlovers_app/favorites/data-state.dart';
 import 'package:colourlovers_app/favorites/v1_data_migration.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_data_storage/flutter_data_storage.dart';
 
 const favoritesDataStoreName = 'favorites';
 
 class FavoritesDataController extends StoredCubit<FavoritesDataState> {
+  final AppUsageDataController appUsageDataController;
   factory FavoritesDataController.fromContext(BuildContext context) {
-    return FavoritesDataController();
+    return FavoritesDataController(
+      appUsageDataController: context.read<AppUsageDataController>(),
+    );
   }
 
-  FavoritesDataController({@visibleForTesting DataStore? dataStore})
-    : super(defaultFavoritesDataState, dataStore: dataStore);
+  FavoritesDataController({required this.appUsageDataController})
+    : super(defaultFavoritesDataState);
 
   @override
   Future<void> migrateData() async {
@@ -59,6 +64,8 @@ class FavoritesDataController extends StoredCubit<FavoritesDataState> {
         data: data,
       );
       favorites = state.favorites.add(newItem);
+      // Increment the favorites count
+      appUsageDataController.incrementFavoritesCount();
     }
   }
 

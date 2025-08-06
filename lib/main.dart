@@ -1,4 +1,5 @@
 import 'package:colourlovers_app/app/view.dart';
+import 'package:colourlovers_app/app_usage/data-controller.dart';
 import 'package:colourlovers_app/favorites/data-controller.dart';
 import 'package:colourlovers_app/filters/color/data-controller.dart';
 import 'package:colourlovers_app/filters/favorites/data-controller.dart';
@@ -22,7 +23,11 @@ Future<void> main() async {
     appRunner: () {
       runApp(
         MultiBlocProvider(
-          providers: [
+          providers: const [
+            BlocProvider(
+              create: PreferencesDataController.fromContext,
+              lazy: false, //
+            ),
             BlocProvider(
               create: AppUsageDataController.fromContext,
               lazy: false, //
