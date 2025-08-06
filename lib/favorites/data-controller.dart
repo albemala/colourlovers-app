@@ -6,6 +6,8 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_data_storage/flutter_data_storage.dart';
+import 'package:in_app_review/in_app_review.dart';
+import 'package:colourlovers_app/review.dart';
 
 const favoritesDataStoreName = 'favorites';
 
@@ -64,8 +66,15 @@ class FavoritesDataController extends StoredCubit<FavoritesDataState> {
         data: data,
       );
       favorites = state.favorites.add(newItem);
+
       // Increment the favorites count
       appUsageDataController.incrementFavoritesCount();
+      final shouldShowReviewDialog =
+          appUsageDataController.favoritesCount > 0 &&
+          appUsageDataController.favoritesCount % 3 == 0;
+      if (shouldShowReviewDialog) {
+        showReviewDialog();
+      }
     }
   }
 

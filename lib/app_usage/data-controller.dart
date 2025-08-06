@@ -28,7 +28,8 @@ class AppUsageDataController extends StoredCubit<AppUsageDataState> {
   }
 
   int get usageCount => state.usageCount;
-  set usageCount(int count) => emit(state.copyWith(usageCount: count));
+
+  int get favoritesCount => state.favoritesCount;
 
   void incrementUsageCount() =>
       emit(state.copyWith(usageCount: state.usageCount + 1));
