@@ -1,10 +1,15 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/filters/defines.dart';
 import 'package:colourlovers_app/filters/user/data-state.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_data_storage/flutter_data_storage.dart';
 
 class UserFiltersDataController extends StoredCubit<UserFiltersDataState> {
   UserFiltersDataController() : super(defaultUserFiltersDataState);
+
+  factory UserFiltersDataController.fromContext(BuildContext context) {
+    return UserFiltersDataController();
+  }
 
   @override
   Future<void> migrateData() async {}

@@ -1,10 +1,15 @@
 import 'package:colourlovers_app/filters/favorites/data-state.dart';
 import 'package:colourlovers_app/filters/favorites/defines.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_data_storage/flutter_data_storage.dart';
 
 class FavoritesFiltersDataController
     extends StoredCubit<FavoritesFiltersDataState> {
   FavoritesFiltersDataController() : super(defaultFavoritesFiltersDataState);
+
+  factory FavoritesFiltersDataController.fromContext(BuildContext context) {
+    return FavoritesFiltersDataController();
+  }
 
   @override
   Future<void> migrateData() async {}

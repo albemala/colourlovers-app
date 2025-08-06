@@ -6,6 +6,10 @@ import 'package:flutter_data_storage/flutter_data_storage.dart';
 class PreferencesDataController extends StoredCubit<PreferencesDataState> {
   PreferencesDataController() : super(defaultPreferencesDataState);
 
+  factory PreferencesDataController.fromContext(BuildContext context) {
+    return PreferencesDataController();
+  }
+
   @override
   Future<void> migrateData() async {}
 

@@ -2,11 +2,16 @@ import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/filters/defines.dart';
 import 'package:colourlovers_app/filters/palette/data-state.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_data_storage/flutter_data_storage.dart';
 
 class PaletteFiltersDataController
     extends StoredCubit<PaletteFiltersDataState> {
   PaletteFiltersDataController() : super(defaultPaletteFiltersDataState);
+
+  factory PaletteFiltersDataController.fromContext(BuildContext context) {
+    return PaletteFiltersDataController();
+  }
 
   @override
   Future<void> migrateData() async {}

@@ -37,10 +37,6 @@ class UserFiltersViewController extends Cubit<UserFiltersViewState> {
     _updateState();
   }
 
-  @override
-  Future<void> close() {
-    return super.close();
-  }
 
   void setShowCriteria(ContentShowCriteria value) {
     _showCriteria = value;

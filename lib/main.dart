@@ -24,31 +24,31 @@ Future<void> main() async {
         MultiBlocProvider(
           providers: [
             BlocProvider(
-              create: (_) => FavoritesDataController(),
+              create: AppUsageDataController.fromContext,
               lazy: false, //
             ),
             BlocProvider(
-              create: (_) => PreferencesDataController(),
+              create: FavoritesDataController.fromContext,
               lazy: false, //
             ),
             BlocProvider(
-              create: (_) => ColorFiltersDataController(),
+              create: ColorFiltersDataController.fromContext,
               lazy: false, //
             ),
             BlocProvider(
-              create: (_) => PaletteFiltersDataController(),
+              create: PaletteFiltersDataController.fromContext,
               lazy: false, //
             ),
             BlocProvider(
-              create: (_) => PatternFiltersDataController(),
+              create: PatternFiltersDataController.fromContext,
               lazy: false, //
             ),
             BlocProvider(
-              create: (_) => UserFiltersDataController(),
+              create: UserFiltersDataController.fromContext,
               lazy: false, //
             ),
             BlocProvider(
-              create: (_) => FavoritesFiltersDataController(),
+              create: FavoritesFiltersDataController.fromContext,
               lazy: false, //
             ),
           ],

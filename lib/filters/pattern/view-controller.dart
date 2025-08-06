@@ -49,10 +49,6 @@ class PatternFiltersViewController extends Cubit<PatternFiltersViewState> {
     _updateState();
   }
 
-  @override
-  Future<void> close() {
-    return super.close();
-  }
 
   void setShowCriteria(ContentShowCriteria value) {
     _showCriteria = value;
