@@ -36,7 +36,7 @@ platform :mac do
       key_filepath: ENV["APPLE_KEY_FILEPATH"],
     )
     upload_to_app_store(
-      pkg: "build/colourlovers_app.pkg",
+      pkg: "build/LUV.pkg",
       api_key: api_key,
 #       skip_metadata: true,
       skip_screenshots: true,
@@ -65,7 +65,7 @@ platform :mac do
 
     notarize(
       asc_provider: ENV["TEAM_ID"],
-      package: "build/colourlovers_app.app",
+      package: "build/LUV.app",
 #       print_log: true,
 #       verbose: true,
     )

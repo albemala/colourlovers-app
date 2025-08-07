@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/filters/color/data-controller.dart';
