@@ -22,7 +22,7 @@ class PaletteTileViewState extends Equatable {
   });
 
   @override
-  List<Object?> get props => [id, title, numViews, numVotes, hexs, widths];
+  List<Object> get props => [id, title, numViews, numVotes, hexs, widths];
 
   PaletteTileViewState copyWith({
     String? id,

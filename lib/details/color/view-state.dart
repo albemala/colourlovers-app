@@ -22,7 +22,7 @@ class ColorRgbViewState extends Equatable {
   });
 
   @override
-  List<Object?> get props => [red, green, blue];
+  List<Object> get props => [red, green, blue];
 
   ColorRgbViewState copyWith({double? red, double? green, double? blue}) {
     return ColorRgbViewState(
@@ -55,7 +55,7 @@ class ColorHsvViewState extends Equatable {
   });
 
   @override
-  List<Object?> get props => [hue, saturation, value];
+  List<Object> get props => [hue, saturation, value];
 
   ColorHsvViewState copyWith({double? hue, double? saturation, double? value}) {
     return ColorHsvViewState(
@@ -110,7 +110,7 @@ class ColorDetailsViewState extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
+  List<Object> get props => [
     isLoading,
     title,
     hex,

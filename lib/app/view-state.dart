@@ -16,7 +16,7 @@ class AppViewState extends Equatable {
   });
 
   @override
-  List<Object?> get props => [themeMode, flexScheme];
+  List<Object> get props => [themeMode, flexScheme, isLoading];
 
   AppViewState copyWith({
     ThemeMode? themeMode,

@@ -9,7 +9,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppViewController extends Cubit<AppViewState> {
   final AppUsageDataController appUsageDataController;
-  final PreferencesDataController _preferencesDataController;
+  final PreferencesDataController preferencesDataController;
 
   StreamSubscription<PreferencesDataState>?
   _preferencesDataControllerSubscription;
@@ -21,11 +21,9 @@ class AppViewController extends Cubit<AppViewState> {
     );
   }
 
-  AppViewController(
-    this.appUsageDataController,
-    this._preferencesDataController,
-  ) : super(defaultAppViewState) {
-    _preferencesDataControllerSubscription = _preferencesDataController.stream
+  AppViewController(this.appUsageDataController, this.preferencesDataController)
+    : super(defaultAppViewState) {
+    _preferencesDataControllerSubscription = preferencesDataController.stream
         .listen((_) {
           _updateState();
         });
@@ -53,8 +51,8 @@ class AppViewController extends Cubit<AppViewState> {
   void _updateState() {
     emit(
       state.copyWith(
-        themeMode: _preferencesDataController.state.themeMode,
-        flexScheme: _preferencesDataController.state.flexScheme,
+        themeMode: preferencesDataController.state.themeMode,
+        flexScheme: preferencesDataController.state.flexScheme,
         isLoading: !appUsageDataController.isInitialized.value,
       ),
     );

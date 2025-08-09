@@ -19,7 +19,7 @@ class PatternTileViewState extends Equatable {
   });
 
   @override
-  List<Object?> get props => [id, title, numViews, numVotes, imageUrl];
+  List<Object> get props => [id, title, numViews, numVotes, imageUrl];
 
   PatternTileViewState copyWith({
     String? id,

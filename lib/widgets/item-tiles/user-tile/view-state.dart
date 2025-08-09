@@ -19,13 +19,7 @@ class UserTileViewState extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
-    id,
-    userName,
-    numColors,
-    numPalettes,
-    numPatterns,
-  ];
+  List<Object> get props => [id, userName, numColors, numPalettes, numPatterns];
 
   UserTileViewState copyWith({
     String? id,

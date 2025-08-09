@@ -18,7 +18,7 @@ class SharePatternViewState extends Equatable {
   });
 
   @override
-  List<Object?> get props => [colors, imageUrl, templateUrl, backgroundBlobs];
+  List<Object> get props => [colors, imageUrl, templateUrl, backgroundBlobs];
 
   SharePatternViewState copyWith({
     IList<String>? colors,

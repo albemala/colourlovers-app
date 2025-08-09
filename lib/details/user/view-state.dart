@@ -45,7 +45,7 @@ class UserDetailsViewState extends Equatable {
   });
 
   @override
-  List<Object?> get props => [
+  List<Object> get props => [
     isLoading,
     userName,
     numColors,

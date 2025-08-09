@@ -19,7 +19,7 @@ class ItemListViewState<ItemType> extends Equatable {
   });
 
   @override
-  List<Object?> get props => [isLoading, items, hasMoreItems];
+  List<Object> get props => [isLoading, items, hasMoreItems];
 
   ItemListViewState<ItemType> copyWith({
     bool? isLoading,

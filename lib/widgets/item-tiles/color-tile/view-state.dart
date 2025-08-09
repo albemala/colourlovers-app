@@ -19,7 +19,7 @@ class ColorTileViewState extends Equatable {
   });
 
   @override
-  List<Object?> get props => [id, title, numViews, numVotes, hex];
+  List<Object> get props => [id, title, numViews, numVotes, hex];
 
   ColorTileViewState copyWith({
     String? id,

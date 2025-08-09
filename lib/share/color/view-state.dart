@@ -16,7 +16,7 @@ class ShareColorViewState extends Equatable {
   });
 
   @override
-  List<Object?> get props => [hex, imageUrl, backgroundBlobs];
+  List<Object> get props => [hex, imageUrl, backgroundBlobs];
 
   ShareColorViewState copyWith({
     String? hex,
