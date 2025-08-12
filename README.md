@@ -37,9 +37,9 @@ Whether you're a graphic designer, web developer, UI/UX designer, or simply some
 
 Available on:
 
-- [iOS App Store]()
-- [Android Play Store]()
-- [macOS App Store]()
+- [Android Play Store](https://play.google.com/store/apps/details?id=me.albemala.luv&hl=en)
+- [iOS App Store](https://apps.apple.com/us/app/color-picker-luv/id1438312561)
+- [macOS App Store](https://apps.apple.com/us/app/color-picker-luv/id1438312561)
 
 ## Key Functionality
 

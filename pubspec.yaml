@@ -90,13 +90,10 @@ icons_launcher:
       image_path: "assets/app-icon/macos-icon.png"
     windows:
       enable: true
-      # image_path: 'assets/ic_logo_border.png'
     linux:
       enable: true
-      # image_path: 'assets/ic_logo_border.png'
     web:
       enable: false
-      # image_path: 'assets/ic_logo_border.png'
       # favicon_path: 'assets/ic_logo_round.png'
     android:
       enable: false
