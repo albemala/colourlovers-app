@@ -1,1 +1,1 @@
-Color Finder: LUV
+Color Picker: LUV
