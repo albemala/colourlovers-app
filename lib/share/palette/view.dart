@@ -1,7 +1,7 @@
 import 'package:colourlovers_api/colourlovers_api.dart';
+import 'package:colourlovers_app/ads.dart';
 import 'package:colourlovers_app/share/palette/view-controller.dart';
 import 'package:colourlovers_app/share/palette/view-state.dart';
-import 'package:colourlovers_app/widgets/ads.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/items/palette.dart';
@@ -121,7 +121,7 @@ class SharePaletteView extends StatelessWidget {
                         ),
                       ],
                     ),
-                    AdView(adType: selectRandomAdType(includeNoneType: false)),
+                    AdView(adData: selectRandomAdData()),
                   ],
                 ),
               ),
