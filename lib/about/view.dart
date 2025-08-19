@@ -93,7 +93,7 @@ class AboutView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 spacing: 16,
                 children: [
-                  const H1TextView('Help & Support'),
+                  const H2TextView('Help & Support'),
                   OutlinedButton(
                     onPressed: controller.openEmail,
                     child: const Text('Contact us'),

@@ -32,7 +32,7 @@ class AboutViewController extends Cubit<AboutViewState> {
   Future<void> shareApp(Rect sharePosition) async {
     await shareText(
       position: sharePosition,
-      text: '$appName ∙ $appDescription ∙ $websiteUrl',
+      text: '$appName ∙ $appDescription ∙ $repositoryUrl',
     );
   }
 
@@ -45,7 +45,7 @@ class AboutViewController extends Cubit<AboutViewState> {
   }
 
   Future<void> openWebsite() async {
-    await openUrl(websiteUrl);
+    await openUrl(repositoryUrl);
   }
 
   Future<void> openOtherProjects() async {
