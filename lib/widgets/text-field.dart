@@ -5,8 +5,6 @@ class TextFieldView extends StatefulWidget {
   final void Function(String value)? onTextChanged;
   final String? Function(String?)? validator;
   final String? title;
-  final int? maxLines;
-  final bool readOnly;
   final Widget? suffixIcon;
 
   const TextFieldView({
@@ -15,8 +13,6 @@ class TextFieldView extends StatefulWidget {
     this.onTextChanged,
     this.validator,
     this.title,
-    this.maxLines,
-    this.readOnly = false,
     this.suffixIcon,
   });
 
@@ -54,8 +50,7 @@ class _TextFieldViewState extends State<TextFieldView> {
       onChanged: widget.onTextChanged,
       validator: widget.validator,
       autovalidateMode: AutovalidateMode.always,
-      readOnly: widget.readOnly,
-      maxLines: widget.maxLines,
+      autocorrect: false,
       decoration: InputDecoration(
         labelText: widget.title,
         floatingLabelBehavior: FloatingLabelBehavior.always,
