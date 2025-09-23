@@ -2,10 +2,7 @@
 
 Endless inspiration for designers, powered by COLOURlovers
 
-<img src="https://raw.githubusercontent.com/albemala/colourlovers-app/refs/heads/main/screenshots/2.x/explore_view.png" alt="LUV explore view" width="270"/>
-<img src="https://raw.githubusercontent.com/albemala/colourlovers-app/refs/heads/main/screenshots/2.x/colors_list_view.png" alt="LUV colors list" width="270"/>
-<img src="https://raw.githubusercontent.com/albemala/colourlovers-app/refs/heads/main/screenshots/2.x/palette_details_view.png" alt="LUV palette details" width="270"/>
-<img src="https://raw.githubusercontent.com/albemala/colourlovers-app/refs/heads/main/screenshots/2.x/pattern_details_view.png" alt="LUV pattern details" width="270"/>
+<img src="https://github.com/albemala/colourlovers-app/blob/main/screenshots/2.x/en/newerIphoneScreenshots/explore_view.png?raw=true" alt="LUV explore view" width="270"/> <img src="https://github.com/albemala/colourlovers-app/blob/main/screenshots/2.x/en/newerIphoneScreenshots/colors_list_view.png?raw=true" alt="LUV colors list" width="270"/> <img src="https://github.com/albemala/colourlovers-app/blob/main/screenshots/2.x/en/newerIphoneScreenshots/palette_details_view.png?raw=true" alt="LUV palette details" width="270"/> <img src="https://github.com/albemala/colourlovers-app/blob/main/screenshots/2.x/en/newerIphoneScreenshots/pattern_details_view.png?raw=true" alt="LUV pattern details" width="270"/>
 
 LUV is a comprehensive mobile client for [COLOURlovers.com](https://www.colourlovers.com), providing endless inspiration and resources for designers and artists. Explore thousands of colors, palettes, and patterns from the vibrant COLOURlovers community, all optimized for mobile browsing and discovery.
 
