@@ -40,7 +40,7 @@ Future<void> takeScreenshot({
     locale: locale,
     theme: theme,
     device: customDevice,
-    child: child,
+    home: child,
   );
 
   await tester.runAsync(() => tester.pumpWidget(widget));
