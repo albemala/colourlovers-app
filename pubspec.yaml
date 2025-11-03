@@ -19,7 +19,7 @@ dependencies:
   flutter_data_storage:
     git:
       url: https://github.com/albemala/flutter_data_storage.git
-      ref: 3.2.1
+      ref: 3.4.0
   # v1 data migration
   path_provider: ^2.1.5
   crypto: ^3.0.3
