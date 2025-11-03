@@ -16,17 +16,18 @@ class FavoritesFiltersViewCreator extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider<FavoritesFiltersViewController>(
       create: FavoritesFiltersViewController.fromContext,
-      child: BlocBuilder<
-        FavoritesFiltersViewController,
-        FavoritesFiltersViewState
-      >(
-        builder: (context, state) {
-          return FavoritesFiltersView(
-            state: state,
-            controller: context.read<FavoritesFiltersViewController>(),
-          );
-        },
-      ),
+      child:
+          BlocBuilder<
+            FavoritesFiltersViewController,
+            FavoritesFiltersViewState
+          >(
+            builder: (context, state) {
+              return FavoritesFiltersView(
+                state: state,
+                controller: context.read<FavoritesFiltersViewController>(),
+              );
+            },
+          ),
     );
   }
 }
@@ -107,16 +108,15 @@ class _ShowView extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           child: Wrap(
             spacing: 8,
-            children:
-                FavoriteItemTypeFilter.values.map((type) {
-                  return ChoiceChip(
-                    label: Text(getFavoriteItemTypeFilterName(type)),
-                    selected: state.typeFilter == type,
-                    onSelected: (bool value) {
-                      controller.setTypeFilter(type);
-                    },
-                  );
-                }).toList(),
+            children: FavoriteItemTypeFilter.values.map((type) {
+              return ChoiceChip(
+                label: Text(getFavoriteItemTypeFilterName(type)),
+                selected: state.typeFilter == type,
+                onSelected: (bool value) {
+                  controller.setTypeFilter(type);
+                },
+              );
+            }).toList(),
           ),
         ),
       ],
@@ -141,30 +141,28 @@ class _SortView extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           child: Wrap(
             spacing: 8,
-            children:
-                FavoriteSortBy.values.map((sortBy) {
-                  return ChoiceChip(
-                    label: Text(getFavoriteSortByName(sortBy)),
-                    selected: state.sortBy == sortBy,
-                    onSelected: (bool value) {
-                      controller.setSortBy(sortBy);
-                    },
-                  );
-                }).toList(),
+            children: FavoriteSortBy.values.map((sortBy) {
+              return ChoiceChip(
+                label: Text(getFavoriteSortByName(sortBy)),
+                selected: state.sortBy == sortBy,
+                onSelected: (bool value) {
+                  controller.setSortBy(sortBy);
+                },
+              );
+            }).toList(),
           ),
         ),
         Wrap(
           spacing: 8,
-          children:
-              FavoriteSortOrder.values.map((sortOrder) {
-                return ChoiceChip(
-                  label: Text(getFavoriteSortOrderName(sortOrder)),
-                  selected: state.sortOrder == sortOrder,
-                  onSelected: (bool value) {
-                    controller.setSortOrder(sortOrder);
-                  },
-                );
-              }).toList(),
+          children: FavoriteSortOrder.values.map((sortOrder) {
+            return ChoiceChip(
+              label: Text(getFavoriteSortOrderName(sortOrder)),
+              selected: state.sortOrder == sortOrder,
+              onSelected: (bool value) {
+                controller.setSortOrder(sortOrder);
+              },
+            );
+          }).toList(),
         ),
       ],
     );

@@ -3,7 +3,8 @@ import 'package:colourlovers_app/ads.dart';
 import 'package:colourlovers_app/details/user/view-controller.dart';
 import 'package:colourlovers_app/details/user/view-state.dart';
 import 'package:colourlovers_app/theme/text.dart';
-import 'package:colourlovers_app/urls/defines.dart';
+import 'package:colourlovers_app/urls.dart';
+
 import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/credits.dart';
@@ -66,125 +67,124 @@ class UserDetailsView extends StatelessWidget {
       ),
       body: BackgroundView(
         blobs: state.backgroundBlobs.toList(),
-        child:
-            state.isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 32,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 32,
-                    children: [
-                      Center(
-                        child: Text(
-                          state.userName,
-                          style: getUserNameTextStyle(context),
-                        ),
-                      ),
-                      StatsView(
-                        stats: [
-                          StatsItemViewState(
-                            label: 'Colors',
-                            value: state.numColors,
-                          ),
-                          StatsItemViewState(
-                            label: 'Palettes',
-                            value: state.numPalettes,
-                          ),
-                          StatsItemViewState(
-                            label: 'Patterns',
-                            value: state.numPatterns,
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 8,
-                        children: [
-                          LabelValueView(label: 'Rating', value: state.rating),
-                          LabelValueView(
-                            label: 'Lovers',
-                            value: state.numLovers,
-                          ),
-                          LabelValueView(
-                            label: 'Location',
-                            value: state.location,
-                          ),
-                          LabelValueView(
-                            label: 'Registered',
-                            value: state.dateRegistered,
-                          ),
-                          LabelValueView(
-                            label: 'Last Active',
-                            value: state.dateLastActive,
-                          ),
-                        ],
-                      ),
-                      if (state.userColors.isNotEmpty)
-                        RelatedItemsPreviewView(
-                          title: 'Colors',
-                          items: state.userColors.toList(),
-                          itemBuilder: (state) {
-                            return ColorTileView(
-                              state: state,
-                              onTap: () {
-                                controller.showColorDetailsView(context, state);
-                              },
-                            );
-                          },
-                          onShowMorePressed: () {
-                            controller.showUserColorsView(context);
-                          },
-                        ),
-                      if (state.userPalettes.isNotEmpty)
-                        RelatedItemsPreviewView(
-                          title: 'Palettes',
-                          items: state.userPalettes.toList(),
-                          itemBuilder: (state) {
-                            return PaletteTileView(
-                              state: state,
-                              onTap: () {
-                                controller.showPaletteDetailsView(
-                                  context,
-                                  state,
-                                );
-                              },
-                            );
-                          },
-                          onShowMorePressed: () {
-                            controller.showUserPalettesView(context);
-                          },
-                        ),
-                      if (state.userPatterns.isNotEmpty)
-                        RelatedItemsPreviewView(
-                          title: 'Patterns',
-                          items: state.userPatterns.toList(),
-                          itemBuilder: (state) {
-                            return PatternTileView(
-                              state: state,
-                              onTap: () {
-                                controller.showPatternDetailsView(
-                                  context,
-                                  state,
-                                );
-                              },
-                            );
-                          },
-                          onShowMorePressed: () {
-                            controller.showUserPatternsView(context);
-                          },
-                        ),
-                      AdView(adData: selectRandomAdData()),
-                      CreditsView(
-                        itemName: 'user',
-                        itemUrl: '$colourLoversUrl/lover/$userName',
-                      ),
-                    ],
-                  ),
+        child: state.isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 32,
                 ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  spacing: 32,
+                  children: [
+                    Center(
+                      child: Text(
+                        state.userName,
+                        style: getUserNameTextStyle(context),
+                      ),
+                    ),
+                    StatsView(
+                      stats: [
+                        StatsItemViewState(
+                          label: 'Colors',
+                          value: state.numColors,
+                        ),
+                        StatsItemViewState(
+                          label: 'Palettes',
+                          value: state.numPalettes,
+                        ),
+                        StatsItemViewState(
+                          label: 'Patterns',
+                          value: state.numPatterns,
+                        ),
+                      ],
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      spacing: 8,
+                      children: [
+                        LabelValueView(label: 'Rating', value: state.rating),
+                        LabelValueView(
+                          label: 'Lovers',
+                          value: state.numLovers,
+                        ),
+                        LabelValueView(
+                          label: 'Location',
+                          value: state.location,
+                        ),
+                        LabelValueView(
+                          label: 'Registered',
+                          value: state.dateRegistered,
+                        ),
+                        LabelValueView(
+                          label: 'Last Active',
+                          value: state.dateLastActive,
+                        ),
+                      ],
+                    ),
+                    if (state.userColors.isNotEmpty)
+                      RelatedItemsPreviewView(
+                        title: 'Colors',
+                        items: state.userColors.toList(),
+                        itemBuilder: (state) {
+                          return ColorTileView(
+                            state: state,
+                            onTap: () {
+                              controller.showColorDetailsView(context, state);
+                            },
+                          );
+                        },
+                        onShowMorePressed: () {
+                          controller.showUserColorsView(context);
+                        },
+                      ),
+                    if (state.userPalettes.isNotEmpty)
+                      RelatedItemsPreviewView(
+                        title: 'Palettes',
+                        items: state.userPalettes.toList(),
+                        itemBuilder: (state) {
+                          return PaletteTileView(
+                            state: state,
+                            onTap: () {
+                              controller.showPaletteDetailsView(
+                                context,
+                                state,
+                              );
+                            },
+                          );
+                        },
+                        onShowMorePressed: () {
+                          controller.showUserPalettesView(context);
+                        },
+                      ),
+                    if (state.userPatterns.isNotEmpty)
+                      RelatedItemsPreviewView(
+                        title: 'Patterns',
+                        items: state.userPatterns.toList(),
+                        itemBuilder: (state) {
+                          return PatternTileView(
+                            state: state,
+                            onTap: () {
+                              controller.showPatternDetailsView(
+                                context,
+                                state,
+                              );
+                            },
+                          );
+                        },
+                        onShowMorePressed: () {
+                          controller.showUserPatternsView(context);
+                        },
+                      ),
+                    AdView(adData: selectRandomAdData()),
+                    CreditsView(
+                      itemName: 'user',
+                      itemUrl: '$colourLoversUrl/lover/$userName',
+                    ),
+                  ],
+                ),
+              ),
       ),
     );
   }

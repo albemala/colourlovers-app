@@ -76,9 +76,8 @@ class AboutView extends StatelessWidget {
                   Builder(
                     builder: (context) {
                       return OutlinedButton(
-                        onPressed:
-                            () =>
-                                controller.shareApp(getSharePosition(context)),
+                        onPressed: () =>
+                            controller.shareApp(getSharePosition(context)),
                         child: const Text('Share $appName'),
                       );
                     },

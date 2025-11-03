@@ -82,10 +82,9 @@ class FavoritesView extends StatelessWidget {
                     onSelected: (value) {
                       controller.showFavoritesFilters(context);
                     },
-                    avatar:
-                        state.sortOrder == FavoriteSortOrder.ascending
-                            ? const Icon(LucideIcons.arrowUp)
-                            : const Icon(LucideIcons.arrowDown),
+                    avatar: state.sortOrder == FavoriteSortOrder.ascending
+                        ? const Icon(LucideIcons.arrowUp)
+                        : const Icon(LucideIcons.arrowDown),
                     label: Text(getFavoriteSortByName(state.sortBy)),
                     tooltip: 'Sort by',
                   ),
@@ -93,25 +92,24 @@ class FavoritesView extends StatelessWidget {
               ),
             ),
             Expanded(
-              child:
-                  state.items.isEmpty
-                      ? const Center(
-                        child: Text(
-                          'No favorites yet',
-                          style: TextStyle(fontSize: 18, color: Colors.grey),
-                        ),
-                      )
-                      : ListView.separated(
-                        padding: const EdgeInsets.all(16),
-                        itemCount: state.items.length,
-                        itemBuilder: (context, index) {
-                          final item = state.items[index];
-                          return _buildTileForItem(context, item);
-                        },
-                        separatorBuilder: (context, index) {
-                          return const SizedBox(height: 12);
-                        },
+              child: state.items.isEmpty
+                  ? const Center(
+                      child: Text(
+                        'No favorites yet',
+                        style: TextStyle(fontSize: 18, color: Colors.grey),
                       ),
+                    )
+                  : ListView.separated(
+                      padding: const EdgeInsets.all(16),
+                      itemCount: state.items.length,
+                      itemBuilder: (context, index) {
+                        final item = state.items[index];
+                        return _buildTileForItem(context, item);
+                      },
+                      separatorBuilder: (context, index) {
+                        return const SizedBox(height: 12);
+                      },
+                    ),
             ),
           ],
         ),

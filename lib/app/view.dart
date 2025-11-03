@@ -41,10 +41,9 @@ class AppView extends StatelessWidget {
       theme: getLightTheme(state.flexScheme),
       darkTheme: getDarkTheme(state.flexScheme),
       themeMode: state.themeMode,
-      home:
-          state.isLoading
-              ? const Scaffold(body: Center(child: CircularProgressIndicator()))
-              : const AppContentViewCreator(),
+      home: state.isLoading
+          ? const Scaffold(body: Center(child: CircularProgressIndicator()))
+          : const AppContentViewCreator(),
     );
   }
 }

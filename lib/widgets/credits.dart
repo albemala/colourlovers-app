@@ -1,5 +1,4 @@
-import 'package:colourlovers_app/urls/defines.dart';
-import 'package:colourlovers_app/urls/functions.dart';
+import 'package:colourlovers_app/urls.dart';
 import 'package:colourlovers_app/widgets/link.dart';
 import 'package:flutter/material.dart';
 

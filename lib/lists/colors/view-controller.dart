@@ -141,11 +141,10 @@ class ColorsViewController extends Cubit<ColorsViewState> {
         userName: _dataController.userName,
         itemsList: ItemListViewState(
           isLoading: _pagination.isLoading,
-          items:
-              _pagination
-                  .items //
-                  .map(ColorTileViewState.fromColourloverColor)
-                  .toIList(),
+          items: _pagination
+              .items //
+              .map(ColorTileViewState.fromColourloverColor)
+              .toIList(),
           hasMoreItems: _pagination.hasMoreItems,
         ),
       ),

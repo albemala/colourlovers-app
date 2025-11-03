@@ -86,10 +86,9 @@ class PalettesView extends StatelessWidget {
                       onSelected: (value) {
                         controller.showPaletteFilters(context);
                       },
-                      avatar:
-                          state.sortOrder == ColourloversRequestSortBy.ASC
-                              ? const Icon(LucideIcons.arrowUp)
-                              : const Icon(LucideIcons.arrowDown),
+                      avatar: state.sortOrder == ColourloversRequestSortBy.ASC
+                          ? const Icon(LucideIcons.arrowUp)
+                          : const Icon(LucideIcons.arrowDown),
                       label: Text(
                         getColourloversRequestOrderByName(state.sortBy),
                       ),
@@ -103,22 +102,21 @@ class PalettesView extends StatelessWidget {
                       avatar: const Icon(LucideIcons.rainbow),
                       label: Row(
                         mainAxisSize: MainAxisSize.min,
-                        children:
-                            state.hueRanges.map((hueRange) {
-                              return Container(
-                                width: 12,
-                                height: 12,
-                                margin: const EdgeInsets.symmetric(
-                                  horizontal: 2,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: getColourloversRequestHueRangeColor(
-                                    hueRange,
-                                  ),
-                                  shape: BoxShape.circle,
-                                ),
-                              );
-                            }).toList(),
+                        children: state.hueRanges.map((hueRange) {
+                          return Container(
+                            width: 12,
+                            height: 12,
+                            margin: const EdgeInsets.symmetric(
+                              horizontal: 2,
+                            ),
+                            decoration: BoxDecoration(
+                              color: getColourloversRequestHueRangeColor(
+                                hueRange,
+                              ),
+                              shape: BoxShape.circle,
+                            ),
+                          );
+                        }).toList(),
                       ),
                       tooltip: 'Hue Ranges',
                     ),

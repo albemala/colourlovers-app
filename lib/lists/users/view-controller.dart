@@ -110,10 +110,9 @@ class UsersViewController extends Cubit<UsersViewState> {
         userName: _dataController.userName,
         itemsList: ItemListViewState(
           isLoading: _pagination.isLoading,
-          items:
-              _pagination.items
-                  .map(UserTileViewState.fromColourloverUser)
-                  .toIList(),
+          items: _pagination.items
+              .map(UserTileViewState.fromColourloverUser)
+              .toIList(),
           hasMoreItems: _pagination.hasMoreItems,
         ),
       ),

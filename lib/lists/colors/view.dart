@@ -83,10 +83,9 @@ class ColorsView extends StatelessWidget {
                       onSelected: (value) {
                         controller.showColorFilters(context);
                       },
-                      avatar:
-                          state.sortOrder == ColourloversRequestSortBy.ASC
-                              ? const Icon(LucideIcons.arrowUp)
-                              : const Icon(LucideIcons.arrowDown),
+                      avatar: state.sortOrder == ColourloversRequestSortBy.ASC
+                          ? const Icon(LucideIcons.arrowUp)
+                          : const Icon(LucideIcons.arrowDown),
                       label: Text(
                         getColourloversRequestOrderByName(state.sortBy),
                       ),

@@ -63,11 +63,10 @@ class UserPalettesViewController extends Cubit<UserPalettesViewState> {
       state.copyWith(
         itemsList: ItemListViewState(
           isLoading: _pagination.isLoading,
-          items:
-              _pagination
-                  .items //
-                  .map(PaletteTileViewState.fromColourloverPalette)
-                  .toIList(),
+          items: _pagination
+              .items //
+              .map(PaletteTileViewState.fromColourloverPalette)
+              .toIList(),
           hasMoreItems: _pagination.hasMoreItems,
         ),
       ),

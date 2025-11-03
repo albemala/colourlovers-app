@@ -2,7 +2,8 @@ import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/ads.dart';
 import 'package:colourlovers_app/details/color/view-controller.dart';
 import 'package:colourlovers_app/details/color/view-state.dart';
-import 'package:colourlovers_app/urls/defines.dart';
+import 'package:colourlovers_app/urls.dart';
+
 import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/color-channel.dart';
@@ -73,106 +74,105 @@ class ColorDetailsView extends StatelessWidget {
       ),
       body: BackgroundView(
         blobs: state.backgroundBlobs.toList(),
-        child:
-            state.isLoading
-                ? const Center(child: CircularProgressIndicator())
-                : SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 32,
-                  ),
-                  child: Column(
-                    spacing: 32,
-                    children: [
-                      DetailsHeaderView(
-                        title: state.title,
-                        item: ColorView(hex: state.hex),
-                        onItemTap: () {
-                          controller.showShareColorView(context);
-                        },
-                      ),
-                      StatsView(
-                        stats: [
-                          StatsItemViewState(
-                            label: 'Views',
-                            value: state.numViews,
-                          ),
-                          StatsItemViewState(
-                            label: 'Votes',
-                            value: state.numVotes,
-                          ),
-                          StatsItemViewState(label: 'Rank', value: state.rank),
-                        ],
-                      ),
-                      _ColorValuesView(rgb: state.rgb, hsv: state.hsv),
-                      CreatedByView(
-                        user: state.user,
-                        onUserTap: () {
-                          controller.showUserDetailsView(context);
-                        },
-                      ),
-                      if (state.relatedColors.isNotEmpty)
-                        RelatedItemsPreviewView(
-                          title: 'Related colors',
-                          items: state.relatedColors.toList(),
-                          itemBuilder: (state) {
-                            return ColorTileView(
-                              state: state,
-                              onTap: () {
-                                controller.showColorDetailsView(context, state);
-                              },
-                            );
-                          },
-                          onShowMorePressed: () {
-                            controller.showRelatedColorsView(context);
-                          },
-                        ),
-                      if (state.relatedPalettes.isNotEmpty)
-                        RelatedItemsPreviewView(
-                          title: 'Related palettes',
-                          items: state.relatedPalettes.toList(),
-                          itemBuilder: (state) {
-                            return PaletteTileView(
-                              state: state,
-                              onTap: () {
-                                controller.showPaletteDetailsView(
-                                  context,
-                                  state,
-                                );
-                              },
-                            );
-                          },
-                          onShowMorePressed: () {
-                            controller.showRelatedPalettesView(context);
-                          },
-                        ),
-                      if (state.relatedPatterns.isNotEmpty)
-                        RelatedItemsPreviewView(
-                          title: 'Related patterns',
-                          items: state.relatedPatterns.toList(),
-                          itemBuilder: (state) {
-                            return PatternTileView(
-                              state: state,
-                              onTap: () {
-                                controller.showPatternDetailsView(
-                                  context,
-                                  state,
-                                );
-                              },
-                            );
-                          },
-                          onShowMorePressed: () {
-                            controller.showRelatedPatternsView(context);
-                          },
-                        ),
-                      AdView(adData: selectRandomAdData()),
-                      CreditsView(
-                        itemName: 'color',
-                        itemUrl: '$colourLoversUrl/color/${state.hex}',
-                      ),
-                    ],
-                  ),
+        child: state.isLoading
+            ? const Center(child: CircularProgressIndicator())
+            : SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 32,
                 ),
+                child: Column(
+                  spacing: 32,
+                  children: [
+                    DetailsHeaderView(
+                      title: state.title,
+                      item: ColorView(hex: state.hex),
+                      onItemTap: () {
+                        controller.showShareColorView(context);
+                      },
+                    ),
+                    StatsView(
+                      stats: [
+                        StatsItemViewState(
+                          label: 'Views',
+                          value: state.numViews,
+                        ),
+                        StatsItemViewState(
+                          label: 'Votes',
+                          value: state.numVotes,
+                        ),
+                        StatsItemViewState(label: 'Rank', value: state.rank),
+                      ],
+                    ),
+                    _ColorValuesView(rgb: state.rgb, hsv: state.hsv),
+                    CreatedByView(
+                      user: state.user,
+                      onUserTap: () {
+                        controller.showUserDetailsView(context);
+                      },
+                    ),
+                    if (state.relatedColors.isNotEmpty)
+                      RelatedItemsPreviewView(
+                        title: 'Related colors',
+                        items: state.relatedColors.toList(),
+                        itemBuilder: (state) {
+                          return ColorTileView(
+                            state: state,
+                            onTap: () {
+                              controller.showColorDetailsView(context, state);
+                            },
+                          );
+                        },
+                        onShowMorePressed: () {
+                          controller.showRelatedColorsView(context);
+                        },
+                      ),
+                    if (state.relatedPalettes.isNotEmpty)
+                      RelatedItemsPreviewView(
+                        title: 'Related palettes',
+                        items: state.relatedPalettes.toList(),
+                        itemBuilder: (state) {
+                          return PaletteTileView(
+                            state: state,
+                            onTap: () {
+                              controller.showPaletteDetailsView(
+                                context,
+                                state,
+                              );
+                            },
+                          );
+                        },
+                        onShowMorePressed: () {
+                          controller.showRelatedPalettesView(context);
+                        },
+                      ),
+                    if (state.relatedPatterns.isNotEmpty)
+                      RelatedItemsPreviewView(
+                        title: 'Related patterns',
+                        items: state.relatedPatterns.toList(),
+                        itemBuilder: (state) {
+                          return PatternTileView(
+                            state: state,
+                            onTap: () {
+                              controller.showPatternDetailsView(
+                                context,
+                                state,
+                              );
+                            },
+                          );
+                        },
+                        onShowMorePressed: () {
+                          controller.showRelatedPatternsView(context);
+                        },
+                      ),
+                    AdView(adData: selectRandomAdData()),
+                    CreditsView(
+                      itemName: 'color',
+                      itemUrl: '$colourLoversUrl/color/${state.hex}',
+                    ),
+                  ],
+                ),
+              ),
       ),
     );
   }

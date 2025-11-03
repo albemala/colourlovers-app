@@ -70,10 +70,9 @@ class UsersView extends StatelessWidget {
                       onSelected: (value) {
                         controller.showUserFilters(context);
                       },
-                      avatar:
-                          state.sortOrder == ColourloversRequestSortBy.ASC
-                              ? const Icon(LucideIcons.arrowUp)
-                              : const Icon(LucideIcons.arrowDown),
+                      avatar: state.sortOrder == ColourloversRequestSortBy.ASC
+                          ? const Icon(LucideIcons.arrowUp)
+                          : const Icon(LucideIcons.arrowDown),
                       label: Text(
                         getColourloversRequestOrderByName(state.sortBy),
                       ),

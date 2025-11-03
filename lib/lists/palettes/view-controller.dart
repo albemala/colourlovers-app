@@ -41,14 +41,12 @@ class PalettesViewController extends Cubit<PalettesViewState> {
 
     _pagination = ItemsPagination<ColourloversPalette>((numResults, offset) {
       final lover = _dataController.userName;
-      final hueRanges =
-          _dataController.colorFilter == ColorFilter.hueRanges
-              ? _dataController.hueRanges.toList()
-              : <ColourloversRequestHueRange>[];
-      final hex =
-          _dataController.colorFilter == ColorFilter.hex
-              ? [_dataController.hex]
-              : <String>[];
+      final hueRanges = _dataController.colorFilter == ColorFilter.hueRanges
+          ? _dataController.hueRanges.toList()
+          : <ColourloversRequestHueRange>[];
+      final hex = _dataController.colorFilter == ColorFilter.hex
+          ? [_dataController.hex]
+          : <String>[];
       final keywords = _dataController.paletteName;
 
       switch (_dataController.showCriteria) {
@@ -145,10 +143,9 @@ class PalettesViewController extends Cubit<PalettesViewState> {
         userName: _dataController.userName,
         itemsList: ItemListViewState(
           isLoading: _pagination.isLoading,
-          items:
-              _pagination.items
-                  .map(PaletteTileViewState.fromColourloverPalette)
-                  .toIList(),
+          items: _pagination.items
+              .map(PaletteTileViewState.fromColourloverPalette)
+              .toIList(),
           hasMoreItems: _pagination.hasMoreItems,
         ),
       ),

@@ -1,4 +1,3 @@
-
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/filters/defines.dart';
 import 'package:colourlovers_app/filters/user/data-controller.dart';
@@ -35,7 +34,6 @@ class UserFiltersViewController extends Cubit<UserFiltersViewState> {
     );
     _updateState();
   }
-
 
   void setShowCriteria(ContentShowCriteria value) {
     _showCriteria = value;

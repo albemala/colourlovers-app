@@ -56,15 +56,14 @@ FavoritesDataState _parseV1FavoritesData(String rawData) {
     final parsedData = jsonDecode(rawData) as Map<String, dynamic>;
     final items = parsedData['items'] as Map<String, dynamic>;
 
-    final favorites =
-        items.entries
-            .map(
-              (entry) => _createFavoriteItem(
-                entry.key,
-                entry.value as Map<String, dynamic>,
-              ),
-            )
-            .toList();
+    final favorites = items.entries
+        .map(
+          (entry) => _createFavoriteItem(
+            entry.key,
+            entry.value as Map<String, dynamic>,
+          ),
+        )
+        .toList();
 
     return FavoritesDataState(favorites: IList(favorites));
   } catch (e) {

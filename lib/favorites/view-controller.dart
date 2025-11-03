@@ -70,10 +70,9 @@ class FavoritesViewController extends Cubit<FavoritesViewState> {
 
     // Apply type filter
     if (currentFilters.typeFilter != FavoriteItemTypeFilter.all) {
-      filteredFavorites =
-          filteredFavorites.where((item) {
-            return item.type.name == currentFilters.typeFilter.name;
-          }).toList();
+      filteredFavorites = filteredFavorites.where((item) {
+        return item.type.name == currentFilters.typeFilter.name;
+      }).toList();
     }
 
     // Apply sorting
@@ -85,8 +84,9 @@ class FavoritesViewController extends Cubit<FavoritesViewState> {
       }
     }
 
-    final items =
-        filteredFavorites.map(_convertFavoriteItemToTileViewState).toIList();
+    final items = filteredFavorites
+        .map(_convertFavoriteItemToTileViewState)
+        .toIList();
     emit(
       state.copyWith(
         items: items,

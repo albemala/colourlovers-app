@@ -40,22 +40,19 @@ class ShareItemsTestView extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child:
-              state.color != null
-                  ? ShareColorViewCreator(color: state.color!)
-                  : const Center(child: CircularProgressIndicator()),
+          child: state.color != null
+              ? ShareColorViewCreator(color: state.color!)
+              : const Center(child: CircularProgressIndicator()),
         ),
         Expanded(
-          child:
-              state.palette != null
-                  ? SharePaletteViewCreator(palette: state.palette!)
-                  : const Center(child: CircularProgressIndicator()),
+          child: state.palette != null
+              ? SharePaletteViewCreator(palette: state.palette!)
+              : const Center(child: CircularProgressIndicator()),
         ),
         Expanded(
-          child:
-              state.pattern != null
-                  ? SharePatternViewCreator(pattern: state.pattern!)
-                  : const Center(child: CircularProgressIndicator()),
+          child: state.pattern != null
+              ? SharePatternViewCreator(pattern: state.pattern!)
+              : const Center(child: CircularProgressIndicator()),
         ),
       ],
     );

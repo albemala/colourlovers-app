@@ -73,10 +73,9 @@ class _ColorRangePainter extends CustomPainter {
 
     for (var x = 0; x < width; x++) {
       final currentValue = min + (x / width) * range;
-      paint.color =
-          (currentValue >= lowerValue && currentValue <= upperValue)
-              ? getColor(currentValue)
-              : backgroundColor;
+      paint.color = (currentValue >= lowerValue && currentValue <= upperValue)
+          ? getColor(currentValue)
+          : backgroundColor;
       canvas.drawRect(Rect.fromLTWH(x.toDouble(), 0, 1, height), paint);
     }
   }

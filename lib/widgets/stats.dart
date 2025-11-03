@@ -19,15 +19,14 @@ class StatsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children:
-          stats.map((entry) {
-            return Column(
-              children: [
-                H2TextView(entry.label),
-                Text(entry.value, style: getValueTextStyle(context)),
-              ],
-            );
-          }).toList(),
+      children: stats.map((entry) {
+        return Column(
+          children: [
+            H2TextView(entry.label),
+            Text(entry.value, style: getValueTextStyle(context)),
+          ],
+        );
+      }).toList(),
     );
   }
 }

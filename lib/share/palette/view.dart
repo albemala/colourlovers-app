@@ -78,27 +78,26 @@ class SharePaletteView extends StatelessWidget {
                         const H2TextView('Values'),
                         Column(
                           spacing: 8,
-                          children:
-                              state.colors.map((color) {
-                                return Row(
-                                  spacing: 8,
-                                  children: [
-                                    SizedBox(
-                                      width: 120,
-                                      child: H1TextView('#$color'),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-                                        controller.copyColorToClipboard(
-                                          context,
-                                          color,
-                                        );
-                                      },
-                                      child: const Text('Copy'),
-                                    ),
-                                  ],
-                                );
-                              }).toList(),
+                          children: state.colors.map((color) {
+                            return Row(
+                              spacing: 8,
+                              children: [
+                                SizedBox(
+                                  width: 120,
+                                  child: H1TextView('#$color'),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    controller.copyColorToClipboard(
+                                      context,
+                                      color,
+                                    );
+                                  },
+                                  child: const Text('Copy'),
+                                ),
+                              ],
+                            );
+                          }).toList(),
                         ),
                       ],
                     ),

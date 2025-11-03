@@ -41,14 +41,12 @@ class PatternsViewController extends Cubit<PatternsViewState> {
 
     _pagination = ItemsPagination<ColourloversPattern>((numResults, offset) {
       final lover = _dataController.userName;
-      final hueRanges =
-          _dataController.colorFilter == ColorFilter.hueRanges
-              ? _dataController.hueRanges.toList()
-              : <ColourloversRequestHueRange>[];
-      final hex =
-          _dataController.colorFilter == ColorFilter.hex
-              ? [_dataController.hex]
-              : <String>[];
+      final hueRanges = _dataController.colorFilter == ColorFilter.hueRanges
+          ? _dataController.hueRanges.toList()
+          : <ColourloversRequestHueRange>[];
+      final hex = _dataController.colorFilter == ColorFilter.hex
+          ? [_dataController.hex]
+          : <String>[];
       final keywords = _dataController.patternName;
 
       switch (_dataController.showCriteria) {
@@ -145,10 +143,9 @@ class PatternsViewController extends Cubit<PatternsViewState> {
         userName: _dataController.userName,
         itemsList: ItemListViewState(
           isLoading: _pagination.isLoading,
-          items:
-              _pagination.items
-                  .map(PatternTileViewState.fromColourloverPattern)
-                  .toIList(),
+          items: _pagination.items
+              .map(PatternTileViewState.fromColourloverPattern)
+              .toIList(),
           hasMoreItems: _pagination.hasMoreItems,
         ),
       ),

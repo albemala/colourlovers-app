@@ -4,7 +4,10 @@ import 'package:flutter/material.dart';
 class H1TextView extends StatelessWidget {
   final String text;
 
-  const H1TextView(this.text, {super.key, });
+  const H1TextView(
+    this.text, {
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

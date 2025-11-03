@@ -22,15 +22,14 @@ class ItemColorsView extends StatelessWidget {
         const H2TextView('Colors'),
         Column(
           spacing: 8,
-          children:
-              colorViewStates.map((state) {
-                return ColorTileView(
-                  state: state,
-                  onTap: () {
-                    onColorTap(state);
-                  },
-                );
-              }).toList(),
+          children: colorViewStates.map((state) {
+            return ColorTileView(
+              state: state,
+              onTap: () {
+                onColorTap(state);
+              },
+            );
+          }).toList(),
         ),
       ],
     );

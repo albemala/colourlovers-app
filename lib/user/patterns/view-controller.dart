@@ -63,11 +63,10 @@ class UserPatternsViewController extends Cubit<UserPatternsViewState> {
       state.copyWith(
         itemsList: ItemListViewState(
           isLoading: _pagination.isLoading,
-          items:
-              _pagination
-                  .items //
-                  .map(PatternTileViewState.fromColourloverPattern)
-                  .toIList(),
+          items: _pagination
+              .items //
+              .map(PatternTileViewState.fromColourloverPattern)
+              .toIList(),
           hasMoreItems: _pagination.hasMoreItems,
         ),
       ),

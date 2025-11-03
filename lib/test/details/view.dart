@@ -41,28 +41,24 @@ class ItemDetailsTestView extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child:
-              state.color != null
-                  ? ColorDetailsViewCreator(color: state.color!)
-                  : const Center(child: CircularProgressIndicator()),
+          child: state.color != null
+              ? ColorDetailsViewCreator(color: state.color!)
+              : const Center(child: CircularProgressIndicator()),
         ),
         Expanded(
-          child:
-              state.palette != null
-                  ? PaletteDetailsViewCreator(palette: state.palette!)
-                  : const Center(child: CircularProgressIndicator()),
+          child: state.palette != null
+              ? PaletteDetailsViewCreator(palette: state.palette!)
+              : const Center(child: CircularProgressIndicator()),
         ),
         Expanded(
-          child:
-              state.pattern != null
-                  ? PatternDetailsViewCreator(pattern: state.pattern!)
-                  : const Center(child: CircularProgressIndicator()),
+          child: state.pattern != null
+              ? PatternDetailsViewCreator(pattern: state.pattern!)
+              : const Center(child: CircularProgressIndicator()),
         ),
         Expanded(
-          child:
-              state.user != null
-                  ? UserDetailsViewCreator(user: state.user!)
-                  : const Center(child: CircularProgressIndicator()),
+          child: state.user != null
+              ? UserDetailsViewCreator(user: state.user!)
+              : const Center(child: CircularProgressIndicator()),
         ),
       ],
     );

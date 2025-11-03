@@ -114,16 +114,15 @@ class _ShowView extends StatelessWidget {
         const H1TextView('Show'),
         Row(
           spacing: 8,
-          children:
-              ContentShowCriteria.values.map((showCriteria) {
-                return ChoiceChip(
-                  label: Text(getContentShowCriteriaName(showCriteria)),
-                  selected: state.showCriteria == showCriteria,
-                  onSelected: (bool value) {
-                    controller.setShowCriteria(showCriteria);
-                  },
-                );
-              }).toList(),
+          children: ContentShowCriteria.values.map((showCriteria) {
+            return ChoiceChip(
+              label: Text(getContentShowCriteriaName(showCriteria)),
+              selected: state.showCriteria == showCriteria,
+              onSelected: (bool value) {
+                controller.setShowCriteria(showCriteria);
+              },
+            );
+          }).toList(),
         ),
       ],
     );
@@ -147,30 +146,28 @@ class _SortByView extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           child: Row(
             spacing: 8,
-            children:
-                ColourloversRequestOrderBy.values.map((sortBy) {
-                  return ChoiceChip(
-                    label: Text(getColourloversRequestOrderByName(sortBy)),
-                    selected: state.sortBy == sortBy,
-                    onSelected: (bool value) {
-                      controller.setSortBy(sortBy);
-                    },
-                  );
-                }).toList(),
+            children: ColourloversRequestOrderBy.values.map((sortBy) {
+              return ChoiceChip(
+                label: Text(getColourloversRequestOrderByName(sortBy)),
+                selected: state.sortBy == sortBy,
+                onSelected: (bool value) {
+                  controller.setSortBy(sortBy);
+                },
+              );
+            }).toList(),
           ),
         ),
         Row(
           spacing: 8,
-          children:
-              ColourloversRequestSortBy.values.map((sortOrder) {
-                return ChoiceChip(
-                  label: Text(getColourloversRequestSortByName(sortOrder)),
-                  selected: state.sortOrder == sortOrder,
-                  onSelected: (bool value) {
-                    controller.setOrder(sortOrder);
-                  },
-                );
-              }).toList(),
+          children: ColourloversRequestSortBy.values.map((sortOrder) {
+            return ChoiceChip(
+              label: Text(getColourloversRequestSortByName(sortOrder)),
+              selected: state.sortOrder == sortOrder,
+              onSelected: (bool value) {
+                controller.setOrder(sortOrder);
+              },
+            );
+          }).toList(),
         ),
       ],
     );
@@ -194,16 +191,15 @@ class _ColorFilterView extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           child: Row(
             spacing: 8,
-            children:
-                ColorFilter.values.map((colorFilter) {
-                  return ChoiceChip(
-                    label: Text(getColorFilterName(colorFilter)),
-                    selected: state.colorFilter == colorFilter,
-                    onSelected: (bool value) {
-                      controller.setColorFilter(colorFilter);
-                    },
-                  );
-                }).toList(),
+            children: ColorFilter.values.map((colorFilter) {
+              return ChoiceChip(
+                label: Text(getColorFilterName(colorFilter)),
+                selected: state.colorFilter == colorFilter,
+                onSelected: (bool value) {
+                  controller.setColorFilter(colorFilter);
+                },
+              );
+            }).toList(),
           ),
         ),
       ],
@@ -222,28 +218,27 @@ class _HueRangesView extends StatelessWidget {
     return Wrap(
       spacing: 8,
       runSpacing: 8,
-      children:
-          ColourloversRequestHueRange.values.map((hueRange) {
-            return ChoiceChip(
-              avatar: Container(
-                decoration: BoxDecoration(
-                  color: getColourloversRequestHueRangeColor(hueRange),
-                  shape: BoxShape.circle,
-                ),
-                width: 18,
-                height: 18,
-              ),
-              label: Text(getColourloversRequestHueRangeName(hueRange)),
-              selected: state.hueRanges.contains(hueRange),
-              onSelected: (bool selected) {
-                if (selected) {
-                  controller.addHueRange(context, hueRange);
-                } else {
-                  controller.removeHueRange(hueRange);
-                }
-              },
-            );
-          }).toList(),
+      children: ColourloversRequestHueRange.values.map((hueRange) {
+        return ChoiceChip(
+          avatar: Container(
+            decoration: BoxDecoration(
+              color: getColourloversRequestHueRangeColor(hueRange),
+              shape: BoxShape.circle,
+            ),
+            width: 18,
+            height: 18,
+          ),
+          label: Text(getColourloversRequestHueRangeName(hueRange)),
+          selected: state.hueRanges.contains(hueRange),
+          onSelected: (bool selected) {
+            if (selected) {
+              controller.addHueRange(context, hueRange);
+            } else {
+              controller.removeHueRange(hueRange);
+            }
+          },
+        );
+      }).toList(),
     );
   }
 }
