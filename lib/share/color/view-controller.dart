@@ -19,7 +19,7 @@ class ShareColorViewController extends Cubit<ShareColorViewState> {
     return ShareColorViewController(color);
   }
 
-  ShareColorViewController(this._color) : super(defaultShareColorViewState) {
+  ShareColorViewController(this._color) : super(ShareColorViewState.initial()) {
     emit(
       state.copyWith(
         backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),

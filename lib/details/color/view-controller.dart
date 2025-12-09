@@ -51,7 +51,7 @@ class ColorDetailsViewController extends Cubit<ColorDetailsViewState> {
     this._color,
     this._client,
     this._favoritesDataController,
-  ) : super(defaultColorDetailsViewState) {
+  ) : super(ColorDetailsViewState.initial()) {
     _favoritesDataControllerSubscription = _favoritesDataController.stream
         .listen((_) {
           _updateIsFavoritedState();

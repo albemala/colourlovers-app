@@ -7,7 +7,7 @@ import 'package:flutter_data_storage/flutter_data_storage.dart';
 
 class PatternFiltersDataController
     extends StoredCubit<PatternFiltersDataState> {
-  PatternFiltersDataController() : super(defaultPatternFiltersDataState);
+  PatternFiltersDataController() : super(PatternFiltersDataState.initial());
 
   factory PatternFiltersDataController.fromContext(BuildContext context) {
     return PatternFiltersDataController();

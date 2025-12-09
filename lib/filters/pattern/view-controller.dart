@@ -10,17 +10,19 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+final _initialPatternFilters = PatternFiltersDataState.initial();
+
 class PatternFiltersViewController extends Cubit<PatternFiltersViewState> {
   final PatternFiltersDataController _dataController;
 
-  var _showCriteria = defaultPatternFiltersViewState.showCriteria;
-  var _sortBy = defaultPatternFiltersViewState.sortBy;
-  var _sortOrder = defaultPatternFiltersViewState.sortOrder;
-  var _colorFilter = defaultPatternFiltersViewState.colorFilter;
-  var _hueRanges = defaultPatternFiltersViewState.hueRanges;
-  var _hex = defaultPatternFiltersViewState.hex;
-  var _patternName = defaultPatternFiltersViewState.patternName;
-  var _userName = defaultPatternFiltersViewState.userName;
+  var _showCriteria = _initialPatternFilters.showCriteria;
+  var _sortBy = _initialPatternFilters.sortBy;
+  var _sortOrder = _initialPatternFilters.sortOrder;
+  var _colorFilter = _initialPatternFilters.colorFilter;
+  var _hueRanges = _initialPatternFilters.hueRanges;
+  var _hex = _initialPatternFilters.hex;
+  var _patternName = _initialPatternFilters.patternName;
+  var _userName = _initialPatternFilters.userName;
 
   factory PatternFiltersViewController.fromContext(BuildContext context) {
     return PatternFiltersViewController(
@@ -29,7 +31,7 @@ class PatternFiltersViewController extends Cubit<PatternFiltersViewState> {
   }
 
   PatternFiltersViewController(this._dataController)
-    : super(defaultPatternFiltersViewState) {
+    : super(PatternFiltersViewState.initial()) {
     _showCriteria = _dataController.showCriteria;
     _sortBy = _dataController.sortBy;
     _sortOrder = _dataController.sortOrder;
@@ -111,14 +113,14 @@ class PatternFiltersViewController extends Cubit<PatternFiltersViewState> {
   void pickHex(BuildContext context) {}
 
   void resetFilters() {
-    _showCriteria = defaultPatternFiltersDataState.showCriteria;
-    _sortBy = defaultPatternFiltersDataState.sortBy;
-    _sortOrder = defaultPatternFiltersDataState.sortOrder;
-    _colorFilter = defaultPatternFiltersDataState.colorFilter;
-    _hueRanges = defaultPatternFiltersDataState.hueRanges;
-    _hex = defaultPatternFiltersDataState.hex;
-    _patternName = defaultPatternFiltersDataState.patternName;
-    _userName = defaultPatternFiltersDataState.userName;
+    _showCriteria = _initialPatternFilters.showCriteria;
+    _sortBy = _initialPatternFilters.sortBy;
+    _sortOrder = _initialPatternFilters.sortOrder;
+    _colorFilter = _initialPatternFilters.colorFilter;
+    _hueRanges = _initialPatternFilters.hueRanges;
+    _hex = _initialPatternFilters.hex;
+    _patternName = _initialPatternFilters.patternName;
+    _userName = _initialPatternFilters.userName;
     _updateState();
   }
 

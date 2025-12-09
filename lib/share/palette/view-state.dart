@@ -33,11 +33,13 @@ class SharePaletteViewState extends Equatable {
       backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );
   }
-}
 
-const defaultSharePaletteViewState = SharePaletteViewState(
-  colors: IList.empty(),
-  colorWidths: IList.empty(),
-  imageUrl: '',
-  backgroundBlobs: IList.empty(),
-);
+  factory SharePaletteViewState.initial() {
+    return const SharePaletteViewState(
+      colors: IList.empty(),
+      colorWidths: IList.empty(),
+      imageUrl: '',
+      backgroundBlobs: IList.empty(),
+    );
+  }
+}

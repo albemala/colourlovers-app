@@ -24,7 +24,7 @@ class UserPatternsViewController extends Cubit<UserPatternsViewState> {
   }
 
   UserPatternsViewController(this._userName, this._client)
-    : super(defaultUserPatternsViewState) {
+    : super(UserPatternsViewState.initial()) {
     _pagination = ItemsPagination<ColourloversPattern>((numResults, offset) {
       return fetchUserPatterns(_client, numResults, offset, _userName);
     });

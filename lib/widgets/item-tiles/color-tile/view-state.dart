@@ -18,6 +18,16 @@ class ColorTileViewState extends Equatable {
     required this.hex,
   });
 
+  factory ColorTileViewState.initial() {
+    return const ColorTileViewState(
+      id: '',
+      title: '',
+      numViews: 0,
+      numVotes: 0,
+      hex: '',
+    );
+  }
+
   @override
   List<Object> get props => [id, title, numViews, numVotes, hex];
 
@@ -38,7 +48,7 @@ class ColorTileViewState extends Equatable {
   }
 
   factory ColorTileViewState.fromColourloverColor(ColourloversColor? color) {
-    if (color == null) return defaultColorTileViewState;
+    if (color == null) return ColorTileViewState.initial();
     return ColorTileViewState(
       id: color.id?.toString() ?? '',
       title: color.title ?? '',
@@ -48,11 +58,3 @@ class ColorTileViewState extends Equatable {
     );
   }
 }
-
-const defaultColorTileViewState = ColorTileViewState(
-  id: '',
-  title: '',
-  numViews: 0,
-  numVotes: 0,
-  hex: '',
-);

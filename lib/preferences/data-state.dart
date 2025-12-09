@@ -36,15 +36,14 @@ class PreferencesDataState extends Equatable {
           themeMode: ThemeMode.values.byName(themeMode),
           flexScheme: FlexScheme.values.byName(flexScheme),
         ),
-      _ => defaultPreferencesDataState,
+      _ => PreferencesDataState.initial(),
     };
   }
+
+  factory PreferencesDataState.initial() {
+    return const PreferencesDataState(
+      themeMode: ThemeMode.dark,
+      flexScheme: FlexScheme.purpleM3,
+    );
+  }
 }
-
-const defaultThemeMode = ThemeMode.dark;
-const defaultFlexScheme = FlexScheme.purpleM3;
-
-const defaultPreferencesDataState = PreferencesDataState(
-  themeMode: defaultThemeMode,
-  flexScheme: defaultFlexScheme,
-);

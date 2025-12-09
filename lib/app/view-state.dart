@@ -1,4 +1,3 @@
-import 'package:colourlovers_app/preferences/data-state.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
@@ -29,10 +28,12 @@ class AppViewState extends Equatable {
       isLoading: isLoading ?? this.isLoading,
     );
   }
-}
 
-const defaultAppViewState = AppViewState(
-  themeMode: defaultThemeMode,
-  flexScheme: defaultFlexScheme,
-  isLoading: false,
-);
+  factory AppViewState.initial() {
+    return const AppViewState(
+      themeMode: ThemeMode.dark,
+      flexScheme: FlexScheme.purpleM3,
+      isLoading: false,
+    );
+  }
+}

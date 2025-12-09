@@ -19,6 +19,10 @@ class FavoritesDataState extends Equatable {
     return {'favorites': favorites.map((item) => item.toMap()).toList()};
   }
 
+  factory FavoritesDataState.initial() {
+    return const FavoritesDataState(favorites: IList.empty());
+  }
+
   factory FavoritesDataState.fromMap(Map<String, dynamic> map) {
     return switch (map) {
       {'favorites': final List<dynamic> favorites} => FavoritesDataState(
@@ -29,7 +33,7 @@ class FavoritesDataState extends Equatable {
               .toList(),
         ),
       ),
-      _ => defaultFavoritesDataState,
+      _ => FavoritesDataState.initial(),
     };
   }
 }
@@ -74,6 +78,15 @@ class FavoriteItem extends Equatable {
     };
   }
 
+  factory FavoriteItem.initial() {
+    return const FavoriteItem(
+      type: FavoriteItemType.unknown,
+      id: '',
+      timeAdded: 0,
+      data: IMap.empty(),
+    );
+  }
+
   factory FavoriteItem.fromMap(Map<String, dynamic> map) {
     return switch (map) {
       {
@@ -88,18 +101,9 @@ class FavoriteItem extends Equatable {
           timeAdded: timeAdded,
           data: IMap(data.cast<String, dynamic>()),
         ),
-      _ => defaultFavoriteItem,
+      _ => FavoriteItem.initial(),
     };
   }
 }
 
 enum FavoriteItemType { color, palette, pattern, user, unknown }
-
-const defaultFavoritesDataState = FavoritesDataState(favorites: IList.empty());
-
-const defaultFavoriteItem = FavoriteItem(
-  type: FavoriteItemType.unknown,
-  id: '',
-  timeAdded: 0,
-  data: IMap.empty(),
-);

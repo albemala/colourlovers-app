@@ -24,7 +24,7 @@ class RelatedColorsViewController extends Cubit<RelatedColorsViewState> {
   }
 
   RelatedColorsViewController(this._hsv, this._client)
-    : super(defaultRelatedColorsViewState) {
+    : super(RelatedColorsViewState.initial()) {
     _pagination = ItemsPagination<ColourloversColor>((numResults, offset) {
       return fetchRelatedColors(_client, numResults, offset, _hsv);
     });

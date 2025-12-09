@@ -24,7 +24,7 @@ class UserColorsViewController extends Cubit<UserColorsViewState> {
   }
 
   UserColorsViewController(this._userName, this._client)
-    : super(defaultUserColorsViewState) {
+    : super(UserColorsViewState.initial()) {
     _pagination = ItemsPagination<ColourloversColor>((numResults, offset) {
       return fetchUserColors(_client, numResults, offset, _userName);
     });

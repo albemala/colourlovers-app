@@ -27,9 +27,11 @@ class RelatedPalettesViewState extends Equatable {
       backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );
   }
-}
 
-const defaultRelatedPalettesViewState = RelatedPalettesViewState(
-  itemsList: defaultPalettesListViewState,
-  backgroundBlobs: IList.empty(),
-);
+  factory RelatedPalettesViewState.initial() {
+    return RelatedPalettesViewState(
+      itemsList: ItemListViewState<PaletteTileViewState>.initial(),
+      backgroundBlobs: const IList.empty(),
+    );
+  }
+}

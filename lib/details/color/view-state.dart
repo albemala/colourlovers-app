@@ -21,6 +21,10 @@ class ColorRgbViewState extends Equatable {
     required this.blue,
   });
 
+  factory ColorRgbViewState.initial() {
+    return const ColorRgbViewState(red: 0, green: 0, blue: 0);
+  }
+
   @override
   List<Object> get props => [red, green, blue];
 
@@ -33,7 +37,7 @@ class ColorRgbViewState extends Equatable {
   }
 
   factory ColorRgbViewState.fromColourloverRgb(Rgb? rgb) {
-    if (rgb == null) return defaultColorRgbViewState;
+    if (rgb == null) return ColorRgbViewState.initial();
     return ColorRgbViewState(
       red: rgb.red?.toDouble() ?? 0,
       green: rgb.green?.toDouble() ?? 0,
@@ -54,6 +58,10 @@ class ColorHsvViewState extends Equatable {
     required this.value,
   });
 
+  factory ColorHsvViewState.initial() {
+    return const ColorHsvViewState(hue: 0, saturation: 0, value: 0);
+  }
+
   @override
   List<Object> get props => [hue, saturation, value];
 
@@ -66,7 +74,7 @@ class ColorHsvViewState extends Equatable {
   }
 
   factory ColorHsvViewState.fromColourloverHsv(Hsv? hsv) {
-    if (hsv == null) return defaultColorHsvViewState;
+    if (hsv == null) return ColorHsvViewState.initial();
     return ColorHsvViewState(
       hue: hsv.hue?.toDouble() ?? 0,
       saturation: hsv.saturation?.toDouble() ?? 0,
@@ -108,6 +116,25 @@ class ColorDetailsViewState extends Equatable {
     required this.backgroundBlobs,
     required this.isFavorited,
   });
+
+  factory ColorDetailsViewState.initial() {
+    return ColorDetailsViewState(
+      isLoading: true,
+      title: '',
+      hex: '',
+      rgb: ColorRgbViewState.initial(),
+      hsv: ColorHsvViewState.initial(),
+      numViews: '',
+      numVotes: '',
+      rank: '',
+      user: UserTileViewState.initial(),
+      relatedColors: const IList.empty(),
+      relatedPalettes: const IList.empty(),
+      relatedPatterns: const IList.empty(),
+      backgroundBlobs: const IList.empty(),
+      isFavorited: false,
+    );
+  }
 
   @override
   List<Object> get props => [
@@ -175,28 +202,3 @@ class ColorDetailsViewState extends Equatable {
     );
   }
 }
-
-const defaultColorRgbViewState = ColorRgbViewState(red: 0, green: 0, blue: 0);
-
-const defaultColorHsvViewState = ColorHsvViewState(
-  hue: 0,
-  saturation: 0,
-  value: 0,
-);
-
-const defaultColorDetailsViewState = ColorDetailsViewState(
-  isLoading: true,
-  title: '',
-  hex: '',
-  rgb: defaultColorRgbViewState,
-  hsv: defaultColorHsvViewState,
-  numViews: '',
-  numVotes: '',
-  rank: '',
-  user: defaultUserTileViewState,
-  relatedColors: IList.empty(),
-  relatedPalettes: IList.empty(),
-  relatedPatterns: IList.empty(),
-  backgroundBlobs: IList.empty(),
-  isFavorited: false,
-);

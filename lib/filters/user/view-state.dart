@@ -45,12 +45,14 @@ class UserFiltersViewState extends Equatable {
       backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );
   }
-}
 
-const defaultUserFiltersViewState = UserFiltersViewState(
-  showCriteria: ContentShowCriteria.newest,
-  sortBy: ColourloversRequestOrderBy.dateCreated,
-  sortOrder: ColourloversRequestSortBy.DESC,
-  userName: '',
-  backgroundBlobs: IList.empty(),
-);
+  factory UserFiltersViewState.initial() {
+    return const UserFiltersViewState(
+      showCriteria: ContentShowCriteria.newest,
+      sortBy: ColourloversRequestOrderBy.dateCreated,
+      sortOrder: ColourloversRequestSortBy.DESC,
+      userName: '',
+      backgroundBlobs: IList.empty(),
+    );
+  }
+}

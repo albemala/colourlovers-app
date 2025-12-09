@@ -32,6 +32,8 @@ class ItemDetailsViewState extends Equatable {
       user: user ?? this.user,
     );
   }
-}
 
-const defaultItemDetailsViewState = ItemDetailsViewState();
+  factory ItemDetailsViewState.initial() {
+    return const ItemDetailsViewState();
+  }
+}

@@ -29,10 +29,12 @@ class ShareColorViewState extends Equatable {
       backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );
   }
-}
 
-const defaultShareColorViewState = ShareColorViewState(
-  hex: '',
-  imageUrl: '',
-  backgroundBlobs: IList.empty(),
-);
+  factory ShareColorViewState.initial() {
+    return const ShareColorViewState(
+      hex: '',
+      imageUrl: '',
+      backgroundBlobs: IList.empty(),
+    );
+  }
+}

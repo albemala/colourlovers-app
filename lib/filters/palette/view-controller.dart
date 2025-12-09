@@ -10,17 +10,19 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+final _initialPaletteFilters = PaletteFiltersDataState.initial();
+
 class PaletteFiltersViewController extends Cubit<PaletteFiltersViewState> {
   final PaletteFiltersDataController _dataController;
 
-  var _showCriteria = defaultPaletteFiltersViewState.showCriteria;
-  var _sortBy = defaultPaletteFiltersViewState.sortBy;
-  var _sortOrder = defaultPaletteFiltersViewState.sortOrder;
-  var _colorFilter = defaultPaletteFiltersViewState.colorFilter;
-  var _hueRanges = defaultPaletteFiltersViewState.hueRanges;
-  var _hex = defaultPaletteFiltersViewState.hex;
-  var _paletteName = defaultPaletteFiltersViewState.paletteName;
-  var _userName = defaultPaletteFiltersViewState.userName;
+  var _showCriteria = _initialPaletteFilters.showCriteria;
+  var _sortBy = _initialPaletteFilters.sortBy;
+  var _sortOrder = _initialPaletteFilters.sortOrder;
+  var _colorFilter = _initialPaletteFilters.colorFilter;
+  var _hueRanges = _initialPaletteFilters.hueRanges;
+  var _hex = _initialPaletteFilters.hex;
+  var _paletteName = _initialPaletteFilters.paletteName;
+  var _userName = _initialPaletteFilters.userName;
 
   factory PaletteFiltersViewController.fromContext(BuildContext context) {
     return PaletteFiltersViewController(
@@ -29,7 +31,7 @@ class PaletteFiltersViewController extends Cubit<PaletteFiltersViewState> {
   }
 
   PaletteFiltersViewController(this._dataController)
-    : super(defaultPaletteFiltersViewState) {
+    : super(PaletteFiltersViewState.initial()) {
     _showCriteria = _dataController.showCriteria;
     _sortBy = _dataController.sortBy;
     _sortOrder = _dataController.sortOrder;
@@ -111,14 +113,14 @@ class PaletteFiltersViewController extends Cubit<PaletteFiltersViewState> {
   void pickHex(BuildContext context) {}
 
   void resetFilters() {
-    _showCriteria = defaultPaletteFiltersDataState.showCriteria;
-    _sortBy = defaultPaletteFiltersDataState.sortBy;
-    _sortOrder = defaultPaletteFiltersDataState.sortOrder;
-    _colorFilter = defaultPaletteFiltersDataState.colorFilter;
-    _hueRanges = defaultPaletteFiltersDataState.hueRanges;
-    _hex = defaultPaletteFiltersDataState.hex;
-    _paletteName = defaultPaletteFiltersDataState.paletteName;
-    _userName = defaultPaletteFiltersDataState.userName;
+    _showCriteria = _initialPaletteFilters.showCriteria;
+    _sortBy = _initialPaletteFilters.sortBy;
+    _sortOrder = _initialPaletteFilters.sortOrder;
+    _colorFilter = _initialPaletteFilters.colorFilter;
+    _hueRanges = _initialPaletteFilters.hueRanges;
+    _hex = _initialPaletteFilters.hex;
+    _paletteName = _initialPaletteFilters.paletteName;
+    _userName = _initialPaletteFilters.userName;
     _updateState();
   }
 

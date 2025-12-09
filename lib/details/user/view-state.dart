@@ -114,22 +114,24 @@ class UserDetailsViewState extends Equatable {
       dateLastActive: user.dateLastActive.formatted(),
     );
   }
-}
 
-const defaultUserDetailsViewState = UserDetailsViewState(
-  isLoading: true,
-  userName: '',
-  numColors: '',
-  numPalettes: '',
-  numPatterns: '',
-  rating: '',
-  numLovers: '',
-  location: '',
-  dateRegistered: '',
-  dateLastActive: '',
-  userColors: IList.empty(),
-  userPalettes: IList.empty(),
-  userPatterns: IList.empty(),
-  backgroundBlobs: IList.empty(),
-  isFavorited: false,
-);
+  factory UserDetailsViewState.initial() {
+    return const UserDetailsViewState(
+      isLoading: true,
+      userName: '',
+      numColors: '',
+      numPalettes: '',
+      numPatterns: '',
+      rating: '',
+      numLovers: '',
+      location: '',
+      dateRegistered: '',
+      dateLastActive: '',
+      userColors: IList.empty(),
+      userPalettes: IList.empty(),
+      userPatterns: IList.empty(),
+      backgroundBlobs: IList.empty(),
+      isFavorited: false,
+    );
+  }
+}

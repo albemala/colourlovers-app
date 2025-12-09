@@ -102,19 +102,21 @@ class ColorFiltersDataState extends Equatable {
           colorName: colorName,
           userName: userName,
         ),
-      _ => defaultColorFiltersDataState,
+      _ => ColorFiltersDataState.initial(),
     };
   }
-}
 
-const defaultColorFiltersDataState = ColorFiltersDataState(
-  showCriteria: ContentShowCriteria.newest,
-  sortBy: ColourloversRequestOrderBy.dateCreated,
-  sortOrder: ColourloversRequestSortBy.DESC,
-  hueMin: 0,
-  hueMax: 359,
-  brightnessMin: 0,
-  brightnessMax: 99,
-  colorName: '',
-  userName: '',
-);
+  factory ColorFiltersDataState.initial() {
+    return const ColorFiltersDataState(
+      showCriteria: ContentShowCriteria.newest,
+      sortBy: ColourloversRequestOrderBy.dateCreated,
+      sortOrder: ColourloversRequestSortBy.DESC,
+      hueMin: 0,
+      hueMax: 359,
+      brightnessMin: 0,
+      brightnessMax: 99,
+      colorName: '',
+      userName: '',
+    );
+  }
+}

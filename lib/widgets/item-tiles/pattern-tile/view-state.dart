@@ -18,6 +18,16 @@ class PatternTileViewState extends Equatable {
     required this.imageUrl,
   });
 
+  factory PatternTileViewState.initial() {
+    return const PatternTileViewState(
+      id: '',
+      title: '',
+      numViews: 0,
+      numVotes: 0,
+      imageUrl: '',
+    );
+  }
+
   @override
   List<Object> get props => [id, title, numViews, numVotes, imageUrl];
 
@@ -40,7 +50,7 @@ class PatternTileViewState extends Equatable {
   factory PatternTileViewState.fromColourloverPattern(
     ColourloversPattern? pattern,
   ) {
-    if (pattern == null) return defaultPatternTileViewState;
+    if (pattern == null) return PatternTileViewState.initial();
     return PatternTileViewState(
       id: pattern.id?.toString() ?? '',
       title: pattern.title ?? '',
@@ -50,11 +60,3 @@ class PatternTileViewState extends Equatable {
     );
   }
 }
-
-const defaultPatternTileViewState = PatternTileViewState(
-  id: '',
-  title: '',
-  numViews: 0,
-  numVotes: 0,
-  imageUrl: '',
-);

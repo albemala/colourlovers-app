@@ -8,20 +8,22 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+final _initialUserFilters = UserFiltersDataState.initial();
+
 class UserFiltersViewController extends Cubit<UserFiltersViewState> {
   final UserFiltersDataController _dataController;
 
-  var _showCriteria = defaultUserFiltersViewState.showCriteria;
-  var _sortBy = defaultUserFiltersViewState.sortBy;
-  var _sortOrder = defaultUserFiltersViewState.sortOrder;
-  var _userName = defaultUserFiltersViewState.userName;
+  var _showCriteria = _initialUserFilters.showCriteria;
+  var _sortBy = _initialUserFilters.sortBy;
+  var _sortOrder = _initialUserFilters.sortOrder;
+  var _userName = _initialUserFilters.userName;
 
   factory UserFiltersViewController.fromContext(BuildContext context) {
     return UserFiltersViewController(context.read<UserFiltersDataController>());
   }
 
   UserFiltersViewController(this._dataController)
-    : super(defaultUserFiltersViewState) {
+    : super(UserFiltersViewState.initial()) {
     _showCriteria = _dataController.showCriteria;
     _sortBy = _dataController.sortBy;
     _sortOrder = _dataController.sortOrder;
@@ -58,10 +60,10 @@ class UserFiltersViewController extends Cubit<UserFiltersViewState> {
   void pickHex(BuildContext context) {}
 
   void resetFilters() {
-    _showCriteria = defaultUserFiltersDataState.showCriteria;
-    _sortBy = defaultUserFiltersDataState.sortBy;
-    _sortOrder = defaultUserFiltersDataState.sortOrder;
-    _userName = defaultUserFiltersDataState.userName;
+    _showCriteria = _initialUserFilters.showCriteria;
+    _sortBy = _initialUserFilters.sortBy;
+    _sortOrder = _initialUserFilters.sortOrder;
+    _userName = _initialUserFilters.userName;
     _updateState();
   }
 

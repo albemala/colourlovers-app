@@ -9,6 +9,12 @@ class ExploreViewState extends Equatable {
 
   const ExploreViewState({required this.backgroundBlobs});
 
+  factory ExploreViewState.initial() {
+    return const ExploreViewState(
+      backgroundBlobs: IList.empty(),
+    );
+  }
+
   @override
   List<Object> get props => [backgroundBlobs];
 
@@ -18,7 +24,3 @@ class ExploreViewState extends Equatable {
     );
   }
 }
-
-const defaultExploreViewState = ExploreViewState(
-  backgroundBlobs: IList.empty(),
-);

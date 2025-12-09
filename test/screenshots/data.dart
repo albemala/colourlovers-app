@@ -91,7 +91,7 @@ Future<List<ScreenshotData>> createScreenshotData() async {
     NavigatorView(
       child: ExploreView(
         controller: MockExploreViewController(),
-        state: defaultExploreViewState,
+        state: ExploreViewState.initial(),
       ),
     ),
     NavigatorView(
@@ -103,13 +103,13 @@ Future<List<ScreenshotData>> createScreenshotData() async {
     NavigatorView(
       child: PreferencesView(
         controller: MockPreferencesViewController(),
-        state: defaultPreferencesViewState,
+        state: PreferencesViewState.initial(),
       ),
     ),
     NavigatorView(
       child: AboutView(
         controller: MockAboutViewController(),
-        state: defaultAboutViewState,
+        state: AboutViewState.initial(),
       ),
     ),
   ];
@@ -336,47 +336,40 @@ Future<_LoadedItems> _loadItemsFromAssets() async {
   final patternsJson = jsonDecode(await patternsFile.readAsString()) as List;
   final loversJson = jsonDecode(await loversFile.readAsString()) as List;
 
-  final colors =
-      colorsJson
-          .map((e) => ColourloversColor.fromJson(e as Map<String, dynamic>))
-          .toList();
-  final palettes =
-      palettesJson
-          .map((e) => ColourloversPalette.fromJson(e as Map<String, dynamic>))
-          .toList();
-  final patterns =
-      patternsJson
-          .map((e) => ColourloversPattern.fromJson(e as Map<String, dynamic>))
-          .toList();
+  final colors = colorsJson
+      .map((e) => ColourloversColor.fromJson(e as Map<String, dynamic>))
+      .toList();
+  final palettes = palettesJson
+      .map((e) => ColourloversPalette.fromJson(e as Map<String, dynamic>))
+      .toList();
+  final patterns = patternsJson
+      .map((e) => ColourloversPattern.fromJson(e as Map<String, dynamic>))
+      .toList();
 
   // Update imageUrl for colors
-  final updatedColors =
-      colors.map((color) {
-        return color.copyWith(
-          imageUrl: 'asset://assets/items/colors/${color.id}.png',
-        );
-      }).toList();
+  final updatedColors = colors.map((color) {
+    return color.copyWith(
+      imageUrl: 'asset://assets/items/colors/${color.id}.png',
+    );
+  }).toList();
 
   // Update imageUrl for palettes
-  final updatedPalettes =
-      palettes.map((palette) {
-        return palette.copyWith(
-          imageUrl: 'asset://assets/items/palettes/${palette.id}.png',
-        );
-      }).toList();
+  final updatedPalettes = palettes.map((palette) {
+    return palette.copyWith(
+      imageUrl: 'asset://assets/items/palettes/${palette.id}.png',
+    );
+  }).toList();
 
   // Update imageUrl for patterns
-  final updatedPatterns =
-      patterns.map((pattern) {
-        return pattern.copyWith(
-          imageUrl: 'asset://assets/items/patterns/${pattern.id}.png',
-        );
-      }).toList();
+  final updatedPatterns = patterns.map((pattern) {
+    return pattern.copyWith(
+      imageUrl: 'asset://assets/items/patterns/${pattern.id}.png',
+    );
+  }).toList();
 
-  final lovers =
-      loversJson
-          .map((e) => ColourloversLover.fromJson(e as Map<String, dynamic>))
-          .toList();
+  final lovers = loversJson
+      .map((e) => ColourloversLover.fromJson(e as Map<String, dynamic>))
+      .toList();
 
   return _LoadedItems(
     colors: updatedColors,
@@ -413,7 +406,7 @@ FavoritesViewState _createFavoritesViewState(_LoadedItems loadedItems) {
 ColorDetailsViewState _createColorDetailsViewState(_LoadedItems loadedItems) {
   final color = loadedItems.colors[3];
 
-  return defaultColorDetailsViewState
+  return ColorDetailsViewState.initial()
       .copyWith(
         isLoading: false,
         backgroundBlobs: const IList.empty(),
@@ -422,21 +415,18 @@ ColorDetailsViewState _createColorDetailsViewState(_LoadedItems loadedItems) {
       .copyWithColourloversColor(color: color)
       .copyWith(
         user: UserTileViewState.fromColourloverUser(loadedItems.lovers[3]),
-        relatedColors:
-            loadedItems.colors
-                .take(3)
-                .map(ColorTileViewState.fromColourloverColor)
-                .toIList(),
-        relatedPalettes:
-            loadedItems.palettes
-                .take(3)
-                .map(PaletteTileViewState.fromColourloverPalette)
-                .toIList(),
-        relatedPatterns:
-            loadedItems.patterns
-                .take(3)
-                .map(PatternTileViewState.fromColourloverPattern)
-                .toIList(),
+        relatedColors: loadedItems.colors
+            .take(3)
+            .map(ColorTileViewState.fromColourloverColor)
+            .toIList(),
+        relatedPalettes: loadedItems.palettes
+            .take(3)
+            .map(PaletteTileViewState.fromColourloverPalette)
+            .toIList(),
+        relatedPatterns: loadedItems.patterns
+            .take(3)
+            .map(PatternTileViewState.fromColourloverPattern)
+            .toIList(),
       );
 }
 
@@ -445,7 +435,7 @@ PaletteDetailsViewState _createPaletteDetailsViewState(
 ) {
   final palette = loadedItems.palettes[0];
 
-  return defaultPaletteDetailsViewState
+  return PaletteDetailsViewState.initial()
       .copyWith(
         isLoading: false,
         backgroundBlobs: const IList.empty(),
@@ -453,29 +443,26 @@ PaletteDetailsViewState _createPaletteDetailsViewState(
       )
       .copyWithColourloversPalette(palette: palette)
       .copyWith(
-        colorViewStates:
-            (palette.colors ?? [])
-                .map(
-                  (hex) => ColorTileViewState(
-                    id: hex,
-                    title: hex,
-                    numViews: 0,
-                    numVotes: 0,
-                    hex: hex,
-                  ),
-                )
-                .toIList(),
+        colorViewStates: (palette.colors ?? [])
+            .map(
+              (hex) => ColorTileViewState(
+                id: hex,
+                title: hex,
+                numViews: 0,
+                numVotes: 0,
+                hex: hex,
+              ),
+            )
+            .toIList(),
         user: UserTileViewState.fromColourloverUser(loadedItems.lovers[3]),
-        relatedPalettes:
-            loadedItems.palettes
-                .take(3)
-                .map(PaletteTileViewState.fromColourloverPalette)
-                .toIList(),
-        relatedPatterns:
-            loadedItems.patterns
-                .take(3)
-                .map(PatternTileViewState.fromColourloverPattern)
-                .toIList(),
+        relatedPalettes: loadedItems.palettes
+            .take(3)
+            .map(PaletteTileViewState.fromColourloverPalette)
+            .toIList(),
+        relatedPatterns: loadedItems.patterns
+            .take(3)
+            .map(PatternTileViewState.fromColourloverPattern)
+            .toIList(),
       );
 }
 
@@ -484,7 +471,7 @@ PatternDetailsViewState _createPatternDetailsViewState(
 ) {
   final pattern = loadedItems.patterns[0];
 
-  return defaultPatternDetailsViewState
+  return PatternDetailsViewState.initial()
       .copyWith(
         isLoading: false,
         backgroundBlobs: const IList.empty(),
@@ -492,36 +479,33 @@ PatternDetailsViewState _createPatternDetailsViewState(
       )
       .copyWithColourloversPattern(pattern: pattern)
       .copyWith(
-        colorViewStates:
-            (pattern.colors ?? [])
-                .map(
-                  (hex) => ColorTileViewState(
-                    id: hex,
-                    title: hex,
-                    numViews: 0,
-                    numVotes: 0,
-                    hex: hex,
-                  ),
-                )
-                .toIList(),
+        colorViewStates: (pattern.colors ?? [])
+            .map(
+              (hex) => ColorTileViewState(
+                id: hex,
+                title: hex,
+                numViews: 0,
+                numVotes: 0,
+                hex: hex,
+              ),
+            )
+            .toIList(),
         user: UserTileViewState.fromColourloverUser(loadedItems.lovers[3]),
-        relatedPalettes:
-            loadedItems.palettes
-                .take(3)
-                .map(PaletteTileViewState.fromColourloverPalette)
-                .toIList(),
-        relatedPatterns:
-            loadedItems.patterns
-                .take(3)
-                .map(PatternTileViewState.fromColourloverPattern)
-                .toIList(),
+        relatedPalettes: loadedItems.palettes
+            .take(3)
+            .map(PaletteTileViewState.fromColourloverPalette)
+            .toIList(),
+        relatedPatterns: loadedItems.patterns
+            .take(3)
+            .map(PatternTileViewState.fromColourloverPattern)
+            .toIList(),
       );
 }
 
 UserDetailsViewState _createUserDetailsViewState(_LoadedItems loadedItems) {
   final lover = loadedItems.lovers[3];
 
-  return defaultUserDetailsViewState
+  return UserDetailsViewState.initial()
       .copyWith(
         isLoading: false,
         backgroundBlobs: const IList.empty(),
@@ -529,31 +513,27 @@ UserDetailsViewState _createUserDetailsViewState(_LoadedItems loadedItems) {
       )
       .copyWithColourloversLover(user: lover)
       .copyWith(
-        userColors:
-            loadedItems.colors
-                .take(3)
-                .map(ColorTileViewState.fromColourloverColor)
-                .toIList(),
-        userPalettes:
-            loadedItems.palettes
-                .take(3)
-                .map(PaletteTileViewState.fromColourloverPalette)
-                .toIList(),
-        userPatterns:
-            loadedItems.patterns
-                .take(3)
-                .map(PatternTileViewState.fromColourloverPattern)
-                .toIList(),
+        userColors: loadedItems.colors
+            .take(3)
+            .map(ColorTileViewState.fromColourloverColor)
+            .toIList(),
+        userPalettes: loadedItems.palettes
+            .take(3)
+            .map(PaletteTileViewState.fromColourloverPalette)
+            .toIList(),
+        userPatterns: loadedItems.patterns
+            .take(3)
+            .map(PatternTileViewState.fromColourloverPattern)
+            .toIList(),
       );
 }
 
 ColorsViewState _createColorsListViewState(_LoadedItems loadedItems) {
-  return defaultColorsViewState.copyWith(
-    itemsList: defaultColorsListViewState.copyWith(
-      items:
-          loadedItems.colors
-              .map(ColorTileViewState.fromColourloverColor)
-              .toIList(),
+  return ColorsViewState.initial().copyWith(
+    itemsList: ItemListViewState<ColorTileViewState>.initial().copyWith(
+      items: loadedItems.colors
+          .map(ColorTileViewState.fromColourloverColor)
+          .toIList(),
       isLoading: false,
       hasMoreItems: false,
     ),
@@ -561,12 +541,11 @@ ColorsViewState _createColorsListViewState(_LoadedItems loadedItems) {
 }
 
 PalettesViewState _createPalettesListViewState(_LoadedItems loadedItems) {
-  return defaultPalettesViewState.copyWith(
-    itemsList: defaultPalettesListViewState.copyWith(
-      items:
-          loadedItems.palettes
-              .map(PaletteTileViewState.fromColourloverPalette)
-              .toIList(),
+  return PalettesViewState.initial().copyWith(
+    itemsList: ItemListViewState<PaletteTileViewState>.initial().copyWith(
+      items: loadedItems.palettes
+          .map(PaletteTileViewState.fromColourloverPalette)
+          .toIList(),
       isLoading: false,
       hasMoreItems: false,
     ),
@@ -574,12 +553,11 @@ PalettesViewState _createPalettesListViewState(_LoadedItems loadedItems) {
 }
 
 PatternsViewState _createPatternsListViewState(_LoadedItems loadedItems) {
-  return defaultPatternsViewState.copyWith(
-    itemsList: defaultPatternsListViewState.copyWith(
-      items:
-          loadedItems.patterns
-              .map(PatternTileViewState.fromColourloverPattern)
-              .toIList(),
+  return PatternsViewState.initial().copyWith(
+    itemsList: ItemListViewState<PatternTileViewState>.initial().copyWith(
+      items: loadedItems.patterns
+          .map(PatternTileViewState.fromColourloverPattern)
+          .toIList(),
       isLoading: false,
       hasMoreItems: false,
     ),
@@ -587,12 +565,11 @@ PatternsViewState _createPatternsListViewState(_LoadedItems loadedItems) {
 }
 
 UsersViewState _createUsersListViewState(_LoadedItems loadedItems) {
-  return defaultUsersViewState.copyWith(
-    itemsList: defaultUsersListViewState.copyWith(
-      items:
-          loadedItems.lovers
-              .map(UserTileViewState.fromColourloverUser)
-              .toIList(),
+  return UsersViewState.initial().copyWith(
+    itemsList: ItemListViewState<UserTileViewState>.initial().copyWith(
+      items: loadedItems.lovers
+          .map(UserTileViewState.fromColourloverUser)
+          .toIList(),
       isLoading: false,
       hasMoreItems: false,
     ),
@@ -601,7 +578,7 @@ UsersViewState _createUsersListViewState(_LoadedItems loadedItems) {
 
 ShareColorViewState _createShareColorViewState(_LoadedItems loadedItems) {
   final color = loadedItems.colors[3];
-  return defaultShareColorViewState.copyWith(
+  return ShareColorViewState.initial().copyWith(
     hex: color.hex,
     imageUrl: 'asset://assets/items/colors/${color.id}.png',
     backgroundBlobs: const IList.empty(),
@@ -610,7 +587,7 @@ ShareColorViewState _createShareColorViewState(_LoadedItems loadedItems) {
 
 SharePaletteViewState _createSharePaletteViewState(_LoadedItems loadedItems) {
   final palette = loadedItems.palettes[0];
-  return defaultSharePaletteViewState.copyWith(
+  return SharePaletteViewState.initial().copyWith(
     colors: IList(palette.colors ?? []),
     colorWidths: IList(palette.colorWidths ?? []),
     imageUrl: 'asset://assets/items/palettes/${palette.id}.png',
@@ -620,7 +597,7 @@ SharePaletteViewState _createSharePaletteViewState(_LoadedItems loadedItems) {
 
 SharePatternViewState _createSharePatternViewState(_LoadedItems loadedItems) {
   final pattern = loadedItems.patterns[0];
-  return defaultSharePatternViewState.copyWith(
+  return SharePatternViewState.initial().copyWith(
     colors: IList(pattern.colors ?? []),
     imageUrl: 'asset://assets/items/patterns/${pattern.id}.png',
     templateUrl: 'asset://assets/items/patterns/${pattern.id}.png',
@@ -629,7 +606,7 @@ SharePatternViewState _createSharePatternViewState(_LoadedItems loadedItems) {
 }
 
 ColorFiltersViewState _createColorFiltersViewState(_LoadedItems loadedItems) {
-  return defaultColorFiltersViewState.copyWith(
+  return ColorFiltersViewState.initial().copyWith(
     showCriteria: ContentShowCriteria.top,
     sortBy: ColourloversRequestOrderBy.numVotes,
     sortOrder: ColourloversRequestSortBy.ASC,
@@ -644,7 +621,7 @@ ColorFiltersViewState _createColorFiltersViewState(_LoadedItems loadedItems) {
 PaletteFiltersViewState _createPaletteFiltersViewState(
   _LoadedItems loadedItems,
 ) {
-  return defaultPaletteFiltersViewState.copyWith(
+  return PaletteFiltersViewState.initial().copyWith(
     showCriteria: ContentShowCriteria.top,
     sortBy: ColourloversRequestOrderBy.numVotes,
     sortOrder: ColourloversRequestSortBy.ASC,
@@ -660,7 +637,7 @@ PaletteFiltersViewState _createPaletteFiltersViewState(
 PatternFiltersViewState _createPatternFiltersViewState(
   _LoadedItems loadedItems,
 ) {
-  return defaultPatternFiltersViewState.copyWith(
+  return PatternFiltersViewState.initial().copyWith(
     showCriteria: ContentShowCriteria.top,
     sortBy: ColourloversRequestOrderBy.numVotes,
     sortOrder: ColourloversRequestSortBy.ASC,
@@ -671,7 +648,7 @@ PatternFiltersViewState _createPatternFiltersViewState(
 }
 
 UserFiltersViewState _createUserFiltersViewState(_LoadedItems loadedItems) {
-  return defaultUserFiltersViewState.copyWith(
+  return UserFiltersViewState.initial().copyWith(
     showCriteria: ContentShowCriteria.top,
     sortBy: ColourloversRequestOrderBy.numVotes,
     sortOrder: ColourloversRequestSortBy.ASC,
@@ -682,7 +659,7 @@ UserFiltersViewState _createUserFiltersViewState(_LoadedItems loadedItems) {
 FavoritesFiltersViewState _createFavoritesFiltersViewState(
   _LoadedItems loadedItems,
 ) {
-  return defaultFavoritesFiltersViewState.copyWith(
+  return FavoritesFiltersViewState.initial().copyWith(
     typeFilter: FavoriteItemTypeFilter.palette,
     sortBy: FavoriteSortBy.timeAdded,
     sortOrder: FavoriteSortOrder.ascending,

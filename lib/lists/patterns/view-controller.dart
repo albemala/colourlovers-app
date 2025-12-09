@@ -32,7 +32,7 @@ class PatternsViewController extends Cubit<PatternsViewState> {
   }
 
   PatternsViewController(this._client, this._dataController)
-    : super(defaultPatternsViewState) {
+    : super(PatternsViewState.initial()) {
     _dataControllerSubscription = _dataController.stream.listen((state) {
       _pagination.reset();
       _updateState();

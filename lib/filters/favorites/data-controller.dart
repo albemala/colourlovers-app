@@ -5,7 +5,7 @@ import 'package:flutter_data_storage/flutter_data_storage.dart';
 
 class FavoritesFiltersDataController
     extends StoredCubit<FavoritesFiltersDataState> {
-  FavoritesFiltersDataController() : super(defaultFavoritesFiltersDataState);
+  FavoritesFiltersDataController() : super(FavoritesFiltersDataState.initial());
 
   factory FavoritesFiltersDataController.fromContext(BuildContext context) {
     return FavoritesFiltersDataController();

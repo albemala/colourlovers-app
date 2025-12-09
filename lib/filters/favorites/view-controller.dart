@@ -7,12 +7,14 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+final _initialFavoritesFilters = FavoritesFiltersDataState.initial();
+
 class FavoritesFiltersViewController extends Cubit<FavoritesFiltersViewState> {
   final FavoritesFiltersDataController _dataController;
 
-  var _typeFilter = defaultFavoritesFiltersDataState.typeFilter;
-  var _sortBy = defaultFavoritesFiltersDataState.sortBy;
-  var _sortOrder = defaultFavoritesFiltersDataState.sortOrder;
+  var _typeFilter = _initialFavoritesFilters.typeFilter;
+  var _sortBy = _initialFavoritesFilters.sortBy;
+  var _sortOrder = _initialFavoritesFilters.sortOrder;
 
   factory FavoritesFiltersViewController.fromContext(BuildContext context) {
     return FavoritesFiltersViewController(
@@ -21,7 +23,7 @@ class FavoritesFiltersViewController extends Cubit<FavoritesFiltersViewState> {
   }
 
   FavoritesFiltersViewController(this._dataController)
-    : super(defaultFavoritesFiltersViewState) {
+    : super(FavoritesFiltersViewState.initial()) {
     _typeFilter = _dataController.typeFilter;
     _sortBy = _dataController.sortBy;
     _sortOrder = _dataController.sortOrder;
@@ -50,9 +52,9 @@ class FavoritesFiltersViewController extends Cubit<FavoritesFiltersViewState> {
   }
 
   void resetFilters() {
-    _typeFilter = defaultFavoritesFiltersDataState.typeFilter;
-    _sortBy = defaultFavoritesFiltersDataState.sortBy;
-    _sortOrder = defaultFavoritesFiltersDataState.sortOrder;
+    _typeFilter = _initialFavoritesFilters.typeFilter;
+    _sortBy = _initialFavoritesFilters.sortBy;
+    _sortOrder = _initialFavoritesFilters.sortOrder;
     _updateState();
   }
 

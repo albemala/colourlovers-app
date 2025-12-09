@@ -27,9 +27,11 @@ class UserPatternsViewState extends Equatable {
       backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );
   }
-}
 
-const defaultUserPatternsViewState = UserPatternsViewState(
-  itemsList: defaultPatternsListViewState,
-  backgroundBlobs: IList.empty(),
-);
+  factory UserPatternsViewState.initial() {
+    return UserPatternsViewState(
+      itemsList: ItemListViewState<PatternTileViewState>.initial(),
+      backgroundBlobs: const IList.empty(),
+    );
+  }
+}

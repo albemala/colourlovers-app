@@ -7,7 +7,7 @@ import 'package:flutter_data_storage/flutter_data_storage.dart';
 
 class PaletteFiltersDataController
     extends StoredCubit<PaletteFiltersDataState> {
-  PaletteFiltersDataController() : super(defaultPaletteFiltersDataState);
+  PaletteFiltersDataController() : super(PaletteFiltersDataState.initial());
 
   factory PaletteFiltersDataController.fromContext(BuildContext context) {
     return PaletteFiltersDataController();

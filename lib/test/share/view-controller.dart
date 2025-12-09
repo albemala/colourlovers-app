@@ -10,7 +10,8 @@ class ShareItemsViewController extends Cubit<ShareItemsViewState> {
     return ShareItemsViewController(ColourloversApiClient());
   }
 
-  ShareItemsViewController(this._client) : super(defaultShareItemsViewState) {
+  ShareItemsViewController(this._client)
+    : super(ShareItemsViewState.initial()) {
     _init();
   }
 

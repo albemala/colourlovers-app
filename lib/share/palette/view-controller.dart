@@ -20,7 +20,7 @@ class SharePaletteViewController extends Cubit<SharePaletteViewState> {
   }
 
   SharePaletteViewController(this._palette)
-    : super(defaultSharePaletteViewState) {
+    : super(SharePaletteViewState.initial()) {
     emit(
       state.copyWith(
         backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),

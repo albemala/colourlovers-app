@@ -16,7 +16,7 @@ class AboutViewController extends Cubit<AboutViewState> {
     return AboutViewController();
   }
 
-  AboutViewController() : super(defaultAboutViewState) {
+  AboutViewController() : super(AboutViewState.initial()) {
     emit(
       state.copyWith(
         backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),

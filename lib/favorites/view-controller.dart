@@ -40,7 +40,7 @@ class FavoritesViewController extends Cubit<FavoritesViewState> {
   FavoritesViewController(
     this._favoritesDataController,
     this._favoritesFiltersDataController,
-  ) : super(defaultFavoritesViewState) {
+  ) : super(FavoritesViewState.initial()) {
     _favoritesDataControllerSubscription = _favoritesDataController.stream
         .listen((_) {
           _updateItems();

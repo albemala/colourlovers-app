@@ -27,9 +27,11 @@ class RelatedPatternsViewState extends Equatable {
       backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );
   }
-}
 
-const defaultRelatedPatternsViewState = RelatedPatternsViewState(
-  itemsList: defaultPatternsListViewState,
-  backgroundBlobs: IList.empty(),
-);
+  factory RelatedPatternsViewState.initial() {
+    return RelatedPatternsViewState(
+      itemsList: ItemListViewState<PatternTileViewState>.initial(),
+      backgroundBlobs: const IList.empty(),
+    );
+  }
+}

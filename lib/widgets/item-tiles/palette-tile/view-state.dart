@@ -21,6 +21,17 @@ class PaletteTileViewState extends Equatable {
     required this.widths,
   });
 
+  factory PaletteTileViewState.initial() {
+    return const PaletteTileViewState(
+      id: '',
+      title: '',
+      numViews: 0,
+      numVotes: 0,
+      hexs: IList.empty(),
+      widths: IList.empty(),
+    );
+  }
+
   @override
   List<Object> get props => [id, title, numViews, numVotes, hexs, widths];
 
@@ -45,7 +56,7 @@ class PaletteTileViewState extends Equatable {
   factory PaletteTileViewState.fromColourloverPalette(
     ColourloversPalette? palette,
   ) {
-    if (palette == null) return defaultPaletteTileViewState;
+    if (palette == null) return PaletteTileViewState.initial();
     return PaletteTileViewState(
       id: palette.id?.toString() ?? '',
       title: palette.title ?? '',
@@ -56,12 +67,3 @@ class PaletteTileViewState extends Equatable {
     );
   }
 }
-
-const defaultPaletteTileViewState = PaletteTileViewState(
-  id: '',
-  title: '',
-  numViews: 0,
-  numVotes: 0,
-  hexs: IList.empty(),
-  widths: IList.empty(),
-);

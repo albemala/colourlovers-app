@@ -8,18 +8,20 @@ import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+final _initialColorFilters = ColorFiltersDataState.initial();
+
 class ColorFiltersViewController extends Cubit<ColorFiltersViewState> {
   final ColorFiltersDataController _dataController;
 
-  var _showCriteria = defaultColorFiltersViewState.showCriteria;
-  var _sortBy = defaultColorFiltersViewState.sortBy;
-  var _sortOrder = defaultColorFiltersViewState.sortOrder;
-  var _hueMin = defaultColorFiltersViewState.hueMin;
-  var _hueMax = defaultColorFiltersViewState.hueMax;
-  var _brightnessMin = defaultColorFiltersViewState.brightnessMin;
-  var _brightnessMax = defaultColorFiltersViewState.brightnessMax;
-  var _colorName = defaultColorFiltersViewState.colorName;
-  var _userName = defaultColorFiltersViewState.userName;
+  var _showCriteria = _initialColorFilters.showCriteria;
+  var _sortBy = _initialColorFilters.sortBy;
+  var _sortOrder = _initialColorFilters.sortOrder;
+  var _hueMin = _initialColorFilters.hueMin;
+  var _hueMax = _initialColorFilters.hueMax;
+  var _brightnessMin = _initialColorFilters.brightnessMin;
+  var _brightnessMax = _initialColorFilters.brightnessMax;
+  var _colorName = _initialColorFilters.colorName;
+  var _userName = _initialColorFilters.userName;
 
   factory ColorFiltersViewController.fromContext(BuildContext context) {
     return ColorFiltersViewController(
@@ -28,7 +30,7 @@ class ColorFiltersViewController extends Cubit<ColorFiltersViewState> {
   }
 
   ColorFiltersViewController(this._dataController)
-    : super(defaultColorFiltersViewState) {
+    : super(ColorFiltersViewState.initial()) {
     _showCriteria = _dataController.showCriteria;
     _sortBy = _dataController.sortBy;
     _sortOrder = _dataController.sortOrder;
@@ -93,15 +95,15 @@ class ColorFiltersViewController extends Cubit<ColorFiltersViewState> {
   }
 
   void resetFilters() {
-    _showCriteria = defaultColorFiltersDataState.showCriteria;
-    _sortBy = defaultColorFiltersDataState.sortBy;
-    _sortOrder = defaultColorFiltersDataState.sortOrder;
-    _hueMin = defaultColorFiltersDataState.hueMin;
-    _hueMax = defaultColorFiltersDataState.hueMax;
-    _brightnessMin = defaultColorFiltersDataState.brightnessMin;
-    _brightnessMax = defaultColorFiltersDataState.brightnessMax;
-    _colorName = defaultColorFiltersDataState.colorName;
-    _userName = defaultColorFiltersDataState.userName;
+    _showCriteria = _initialColorFilters.showCriteria;
+    _sortBy = _initialColorFilters.sortBy;
+    _sortOrder = _initialColorFilters.sortOrder;
+    _hueMin = _initialColorFilters.hueMin;
+    _hueMax = _initialColorFilters.hueMax;
+    _brightnessMin = _initialColorFilters.brightnessMin;
+    _brightnessMax = _initialColorFilters.brightnessMax;
+    _colorName = _initialColorFilters.colorName;
+    _userName = _initialColorFilters.userName;
     _updateState();
   }
 

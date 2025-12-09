@@ -57,14 +57,16 @@ class UserFiltersDataState extends Equatable {
           sortOrder: ColourloversRequestSortBy.values.byName(sortOrder),
           userName: userName,
         ),
-      _ => defaultUserFiltersDataState,
+      _ => UserFiltersDataState.initial(),
     };
   }
-}
 
-const defaultUserFiltersDataState = UserFiltersDataState(
-  showCriteria: ContentShowCriteria.newest,
-  sortBy: ColourloversRequestOrderBy.dateCreated,
-  sortOrder: ColourloversRequestSortBy.DESC,
-  userName: '',
-);
+  factory UserFiltersDataState.initial() {
+    return const UserFiltersDataState(
+      showCriteria: ContentShowCriteria.newest,
+      sortBy: ColourloversRequestOrderBy.dateCreated,
+      sortOrder: ColourloversRequestSortBy.DESC,
+      userName: '',
+    );
+  }
+}

@@ -75,17 +75,19 @@ class PalettesViewState extends Equatable {
       backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );
   }
-}
 
-const defaultPalettesViewState = PalettesViewState(
-  showCriteria: ContentShowCriteria.newest,
-  sortBy: ColourloversRequestOrderBy.dateCreated,
-  sortOrder: ColourloversRequestSortBy.DESC,
-  colorFilter: ColorFilter.none,
-  hueRanges: IList.empty(),
-  hex: '',
-  paletteName: '',
-  userName: '',
-  itemsList: defaultPalettesListViewState,
-  backgroundBlobs: IList.empty(),
-);
+  factory PalettesViewState.initial() {
+    return PalettesViewState(
+      showCriteria: ContentShowCriteria.newest,
+      sortBy: ColourloversRequestOrderBy.dateCreated,
+      sortOrder: ColourloversRequestSortBy.DESC,
+      colorFilter: ColorFilter.none,
+      hueRanges: const IList.empty(),
+      hex: '',
+      paletteName: '',
+      userName: '',
+      itemsList: ItemListViewState<PaletteTileViewState>.initial(),
+      backgroundBlobs: const IList.empty(),
+    );
+  }
+}

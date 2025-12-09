@@ -1,7 +1,3 @@
-import 'package:colourlovers_app/widgets/item-tiles/color-tile/view-state.dart';
-import 'package:colourlovers_app/widgets/item-tiles/palette-tile/view-state.dart';
-import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view-state.dart';
-import 'package:colourlovers_app/widgets/item-tiles/user-tile/view-state.dart';
 import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +14,14 @@ class ItemListViewState<ItemType> extends Equatable {
     required this.hasMoreItems,
   });
 
+  factory ItemListViewState.initial() {
+    return ItemListViewState<ItemType>(
+      isLoading: false,
+      items: const IList.empty(),
+      hasMoreItems: true,
+    );
+  }
+
   @override
   List<Object> get props => [isLoading, items, hasMoreItems];
 
@@ -33,27 +37,3 @@ class ItemListViewState<ItemType> extends Equatable {
     );
   }
 }
-
-const defaultColorsListViewState = ItemListViewState<ColorTileViewState>(
-  isLoading: false,
-  items: IList.empty(),
-  hasMoreItems: true,
-);
-
-const defaultPalettesListViewState = ItemListViewState<PaletteTileViewState>(
-  isLoading: false,
-  items: IList.empty(),
-  hasMoreItems: true,
-);
-
-const defaultPatternsListViewState = ItemListViewState<PatternTileViewState>(
-  isLoading: false,
-  items: IList.empty(),
-  hasMoreItems: true,
-);
-
-const defaultUsersListViewState = ItemListViewState<UserTileViewState>(
-  isLoading: false,
-  items: IList.empty(),
-  hasMoreItems: true,
-);

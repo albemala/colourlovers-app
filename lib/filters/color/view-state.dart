@@ -70,17 +70,19 @@ class ColorFiltersViewState extends Equatable {
       backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );
   }
-}
 
-const defaultColorFiltersViewState = ColorFiltersViewState(
-  showCriteria: ContentShowCriteria.newest,
-  sortBy: ColourloversRequestOrderBy.dateCreated,
-  sortOrder: ColourloversRequestSortBy.DESC,
-  hueMin: 0,
-  hueMax: 359,
-  brightnessMin: 0,
-  brightnessMax: 99,
-  colorName: '',
-  userName: '',
-  backgroundBlobs: IList.empty(),
-);
+  factory ColorFiltersViewState.initial() {
+    return const ColorFiltersViewState(
+      showCriteria: ContentShowCriteria.newest,
+      sortBy: ColourloversRequestOrderBy.dateCreated,
+      sortOrder: ColourloversRequestSortBy.DESC,
+      hueMin: 0,
+      hueMax: 359,
+      brightnessMin: 0,
+      brightnessMax: 99,
+      colorName: '',
+      userName: '',
+      backgroundBlobs: IList.empty(),
+    );
+  }
+}

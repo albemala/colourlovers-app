@@ -27,9 +27,11 @@ class RelatedColorsViewState extends Equatable {
       backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );
   }
-}
 
-const defaultRelatedColorsViewState = RelatedColorsViewState(
-  itemsList: defaultColorsListViewState,
-  backgroundBlobs: IList.empty(),
-);
+  factory RelatedColorsViewState.initial() {
+    return RelatedColorsViewState(
+      itemsList: ItemListViewState<ColorTileViewState>.initial(),
+      backgroundBlobs: const IList.empty(),
+    );
+  }
+}

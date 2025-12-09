@@ -99,18 +99,20 @@ class PatternFiltersDataState extends Equatable {
           patternName: patternName,
           userName: userName,
         ),
-      _ => defaultPatternFiltersDataState,
+      _ => PatternFiltersDataState.initial(),
     };
   }
-}
 
-const defaultPatternFiltersDataState = PatternFiltersDataState(
-  showCriteria: ContentShowCriteria.newest,
-  sortBy: ColourloversRequestOrderBy.dateCreated,
-  sortOrder: ColourloversRequestSortBy.DESC,
-  colorFilter: ColorFilter.none,
-  hueRanges: IList.empty(),
-  hex: '',
-  patternName: '',
-  userName: '',
-);
+  factory PatternFiltersDataState.initial() {
+    return const PatternFiltersDataState(
+      showCriteria: ContentShowCriteria.newest,
+      sortBy: ColourloversRequestOrderBy.dateCreated,
+      sortOrder: ColourloversRequestSortBy.DESC,
+      colorFilter: ColorFilter.none,
+      hueRanges: IList.empty(),
+      hex: '',
+      patternName: '',
+      userName: '',
+    );
+  }
+}

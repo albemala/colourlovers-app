@@ -27,9 +27,11 @@ class UserColorsViewState extends Equatable {
       backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );
   }
-}
 
-const defaultUserColorsViewState = UserColorsViewState(
-  itemsList: defaultColorsListViewState,
-  backgroundBlobs: IList.empty(),
-);
+  factory UserColorsViewState.initial() {
+    return UserColorsViewState(
+      itemsList: ItemListViewState<ColorTileViewState>.initial(),
+      backgroundBlobs: const IList.empty(),
+    );
+  }
+}

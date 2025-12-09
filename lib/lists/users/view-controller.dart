@@ -32,7 +32,7 @@ class UsersViewController extends Cubit<UsersViewState> {
   }
 
   UsersViewController(this._client, this._dataController)
-    : super(defaultUsersViewState) {
+    : super(UsersViewState.initial()) {
     _dataControllerSubscription = _dataController.stream.listen((state) {
       _pagination.reset();
       _updateState();

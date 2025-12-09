@@ -46,7 +46,7 @@ class UserDetailsViewController extends Cubit<UserDetailsViewState> {
     this._user,
     this._client,
     this._favoritesDataController,
-  ) : super(defaultUserDetailsViewState) {
+  ) : super(UserDetailsViewState.initial()) {
     _favoritesDataControllerSubscription = _favoritesDataController.stream
         .listen((_) {
           _updateIsFavoritedState();

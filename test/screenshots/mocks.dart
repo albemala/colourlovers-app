@@ -34,12 +34,12 @@ class MockPreferencesDataController //
     implements PreferencesDataController {
   @override
   Stream<PreferencesDataState> get stream {
-    return Stream.value(defaultPreferencesDataState);
+    return Stream.value(PreferencesDataState.initial());
   }
 
   @override
   PreferencesDataState get state {
-    return defaultPreferencesDataState;
+    return PreferencesDataState.initial();
   }
 }
 
@@ -47,12 +47,12 @@ class MockAppContentViewController extends Mock
     implements AppContentViewController {
   @override
   Stream<AppContentViewState> get stream {
-    return Stream.value(defaultAppContentViewState);
+    return Stream.value(AppContentViewState.initial());
   }
 
   @override
   AppContentViewState get state {
-    return defaultAppContentViewState;
+    return AppContentViewState.initial();
   }
 }
 

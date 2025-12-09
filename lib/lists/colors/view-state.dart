@@ -80,18 +80,20 @@ class ColorsViewState extends Equatable {
       backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );
   }
-}
 
-const defaultColorsViewState = ColorsViewState(
-  showCriteria: ContentShowCriteria.newest,
-  sortBy: ColourloversRequestOrderBy.dateCreated,
-  sortOrder: ColourloversRequestSortBy.DESC,
-  hueMin: 0,
-  hueMax: 359,
-  brightnessMin: 0,
-  brightnessMax: 99,
-  colorName: '',
-  userName: '',
-  itemsList: defaultColorsListViewState,
-  backgroundBlobs: IList.empty(),
-);
+  factory ColorsViewState.initial() {
+    return ColorsViewState(
+      showCriteria: ContentShowCriteria.newest,
+      sortBy: ColourloversRequestOrderBy.dateCreated,
+      sortOrder: ColourloversRequestSortBy.DESC,
+      hueMin: 0,
+      hueMax: 359,
+      brightnessMin: 0,
+      brightnessMax: 99,
+      colorName: '',
+      userName: '',
+      itemsList: ItemListViewState<ColorTileViewState>.initial(),
+      backgroundBlobs: const IList.empty(),
+    );
+  }
+}

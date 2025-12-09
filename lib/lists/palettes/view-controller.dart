@@ -32,7 +32,7 @@ class PalettesViewController extends Cubit<PalettesViewState> {
   }
 
   PalettesViewController(this._client, this._dataController)
-    : super(defaultPalettesViewState) {
+    : super(PalettesViewState.initial()) {
     _dataControllerSubscription = _dataController.stream.listen((state) {
       _pagination.reset();
       _updateState();

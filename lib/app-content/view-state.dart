@@ -15,8 +15,8 @@ class AppContentViewState extends Equatable {
   AppContentViewState copyWith({MainRoute? currentRoute}) {
     return AppContentViewState(currentRoute: currentRoute ?? this.currentRoute);
   }
-}
 
-const defaultAppContentViewState = AppContentViewState(
-  currentRoute: MainRoute.explore,
-);
+  factory AppContentViewState.initial() {
+    return const AppContentViewState(currentRoute: MainRoute.explore);
+  }
+}

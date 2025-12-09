@@ -30,10 +30,12 @@ class PreferencesViewState extends Equatable {
       backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );
   }
-}
 
-const defaultPreferencesViewState = PreferencesViewState(
-  themeMode: ThemeMode.dark,
-  flexScheme: FlexScheme.material,
-  backgroundBlobs: IList.empty(),
-);
+  factory PreferencesViewState.initial() {
+    return const PreferencesViewState(
+      themeMode: ThemeMode.dark,
+      flexScheme: FlexScheme.material,
+      backgroundBlobs: IList.empty(),
+    );
+  }
+}

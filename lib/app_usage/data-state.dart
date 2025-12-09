@@ -35,12 +35,14 @@ class AppUsageDataState extends Equatable {
           usageCount: usageCount,
           favoritesCount: favoritesCount,
         ),
-      _ => defaultAppUsageDataState,
+      _ => AppUsageDataState.initial(),
     };
   }
-}
 
-const defaultAppUsageDataState = AppUsageDataState(
-  usageCount: 0,
-  favoritesCount: 0,
-);
+  factory AppUsageDataState.initial() {
+    return const AppUsageDataState(
+      usageCount: 0,
+      favoritesCount: 0,
+    );
+  }
+}

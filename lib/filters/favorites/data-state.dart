@@ -49,13 +49,15 @@ class FavoritesFiltersDataState extends Equatable {
           sortBy: FavoriteSortBy.values.byName(sortBy),
           sortOrder: FavoriteSortOrder.values.byName(sortOrder),
         ),
-      _ => defaultFavoritesFiltersDataState,
+      _ => FavoritesFiltersDataState.initial(),
     };
   }
-}
 
-const defaultFavoritesFiltersDataState = FavoritesFiltersDataState(
-  typeFilter: FavoriteItemTypeFilter.all,
-  sortBy: FavoriteSortBy.timeAdded,
-  sortOrder: FavoriteSortOrder.descending,
-);
+  factory FavoritesFiltersDataState.initial() {
+    return const FavoritesFiltersDataState(
+      typeFilter: FavoriteItemTypeFilter.all,
+      sortBy: FavoriteSortBy.timeAdded,
+      sortOrder: FavoriteSortOrder.descending,
+    );
+  }
+}

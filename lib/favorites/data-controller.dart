@@ -19,7 +19,7 @@ class FavoritesDataController extends StoredCubit<FavoritesDataState> {
   }
 
   FavoritesDataController({required this.appUsageDataController})
-    : super(defaultFavoritesDataState);
+    : super(FavoritesDataState.initial());
 
   @override
   Future<void> migrateData() async {

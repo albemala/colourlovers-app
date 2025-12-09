@@ -68,7 +68,7 @@ FavoritesDataState _parseV1FavoritesData(String rawData) {
     return FavoritesDataState(favorites: IList(favorites));
   } catch (e) {
     captureException(e);
-    return defaultFavoritesDataState;
+    return FavoritesDataState.initial();
   }
 }
 

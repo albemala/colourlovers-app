@@ -27,9 +27,11 @@ class UserPalettesViewState extends Equatable {
       backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );
   }
-}
 
-const defaultUserPalettesViewState = UserPalettesViewState(
-  itemsList: defaultPalettesListViewState,
-  backgroundBlobs: IList.empty(),
-);
+  factory UserPalettesViewState.initial() {
+    return UserPalettesViewState(
+      itemsList: ItemListViewState<PaletteTileViewState>.initial(),
+      backgroundBlobs: const IList.empty(),
+    );
+  }
+}

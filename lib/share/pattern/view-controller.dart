@@ -20,7 +20,7 @@ class SharePatternViewController extends Cubit<SharePatternViewState> {
   }
 
   SharePatternViewController(this._pattern)
-    : super(defaultSharePatternViewState) {
+    : super(SharePatternViewState.initial()) {
     emit(
       state.copyWith(
         backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),

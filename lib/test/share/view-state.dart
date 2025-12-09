@@ -32,6 +32,8 @@ class ShareItemsViewState extends Equatable {
       user: user ?? this.user,
     );
   }
-}
 
-const defaultShareItemsViewState = ShareItemsViewState();
+  factory ShareItemsViewState.initial() {
+    return const ShareItemsViewState();
+  }
+}

@@ -51,7 +51,7 @@ class PaletteDetailsViewController extends Cubit<PaletteDetailsViewState> {
     this._palette,
     this._client,
     this._favoritesDataController,
-  ) : super(defaultPaletteDetailsViewState) {
+  ) : super(PaletteDetailsViewState.initial()) {
     _favoritesDataControllerSubscription = _favoritesDataController.stream
         .listen((_) {
           _updateIsFavoritedState();

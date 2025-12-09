@@ -25,9 +25,11 @@ class AboutViewState extends Equatable {
       backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );
   }
-}
 
-const defaultAboutViewState = AboutViewState(
-  appVersion: '',
-  backgroundBlobs: IList.empty(),
-);
+  factory AboutViewState.initial() {
+    return const AboutViewState(
+      appVersion: '',
+      backgroundBlobs: IList.empty(),
+    );
+  }
+}

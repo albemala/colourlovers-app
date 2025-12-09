@@ -16,7 +16,7 @@ class ExploreViewController extends Cubit<ExploreViewState> {
     return ExploreViewController();
   }
 
-  ExploreViewController() : super(defaultExploreViewState) {
+  ExploreViewController() : super(ExploreViewState.initial()) {
     emit(
       state.copyWith(
         backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),

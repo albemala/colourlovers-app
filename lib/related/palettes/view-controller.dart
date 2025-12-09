@@ -24,7 +24,7 @@ class RelatedPalettesViewController extends Cubit<RelatedPalettesViewState> {
   }
 
   RelatedPalettesViewController(this._hex, this._client)
-    : super(defaultRelatedPalettesViewState) {
+    : super(RelatedPalettesViewState.initial()) {
     _pagination = ItemsPagination<ColourloversPalette>((numResults, offset) {
       return fetchRelatedPalettes(_client, numResults, offset, _hex);
     });

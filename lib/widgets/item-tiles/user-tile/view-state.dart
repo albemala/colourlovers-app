@@ -18,6 +18,16 @@ class UserTileViewState extends Equatable {
     required this.numPatterns,
   });
 
+  factory UserTileViewState.initial() {
+    return const UserTileViewState(
+      id: '',
+      userName: '',
+      numColors: 0,
+      numPalettes: 0,
+      numPatterns: 0,
+    );
+  }
+
   @override
   List<Object> get props => [id, userName, numColors, numPalettes, numPatterns];
 
@@ -38,7 +48,7 @@ class UserTileViewState extends Equatable {
   }
 
   factory UserTileViewState.fromColourloverUser(ColourloversLover? user) {
-    if (user == null) return defaultUserTileViewState;
+    if (user == null) return UserTileViewState.initial();
     return UserTileViewState(
       id: user.userName ?? '',
       userName: user.userName ?? '',
@@ -48,11 +58,3 @@ class UserTileViewState extends Equatable {
     );
   }
 }
-
-const defaultUserTileViewState = UserTileViewState(
-  id: '',
-  userName: '',
-  numColors: 0,
-  numPalettes: 0,
-  numPatterns: 0,
-);

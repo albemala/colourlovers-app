@@ -24,7 +24,7 @@ class RelatedPatternsViewController extends Cubit<RelatedPatternsViewState> {
   }
 
   RelatedPatternsViewController(this._hex, this._client)
-    : super(defaultRelatedPatternsViewState) {
+    : super(RelatedPatternsViewState.initial()) {
     _pagination = ItemsPagination<ColourloversPattern>((numResults, offset) {
       return fetchRelatedPatterns(_client, numResults, offset, _hex);
     });

@@ -51,7 +51,7 @@ class PatternDetailsViewController extends Cubit<PatternDetailsViewState> {
     this._pattern,
     this._client,
     this._favoritesDataController,
-  ) : super(defaultPatternDetailsViewState) {
+  ) : super(PatternDetailsViewState.initial()) {
     _favoritesDataControllerSubscription = _favoritesDataController.stream
         .listen((_) {
           _updateIsFavoritedState();

@@ -55,13 +55,15 @@ class UsersViewState extends Equatable {
       backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );
   }
-}
 
-const defaultUsersViewState = UsersViewState(
-  showCriteria: ContentShowCriteria.newest,
-  sortBy: ColourloversRequestOrderBy.dateCreated,
-  sortOrder: ColourloversRequestSortBy.DESC,
-  userName: '',
-  itemsList: defaultUsersListViewState,
-  backgroundBlobs: IList.empty(),
-);
+  factory UsersViewState.initial() {
+    return UsersViewState(
+      showCriteria: ContentShowCriteria.newest,
+      sortBy: ColourloversRequestOrderBy.dateCreated,
+      sortOrder: ColourloversRequestSortBy.DESC,
+      userName: '',
+      itemsList: ItemListViewState<UserTileViewState>.initial(),
+      backgroundBlobs: const IList.empty(),
+    );
+  }
+}

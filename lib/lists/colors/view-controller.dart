@@ -32,7 +32,7 @@ class ColorsViewController extends Cubit<ColorsViewState> {
   }
 
   ColorsViewController(this._client, this._dataController)
-    : super(defaultColorsViewState) {
+    : super(ColorsViewState.initial()) {
     _dataControllerSubscription = _dataController.stream.listen((state) {
       _pagination.reset();
       _updateState();

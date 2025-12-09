@@ -34,11 +34,13 @@ class FavoritesFiltersViewState extends Equatable {
       backgroundBlobs: backgroundBlobs ?? this.backgroundBlobs,
     );
   }
-}
 
-const defaultFavoritesFiltersViewState = FavoritesFiltersViewState(
-  typeFilter: FavoriteItemTypeFilter.all,
-  sortBy: FavoriteSortBy.timeAdded,
-  sortOrder: FavoriteSortOrder.descending,
-  backgroundBlobs: IList.empty(),
-);
+  factory FavoritesFiltersViewState.initial() {
+    return const FavoritesFiltersViewState(
+      typeFilter: FavoriteItemTypeFilter.all,
+      sortBy: FavoriteSortBy.timeAdded,
+      sortOrder: FavoriteSortOrder.descending,
+      backgroundBlobs: IList.empty(),
+    );
+  }
+}
