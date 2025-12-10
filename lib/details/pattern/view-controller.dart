@@ -65,8 +65,8 @@ class PatternDetailsViewController extends Cubit<PatternDetailsViewState> {
   }
 
   @override
-  Future<void> close() {
-    _favoritesDataControllerSubscription?.cancel();
+  Future<void> close() async {
+    await _favoritesDataControllerSubscription?.cancel();
     return super.close();
   }
 

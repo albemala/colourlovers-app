@@ -90,8 +90,8 @@ class ColorsViewController extends Cubit<ColorsViewState> {
   }
 
   @override
-  Future<void> close() {
-    _dataControllerSubscription?.cancel();
+  Future<void> close() async {
+    await _dataControllerSubscription?.cancel();
     _pagination.removeListener(_updateState);
     return super.close();
   }

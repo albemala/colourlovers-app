@@ -93,8 +93,8 @@ class PalettesViewController extends Cubit<PalettesViewState> {
   }
 
   @override
-  Future<void> close() {
-    _dataControllerSubscription?.cancel();
+  Future<void> close() async {
+    await _dataControllerSubscription?.cancel();
     _pagination.removeListener(_updateState);
     return super.close();
   }

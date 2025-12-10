@@ -58,9 +58,9 @@ class FavoritesViewController extends Cubit<FavoritesViewState> {
   }
 
   @override
-  Future<void> close() {
-    _favoritesDataControllerSubscription?.cancel();
-    _favoritesFiltersDataControllerSubscription?.cancel();
+  Future<void> close() async {
+    await _favoritesDataControllerSubscription?.cancel();
+    await _favoritesFiltersDataControllerSubscription?.cancel();
     return super.close();
   }
 

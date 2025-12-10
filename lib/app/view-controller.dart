@@ -34,8 +34,8 @@ class AppViewController extends Cubit<AppViewState> {
   }
 
   @override
-  Future<void> close() {
-    _preferencesDataControllerSubscription?.cancel();
+  Future<void> close() async {
+    await _preferencesDataControllerSubscription?.cancel();
     return super.close();
   }
 
