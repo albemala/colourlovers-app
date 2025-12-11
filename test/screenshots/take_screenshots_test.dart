@@ -35,8 +35,8 @@ Future<void> main() async {
 
   final devices = [
     GoldenScreenshotDevices.macbook,
-    GoldenScreenshotDevices.newerIpad,
-    GoldenScreenshotDevices.newerIphone,
+    GoldenScreenshotDevices.ipad,
+    GoldenScreenshotDevices.iphone,
   ];
 
   // define what locales to use
