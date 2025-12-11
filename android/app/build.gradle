@@ -27,7 +27,7 @@ android {
 
     defaultConfig {
         applicationId = "me.albemala.luv"
-        minSdkVersion 21
+        minSdkVersion flutter.minSdkVersion
         targetSdkVersion 35
         versionCode = flutter.versionCode
         versionName = flutter.versionName
