@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:colourlovers_app/favorites/data-controller.dart';
 import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/test/details/view.dart';
@@ -17,19 +19,19 @@ class TestViewController extends Cubit<void> {
   TestViewController(this._favoritesDataController) : super(null);
 
   void showItemsTestView(BuildContext context) {
-    openScreen<void>(context, const ItemsTestView());
+    unawaited(openScreen<void>(context, const ItemsTestView()));
   }
 
   void showItemDetailsTestView(BuildContext context) {
-    openScreen<void>(context, const ItemDetailsTestViewCreator());
+    unawaited(openScreen<void>(context, const ItemDetailsTestViewCreator()));
   }
 
   void showShareItemsTestView(BuildContext context) {
-    openScreen<void>(context, const ShareItemsTestViewCreator());
+    unawaited(openScreen<void>(context, const ShareItemsTestViewCreator()));
   }
 
   void showFiltersTestView(BuildContext context) {
-    openScreen<void>(context, const FiltersTestView());
+    unawaited(openScreen<void>(context, const FiltersTestView()));
   }
 
   void removeAllFavorites(BuildContext context) {

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:colourlovers_app/urls.dart';
 import 'package:colourlovers_app/widgets/link.dart';
 import 'package:flutter/material.dart';
@@ -17,13 +19,13 @@ class CreditsView extends StatelessWidget {
         LinkView(
           text: 'This $itemName on COLOURlovers.com',
           onTap: () {
-            openUrl(itemUrl);
+            unawaited(openUrl(itemUrl));
           },
         ),
         LinkView(
           text: 'Licensed under Attribution-Noncommercial-Share Alike',
           onTap: () {
-            openUrl(creativeCommonsUrl);
+            unawaited(openUrl(creativeCommonsUrl));
           },
         ),
       ],

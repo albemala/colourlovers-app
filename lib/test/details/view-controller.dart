@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/test/details/view-state.dart';
 import 'package:flutter/material.dart';
@@ -6,13 +8,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ItemDetailsViewController extends Cubit<ItemDetailsViewState> {
   final ColourloversApiClient _client;
 
-  factory ItemDetailsViewController.fromContext(BuildContext context) {
+  factory ItemDetailsViewController.fromContext(BuildContext _) {
     return ItemDetailsViewController(ColourloversApiClient());
   }
 
   ItemDetailsViewController(this._client)
     : super(ItemDetailsViewState.initial()) {
-    _init();
+    unawaited(_init());
   }
 
   Future<void> _init() async {

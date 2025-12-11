@@ -9,7 +9,7 @@ class PaletteFiltersDataController
     extends StoredCubit<PaletteFiltersDataState> {
   PaletteFiltersDataController() : super(PaletteFiltersDataState.initial());
 
-  factory PaletteFiltersDataController.fromContext(BuildContext context) {
+  factory PaletteFiltersDataController.fromContext(BuildContext _) {
     return PaletteFiltersDataController();
   }
 

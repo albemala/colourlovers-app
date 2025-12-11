@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/details/color/view.dart';
 import 'package:colourlovers_app/items-pagination.dart';
@@ -17,7 +19,7 @@ class RelatedColorsViewController extends Cubit<RelatedColorsViewState> {
   late final ItemsPagination<ColourloversColor> _pagination;
 
   factory RelatedColorsViewController.fromContext(
-    BuildContext context, {
+    BuildContext _, {
     required Hsv hsv,
   }) {
     return RelatedColorsViewController(hsv, ColourloversApiClient());
@@ -55,7 +57,7 @@ class RelatedColorsViewController extends Cubit<RelatedColorsViewState> {
   ) {
     final index = state.itemsList.items.indexOf(tileViewState);
     final color = _pagination.items[index];
-    openScreen<void>(context, ColorDetailsViewCreator(color: color));
+    unawaited(openScreen<void>(context, ColorDetailsViewCreator(color: color)));
   }
 
   void _updateState() {

@@ -104,10 +104,12 @@ class PatternsViewController extends Cubit<PatternsViewState> {
   }
 
   void showPatternFilters(BuildContext context) {
-    openScreen<void>(
-      context,
-      const PatternFiltersViewCreator(),
-      fullscreenDialog: true,
+    unawaited(
+      openScreen<void>(
+        context,
+        const PatternFiltersViewCreator(),
+        fullscreenDialog: true,
+      ),
     );
   }
 
@@ -127,7 +129,9 @@ class PatternsViewController extends Cubit<PatternsViewState> {
   }
 
   void _showPatternDetails(BuildContext context, ColourloversPattern pattern) {
-    openScreen<void>(context, PatternDetailsViewCreator(pattern: pattern));
+    unawaited(
+      openScreen<void>(context, PatternDetailsViewCreator(pattern: pattern)),
+    );
   }
 
   void _updateState() {

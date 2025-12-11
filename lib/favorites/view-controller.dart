@@ -98,7 +98,7 @@ class FavoritesViewController extends Cubit<FavoritesViewState> {
   }
 
   void showFavoritesFilters(BuildContext context) {
-    openScreen<void>(context, const FavoritesFiltersViewCreator());
+    unawaited(openScreen<void>(context, const FavoritesFiltersViewCreator()));
   }
 
   void showColorDetails(
@@ -111,7 +111,7 @@ class FavoritesViewController extends Cubit<FavoritesViewState> {
     );
     if (favoriteItem == null) return;
     final color = ColourloversColor.fromJson(favoriteItem.data.unlock);
-    openScreen<void>(context, ColorDetailsViewCreator(color: color));
+    unawaited(openScreen<void>(context, ColorDetailsViewCreator(color: color)));
   }
 
   void showPaletteDetails(
@@ -124,7 +124,9 @@ class FavoritesViewController extends Cubit<FavoritesViewState> {
     );
     if (favoriteItem == null) return;
     final palette = ColourloversPalette.fromJson(favoriteItem.data.unlock);
-    openScreen<void>(context, PaletteDetailsViewCreator(palette: palette));
+    unawaited(
+      openScreen<void>(context, PaletteDetailsViewCreator(palette: palette)),
+    );
   }
 
   void showPatternDetails(
@@ -137,7 +139,9 @@ class FavoritesViewController extends Cubit<FavoritesViewState> {
     );
     if (favoriteItem == null) return;
     final pattern = ColourloversPattern.fromJson(favoriteItem.data.unlock);
-    openScreen<void>(context, PatternDetailsViewCreator(pattern: pattern));
+    unawaited(
+      openScreen<void>(context, PatternDetailsViewCreator(pattern: pattern)),
+    );
   }
 
   void showUserDetails(BuildContext context, UserTileViewState tileViewState) {
@@ -147,7 +151,7 @@ class FavoritesViewController extends Cubit<FavoritesViewState> {
     );
     if (favoriteItem == null) return;
     final user = ColourloversLover.fromJson(favoriteItem.data.unlock);
-    openScreen<void>(context, UserDetailsViewCreator(user: user));
+    unawaited(openScreen<void>(context, UserDetailsViewCreator(user: user)));
   }
 
   Equatable _convertFavoriteItemToTileViewState(FavoriteItem item) {

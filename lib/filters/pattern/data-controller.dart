@@ -9,7 +9,7 @@ class PatternFiltersDataController
     extends StoredCubit<PatternFiltersDataState> {
   PatternFiltersDataController() : super(PatternFiltersDataState.initial());
 
-  factory PatternFiltersDataController.fromContext(BuildContext context) {
+  factory PatternFiltersDataController.fromContext(BuildContext _) {
     return PatternFiltersDataController();
   }
 

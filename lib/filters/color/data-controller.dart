@@ -7,7 +7,7 @@ import 'package:flutter_data_storage/flutter_data_storage.dart';
 class ColorFiltersDataController extends StoredCubit<ColorFiltersDataState> {
   ColorFiltersDataController() : super(ColorFiltersDataState.initial());
 
-  factory ColorFiltersDataController.fromContext(BuildContext context) {
+  factory ColorFiltersDataController.fromContext(BuildContext _) {
     return ColorFiltersDataController();
   }
 

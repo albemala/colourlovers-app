@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/details/pattern/view.dart';
 import 'package:colourlovers_app/items-pagination.dart';
@@ -17,7 +19,7 @@ class UserPatternsViewController extends Cubit<UserPatternsViewState> {
   late final ItemsPagination<ColourloversPattern> _pagination;
 
   factory UserPatternsViewController.fromContext(
-    BuildContext context, {
+    BuildContext _, {
     required String userName,
   }) {
     return UserPatternsViewController(userName, ColourloversApiClient());
@@ -55,7 +57,9 @@ class UserPatternsViewController extends Cubit<UserPatternsViewState> {
   ) {
     final index = state.itemsList.items.indexOf(tileViewState);
     final pattern = _pagination.items[index];
-    openScreen<void>(context, PatternDetailsViewCreator(pattern: pattern));
+    unawaited(
+      openScreen<void>(context, PatternDetailsViewCreator(pattern: pattern)),
+    );
   }
 
   void _updateState() {

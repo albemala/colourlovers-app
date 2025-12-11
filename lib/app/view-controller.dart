@@ -30,7 +30,7 @@ class AppViewController extends Cubit<AppViewState> {
     _updateState();
 
     // Wait for data controllers initialization
-    _waitForInitialization();
+    unawaited(_waitForInitialization());
   }
 
   @override

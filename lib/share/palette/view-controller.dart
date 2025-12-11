@@ -13,7 +13,7 @@ class SharePaletteViewController extends Cubit<SharePaletteViewState> {
   final ColourloversPalette _palette;
 
   factory SharePaletteViewController.fromContext(
-    BuildContext context, {
+    BuildContext _, {
     required ColourloversPalette palette,
   }) {
     return SharePaletteViewController(palette);

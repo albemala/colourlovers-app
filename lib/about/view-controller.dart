@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:colourlovers_app/about/functions.dart';
 import 'package:colourlovers_app/about/view-state.dart';
 import 'package:colourlovers_app/app/defines.dart';
@@ -12,7 +14,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AboutViewController extends Cubit<AboutViewState> {
-  factory AboutViewController.fromContext(BuildContext context) {
+  factory AboutViewController.fromContext(BuildContext _) {
     return AboutViewController();
   }
 
@@ -22,7 +24,7 @@ class AboutViewController extends Cubit<AboutViewState> {
         backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
       ),
     );
-    _init();
+    unawaited(_init());
   }
 
   Future<void> _init() async {

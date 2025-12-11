@@ -104,10 +104,12 @@ class PalettesViewController extends Cubit<PalettesViewState> {
   }
 
   void showPaletteFilters(BuildContext context) {
-    openScreen<void>(
-      context,
-      const PaletteFiltersViewCreator(),
-      fullscreenDialog: true,
+    unawaited(
+      openScreen<void>(
+        context,
+        const PaletteFiltersViewCreator(),
+        fullscreenDialog: true,
+      ),
     );
   }
 
@@ -127,7 +129,9 @@ class PalettesViewController extends Cubit<PalettesViewState> {
   }
 
   void _showPaletteDetails(BuildContext context, ColourloversPalette palette) {
-    openScreen<void>(context, PaletteDetailsViewCreator(palette: palette));
+    unawaited(
+      openScreen<void>(context, PaletteDetailsViewCreator(palette: palette)),
+    );
   }
 
   void _updateState() {

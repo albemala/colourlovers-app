@@ -13,7 +13,7 @@ class ShareColorViewController extends Cubit<ShareColorViewState> {
   final ColourloversColor _color;
 
   factory ShareColorViewController.fromContext(
-    BuildContext context, {
+    BuildContext _, {
     required ColourloversColor color,
   }) {
     return ShareColorViewController(color);

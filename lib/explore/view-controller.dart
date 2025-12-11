@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:colourlovers_app/explore/view-state.dart';
 import 'package:colourlovers_app/lists/colors/view.dart';
 import 'package:colourlovers_app/lists/palettes/view.dart';
@@ -12,7 +14,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 // TODO create view model and pass tiles data to view from controller
 
 class ExploreViewController extends Cubit<ExploreViewState> {
-  factory ExploreViewController.fromContext(BuildContext context) {
+  factory ExploreViewController.fromContext(BuildContext _) {
     return ExploreViewController();
   }
 
@@ -25,18 +27,18 @@ class ExploreViewController extends Cubit<ExploreViewState> {
   }
 
   void showColorsView(BuildContext context) {
-    openScreen<void>(context, const ColorsViewCreator());
+    unawaited(openScreen<void>(context, const ColorsViewCreator()));
   }
 
   void showPalettesView(BuildContext context) {
-    openScreen<void>(context, const PalettesViewCreator());
+    unawaited(openScreen<void>(context, const PalettesViewCreator()));
   }
 
   void showPatternsView(BuildContext context) {
-    openScreen<void>(context, const PatternsViewCreator());
+    unawaited(openScreen<void>(context, const PatternsViewCreator()));
   }
 
   void showUsersView(BuildContext context) {
-    openScreen<void>(context, const UsersViewCreator());
+    unawaited(openScreen<void>(context, const UsersViewCreator()));
   }
 }

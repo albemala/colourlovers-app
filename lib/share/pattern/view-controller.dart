@@ -13,7 +13,7 @@ class SharePatternViewController extends Cubit<SharePatternViewState> {
   final ColourloversPattern _pattern;
 
   factory SharePatternViewController.fromContext(
-    BuildContext context, {
+    BuildContext _, {
     required ColourloversPattern pattern,
   }) {
     return SharePatternViewController(pattern);

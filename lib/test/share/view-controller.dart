@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/test/share/view-state.dart';
 import 'package:flutter/material.dart';
@@ -6,13 +8,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class ShareItemsViewController extends Cubit<ShareItemsViewState> {
   final ColourloversApiClient _client;
 
-  factory ShareItemsViewController.fromContext(BuildContext context) {
+  factory ShareItemsViewController.fromContext(BuildContext _) {
     return ShareItemsViewController(ColourloversApiClient());
   }
 
   ShareItemsViewController(this._client)
     : super(ShareItemsViewState.initial()) {
-    _init();
+    unawaited(_init());
   }
 
   Future<void> _init() async {

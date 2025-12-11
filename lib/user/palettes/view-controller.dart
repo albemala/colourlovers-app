@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/details/palette/view.dart';
 import 'package:colourlovers_app/items-pagination.dart';
@@ -17,7 +19,7 @@ class UserPalettesViewController extends Cubit<UserPalettesViewState> {
   late final ItemsPagination<ColourloversPalette> _pagination;
 
   factory UserPalettesViewController.fromContext(
-    BuildContext context, {
+    BuildContext _, {
     required String userName,
   }) {
     return UserPalettesViewController(userName, ColourloversApiClient());
@@ -55,7 +57,9 @@ class UserPalettesViewController extends Cubit<UserPalettesViewState> {
   ) {
     final index = state.itemsList.items.indexOf(tileViewState);
     final palette = _pagination.items[index];
-    openScreen<void>(context, PaletteDetailsViewCreator(palette: palette));
+    unawaited(
+      openScreen<void>(context, PaletteDetailsViewCreator(palette: palette)),
+    );
   }
 
   void _updateState() {

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -67,7 +68,7 @@ FavoritesDataState _parseV1FavoritesData(String rawData) {
 
     return FavoritesDataState(favorites: IList(favorites));
   } catch (e) {
-    captureException(e);
+    unawaited(captureException(e));
     return FavoritesDataState.initial();
   }
 }

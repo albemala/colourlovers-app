@@ -61,7 +61,7 @@ class ColorDetailsViewController extends Cubit<ColorDetailsViewState> {
         backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
       ),
     );
-    _init();
+    unawaited(_init());
   }
 
   @override
@@ -127,7 +127,7 @@ class ColorDetailsViewController extends Cubit<ColorDetailsViewState> {
   }
 
   void showShareColorView(BuildContext context) {
-    openScreen<void>(context, ShareColorViewCreator(color: _color));
+    unawaited(openScreen<void>(context, ShareColorViewCreator(color: _color)));
   }
 
   void showColorDetailsView(
@@ -136,7 +136,7 @@ class ColorDetailsViewController extends Cubit<ColorDetailsViewState> {
   ) {
     final index = state.relatedColors.indexOf(tileViewState);
     final color = _relatedColors[index];
-    openScreen<void>(context, ColorDetailsViewCreator(color: color));
+    unawaited(openScreen<void>(context, ColorDetailsViewCreator(color: color)));
   }
 
   void showPaletteDetailsView(
@@ -145,7 +145,9 @@ class ColorDetailsViewController extends Cubit<ColorDetailsViewState> {
   ) {
     final index = state.relatedPalettes.indexOf(tileViewState);
     final palette = _relatedPalettes[index];
-    openScreen<void>(context, PaletteDetailsViewCreator(palette: palette));
+    unawaited(
+      openScreen<void>(context, PaletteDetailsViewCreator(palette: palette)),
+    );
   }
 
   void showPatternDetailsView(
@@ -154,31 +156,37 @@ class ColorDetailsViewController extends Cubit<ColorDetailsViewState> {
   ) {
     final index = state.relatedPatterns.indexOf(tileViewState);
     final pattern = _relatedPatterns[index];
-    openScreen<void>(context, PatternDetailsViewCreator(pattern: pattern));
+    unawaited(
+      openScreen<void>(context, PatternDetailsViewCreator(pattern: pattern)),
+    );
   }
 
   void showUserDetailsView(BuildContext context) {
     final user = _user;
     if (user == null) return;
-    openScreen<void>(context, UserDetailsViewCreator(user: user));
+    unawaited(openScreen<void>(context, UserDetailsViewCreator(user: user)));
   }
 
   void showRelatedColorsView(BuildContext context) {
     final hsv = _color.hsv;
     if (hsv == null) return;
-    openScreen<void>(context, RelatedColorsViewCreator(hsv: hsv));
+    unawaited(openScreen<void>(context, RelatedColorsViewCreator(hsv: hsv)));
   }
 
   void showRelatedPalettesView(BuildContext context) {
     final hex = _color.hex;
     if (hex == null) return;
-    openScreen<void>(context, RelatedPalettesViewCreator(hex: [hex]));
+    unawaited(
+      openScreen<void>(context, RelatedPalettesViewCreator(hex: [hex])),
+    );
   }
 
   void showRelatedPatternsView(BuildContext context) {
     final hex = _color.hex;
     if (hex == null) return;
-    openScreen<void>(context, RelatedPatternsViewCreator(hex: [hex]));
+    unawaited(
+      openScreen<void>(context, RelatedPatternsViewCreator(hex: [hex])),
+    );
   }
 
   String get colorId => _color.id?.toString() ?? '';

@@ -56,7 +56,7 @@ class UserDetailsViewController extends Cubit<UserDetailsViewState> {
         backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
       ),
     );
-    _init();
+    unawaited(_init());
   }
 
   @override
@@ -102,7 +102,7 @@ class UserDetailsViewController extends Cubit<UserDetailsViewState> {
   ) {
     final index = state.userColors.indexOf(tileViewState);
     final color = _userColors[index];
-    openScreen<void>(context, ColorDetailsViewCreator(color: color));
+    unawaited(openScreen<void>(context, ColorDetailsViewCreator(color: color)));
   }
 
   void showPaletteDetailsView(
@@ -111,7 +111,9 @@ class UserDetailsViewController extends Cubit<UserDetailsViewState> {
   ) {
     final index = state.userPalettes.indexOf(tileViewState);
     final palette = _userPalettes[index];
-    openScreen<void>(context, PaletteDetailsViewCreator(palette: palette));
+    unawaited(
+      openScreen<void>(context, PaletteDetailsViewCreator(palette: palette)),
+    );
   }
 
   void showPatternDetailsView(
@@ -120,25 +122,33 @@ class UserDetailsViewController extends Cubit<UserDetailsViewState> {
   ) {
     final index = state.userPatterns.indexOf(tileViewState);
     final pattern = _userPatterns[index];
-    openScreen<void>(context, PatternDetailsViewCreator(pattern: pattern));
+    unawaited(
+      openScreen<void>(context, PatternDetailsViewCreator(pattern: pattern)),
+    );
   }
 
   void showUserColorsView(BuildContext context) {
     final userName = _user.userName;
     if (userName == null) return;
-    openScreen<void>(context, UserColorsViewCreator(userName: userName));
+    unawaited(
+      openScreen<void>(context, UserColorsViewCreator(userName: userName)),
+    );
   }
 
   void showUserPalettesView(BuildContext context) {
     final userName = _user.userName;
     if (userName == null) return;
-    openScreen<void>(context, UserPalettesViewCreator(userName: userName));
+    unawaited(
+      openScreen<void>(context, UserPalettesViewCreator(userName: userName)),
+    );
   }
 
   void showUserPatternsView(BuildContext context) {
     final userName = _user.userName;
     if (userName == null) return;
-    openScreen<void>(context, UserPatternsViewCreator(userName: userName));
+    unawaited(
+      openScreen<void>(context, UserPatternsViewCreator(userName: userName)),
+    );
   }
 
   String get userId => _user.userName ?? '';

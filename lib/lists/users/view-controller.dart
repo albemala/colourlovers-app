@@ -84,10 +84,12 @@ class UsersViewController extends Cubit<UsersViewState> {
   }
 
   void showUserFilters(BuildContext context) {
-    openScreen<void>(
-      context,
-      const UserFiltersViewCreator(),
-      fullscreenDialog: true,
+    unawaited(
+      openScreen<void>(
+        context,
+        const UserFiltersViewCreator(),
+        fullscreenDialog: true,
+      ),
     );
   }
 
@@ -98,7 +100,7 @@ class UsersViewController extends Cubit<UsersViewState> {
   }
 
   void _showUserDetails(BuildContext context, ColourloversLover user) {
-    openScreen<void>(context, UserDetailsViewCreator(user: user));
+    unawaited(openScreen<void>(context, UserDetailsViewCreator(user: user)));
   }
 
   void _updateState() {

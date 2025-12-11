@@ -7,7 +7,7 @@ import 'package:flutter_data_storage/flutter_data_storage.dart';
 class UserFiltersDataController extends StoredCubit<UserFiltersDataState> {
   UserFiltersDataController() : super(UserFiltersDataState.initial());
 
-  factory UserFiltersDataController.fromContext(BuildContext context) {
+  factory UserFiltersDataController.fromContext(BuildContext _) {
     return UserFiltersDataController();
   }
 

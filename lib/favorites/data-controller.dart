@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:collection/collection.dart';
 import 'package:colourlovers_app/app_usage/data-controller.dart';
 import 'package:colourlovers_app/favorites/data-state.dart';
@@ -72,7 +74,7 @@ class FavoritesDataController extends StoredCubit<FavoritesDataState> {
           appUsageDataController.favoritesCount > 0 &&
           appUsageDataController.favoritesCount % 3 == 0;
       if (shouldShowReviewDialog) {
-        showReviewDialog();
+        unawaited(showReviewDialog());
       }
     }
   }

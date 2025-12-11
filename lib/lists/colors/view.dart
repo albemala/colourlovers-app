@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/filters/defines.dart';
 import 'package:colourlovers_app/filters/functions.dart';
@@ -47,7 +49,7 @@ class ColorsView extends StatelessWidget {
         actions: [
           RandomItemButton(
             onPressed: () {
-              controller.showRandomColor(context);
+              unawaited(controller.showRandomColor(context));
             },
             tooltip: 'Random color',
           ),

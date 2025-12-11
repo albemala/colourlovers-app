@@ -101,10 +101,12 @@ class ColorsViewController extends Cubit<ColorsViewState> {
   }
 
   void showColorFilters(BuildContext context) {
-    openScreen<void>(
-      context,
-      const ColorFiltersViewCreator(),
-      fullscreenDialog: true,
+    unawaited(
+      openScreen<void>(
+        context,
+        const ColorFiltersViewCreator(),
+        fullscreenDialog: true,
+      ),
     );
   }
 
@@ -124,7 +126,7 @@ class ColorsViewController extends Cubit<ColorsViewState> {
   }
 
   void _showColorDetails(BuildContext context, ColourloversColor color) {
-    openScreen<void>(context, ColorDetailsViewCreator(color: color));
+    unawaited(openScreen<void>(context, ColorDetailsViewCreator(color: color)));
   }
 
   void _updateState() {

@@ -7,7 +7,7 @@ class FavoritesFiltersDataController
     extends StoredCubit<FavoritesFiltersDataState> {
   FavoritesFiltersDataController() : super(FavoritesFiltersDataState.initial());
 
-  factory FavoritesFiltersDataController.fromContext(BuildContext context) {
+  factory FavoritesFiltersDataController.fromContext(BuildContext _) {
     return FavoritesFiltersDataController();
   }
 
