@@ -1,1 +1,1 @@
-color picker,colors,palettes,patterns,design,inspiration,COLOURlovers,graphic,hue,coolors
+color finder,colors,palettes,patterns,design,inspiration,graphic,hue,coolors
