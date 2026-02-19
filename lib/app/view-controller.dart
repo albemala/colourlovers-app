@@ -4,6 +4,7 @@ import 'package:colourlovers_app/app/view-state.dart';
 import 'package:colourlovers_app/app_usage/data-controller.dart';
 import 'package:colourlovers_app/preferences/data-controller.dart';
 import 'package:colourlovers_app/preferences/data-state.dart';
+import 'package:colourlovers_app/review.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -44,6 +45,9 @@ class AppViewController extends Cubit<AppViewState> {
 
     // Increment usage count after initialization is complete
     appUsageDataController.incrementUsageCount();
+    if (_shouldShowReviewDialog()) {
+      Future.delayed(const Duration(seconds: 3), showReviewDialog);
+    }
 
     _updateState();
   }
@@ -56,5 +60,10 @@ class AppViewController extends Cubit<AppViewState> {
         isLoading: !appUsageDataController.isInitialized.value,
       ),
     );
+  }
+
+  bool _shouldShowReviewDialog() {
+    return appUsageDataController.usageCount > 0 &&
+        appUsageDataController.usageCount % 5 == 0;
   }
 }

@@ -70,13 +70,15 @@ class FavoritesDataController extends StoredCubit<FavoritesDataState> {
 
       // Increment the favorites count
       appUsageDataController.incrementFavoritesCount();
-      final shouldShowReviewDialog =
-          appUsageDataController.favoritesCount > 0 &&
-          appUsageDataController.favoritesCount % 3 == 0;
-      if (shouldShowReviewDialog) {
+      if (shouldShowReviewDialog()) {
         unawaited(showReviewDialog());
       }
     }
+  }
+
+  bool shouldShowReviewDialog() {
+    return appUsageDataController.favoritesCount > 0 &&
+        appUsageDataController.favoritesCount % 3 == 0;
   }
 
   void removeFavorite(FavoriteItemType type, String id) {
