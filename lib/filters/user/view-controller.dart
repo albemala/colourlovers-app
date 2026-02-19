@@ -34,27 +34,27 @@ class UserFiltersViewController extends Cubit<UserFiltersViewState> {
         backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
       ),
     );
-    _updateState();
+    updateViewState();
   }
 
   void setShowCriteria(ContentShowCriteria value) {
     _showCriteria = value;
-    _updateState();
+    updateViewState();
   }
 
   void setSortBy(ColourloversRequestOrderBy value) {
     _sortBy = value;
-    _updateState();
+    updateViewState();
   }
 
   void setOrder(ColourloversRequestSortBy value) {
     _sortOrder = value;
-    _updateState();
+    updateViewState();
   }
 
   void setUserName(String value) {
     _userName = value;
-    _updateState();
+    updateViewState();
   }
 
   void pickHex(BuildContext context) {}
@@ -64,7 +64,7 @@ class UserFiltersViewController extends Cubit<UserFiltersViewState> {
     _sortBy = _initialUserFilters.sortBy;
     _sortOrder = _initialUserFilters.sortOrder;
     _userName = _initialUserFilters.userName;
-    _updateState();
+    updateViewState();
   }
 
   void applyFilters() {
@@ -75,7 +75,7 @@ class UserFiltersViewController extends Cubit<UserFiltersViewState> {
       ..userName = _userName;
   }
 
-  void _updateState() {
+  void updateViewState() {
     emit(
       state.copyWith(
         showCriteria: _showCriteria,

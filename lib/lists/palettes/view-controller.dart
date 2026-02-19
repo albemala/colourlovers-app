@@ -35,7 +35,7 @@ class PalettesViewController extends Cubit<PalettesViewState> {
     : super(PalettesViewState.initial()) {
     _dataControllerSubscription = _dataController.stream.listen((state) {
       _pagination.reset();
-      _updateState();
+      updateViewState();
       unawaited(_pagination.load());
     });
 
@@ -81,7 +81,7 @@ class PalettesViewController extends Cubit<PalettesViewState> {
           );
       }
     });
-    _pagination.addListener(_updateState);
+    _pagination.addListener(updateViewState);
     unawaited(_pagination.load());
 
     emit(
@@ -94,7 +94,7 @@ class PalettesViewController extends Cubit<PalettesViewState> {
   @override
   Future<void> close() async {
     await _dataControllerSubscription?.cancel();
-    _pagination.removeListener(_updateState);
+    _pagination.removeListener(updateViewState);
     return super.close();
   }
 
@@ -134,7 +134,7 @@ class PalettesViewController extends Cubit<PalettesViewState> {
     );
   }
 
-  void _updateState() {
+  void updateViewState() {
     emit(
       state.copyWith(
         showCriteria: _dataController.showCriteria,

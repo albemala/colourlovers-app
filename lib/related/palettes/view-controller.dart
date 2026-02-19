@@ -30,7 +30,7 @@ class RelatedPalettesViewController extends Cubit<RelatedPalettesViewState> {
     _pagination = ItemsPagination<ColourloversPalette>((numResults, offset) {
       return fetchRelatedPalettes(_client, numResults, offset, _hex);
     });
-    _pagination.addListener(_updateState);
+    _pagination.addListener(updateViewState);
     unawaited(_pagination.load());
 
     emit(
@@ -42,7 +42,7 @@ class RelatedPalettesViewController extends Cubit<RelatedPalettesViewState> {
 
   @override
   Future<void> close() {
-    _pagination.removeListener(_updateState);
+    _pagination.removeListener(updateViewState);
     return super.close();
   }
 
@@ -61,7 +61,7 @@ class RelatedPalettesViewController extends Cubit<RelatedPalettesViewState> {
     );
   }
 
-  void _updateState() {
+  void updateViewState() {
     emit(
       state.copyWith(
         itemsList: ItemListViewState(

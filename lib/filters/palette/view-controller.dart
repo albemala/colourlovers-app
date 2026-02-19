@@ -46,39 +46,39 @@ class PaletteFiltersViewController extends Cubit<PaletteFiltersViewState> {
         backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
       ),
     );
-    _updateState();
+    updateViewState();
   }
 
   void setShowCriteria(ContentShowCriteria value) {
     _showCriteria = value;
-    _updateState();
+    updateViewState();
   }
 
   void setSortBy(ColourloversRequestOrderBy value) {
     _sortBy = value;
-    _updateState();
+    updateViewState();
   }
 
   void setOrder(ColourloversRequestSortBy value) {
     _sortOrder = value;
-    _updateState();
+    updateViewState();
   }
 
   void setColorFilter(ColorFilter value) {
     _colorFilter = value;
-    _updateState();
+    updateViewState();
   }
 
   void setHueRanges(IList<ColourloversRequestHueRange> value) {
     _hueRanges = value;
-    _updateState();
+    updateViewState();
   }
 
   void addHueRange(BuildContext context, ColourloversRequestHueRange hueRange) {
     if (!_hueRanges.contains(hueRange)) {
       if (_hueRanges.length < 5) {
         _hueRanges = _hueRanges.add(hueRange);
-        _updateState();
+        updateViewState();
       } else {
         showSnackBar(
           context,
@@ -91,23 +91,23 @@ class PaletteFiltersViewController extends Cubit<PaletteFiltersViewState> {
   void removeHueRange(ColourloversRequestHueRange hueRange) {
     if (_hueRanges.contains(hueRange)) {
       _hueRanges = _hueRanges.remove(hueRange);
-      _updateState();
+      updateViewState();
     }
   }
 
   void setHex(String value) {
     _hex = value;
-    _updateState();
+    updateViewState();
   }
 
   void setPaletteName(String value) {
     _paletteName = value;
-    _updateState();
+    updateViewState();
   }
 
   void setUserName(String value) {
     _userName = value;
-    _updateState();
+    updateViewState();
   }
 
   void pickHex(BuildContext context) {}
@@ -121,7 +121,7 @@ class PaletteFiltersViewController extends Cubit<PaletteFiltersViewState> {
     _hex = _initialPaletteFilters.hex;
     _paletteName = _initialPaletteFilters.paletteName;
     _userName = _initialPaletteFilters.userName;
-    _updateState();
+    updateViewState();
   }
 
   void applyFilters() {
@@ -136,7 +136,7 @@ class PaletteFiltersViewController extends Cubit<PaletteFiltersViewState> {
       ..userName = _userName;
   }
 
-  void _updateState() {
+  void updateViewState() {
     emit(
       state.copyWith(
         showCriteria: _showCriteria,

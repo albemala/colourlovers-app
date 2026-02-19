@@ -30,7 +30,7 @@ class UserPatternsViewController extends Cubit<UserPatternsViewState> {
     _pagination = ItemsPagination<ColourloversPattern>((numResults, offset) {
       return fetchUserPatterns(_client, numResults, offset, _userName);
     });
-    _pagination.addListener(_updateState);
+    _pagination.addListener(updateViewState);
     unawaited(_pagination.load());
 
     emit(
@@ -42,7 +42,7 @@ class UserPatternsViewController extends Cubit<UserPatternsViewState> {
 
   @override
   Future<void> close() {
-    _pagination.removeListener(_updateState);
+    _pagination.removeListener(updateViewState);
     return super.close();
   }
 
@@ -61,7 +61,7 @@ class UserPatternsViewController extends Cubit<UserPatternsViewState> {
     );
   }
 
-  void _updateState() {
+  void updateViewState() {
     emit(
       state.copyWith(
         itemsList: ItemListViewState(

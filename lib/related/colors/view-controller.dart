@@ -30,7 +30,7 @@ class RelatedColorsViewController extends Cubit<RelatedColorsViewState> {
     _pagination = ItemsPagination<ColourloversColor>((numResults, offset) {
       return fetchRelatedColors(_client, numResults, offset, _hsv);
     });
-    _pagination.addListener(_updateState);
+    _pagination.addListener(updateViewState);
     unawaited(_pagination.load());
 
     emit(
@@ -42,7 +42,7 @@ class RelatedColorsViewController extends Cubit<RelatedColorsViewState> {
 
   @override
   Future<void> close() {
-    _pagination.removeListener(_updateState);
+    _pagination.removeListener(updateViewState);
     return super.close();
   }
 
@@ -59,7 +59,7 @@ class RelatedColorsViewController extends Cubit<RelatedColorsViewState> {
     unawaited(openScreen<void>(context, ColorDetailsViewCreator(color: color)));
   }
 
-  void _updateState() {
+  void updateViewState() {
     emit(
       state.copyWith(
         itemsList: ItemListViewState(

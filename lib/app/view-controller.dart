@@ -26,9 +26,9 @@ class AppViewController extends Cubit<AppViewState> {
     : super(AppViewState.initial()) {
     _preferencesDataControllerSubscription = preferencesDataController.stream
         .listen((_) {
-          _updateState();
+          updateViewState();
         });
-    _updateState();
+    updateViewState();
 
     // Wait for data controllers initialization
     unawaited(_waitForInitialization());
@@ -45,14 +45,14 @@ class AppViewController extends Cubit<AppViewState> {
 
     // Increment usage count after initialization is complete
     appUsageDataController.incrementUsageCount();
-    if (_shouldShowReviewDialog()) {
+    if (shouldShowReviewDialog()) {
       Future.delayed(const Duration(seconds: 3), showReviewDialog);
     }
 
-    _updateState();
+    updateViewState();
   }
 
-  void _updateState() {
+  void updateViewState() {
     emit(
       state.copyWith(
         themeMode: preferencesDataController.state.themeMode,
@@ -62,7 +62,7 @@ class AppViewController extends Cubit<AppViewState> {
     );
   }
 
-  bool _shouldShowReviewDialog() {
+  bool shouldShowReviewDialog() {
     return appUsageDataController.usageCount > 0 &&
         appUsageDataController.usageCount % 5 == 0;
   }

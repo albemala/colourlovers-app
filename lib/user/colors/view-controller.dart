@@ -30,7 +30,7 @@ class UserColorsViewController extends Cubit<UserColorsViewState> {
     _pagination = ItemsPagination<ColourloversColor>((numResults, offset) {
       return fetchUserColors(_client, numResults, offset, _userName);
     });
-    _pagination.addListener(_updateState);
+    _pagination.addListener(updateViewState);
     unawaited(_pagination.load());
 
     emit(
@@ -42,7 +42,7 @@ class UserColorsViewController extends Cubit<UserColorsViewState> {
 
   @override
   Future<void> close() {
-    _pagination.removeListener(_updateState);
+    _pagination.removeListener(updateViewState);
     return super.close();
   }
 
@@ -59,7 +59,7 @@ class UserColorsViewController extends Cubit<UserColorsViewState> {
     unawaited(openScreen<void>(context, ColorDetailsViewCreator(color: color)));
   }
 
-  void _updateState() {
+  void updateViewState() {
     emit(
       state.copyWith(
         itemsList: ItemListViewState(

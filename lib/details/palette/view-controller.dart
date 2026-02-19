@@ -75,7 +75,7 @@ class PaletteDetailsViewController extends Cubit<PaletteDetailsViewState> {
     await _initColors();
     await _initRelatedPalettes();
     await _initRelatedPatterns();
-    _updateState();
+    updateViewState();
     _updateIsFavoritedState();
   }
 
@@ -103,7 +103,7 @@ class PaletteDetailsViewController extends Cubit<PaletteDetailsViewState> {
     _relatedPatterns = await fetchRelatedPatternsPreview(_client, colors);
   }
 
-  void _updateState() {
+  void updateViewState() {
     emit(
       state
           .copyWith(isLoading: false)

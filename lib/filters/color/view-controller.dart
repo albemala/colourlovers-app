@@ -46,52 +46,52 @@ class ColorFiltersViewController extends Cubit<ColorFiltersViewState> {
         backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
       ),
     );
-    _updateState();
+    updateViewState();
   }
 
   void setShowCriteria(ContentShowCriteria value) {
     _showCriteria = value;
-    _updateState();
+    updateViewState();
   }
 
   void setSortBy(ColourloversRequestOrderBy value) {
     _sortBy = value;
-    _updateState();
+    updateViewState();
   }
 
   void setOrder(ColourloversRequestSortBy value) {
     _sortOrder = value;
-    _updateState();
+    updateViewState();
   }
 
   void setHueMin(int value) {
     _hueMin = value;
-    _updateState();
+    updateViewState();
   }
 
   void setHueMax(int value) {
     _hueMax = value;
-    _updateState();
+    updateViewState();
   }
 
   void setBrightnessMin(int value) {
     _brightnessMin = value;
-    _updateState();
+    updateViewState();
   }
 
   void setBrightnessMax(int value) {
     _brightnessMax = value;
-    _updateState();
+    updateViewState();
   }
 
   void setColorName(String value) {
     _colorName = value;
-    _updateState();
+    updateViewState();
   }
 
   void setUserName(String value) {
     _userName = value;
-    _updateState();
+    updateViewState();
   }
 
   void resetFilters() {
@@ -104,7 +104,7 @@ class ColorFiltersViewController extends Cubit<ColorFiltersViewState> {
     _brightnessMax = _initialColorFilters.brightnessMax;
     _colorName = _initialColorFilters.colorName;
     _userName = _initialColorFilters.userName;
-    _updateState();
+    updateViewState();
   }
 
   void applyFilters() {
@@ -120,7 +120,7 @@ class ColorFiltersViewController extends Cubit<ColorFiltersViewState> {
       ..userName = _userName;
   }
 
-  void _updateState() {
+  void updateViewState() {
     emit(
       state.copyWith(
         showCriteria: _showCriteria,

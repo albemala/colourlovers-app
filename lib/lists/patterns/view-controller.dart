@@ -35,7 +35,7 @@ class PatternsViewController extends Cubit<PatternsViewState> {
     : super(PatternsViewState.initial()) {
     _dataControllerSubscription = _dataController.stream.listen((state) {
       _pagination.reset();
-      _updateState();
+      updateViewState();
       unawaited(_pagination.load());
     });
 
@@ -81,7 +81,7 @@ class PatternsViewController extends Cubit<PatternsViewState> {
           );
       }
     });
-    _pagination.addListener(_updateState);
+    _pagination.addListener(updateViewState);
     unawaited(_pagination.load());
 
     emit(
@@ -94,7 +94,7 @@ class PatternsViewController extends Cubit<PatternsViewState> {
   @override
   Future<void> close() async {
     await _dataControllerSubscription?.cancel();
-    _pagination.removeListener(_updateState);
+    _pagination.removeListener(updateViewState);
     return super.close();
   }
 
@@ -134,7 +134,7 @@ class PatternsViewController extends Cubit<PatternsViewState> {
     );
   }
 
-  void _updateState() {
+  void updateViewState() {
     emit(
       state.copyWith(
         showCriteria: _dataController.showCriteria,

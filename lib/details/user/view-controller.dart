@@ -70,11 +70,11 @@ class UserDetailsViewController extends Cubit<UserDetailsViewState> {
     _userColors = await fetchUserColorsPreview(_client, userName);
     _userPalettes = await fetchUserPalettesPreview(_client, userName);
     _userPatterns = await fetchUserPatternsPreview(_client, userName);
-    _updateState();
+    updateViewState();
     _updateIsFavoritedState();
   }
 
-  void _updateState() {
+  void updateViewState() {
     emit(
       state
           .copyWith(isLoading: false)

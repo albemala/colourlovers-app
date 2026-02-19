@@ -33,29 +33,29 @@ class FavoritesFiltersViewController extends Cubit<FavoritesFiltersViewState> {
         backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
       ),
     );
-    _updateState();
+    updateViewState();
   }
 
   void setTypeFilter(FavoriteItemTypeFilter value) {
     _typeFilter = value;
-    _updateState();
+    updateViewState();
   }
 
   void setSortBy(FavoriteSortBy value) {
     _sortBy = value;
-    _updateState();
+    updateViewState();
   }
 
   void setSortOrder(FavoriteSortOrder value) {
     _sortOrder = value;
-    _updateState();
+    updateViewState();
   }
 
   void resetFilters() {
     _typeFilter = _initialFavoritesFilters.typeFilter;
     _sortBy = _initialFavoritesFilters.sortBy;
     _sortOrder = _initialFavoritesFilters.sortOrder;
-    _updateState();
+    updateViewState();
   }
 
   void applyFilters() {
@@ -65,7 +65,7 @@ class FavoritesFiltersViewController extends Cubit<FavoritesFiltersViewState> {
       ..sortOrder = _sortOrder;
   }
 
-  void _updateState() {
+  void updateViewState() {
     emit(
       state.copyWith(
         typeFilter: _typeFilter,

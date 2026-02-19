@@ -23,14 +23,14 @@ class PreferencesViewController extends Cubit<PreferencesViewState> {
     : super(PreferencesViewState.initial()) {
     _preferencesDataControllerSubscription = _preferencesDataController.stream
         .listen((_) {
-          _updateState();
+          updateViewState();
         });
     emit(
       state.copyWith(
         backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
       ),
     );
-    _updateState();
+    updateViewState();
   }
 
   @override
@@ -39,7 +39,7 @@ class PreferencesViewController extends Cubit<PreferencesViewState> {
     return super.close();
   }
 
-  void _updateState() {
+  void updateViewState() {
     emit(
       state.copyWith(
         themeMode: _preferencesDataController.state.themeMode,
