@@ -116,7 +116,7 @@ class _ShowView extends StatelessWidget {
             return ChoiceChip(
               label: Text(getContentShowCriteriaName(showCriteria)),
               selected: state.showCriteria == showCriteria,
-              onSelected: (bool value) {
+              onSelected: (value) {
                 controller.setShowCriteria(showCriteria);
               },
             );
@@ -148,7 +148,7 @@ class _SortByView extends StatelessWidget {
               return ChoiceChip(
                 label: Text(getColourloversRequestOrderByName(sortBy)),
                 selected: state.sortBy == sortBy,
-                onSelected: (bool value) {
+                onSelected: (value) {
                   controller.setSortBy(sortBy);
                 },
               );
@@ -161,7 +161,7 @@ class _SortByView extends StatelessWidget {
             return ChoiceChip(
               label: Text(getColourloversRequestSortByName(sortOrder)),
               selected: state.sortOrder == sortOrder,
-              onSelected: (bool value) {
+              onSelected: (value) {
                 controller.setOrder(sortOrder);
               },
             );

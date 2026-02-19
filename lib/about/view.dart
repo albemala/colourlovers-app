@@ -62,7 +62,7 @@ class AboutView extends StatelessWidget {
                   ),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
-                    spacing: 0,
+                    // spacing: 0,
                     children: [
                       const H1TextView(appName),
                       H2TextView(state.appVersion),

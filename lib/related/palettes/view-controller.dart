@@ -30,9 +30,8 @@ class RelatedPalettesViewController extends Cubit<RelatedPalettesViewState> {
     _pagination = ItemsPagination<ColourloversPalette>((numResults, offset) {
       return fetchRelatedPalettes(_client, numResults, offset, _hex);
     });
-    _pagination
-      ..addListener(_updateState)
-      ..load();
+    _pagination.addListener(_updateState);
+    unawaited(_pagination.load());
 
     emit(
       state.copyWith(

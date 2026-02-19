@@ -112,7 +112,7 @@ class _ShowView extends StatelessWidget {
               return ChoiceChip(
                 label: Text(getFavoriteItemTypeFilterName(type)),
                 selected: state.typeFilter == type,
-                onSelected: (bool value) {
+                onSelected: (value) {
                   controller.setTypeFilter(type);
                 },
               );
@@ -145,7 +145,7 @@ class _SortView extends StatelessWidget {
               return ChoiceChip(
                 label: Text(getFavoriteSortByName(sortBy)),
                 selected: state.sortBy == sortBy,
-                onSelected: (bool value) {
+                onSelected: (value) {
                   controller.setSortBy(sortBy);
                 },
               );
@@ -158,7 +158,7 @@ class _SortView extends StatelessWidget {
             return ChoiceChip(
               label: Text(getFavoriteSortOrderName(sortOrder)),
               selected: state.sortOrder == sortOrder,
-              onSelected: (bool value) {
+              onSelected: (value) {
                 controller.setSortOrder(sortOrder);
               },
             );

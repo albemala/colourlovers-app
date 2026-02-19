@@ -36,12 +36,11 @@ Future<void> main() async {
     print('Saved ${topColors.length} top colors.');
 
     // Download color images
-    final itemsToDownload =
-        topColors
-            .map(
-              (c) => (id: c.id.toString(), imageUrl: httpToHttps(c.imageUrl!)),
-            )
-            .toList();
+    final itemsToDownload = topColors
+        .map(
+          (c) => (id: c.id.toString(), imageUrl: httpToHttps(c.imageUrl!)),
+        )
+        .toList();
     await _downloadImages(itemsToDownload, 'assets/items/colors');
   }
 
@@ -56,12 +55,11 @@ Future<void> main() async {
     print('Saved ${topPalettes.length} top palettes.');
 
     // Download palette images
-    final itemsToDownload =
-        topPalettes
-            .map(
-              (p) => (id: p.id.toString(), imageUrl: httpToHttps(p.imageUrl!)),
-            )
-            .toList();
+    final itemsToDownload = topPalettes
+        .map(
+          (p) => (id: p.id.toString(), imageUrl: httpToHttps(p.imageUrl!)),
+        )
+        .toList();
     await _downloadImages(itemsToDownload, 'assets/items/palettes');
   }
 
@@ -76,12 +74,11 @@ Future<void> main() async {
     print('Saved ${topPatterns.length} top patterns.');
 
     // Download pattern images
-    final itemsToDownload =
-        topPatterns
-            .map(
-              (p) => (id: p.id.toString(), imageUrl: httpToHttps(p.imageUrl!)),
-            )
-            .toList();
+    final itemsToDownload = topPatterns
+        .map(
+          (p) => (id: p.id.toString(), imageUrl: httpToHttps(p.imageUrl!)),
+        )
+        .toList();
     await _downloadImages(itemsToDownload, 'assets/items/patterns');
   }
 
@@ -111,31 +108,30 @@ Future<void> _downloadImages(
     destDir.createSync(recursive: true);
   }
 
-  final downloadFutures =
-      items.map((item) async {
-        final id = item.id;
-        final imageUrl = item.imageUrl;
-        final filename = '$id.png'; // Use id as filename
+  final downloadFutures = items.map((item) async {
+    final id = item.id;
+    final imageUrl = item.imageUrl;
+    final filename = '$id.png'; // Use id as filename
 
-        final httpClient = HttpClient();
-        try {
-          final request = await httpClient.getUrl(Uri.parse(imageUrl));
-          final response = await request.close();
+    final httpClient = HttpClient();
+    try {
+      final request = await httpClient.getUrl(Uri.parse(imageUrl));
+      final response = await request.close();
 
-          if (response.statusCode == 200) {
-            final file = File('$destinationFolder/$filename')
-              ..createSync(recursive: true);
-            await response.pipe(file.openWrite());
-            print('Downloaded: $filename to $destinationFolder');
-          } else {
-            print('Failed to download: $imageUrl (${response.statusCode})');
-          }
-        } catch (e) {
-          print('Error downloading: $imageUrl - $e');
-        } finally {
-          httpClient.close();
-        }
-      }).toList();
+      if (response.statusCode == 200) {
+        final file = File('$destinationFolder/$filename')
+          ..createSync(recursive: true);
+        await response.pipe(file.openWrite());
+        print('Downloaded: $filename to $destinationFolder');
+      } else {
+        print('Failed to download: $imageUrl (${response.statusCode})');
+      }
+    } catch (e) {
+      print('Error downloading: $imageUrl - $e');
+    } finally {
+      httpClient.close();
+    }
+  }).toList();
 
   if (downloadFutures.isNotEmpty) {
     await Future.wait(downloadFutures);

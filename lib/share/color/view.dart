@@ -75,8 +75,8 @@ class ShareColorView extends StatelessWidget {
                               child: H1TextView('#${state.hex}'),
                             ),
                             TextButton(
-                              onPressed: () {
-                                controller.copyHexToClipboard(context);
+                              onPressed: () async {
+                                await controller.copyHexToClipboard(context);
                               },
                               child: const Text('Copy'),
                             ),

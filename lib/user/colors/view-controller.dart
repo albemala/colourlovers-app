@@ -30,9 +30,8 @@ class UserColorsViewController extends Cubit<UserColorsViewState> {
     _pagination = ItemsPagination<ColourloversColor>((numResults, offset) {
       return fetchUserColors(_client, numResults, offset, _userName);
     });
-    _pagination
-      ..addListener(_updateState)
-      ..load();
+    _pagination.addListener(_updateState);
+    unawaited(_pagination.load());
 
     emit(
       state.copyWith(

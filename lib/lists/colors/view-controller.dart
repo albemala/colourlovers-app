@@ -36,7 +36,7 @@ class ColorsViewController extends Cubit<ColorsViewState> {
     _dataControllerSubscription = _dataController.stream.listen((state) {
       _pagination.reset();
       _updateState();
-      _pagination.load();
+      unawaited(_pagination.load());
     });
 
     _pagination = ItemsPagination<ColourloversColor>((numResults, offset) {
@@ -78,9 +78,8 @@ class ColorsViewController extends Cubit<ColorsViewState> {
           );
       }
     });
-    _pagination
-      ..addListener(_updateState)
-      ..load();
+    _pagination.addListener(_updateState);
+    unawaited(_pagination.load());
 
     emit(
       state.copyWith(
@@ -122,6 +121,7 @@ class ColorsViewController extends Cubit<ColorsViewState> {
   Future<void> showRandomColor(BuildContext context) async {
     final color = await _client.getRandomColor();
     if (color == null) return;
+    if (!context.mounted) return;
     _showColorDetails(context, color);
   }
 

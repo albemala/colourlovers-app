@@ -6,7 +6,6 @@ import 'package:colourlovers_app/filters/user/view-state.dart';
 import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background/view.dart';
-import 'package:colourlovers_app/widgets/text-field.dart';
 import 'package:colourlovers_app/widgets/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -114,7 +113,7 @@ class _ShowView extends StatelessWidget {
             return ChoiceChip(
               label: Text(getContentShowCriteriaName(showCriteria)),
               selected: state.showCriteria == showCriteria,
-              onSelected: (bool value) {
+              onSelected: (value) {
                 controller.setShowCriteria(showCriteria);
               },
             );
@@ -146,7 +145,7 @@ class _SortByView extends StatelessWidget {
               return ChoiceChip(
                 label: Text(getColourloversRequestOrderByName(sortBy)),
                 selected: state.sortBy == sortBy,
-                onSelected: (bool value) {
+                onSelected: (value) {
                   controller.setSortBy(sortBy);
                 },
               );
@@ -159,7 +158,7 @@ class _SortByView extends StatelessWidget {
             return ChoiceChip(
               label: Text(getColourloversRequestSortByName(sortOrder)),
               selected: state.sortOrder == sortOrder,
-              onSelected: (bool value) {
+              onSelected: (value) {
                 controller.setOrder(sortOrder);
               },
             );
@@ -170,24 +169,24 @@ class _SortByView extends StatelessWidget {
   }
 }
 
-class _UserNameView extends StatelessWidget {
-  final UserFiltersViewState state;
-  final UserFiltersViewController controller;
+// class _UserNameView extends StatelessWidget {
+//   final UserFiltersViewState state;
+//   final UserFiltersViewController controller;
 
-  const _UserNameView({required this.state, required this.controller});
+//   const _UserNameView({required this.state, required this.controller});
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: 12,
-      children: [
-        const H1TextView('User name'),
-        TextFieldView(
-          text: state.userName,
-          onTextChanged: controller.setUserName,
-        ),
-      ],
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       spacing: 12,
+//       children: [
+//         const H1TextView('User name'),
+//         TextFieldView(
+//           text: state.userName,
+//           onTextChanged: controller.setUserName,
+//         ),
+//       ],
+//     );
+//   }
+// }

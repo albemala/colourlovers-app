@@ -36,7 +36,7 @@ class PalettesViewController extends Cubit<PalettesViewState> {
     _dataControllerSubscription = _dataController.stream.listen((state) {
       _pagination.reset();
       _updateState();
-      _pagination.load();
+      unawaited(_pagination.load());
     });
 
     _pagination = ItemsPagination<ColourloversPalette>((numResults, offset) {
@@ -81,9 +81,8 @@ class PalettesViewController extends Cubit<PalettesViewState> {
           );
       }
     });
-    _pagination
-      ..addListener(_updateState)
-      ..load();
+    _pagination.addListener(_updateState);
+    unawaited(_pagination.load());
 
     emit(
       state.copyWith(
@@ -125,6 +124,7 @@ class PalettesViewController extends Cubit<PalettesViewState> {
   Future<void> showRandomPalette(BuildContext context) async {
     final palette = await _client.getRandomPalette();
     if (palette == null) return;
+    if (!context.mounted) return;
     _showPaletteDetails(context, palette);
   }
 

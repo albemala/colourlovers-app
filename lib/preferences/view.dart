@@ -2,6 +2,7 @@ import 'package:colourlovers_app/preferences/view-controller.dart';
 import 'package:colourlovers_app/preferences/view-state.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background/view.dart';
+import 'package:colourlovers_app/widgets/radio.dart';
 import 'package:colourlovers_app/widgets/text.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/foundation.dart';
@@ -59,27 +60,13 @@ class PreferencesView extends StatelessWidget {
                 spacing: 8,
                 children: [
                   const H1TextView('App theme'),
-                  Column(
-                    children: [
-                      RadioListTile<ThemeMode>(
-                        title: const Text('Dark'),
-                        value: ThemeMode.dark,
-                        groupValue: state.themeMode,
-                        onChanged: (value) {
-                          if (value == null) return;
-                          controller.setThemeMode(value);
-                        },
-                      ),
-                      RadioListTile<ThemeMode>(
-                        title: const Text('Light'),
-                        value: ThemeMode.light,
-                        groupValue: state.themeMode,
-                        onChanged: (value) {
-                          if (value == null) return;
-                          controller.setThemeMode(value);
-                        },
-                      ),
+                  RadioView<ThemeMode>(
+                    options: const [
+                      (value: ThemeMode.dark, label: 'Dark'),
+                      (value: ThemeMode.light, label: 'Light'),
                     ],
+                    selectedValue: state.themeMode,
+                    onChanged: controller.setThemeMode,
                   ),
                 ],
               ),
@@ -96,7 +83,7 @@ class PreferencesView extends StatelessWidget {
                           maxCrossAxisExtent: 80,
                           mainAxisSpacing: 8,
                           crossAxisSpacing: 8,
-                          childAspectRatio: 1,
+                          // childAspectRatio: 1,
                         ),
                     itemCount: schemes.length,
                     itemBuilder: (context, index) {

@@ -49,8 +49,8 @@ class PalettesView extends StatelessWidget {
         title: 'Palettes',
         actions: [
           RandomItemButton(
-            onPressed: () {
-              controller.showRandomPalette(context);
+            onPressed: () async {
+              await controller.showRandomPalette(context);
             },
             tooltip: 'Random palette',
           ),

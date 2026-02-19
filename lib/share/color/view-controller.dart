@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/clipboard.dart';
 import 'package:colourlovers_app/routing.dart';
@@ -25,7 +27,7 @@ class ShareColorViewController extends Cubit<ShareColorViewState> {
         backgroundBlobs: generateBackgroundBlobs(getRandomPalette()).toIList(),
       ),
     );
-    _init();
+    unawaited(_init());
   }
 
   Future<void> _init() async {
@@ -39,10 +41,11 @@ class ShareColorViewController extends Cubit<ShareColorViewState> {
 
   Future<void> copyHexToClipboard(BuildContext context) async {
     await copyToClipboard(state.hex);
+    if (!context.mounted) return;
     showSnackBar(context, createCopiedToClipboardSnackBar(state.hex));
   }
 
   void shareImage() {
-    openUrl(state.imageUrl);
+    unawaited(openUrl(state.imageUrl));
   }
 }

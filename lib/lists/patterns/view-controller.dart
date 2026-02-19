@@ -36,7 +36,7 @@ class PatternsViewController extends Cubit<PatternsViewState> {
     _dataControllerSubscription = _dataController.stream.listen((state) {
       _pagination.reset();
       _updateState();
-      _pagination.load();
+      unawaited(_pagination.load());
     });
 
     _pagination = ItemsPagination<ColourloversPattern>((numResults, offset) {
@@ -81,9 +81,8 @@ class PatternsViewController extends Cubit<PatternsViewState> {
           );
       }
     });
-    _pagination
-      ..addListener(_updateState)
-      ..load();
+    _pagination.addListener(_updateState);
+    unawaited(_pagination.load());
 
     emit(
       state.copyWith(
@@ -125,6 +124,7 @@ class PatternsViewController extends Cubit<PatternsViewState> {
   Future<void> showRandomPattern(BuildContext context) async {
     final pattern = await _client.getRandomPattern();
     if (pattern == null) return;
+    if (!context.mounted) return;
     _showPatternDetails(context, pattern);
   }
 

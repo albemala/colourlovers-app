@@ -30,9 +30,8 @@ class UserPalettesViewController extends Cubit<UserPalettesViewState> {
     _pagination = ItemsPagination<ColourloversPalette>((numResults, offset) {
       return fetchUserPalettes(_client, numResults, offset, _userName);
     });
-    _pagination
-      ..addListener(_updateState)
-      ..load();
+    _pagination.addListener(_updateState);
+    unawaited(_pagination.load());
 
     emit(
       state.copyWith(

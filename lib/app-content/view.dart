@@ -87,8 +87,8 @@ class NavigatorView extends StatelessWidget {
     return PopScope(
       canPop: false,
       child: Navigator(
-        onGenerateRoute: (RouteSettings settings) {
-          return MaterialPageRoute(builder: (BuildContext context) => child);
+        onGenerateRoute: (settings) {
+          return MaterialPageRoute(builder: (context) => child);
         },
       ),
     );

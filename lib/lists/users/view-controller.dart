@@ -36,11 +36,11 @@ class UsersViewController extends Cubit<UsersViewState> {
     _dataControllerSubscription = _dataController.stream.listen((state) {
       _pagination.reset();
       _updateState();
-      _pagination.load();
+      unawaited(_pagination.load());
     });
 
     _pagination = ItemsPagination<ColourloversLover>((numResults, offset) {
-      final userName = _dataController.userName;
+      // final userName = _dataController.userName;
       switch (_dataController.showCriteria) {
         case ContentShowCriteria.newest:
           return _client.getNewLovers(
@@ -61,9 +61,8 @@ class UsersViewController extends Cubit<UsersViewState> {
           );
       }
     });
-    _pagination
-      ..addListener(_updateState)
-      ..load();
+    _pagination.addListener(_updateState);
+    unawaited(_pagination.load());
 
     emit(
       state.copyWith(

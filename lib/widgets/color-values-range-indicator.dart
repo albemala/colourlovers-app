@@ -24,7 +24,7 @@ class ColorValueRangeIndicatorView extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(
           color: Theme.of(context).colorScheme.onSurface,
-          width: 1,
+          // width: 1,
         ),
         borderRadius: borderRadius,
       ),

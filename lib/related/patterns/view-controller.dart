@@ -30,9 +30,8 @@ class RelatedPatternsViewController extends Cubit<RelatedPatternsViewState> {
     _pagination = ItemsPagination<ColourloversPattern>((numResults, offset) {
       return fetchRelatedPatterns(_client, numResults, offset, _hex);
     });
-    _pagination
-      ..addListener(_updateState)
-      ..load();
+    _pagination.addListener(_updateState);
+    unawaited(_pagination.load());
 
     emit(
       state.copyWith(

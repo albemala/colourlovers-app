@@ -49,8 +49,8 @@ class PatternsView extends StatelessWidget {
         title: 'Patterns',
         actions: [
           RandomItemButton(
-            onPressed: () {
-              controller.showRandomPattern(context);
+            onPressed: () async {
+              await controller.showRandomPattern(context);
             },
             tooltip: 'Random pattern',
           ),

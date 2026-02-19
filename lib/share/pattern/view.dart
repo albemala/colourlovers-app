@@ -85,8 +85,8 @@ class SharePatternView extends StatelessWidget {
                                   child: H1TextView('#$color'),
                                 ),
                                 TextButton(
-                                  onPressed: () {
-                                    controller.copyColorToClipboard(
+                                  onPressed: () async {
+                                    await controller.copyColorToClipboard(
                                       context,
                                       color,
                                     );

@@ -30,9 +30,8 @@ class UserPatternsViewController extends Cubit<UserPatternsViewState> {
     _pagination = ItemsPagination<ColourloversPattern>((numResults, offset) {
       return fetchUserPatterns(_client, numResults, offset, _userName);
     });
-    _pagination
-      ..addListener(_updateState)
-      ..load();
+    _pagination.addListener(_updateState);
+    unawaited(_pagination.load());
 
     emit(
       state.copyWith(
