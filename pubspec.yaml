@@ -5,35 +5,35 @@ version: 2.1.0+20
 publish_to: 'none'
 
 environment:
-  sdk: '>=3.9.0 <4.0.0'
-  flutter: ">=3.35.0"
+  sdk: '>=3.11.0 <4.0.0'
+  flutter: ">=3.41.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
   # state management and data storage
-  equatable: ^2.0.7
+  equatable: ^2.0.8
   fast_immutable_collections: ^11.1.0
   flutter_bloc: ^9.0.0
   flutter_data_storage:
     git:
       url: https://github.com/albemala/flutter_data_storage.git
-      ref: 3.4.0
+      ref: 3.5.0
   # v1 data migration
   path_provider: ^2.1.5
   crypto: ^3.0.7
 
   # UI
-  flex_color_scheme: ^8.3.1
-  google_fonts: ^6.3.3
+  flex_color_scheme: ^8.4.0
+  google_fonts: ^8.0.2
   lucide_icons: ^0.257.0
   another_xlider: ^3.0.2
   aurora: ^1.0.0
 
   # utils
   collection: ^1.18.0
-  clipboard: ^3.0.8
+  clipboard: ^3.0.14
 
   # support
   package_info_plus: ^8.3.1
@@ -53,20 +53,20 @@ dependencies:
       url: https://github.com/albemala/colourlovers-api-dart.git
       ref: main
 
-  sentry_flutter: ^9.8.0
+  sentry_flutter: ^9.13.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   mocktail: ^1.0.4
   # flutter test --update-goldens test/screenshots/take_screenshots_test.dart
-  golden_screenshot: ^9.1.2
+  golden_screenshot: ^10.0.0
 
-  build_runner: ^2.10.4
+  build_runner: ^2.11.1
   icons_launcher: ^3.0.3
   package_rename: ^1.10.1
 
-  very_good_analysis: ^10.0.0
+  very_good_analysis: ^10.2.0
 
 flutter:
   uses-material-design: true
