@@ -9,22 +9,27 @@ class PillView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: ShapeDecoration(
-        shape: const StadiumBorder(),
-        color: Theme.of(context).colorScheme.onSurface,
-      ),
-      child: Row(
-        children: [
-          Icon(
-            icon,
-            size: 16,
-            color: Theme.of(context).colorScheme.secondaryContainer,
+    return IgnorePointer(
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          shape: const StadiumBorder(),
+          color: Theme.of(context).colorScheme.onSurface,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Icon(
+                icon,
+                size: 16,
+                color: Theme.of(context).colorScheme.secondaryContainer,
+              ),
+              const SizedBox(width: 8),
+              Text(text, style: getPillTextStyle(context)),
+            ],
           ),
-          const SizedBox(width: 8),
-          Text(text, style: getPillTextStyle(context)),
-        ],
+        ),
       ),
     );
   }

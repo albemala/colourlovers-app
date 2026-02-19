@@ -200,67 +200,71 @@ class AdView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surfaceContainerHighest,
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: 16,
-        children: [
-          Row(
-            // crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: 16,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(8),
-                decoration: ShapeDecoration(
-                  color: Theme.of(context).colorScheme.surface,
-                  shape: const CircleBorder(),
-                ),
-                child: ClipOval(
-                  child: Image.asset(
-                    adData.iconAssetPath,
-                    width: 32,
-                    height: 32,
+      child: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 12,
+          children: [
+            Row(
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 16,
+              children: [
+                DecoratedBox(
+                  decoration: ShapeDecoration(
+                    color: Theme.of(context).colorScheme.surface,
+                    shape: const CircleBorder(),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: ClipOval(
+                      child: Image.asset(
+                        adData.iconAssetPath,
+                        width: 32,
+                        height: 32,
+                      ),
+                    ),
                   ),
                 ),
-              ),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: 8,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          adData.overline.toUpperCase(),
-                          style: Theme.of(context).textTheme.labelSmall,
-                        ),
-                        Text(
-                          adData.title,
-                          style: Theme.of(context).textTheme.titleMedium,
-                          softWrap: true,
-                        ),
-                      ],
-                    ),
-                  ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    spacing: 8,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            adData.overline.toUpperCase(),
+                            style: Theme.of(context).textTheme.labelSmall,
+                          ),
+                          Text(
+                            adData.title,
+                            style: Theme.of(context).textTheme.titleMedium,
+                            softWrap: true,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-          Text(
-            adData.description,
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-          OutlinedButton(
-            onPressed: () => openUrl(adData.url),
-            child: const Text('Learn more'),
-          ),
-        ],
+              ],
+            ),
+            Text(
+              adData.description,
+              style: Theme.of(context).textTheme.bodyMedium,
+            ),
+            OutlinedButton(
+              onPressed: () => openUrl(adData.url),
+              child: const Text('Learn more'),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -6,6 +6,7 @@ import 'package:colourlovers_app/filters/pattern/view-state.dart';
 import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background/view.dart';
+import 'package:colourlovers_app/widgets/hue-ranges.dart';
 import 'package:colourlovers_app/widgets/text-field.dart';
 import 'package:colourlovers_app/widgets/text.dart';
 import 'package:flutter/material.dart';
@@ -63,7 +64,16 @@ class PatternFiltersView extends StatelessWidget {
                       _SortByView(state: state, controller: controller),
                     _ColorFilterView(state: state, controller: controller),
                     if (state.colorFilter == ColorFilter.hueRanges)
-                      _HueRangesView(state: state, controller: controller),
+                      HueRangesView(
+                        hueRanges: state.hueRanges.toList(),
+                        onSelected: (range, selected) {
+                          if (selected) {
+                            controller.addHueRange(context, range);
+                          } else {
+                            controller.removeHueRange(range);
+                          }
+                        },
+                      ),
                     if (state.colorFilter == ColorFilter.hex)
                       _HexView(state: state, controller: controller),
                     _PatternNameView(state: state, controller: controller),
@@ -207,42 +217,6 @@ class _ColorFilterView extends StatelessWidget {
   }
 }
 
-class _HueRangesView extends StatelessWidget {
-  final PatternFiltersViewState state;
-  final PatternFiltersViewController controller;
-
-  const _HueRangesView({required this.state, required this.controller});
-
-  @override
-  Widget build(BuildContext context) {
-    return Wrap(
-      spacing: 8,
-      runSpacing: 8,
-      children: ColourloversRequestHueRange.values.map((hueRange) {
-        return ChoiceChip(
-          avatar: Container(
-            decoration: BoxDecoration(
-              color: getColourloversRequestHueRangeColor(hueRange),
-              shape: BoxShape.circle,
-            ),
-            width: 18,
-            height: 18,
-          ),
-          label: Text(getColourloversRequestHueRangeName(hueRange)),
-          selected: state.hueRanges.contains(hueRange),
-          onSelected: (selected) {
-            if (selected) {
-              controller.addHueRange(context, hueRange);
-            } else {
-              controller.removeHueRange(hueRange);
-            }
-          },
-        );
-      }).toList(),
-    );
-  }
-}
-
 class _HexView extends StatelessWidget {
   final PatternFiltersViewState state;
   final PatternFiltersViewController controller;
@@ -270,13 +244,15 @@ class _HexView extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           spacing: 8,
           children: [
-            Container(
+            SizedBox(
               width: 32,
               height: 32,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Color(
-                  int.tryParse('FF${state.hex}', radix: 16) ?? 0x00000000,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Color(
+                    int.tryParse('FF${state.hex}', radix: 16) ?? 0x00000000,
+                  ),
                 ),
               ),
             ),

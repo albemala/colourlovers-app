@@ -102,21 +102,24 @@ class PatternsView extends StatelessWidget {
                       avatar: const Icon(LucideIcons.rainbow),
                       label: Row(
                         mainAxisSize: MainAxisSize.min,
+                        spacing: 2,
                         children: state.hueRanges.map((hueRange) {
-                          return Container(
+                          return SizedBox(
                             width: 12,
                             height: 12,
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: 2,
-                            ),
-                            decoration: BoxDecoration(
-                              color: getColourloversRequestHueRangeColor(
-                                hueRange,
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                color: getColourloversRequestHueRangeColor(
+                                  hueRange,
+                                ),
+                                shape: BoxShape.circle,
                               ),
-                              shape: BoxShape.circle,
                             ),
                           );
                         }).toList(),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 2,
                       ),
                       tooltip: 'Hue Ranges',
                     ),
@@ -126,12 +129,16 @@ class PatternsView extends StatelessWidget {
                         controller.showPatternFilters(context);
                       },
                       avatar: const Icon(LucideIcons.palette),
-                      label: Container(
+                      label: SizedBox(
                         width: 24,
                         height: 12,
-                        decoration: BoxDecoration(
-                          color: Color(int.parse('FF${state.hex}', radix: 16)),
-                          borderRadius: BorderRadius.circular(4),
+                        child: DecoratedBox(
+                          decoration: BoxDecoration(
+                            color: Color(
+                              int.parse('FF${state.hex}', radix: 16),
+                            ),
+                            borderRadius: BorderRadius.circular(4),
+                          ),
                         ),
                       ),
                       tooltip: 'Color Hex',

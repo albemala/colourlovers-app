@@ -12,7 +12,7 @@ class UserView extends StatelessWidget {
         alignment: Alignment.centerRight,
         child: Padding(
           padding: const EdgeInsets.only(right: 8),
-          child: Container(
+          child: DecoratedBox(
             decoration: BoxDecoration(
               color: Theme.of(
                 context,
