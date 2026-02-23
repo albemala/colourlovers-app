@@ -3,7 +3,7 @@ platform :ios do
   lane :generate_certificates_profiles do |options|
     match(
       type: "development",
-#       force_for_new_devices: true,
+      # force_for_new_devices: true,
     )
     match(
       type: "adhoc",
@@ -33,8 +33,8 @@ platform :ios do
     upload_to_app_store(
       ipa: "build/Runner.ipa",
       api_key: api_key,
-#       skip_metadata: true,
-      skip_screenshots: true,
+      skip_metadata: false,
+      skip_screenshots: false,
       precheck_include_in_app_purchases: false,
       submit_for_review: true,
       automatic_release: true,
