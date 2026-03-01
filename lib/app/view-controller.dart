@@ -3,17 +3,15 @@ import 'dart:async';
 import 'package:colourlovers_app/app/view-state.dart';
 import 'package:colourlovers_app/app_usage/data-controller.dart';
 import 'package:colourlovers_app/preferences/data-controller.dart';
-import 'package:colourlovers_app/preferences/data-state.dart';
-import 'package:colourlovers_app/review.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_utils/flutter_utils.dart';
 
 class AppViewController extends Cubit<AppViewState> {
   final AppUsageDataController appUsageDataController;
   final PreferencesDataController preferencesDataController;
 
-  StreamSubscription<PreferencesDataState>?
-  _preferencesDataControllerSubscription;
+  StreamSubscription<void>? _preferencesDataControllerSubscription;
 
   factory AppViewController.fromContext(BuildContext context) {
     return AppViewController(

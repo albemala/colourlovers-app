@@ -9,10 +9,8 @@ import 'package:colourlovers_app/favorites/data-controller.dart';
 import 'package:colourlovers_app/favorites/data-state.dart';
 import 'package:colourlovers_app/favorites/view-state.dart';
 import 'package:colourlovers_app/filters/favorites/data-controller.dart';
-import 'package:colourlovers_app/filters/favorites/data-state.dart';
 import 'package:colourlovers_app/filters/favorites/defines.dart';
 import 'package:colourlovers_app/filters/favorites/view.dart';
-import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/widgets/background/functions.dart';
 import 'package:colourlovers_app/widgets/item-tiles/color-tile/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/palette-tile/view-state.dart';
@@ -22,13 +20,14 @@ import 'package:equatable/equatable.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_utils/flutter_utils.dart';
 
 class FavoritesViewController extends Cubit<FavoritesViewState> {
   final FavoritesDataController _favoritesDataController;
   final FavoritesFiltersDataController _favoritesFiltersDataController;
-  StreamSubscription<FavoritesDataState>? _favoritesDataControllerSubscription;
-  StreamSubscription<FavoritesFiltersDataState>?
-  _favoritesFiltersDataControllerSubscription;
+
+  StreamSubscription<void>? _favoritesDataControllerSubscription;
+  StreamSubscription<void>? _favoritesFiltersDataControllerSubscription;
 
   factory FavoritesViewController.fromContext(BuildContext context) {
     return FavoritesViewController(

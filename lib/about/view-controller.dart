@@ -3,15 +3,13 @@ import 'dart:async';
 import 'package:colourlovers_app/about/functions.dart';
 import 'package:colourlovers_app/about/view-state.dart';
 import 'package:colourlovers_app/app/defines.dart';
-import 'package:colourlovers_app/feedback.dart';
 import 'package:colourlovers_app/review.dart';
-import 'package:colourlovers_app/share.dart';
-
 import 'package:colourlovers_app/urls.dart';
 import 'package:colourlovers_app/widgets/background/functions.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_utils/flutter_utils.dart';
 
 class AboutViewController extends Cubit<AboutViewState> {
   factory AboutViewController.fromContext(BuildContext _) {
@@ -39,11 +37,13 @@ class AboutViewController extends Cubit<AboutViewState> {
   }
 
   Future<void> rateApp() async {
-    await openStoreListing();
+    await openStoreListing(
+      appleStoreId: appleStoreId,
+    );
   }
 
   Future<void> openEmail() async {
-    await sendFeedback();
+    await sendFeedback(email: defaultEmailUrl);
   }
 
   Future<void> openWebsite() async {
@@ -55,7 +55,7 @@ class AboutViewController extends Cubit<AboutViewState> {
   }
 
   Future<void> openTwitter() async {
-    await openUrl(twitterUrl);
+    await openUrl(defaultTwitterUrl);
   }
 
   Future<void> openColourLoversLicense() async {

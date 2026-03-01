@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:colourlovers_app/preferences/data-controller.dart';
-import 'package:colourlovers_app/preferences/data-state.dart';
 import 'package:colourlovers_app/preferences/view-state.dart';
 import 'package:colourlovers_app/widgets/background/functions.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
@@ -12,8 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class PreferencesViewController extends Cubit<PreferencesViewState> {
   final PreferencesDataController _preferencesDataController;
 
-  StreamSubscription<PreferencesDataState>?
-  _preferencesDataControllerSubscription;
+  StreamSubscription<void>? _preferencesDataControllerSubscription;
 
   factory PreferencesViewController.fromContext(BuildContext context) {
     return PreferencesViewController(context.read<PreferencesDataController>());

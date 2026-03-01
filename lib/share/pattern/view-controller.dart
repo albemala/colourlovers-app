@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:colourlovers_api/colourlovers_api.dart';
-import 'package:colourlovers_app/clipboard.dart';
-import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/share/pattern/view-state.dart';
 import 'package:colourlovers_app/urls.dart';
 import 'package:colourlovers_app/widgets/background/functions.dart';
@@ -10,6 +8,7 @@ import 'package:colourlovers_app/widgets/snack-bar.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_utils/flutter_utils.dart';
 
 class SharePatternViewController extends Cubit<SharePatternViewState> {
   final ColourloversPattern _pattern;

@@ -3,18 +3,17 @@ import 'dart:async';
 import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/details/color/view.dart';
 import 'package:colourlovers_app/filters/color/data-controller.dart';
-import 'package:colourlovers_app/filters/color/data-state.dart';
 import 'package:colourlovers_app/filters/color/view.dart';
 import 'package:colourlovers_app/filters/defines.dart';
 import 'package:colourlovers_app/items-pagination.dart';
 import 'package:colourlovers_app/lists/colors/view-state.dart';
-import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/widgets/background/functions.dart';
 import 'package:colourlovers_app/widgets/item-list/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/color-tile/view-state.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_utils/flutter_utils.dart';
 
 class ColorsViewController extends Cubit<ColorsViewState> {
   final ColourloversApiClient _client;
@@ -22,7 +21,7 @@ class ColorsViewController extends Cubit<ColorsViewState> {
 
   late final ItemsPagination<ColourloversColor> _pagination;
 
-  StreamSubscription<ColorFiltersDataState>? _dataControllerSubscription;
+  StreamSubscription<void>? _dataControllerSubscription;
 
   factory ColorsViewController.fromContext(BuildContext context) {
     return ColorsViewController(

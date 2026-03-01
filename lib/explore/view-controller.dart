@@ -5,11 +5,11 @@ import 'package:colourlovers_app/lists/colors/view.dart';
 import 'package:colourlovers_app/lists/palettes/view.dart';
 import 'package:colourlovers_app/lists/patterns/view.dart';
 import 'package:colourlovers_app/lists/users/view.dart';
-import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/widgets/background/functions.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_utils/flutter_utils.dart';
 
 // TODO create view model and pass tiles data to view from controller
 

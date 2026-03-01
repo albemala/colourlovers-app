@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:colourlovers_app/urls.dart';
 import 'package:colourlovers_app/widgets/link.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_utils/flutter_utils.dart';
 
 class CreditsView extends StatelessWidget {
   final String itemName;

@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'dart:math';
 
-import 'package:colourlovers_app/urls.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_utils/flutter_utils.dart';
 
 class AdData {
   final String iconAssetPath;

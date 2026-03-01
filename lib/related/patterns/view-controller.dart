@@ -5,13 +5,13 @@ import 'package:colourlovers_app/details/pattern/view.dart';
 import 'package:colourlovers_app/items-pagination.dart';
 import 'package:colourlovers_app/related-items.dart';
 import 'package:colourlovers_app/related/patterns/view-state.dart';
-import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/widgets/background/functions.dart';
 import 'package:colourlovers_app/widgets/item-list/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view-state.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_utils/flutter_utils.dart';
 
 class RelatedPatternsViewController extends Cubit<RelatedPatternsViewState> {
   final List<String> _hex;

@@ -3,12 +3,12 @@ import 'package:colourlovers_app/filters/defines.dart';
 import 'package:colourlovers_app/filters/pattern/data-controller.dart';
 import 'package:colourlovers_app/filters/pattern/data-state.dart';
 import 'package:colourlovers_app/filters/pattern/view-state.dart';
-import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/widgets/background/functions.dart';
 import 'package:colourlovers_app/widgets/snack-bar.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_utils/flutter_utils.dart';
 
 final _initialPatternFilters = PatternFiltersDataState.initial();
 

@@ -1,13 +1,13 @@
 import 'package:colourlovers_app/about/view-controller.dart';
 import 'package:colourlovers_app/about/view-state.dart';
 import 'package:colourlovers_app/app/defines.dart';
-import 'package:colourlovers_app/share.dart';
 import 'package:colourlovers_app/widgets/app-bar.dart';
 import 'package:colourlovers_app/widgets/background/view.dart';
 import 'package:colourlovers_app/widgets/link.dart';
 import 'package:colourlovers_app/widgets/text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_utils/flutter_utils.dart';
 
 class AboutViewCreator extends StatelessWidget {
   const AboutViewCreator({super.key});

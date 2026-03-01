@@ -4,17 +4,16 @@ import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/details/user/view.dart';
 import 'package:colourlovers_app/filters/defines.dart';
 import 'package:colourlovers_app/filters/user/data-controller.dart';
-import 'package:colourlovers_app/filters/user/data-state.dart';
 import 'package:colourlovers_app/filters/user/view.dart';
 import 'package:colourlovers_app/items-pagination.dart';
 import 'package:colourlovers_app/lists/users/view-state.dart';
-import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/widgets/background/functions.dart';
 import 'package:colourlovers_app/widgets/item-list/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/user-tile/view-state.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_utils/flutter_utils.dart';
 
 class UsersViewController extends Cubit<UsersViewState> {
   final ColourloversApiClient _client;
@@ -22,7 +21,7 @@ class UsersViewController extends Cubit<UsersViewState> {
 
   late final ItemsPagination<ColourloversLover> _pagination;
 
-  StreamSubscription<UserFiltersDataState>? _dataControllerSubscription;
+  StreamSubscription<void>? _dataControllerSubscription;
 
   factory UsersViewController.fromContext(BuildContext context) {
     return UsersViewController(

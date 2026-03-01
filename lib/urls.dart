@@ -1,12 +1,8 @@
 import 'dart:io';
 
-import 'package:url_launcher/url_launcher.dart';
-
-const supportEmailUrl = 'albemala@gmail.com';
 
 // const websiteUrl = 'https://luv.albemala.me/';
 const repositoryUrl = 'https://github.com/albemala/colourlovers-app';
-const twitterUrl = 'https://twitter.com/albemala';
 
 const colourLoversUrl = 'https://www.colourlovers.com';
 const colourLoversLicenseUrl = '$colourLoversUrl/api';
@@ -28,18 +24,6 @@ String get otherProjectsUrl {
     default:
       return 'https://projects.albemala.me/?ref=luv-app';
   }
-}
-
-Future<void> openUrl(String url) async {
-  final uri = Uri.tryParse(url);
-  if (uri == null) return;
-  await openUri(uri);
-}
-
-Future<void> openUri(Uri uri) async {
-  final canOpenUrl = await canLaunchUrl(uri);
-  if (!canOpenUrl) return;
-  await launchUrl(uri);
 }
 
 String httpToHttps(String url) {

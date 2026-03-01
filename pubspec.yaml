@@ -33,18 +33,13 @@ dependencies:
 
   # utils
   collection: ^1.18.0
-  clipboard: ^3.0.14
 
   # support
-  package_info_plus: ^8.3.1
-  device_info_plus: ^11.5.0
-  share_plus: ^12.0.1
-  url_launcher: ^6.3.2
-  in_app_review: ^2.0.11
-  send_support_email:
+  package_info_plus: ^9.0.0
+  flutter_utils:
     git:
-      url: https://github.com/albemala/send_support_email.git
-      ref: 4.0.0
+      url: https://github.com/albemala/flutter_utils.git
+      ref: 1.0.1
 
   hexcolor: ^3.0.2
 

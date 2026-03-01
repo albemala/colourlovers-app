@@ -4,17 +4,16 @@ import 'package:colourlovers_api/colourlovers_api.dart';
 import 'package:colourlovers_app/details/pattern/view.dart';
 import 'package:colourlovers_app/filters/defines.dart';
 import 'package:colourlovers_app/filters/pattern/data-controller.dart';
-import 'package:colourlovers_app/filters/pattern/data-state.dart';
 import 'package:colourlovers_app/filters/pattern/view.dart';
 import 'package:colourlovers_app/items-pagination.dart';
 import 'package:colourlovers_app/lists/patterns/view-state.dart';
-import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/widgets/background/functions.dart';
 import 'package:colourlovers_app/widgets/item-list/view-state.dart';
 import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view-state.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_utils/flutter_utils.dart';
 
 class PatternsViewController extends Cubit<PatternsViewState> {
   final ColourloversApiClient _client;
@@ -22,7 +21,7 @@ class PatternsViewController extends Cubit<PatternsViewState> {
 
   late final ItemsPagination<ColourloversPattern> _pagination;
 
-  StreamSubscription<PatternFiltersDataState>? _dataControllerSubscription;
+  StreamSubscription<void>? _dataControllerSubscription;
 
   factory PatternsViewController.fromContext(BuildContext context) {
     return PatternsViewController(

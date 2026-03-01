@@ -7,7 +7,6 @@ import 'package:colourlovers_app/details/pattern/view.dart';
 import 'package:colourlovers_app/details/user/view-state.dart';
 import 'package:colourlovers_app/favorites/data-controller.dart';
 import 'package:colourlovers_app/favorites/data-state.dart';
-import 'package:colourlovers_app/routing.dart';
 import 'package:colourlovers_app/user-items.dart';
 import 'package:colourlovers_app/user/colors/view.dart';
 import 'package:colourlovers_app/user/palettes/view.dart';
@@ -20,6 +19,7 @@ import 'package:colourlovers_app/widgets/item-tiles/pattern-tile/view-state.dart
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_utils/flutter_utils.dart';
 
 class UserDetailsViewController extends Cubit<UserDetailsViewState> {
   final ColourloversLover _user;
@@ -29,7 +29,7 @@ class UserDetailsViewController extends Cubit<UserDetailsViewState> {
   List<ColourloversPalette> _userPalettes = [];
   List<ColourloversPattern> _userPatterns = [];
 
-  StreamSubscription<FavoritesDataState>? _favoritesDataControllerSubscription;
+  StreamSubscription<void>? _favoritesDataControllerSubscription;
 
   factory UserDetailsViewController.fromContext(
     BuildContext context, {
