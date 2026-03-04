@@ -457,11 +457,11 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "1.0.1"
-      resolved-ref: "3efd462f4ef2ce4ded220c997f7bea3704b593d8"
+      ref: "1.1.0"
+      resolved-ref: "49b316f4bc54c1a35b44eeffa8c779353e41e430"
       url: "https://github.com/albemala/flutter_utils.git"
     source: git
-    version: "1.0.1"
+    version: "1.1.0"
   flutter_web_plugins:
     dependency: transitive
     description: flutter
