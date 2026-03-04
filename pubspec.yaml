@@ -33,13 +33,11 @@ dependencies:
 
   # utils
   collection: ^1.18.0
-
-  # support
-  package_info_plus: ^9.0.0
+  package_info_plus: ^9.0.0 # about version
   flutter_utils:
     git:
       url: https://github.com/albemala/flutter_utils.git
-      ref: 1.0.1
+      ref: 1.1.0
 
   hexcolor: ^3.0.2
 
