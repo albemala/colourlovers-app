@@ -105,11 +105,11 @@ package_rename_config:
   macos:
     app_name: LUV
     package_name: me.albemala.luv
-    copyright_notice: Copyright © 2025 Alberto Malagoli (albemala.me). All rights reserved.
+    copyright_notice: Copyright © 2026 Alberto Malagoli (albemala.me). All rights reserved.
   windows:
     app_name: LUV
     organization: albemala.me
-    copyright_notice: Copyright © 2025 Alberto Malagoli (albemala.me).
+    copyright_notice: Copyright © 2026 Alberto Malagoli (albemala.me).
     exe_name: LUV
   linux:
     app_name: LUV
