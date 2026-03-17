@@ -1,6 +1,5 @@
 import 'dart:io';
 
-
 // const websiteUrl = 'https://luv.albemala.me/';
 const repositoryUrl = 'https://github.com/albemala/colourlovers-app';
 
@@ -15,16 +14,6 @@ String get websiteUrl => switch (Platform.operatingSystem) {
     'https://play.google.com/store/apps/details?id=me.albemala.luv&hl=en',
   _ => 'https://github.com/albemala/colourlovers-app',
 };
-
-String get otherProjectsUrl {
-  switch (Platform.operatingSystem) {
-    case 'ios':
-    case 'macos':
-      return 'https://apps.apple.com/us/developer/alberto-malagoli/id965971566';
-    default:
-      return 'https://projects.albemala.me/?ref=luv-app';
-  }
-}
 
 String httpToHttps(String url) {
   return url.replaceFirst('http://', 'https://');

@@ -51,7 +51,7 @@ class AboutViewController extends Cubit<AboutViewState> {
   }
 
   Future<void> openOtherProjects() async {
-    await openUrl(otherProjectsUrl);
+    await openUrl(defaultOtherProjectsUrl);
   }
 
   Future<void> openTwitter() async {
